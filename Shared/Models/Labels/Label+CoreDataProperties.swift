@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import SwiftUI
 
 extension Label {
 
@@ -40,6 +40,15 @@ extension Label {
         return set.sorted {
             $0.wrappedName > $1.wrappedName
         }
+    }
+    
+    // MARK: - Computed properties
+    
+    //Label color
+    public var contactName : Color {
+        //Color
+        let index = Int(color)
+        return AppColors[color].Color
     }
 
 }

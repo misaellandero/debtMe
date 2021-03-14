@@ -62,6 +62,13 @@ extension Transaction {
         return DateFormatter.mediumDateTimeFormatter.string(from: wrappedDateSettled)
     }
     
+    // MARK: - Computed properties
+    
+    //Transaction contact name
+    public var contactName : String {
+       
+        return contact.wrappedName ?? "Unknown"
+    }
     
      
 }

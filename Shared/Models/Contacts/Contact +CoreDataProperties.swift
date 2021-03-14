@@ -46,7 +46,34 @@ extension Contact {
         }
     }
     
-
+    // MARK: - Computed properties
+    
+    //How much money do they owe us
+    public var totalDebut : Double {
+        let sum = transactionsArray
+            //Not pay and they own us
+            .filter { $0.settled == false && $0.debt == true }
+            .map { $0.amount }
+            .reduce(0, +)
+        
+        return sum
+    }
+    
+    //How much money do we owe them
+    public var totalOwn : Double {
+        let sum = transactionsArray
+            //Not pay and they own us
+            .filter { $0.settled == false && $0.debt == false }
+            .map { $0.amount }
+            .reduce(0, +)
+        return sum
+    }
+    
+    public var balance : Double {
+        let sum = totalDebut + totalOwn
+        return sum
+    }
+      
 }
 
 // MARK: Generated accessors for transactions
