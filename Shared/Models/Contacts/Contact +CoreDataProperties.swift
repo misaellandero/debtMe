@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension Contacto {
+extension Contact {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Contacto> {
-        return NSFetchRequest<Contacto>(entityName: "Contacto")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Contact> {
+        return NSFetchRequest<Contact>(entityName: "Contacto")
     }
 
     @NSManaged public var id: UUID?
@@ -21,11 +21,36 @@ extension Contacto {
     @NSManaged public var emoji: String?
     @NSManaged public var label: Label?
     @NSManaged public var transactions: NSSet?
+    
+    // MARK: - Wrapped vars
+    
+    // Wrapped id
+    public var wrappedId: UUID {
+        id ?? UUID()
+    }
+    // Wrapped name
+    public var wrappedName: String {
+        name ?? "Unknown"
+    }
+    // Wrapped emoji
+    public var wrappedEmoji: String {
+        emoji ?? "🙂"
+    }
+    
+    // MARK: - Array transactions
+    public var transactionsArray: [Transaction] {
+        let set = transactions as? Set<Transaction> ?? []
+        
+        return set.sorted {
+            $0.wrappedDateCreation > $1.wrappedDateCreation
+        }
+    }
+    
 
 }
 
 // MARK: Generated accessors for transactions
-extension Contacto {
+extension Contact {
 
     @objc(addTransactionsObject:)
     @NSManaged public func addToTransactions(_ value: Transaction)
@@ -41,6 +66,6 @@ extension Contacto {
 
 }
 
-extension Contacto : Identifiable {
+extension Contact : Identifiable {
 
 }

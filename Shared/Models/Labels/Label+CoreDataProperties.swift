@@ -20,6 +20,27 @@ extension Label {
     @NSManaged public var name: String?
     @NSManaged public var color: Int16
     @NSManaged public var contacts: NSSet?
+    
+    // MARK: - Wrapped vars
+    
+    // Wrapped id
+    public var wrappedId: UUID {
+        id ?? UUID()
+    }
+    
+    // Wrapped name
+    public var wrappedName: String {
+        name ?? "Friend"
+    }
+    
+    // MARK: - Array contacts
+    public var contactsArray: [Contact] {
+        let set = contacts as? Set<Contact> ?? []
+        
+        return set.sorted {
+            $0.wrappedName > $1.wrappedName
+        }
+    }
 
 }
 
@@ -27,10 +48,10 @@ extension Label {
 extension Label {
 
     @objc(addContactsObject:)
-    @NSManaged public func addToContacts(_ value: Contacto)
+    @NSManaged public func addToContacts(_ value: Contact)
 
     @objc(removeContactsObject:)
-    @NSManaged public func removeFromContacts(_ value: Contacto)
+    @NSManaged public func removeFromContacts(_ value: Contact)
 
     @objc(addContacts:)
     @NSManaged public func addToContacts(_ values: NSSet)

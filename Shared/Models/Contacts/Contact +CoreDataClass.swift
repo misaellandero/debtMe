@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(Contacto)
-public class Contacto: NSManagedObject {
+public class Contact: NSManagedObject {
 
 }
