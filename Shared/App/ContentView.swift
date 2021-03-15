@@ -22,10 +22,8 @@ struct ContentView: View {
     
     // MARK: - current section selected 
     @State var sectionSelected : SectionSelected? = .contacts
-    
-    
+     
     var body: some View {
-        NavigationView {
             Group{
                 #if os(iOS)
                 if horizontalSizeClass == .compact {
@@ -36,8 +34,7 @@ struct ContentView: View {
                 #elseif os(macOS)
                 SideBarView(sectionSelected : $sectionSelected)
                 #endif
-            }.navigationTitle("DebtMe")
-            
-        }
+            }
+       
     }
 }

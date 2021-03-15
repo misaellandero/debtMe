@@ -14,8 +14,10 @@ struct TabBarView: View {
     var body: some View {
         TabView(selection: $sectionSelected){
             // MARK: - Contacts
-            Text("Contacts")
-                .tabItem {
+            NavigationView{
+                ContactsList()
+            }
+            .tabItem {
                     Label("Contacts", systemImage: "person.2.fill")
                 }
                 .tag(SectionSelected.contacts)
