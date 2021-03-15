@@ -21,20 +21,23 @@ struct ContentView: View {
     #endif
     
     // MARK: - current section selected 
-    @State var sectionSelected : SectionSelected? = .debts
+    @State var sectionSelected : SectionSelected? = .contacts
     
     
     var body: some View {
         NavigationView {
-            #if os(iOS)
-            if horizontalSizeClass == .compact {
-                Text("Hola soy un iPhone")
-            } else {
-                Text("Hola soy un iPad")
-            }
-            #elseif os(macOS)
-            SideBarView(sectionSelected : $sectionSelected)
-            #endif
+            Group{
+                #if os(iOS)
+                if horizontalSizeClass == .compact {
+                    TabBarView(sectionSelected : $sectionSelected)
+                } else {
+                    SideBarView(sectionSelected : $sectionSelected)
+                }
+                #elseif os(macOS)
+                SideBarView(sectionSelected : $sectionSelected)
+                #endif
+            }.navigationTitle("DebtMe")
+            
         }
     }
 }
