@@ -13,13 +13,13 @@ import CoreData
 extension Contact {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Contact> {
-        return NSFetchRequest<Contact>(entityName: "Contacto")
+        return NSFetchRequest<Contact>(entityName: "Contact")
     }
 
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var emoji: String?
-    @NSManaged public var label: Label?
+    @NSManaged public var label: ContactLabel?
     @NSManaged public var transactions: NSSet?
     
     // MARK: - Wrapped vars

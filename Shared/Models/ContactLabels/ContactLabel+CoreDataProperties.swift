@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 import SwiftUI
 
-extension Label {
+extension ContactLabel {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Label> {
-        return NSFetchRequest<Label>(entityName: "Label")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ContactLabel> {
+        return NSFetchRequest<ContactLabel>(entityName: "ContactLabel")
     }
 
     @NSManaged public var id: UUID?
@@ -45,16 +45,16 @@ extension Label {
     // MARK: - Computed properties
     
     //Label color
-    public var contactName : Color {
+    public var labelColor : Color {
         //Color
         let index = Int(color)
-        return AppColors[color].Color
+        return AppColorsModel.colors[index].color
     }
 
 }
 
 // MARK: Generated accessors for contacts
-extension Label {
+extension ContactLabel {
 
     @objc(addContactsObject:)
     @NSManaged public func addToContacts(_ value: Contact)
@@ -70,6 +70,6 @@ extension Label {
 
 }
 
-extension Label : Identifiable {
+extension ContactLabel : Identifiable {
 
 }

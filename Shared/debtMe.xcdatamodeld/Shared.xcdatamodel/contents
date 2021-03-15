@@ -4,10 +4,10 @@
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="label" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Label" inverseName="contacts" inverseEntity="Label"/>
+        <relationship name="label" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactLabel" inverseName="contacts" inverseEntity="ContactLabel"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="contact" inverseEntity="Transaction"/>
     </entity>
-    <entity name="Label" representedClassName="Label" syncable="YES">
+    <entity name="ContactLabel" representedClassName="ContactLabel" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -25,7 +25,7 @@
     </entity>
     <elements>
         <element name="Contact" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="Label" positionX="-63" positionY="9" width="128" height="89"/>
+        <element name="ContactLabel" positionX="-63" positionY="9" width="128" height="89"/>
         <element name="Transaction" positionX="-36" positionY="9" width="128" height="149"/>
     </elements>
 </model>

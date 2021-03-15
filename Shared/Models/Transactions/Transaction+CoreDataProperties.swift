@@ -67,7 +67,7 @@ extension Transaction {
     //Transaction contact name
     public var contactName : String {
        
-        return contact.wrappedName ?? "Unknown"
+        return contact?.wrappedName ?? "Unknown"
     }
     
      
