@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContactsList: View {
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+    
+    
     @State private var showingNewContactForm = false
     var body: some View {
         List{
@@ -25,9 +29,11 @@ struct ContactsList: View {
             }
         }
         .sheet(isPresented: $showingNewContactForm){
-            ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1), save: {})
+            ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
         }
     }
+    
+    
     
 }
 

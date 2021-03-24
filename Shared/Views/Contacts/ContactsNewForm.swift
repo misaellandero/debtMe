@@ -10,8 +10,6 @@ import SwiftUI
 struct ContactsNewForm: View {
     
     @State var contact : ContactModel
-    var save : () -> Void
-    
     
     var body: some View {
         NavigationView{
@@ -19,7 +17,7 @@ struct ContactsNewForm: View {
                 
                 #if os(iOS)
                 List{
-                    NewContactForm(contact: $contact, save: save)
+                    NewContactForm(contact: $contact)
                 }
                 .listStyle(InsetGroupedListStyle())
                 
@@ -39,9 +37,10 @@ struct ContactsNewForm: View {
 }
 
 struct NewContactForm : View {
-    @Binding var contact : ContactModel
-    var save : () -> Void
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
     
+    @Binding var contact : ContactModel
     // MARK: - Screen Size for determining ipad or iphone screen
     #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -86,7 +85,7 @@ struct NewContactForm : View {
                 TextField("Label", text: $contact.label)
             }
             
-            Button(action: save){
+            Button(action: saveContact){
                 HStack{
                     Spacer()
                     Text("Save")
@@ -116,10 +115,18 @@ struct NewContactForm : View {
             self.showPopover.toggle()
         }
     }
+    
+    func saveContact(){
+        
+        let newContact = Contact(context: self.moc)
+        newContact.id = UUID()
+        newContact.name =  contact.name
+        newContact.emoji = contact.emoji
+    }
 }
 
 struct ContactsNewForm_Previews: PreviewProvider {
     static var previews: some View {
-        ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 2), save: {})
+        ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 2))
     }
 }

@@ -62,5 +62,6 @@ struct ContactsRow_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
         ContactsRow(name: "Daniel Rode", emoji: "🤓", tag: "Friend", tagColor: Color.green, balance: 200)
                 .previewLayout(.fixed(width: 400, height: 90))
+            .preferredColorScheme(.light)
     }
 }
