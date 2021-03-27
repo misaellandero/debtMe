@@ -1,8 +1,8 @@
 //
-//  Label+CoreDataProperties.swift
+//  ContactLabel+CoreDataProperties.swift
 //  debtMe
 //
-//  Created by Francisco Misael Landero Ychante on 14/03/21.
+//  Created by Francisco Misael Landero Ychante on 26/03/21.
 //
 //
 
@@ -16,9 +16,9 @@ extension ContactLabel {
         return NSFetchRequest<ContactLabel>(entityName: "ContactLabel")
     }
 
+    @NSManaged public var color: Int16
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
-    @NSManaged public var color: Int16
     @NSManaged public var contacts: NSSet?
     
     // MARK: - Wrapped vars
@@ -50,7 +50,6 @@ extension ContactLabel {
         let index = Int(color)
         return AppColorsModel.colors[index].color
     }
-
 }
 
 // MARK: Generated accessors for contacts

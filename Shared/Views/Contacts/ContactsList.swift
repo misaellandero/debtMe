@@ -9,23 +9,27 @@ import SwiftUI
 import CoreData
 
 struct ContactsList: View {
-    //Model View de Coredate
-    @Environment(\.managedObjectContext) var moc
-    @State private var showingNewContactForm = false
-  
-    @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
-    
+     
+     @State private var showingNewContactForm = false
+   
     var body: some View {
-        List{
-            ForEach(contacts, id: \.id){ contact in
-                ContactsRow(contact: contact)
+        Group{
+            #if os(iOS) 
+                List{
+                    ContactsRows()
+                }
+                .listStyle(InsetGroupedListStyle())
+          
+            #elseif os(macOS)
+            List{
+                ContactsRows()
             }
-            
+            #endif
         }
         //.navigationTitle("Contacts")
         .toolbar {
             ToolbarItem(placement:.navigation){
-                Text("Contacts")
+                Text("\(Image(systemName: "person.2.fill")) Contacts")
                     .font(Font.system(.largeTitle, design: .rounded).weight(.black))
             }
             ToolbarItem(placement: .primaryAction) {
@@ -39,8 +43,35 @@ struct ContactsList: View {
         }
     }
     
+   
     
     
+}
+
+struct ContactsRows : View  {
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+  
+    @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
+    
+    var body: some View {
+        ForEach(contacts, id: \.id){ contact in
+            NavigationLink(destination: ContactsDetail() ){
+                ContactsRow(contact: contact)
+            }
+        }.onDelete(perform: deleteItem)
+    }
+    
+    func deleteItem(at offsets: IndexSet) {
+        
+        for offset in offsets {
+            let contact =  self.contacts[offset]
+            self.moc.delete(contact)
+        }
+         
+        try? self.moc.save()
+        
+       }
 }
 
 struct ContactsList_Previews: PreviewProvider {

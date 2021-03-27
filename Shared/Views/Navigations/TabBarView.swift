@@ -9,42 +9,64 @@ import SwiftUI
 
 struct TabBarView: View {
     // MARK: - current section selected
-    @Binding var sectionSelected : SectionSelected?
+    @State var sectionSelected = SectionSelected.contacts
     
     var body: some View {
-        TabView(selection: $sectionSelected){
+        
+        ZStack{
+            switch sectionSelected {
+            case .contacts:
+                NavigationView{
+                    ContactsList()
+                }
+            case .debts:
+                NavigationView{
+                    Text("debts")
+                }
+            case .loans:
+                NavigationView{
+                    Text("lons")
+                }
+            case .settings:
+                NavigationView{
+                    Text("settings")
+                }
+            }
+            
+            
+            ButtomBar(sectionSelected: $sectionSelected)
+        }
+        /*TabView(selection: $sectionSelected){
             // MARK: - Contacts
             NavigationView{
                 ContactsList()
             }
-            .tabItem {
-                    Label("Contacts", systemImage: "person.2.fill")
-                }
-                .tag(SectionSelected.contacts)
+            .tag(SectionSelected.contacts)
             // MARK: - Debts
             Text("Debts")
-                .tabItem {
+                /*.tabItem {
                     Label("Debts", systemImage: "dollarsign.square")
-                }
+                }*/
                 .tag(SectionSelected.debts)
             // MARK: - Loans
             Text("Loans")
-                .tabItem {
+                /*.tabItem {
                     Label("Loans", systemImage: "dollarsign.square.fill")
-                }
+                }*/
                 .tag(SectionSelected.loans)
             // MARK: - Settings
             Text("Settings")
-                .tabItem {
+                /*.tabItem {
                     Label("Settings", systemImage: "gear")
-                }
+                }*/
                 .tag(SectionSelected.settings)
-        }
+        }*/
+        
     }
 }
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView(sectionSelected: .constant(.contacts))
+        TabBarView( )
     }
 }

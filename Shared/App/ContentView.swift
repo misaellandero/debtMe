@@ -27,7 +27,7 @@ struct ContentView: View {
             Group{
                 #if os(iOS)
                 if horizontalSizeClass == .compact {
-                    TabBarView(sectionSelected : $sectionSelected)
+                    TabBarView()
                 } else {
                     SideBarView(sectionSelected : $sectionSelected)
                 }

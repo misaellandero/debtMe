@@ -1,15 +1,15 @@
 //
-//  Label+CoreDataClass.swift
+//  ContactLabel+CoreDataClass.swift
 //  debtMe
 //
-//  Created by Francisco Misael Landero Ychante on 14/03/21.
+//  Created by Francisco Misael Landero Ychante on 26/03/21.
 //
 //
 
 import Foundation
 import CoreData
 
-@objc(Label)
+@objc(ContactLabel)
 public class ContactLabel: NSManagedObject {
 
 }

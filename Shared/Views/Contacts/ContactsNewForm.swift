@@ -11,6 +11,8 @@ struct ContactsNewForm: View {
     
     @State var contact : ContactModel
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationView{
             Group{
@@ -20,10 +22,27 @@ struct ContactsNewForm: View {
                     NewContactForm(contact: $contact)
                 }
                 .listStyle(InsetGroupedListStyle())
-                
+                .navigationBarItems(
+                    leading:
+                        Button(action:{
+                            self.presentationMode.wrappedValue.dismiss()
+                        }){
+                            
+                            Label("Return", systemImage: "xmark")
+                            //Image(systemName: "chevron.left.circle.fill")
+                                .foregroundColor(Color.gray)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        },
+                    trailing:
+                        Button(action:{}){
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        }
+                )
                 #elseif os(macOS)
                 List{
-                    NewContactForm(contact: $contact, save: save)
+                    NewContactForm(contact: $contact)
                 }
                 #endif
             }
@@ -49,10 +68,12 @@ struct NewContactForm : View {
     @State private var showPopover: Bool = false
     @State var animate : Bool = false
     
+    @State var labelContact: ContactLabel?
     
     // MARK: - To close the sheet
     @Environment(\.presentationMode) var presentationMode
     
+    @State var showLabelList = false
     var body: some View {
         Group{
             HStack{
@@ -80,22 +101,39 @@ struct NewContactForm : View {
             }
             
             HStack{
-                
-                Button(action:showEmojiPicker){
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(AppColorsModel.colors[contact.labelColor].color)
+                Text("Select a tag")
+                Spacer()
+                Button(action:{
+                    showLabelList.toggle()
+                }){
+                    Group{
+                       Text(labelContact?.wrappedName ?? "Nothing selected")
+                    }
+                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                    .foregroundColor(.white)
+                    .padding(4)
+                    .padding(.horizontal,4)
+                    .background(labelContact?.labelColor ?? Color.gray)
+                    .cornerRadius(10)
                 }
-                
-                TextField("Label", text: $contact.label)
+                .sheet(isPresented: $showLabelList){
+                        NavigationView{
+                            labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                        }
+                        .environment(\.horizontalSizeClass, .compact)
+                }
             }
             
-            Button(action: saveContact){
-                HStack{
-                    Spacer()
-                    Text("Save")
-                    Spacer()
+            Section{
+                Button(action: saveContact){
+                    HStack{
+                        Spacer()
+                        Text("Save")
+                        Spacer()
+                    }
                 }
             }
+            
         }
     }
     
@@ -125,6 +163,8 @@ struct NewContactForm : View {
         newContact.id = UUID()
         newContact.name =  contact.name
         newContact.emoji = contact.emoji
+        newContact.label = self.labelContact
+        
         try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()
     }

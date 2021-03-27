@@ -17,24 +17,28 @@ struct SideBarView: View {
             List(selection: $sectionSelected) {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
+                        .font(Font.system(.body, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Debts"), tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
+                        .font(Font.system(.body, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Loans"), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
+                        .font(Font.system(.body, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
+                        .font(Font.system(.body, design: .rounded).weight(.bold))
                 } 
             }
             .listStyle(SidebarListStyle())
             .frame(minWidth: 250, idealWidth: 250, maxWidth: 350)
             .toolbar{
-                ToolbarItem(placement:.navigation){
+                ToolbarItem(placement:.principal){
                     Text("DebtMe")
                         .font(Font.system(.largeTitle, design: .rounded).weight(.black))
                 }
