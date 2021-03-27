@@ -33,7 +33,13 @@ struct SideBarView: View {
             }
             .listStyle(SidebarListStyle())
             .frame(minWidth: 250, idealWidth: 250, maxWidth: 350)
-            .navigationTitle("DebtMe")
+            .toolbar{
+                ToolbarItem(placement:.navigation){
+                    Text("DebtMe")
+                        .font(Font.system(.largeTitle, design: .rounded).weight(.black))
+                }
+            }
+            //.navigationTitle("DebtMe")
         }
     }
 }

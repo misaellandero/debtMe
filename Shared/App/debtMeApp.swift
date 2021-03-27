@@ -13,9 +13,12 @@ struct debtMeApp: App {
     let persistenceController = PersistenceController.shared
     // User preference settings
     let userPreferences = UserPreferences()
+    
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+              ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(userPreferences)
         }

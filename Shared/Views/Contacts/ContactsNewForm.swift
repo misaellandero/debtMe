@@ -49,6 +49,10 @@ struct NewContactForm : View {
     @State private var showPopover: Bool = false
     @State var animate : Bool = false
     
+    
+    // MARK: - To close the sheet
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         Group{
             HStack{
@@ -117,11 +121,12 @@ struct NewContactForm : View {
     }
     
     func saveContact(){
-        
         let newContact = Contact(context: self.moc)
         newContact.id = UUID()
         newContact.name =  contact.name
         newContact.emoji = contact.emoji
+        try? self.moc.save()
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 

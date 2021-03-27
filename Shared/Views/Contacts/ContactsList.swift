@@ -6,22 +6,28 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContactsList: View {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
-    
-    
     @State private var showingNewContactForm = false
+  
+    @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
+    
     var body: some View {
         List{
-            ForEach(0..<100) { index in
-                Text("Hello, World! \(index)")
+            ForEach(contacts, id: \.id){ contact in
+                ContactsRow(contact: contact)
             }
             
         }
-        .navigationTitle("Contacts")
+        //.navigationTitle("Contacts")
         .toolbar {
+            ToolbarItem(placement:.navigation){
+                Text("Contacts")
+                    .font(Font.system(.largeTitle, design: .rounded).weight(.black))
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button(action :{showingNewContactForm.toggle()}){
                     Label("New", systemImage: "person.crop.circle.fill.badge.plus")

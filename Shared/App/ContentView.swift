@@ -22,7 +22,7 @@ struct ContentView: View {
     
     // MARK: - current section selected 
     @State var sectionSelected : SectionSelected? = .contacts
-     
+  
     var body: some View {
             Group{
                 #if os(iOS)
