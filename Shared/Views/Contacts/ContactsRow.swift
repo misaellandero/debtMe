@@ -8,15 +8,11 @@
 import SwiftUI
 
 struct ContactsRow: View {
-    @State var name : String
-    @State var emoji : String
-    @State var tag : String
-    @State var tagColor : Color
-    @State var balance : Double
+    @State var contact : Contact
     var body: some View {
         VStack{
             HStack{
-                Text(emoji)
+                Text(contact.wrappedEmoji)
                     .padding()
                     .font(.largeTitle)
                     .background(Color.secondary)
@@ -26,22 +22,23 @@ struct ContactsRow: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .fontWeight(.black)
-                    Text(name)
+                    Text(contact.wrappedName)
                         .font(.title)
                         .fontWeight(.bold)
                     
                     HStack{
                         Image(systemName: "dollarsign.square.fill")
                         Text("Balance")
-                        Text("$" + String(format: "%.2f",  balance))
+                        Text("$" + String(format: "%.2f",  contact.balance ))
                         Spacer()
-                        Text(tag)
+                        
+                        /*Text(contact.label?.wrappedName ?? "")
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                             .padding(4)
                             .font(.caption)
-                            .background(tagColor)
-                            .cornerRadius(20)
+                            .background(contact.label?.color ?? Color.gray)
+                            .cornerRadius(20)*/
                             
                     }
                     
@@ -54,7 +51,7 @@ struct ContactsRow: View {
         .padding()
     }
 }
-
+/*
 struct ContactsRow_Previews: PreviewProvider {
     static var previews: some View {
         ContactsRow(name: "Daniel Rode", emoji: "🤓", tag: "Friend", tagColor: Color.green, balance: 200)
@@ -64,4 +61,4 @@ struct ContactsRow_Previews: PreviewProvider {
                 .previewLayout(.fixed(width: 400, height: 90))
             .preferredColorScheme(.light)
     }
-}
+}*/

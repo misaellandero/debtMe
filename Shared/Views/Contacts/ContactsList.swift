@@ -11,13 +11,17 @@ struct ContactsList: View {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
     
+    //List of contacts
+    @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.id, ascending: true)]) var contacts: FetchedResults<Contact>
+    
     
     @State private var showingNewContactForm = false
     var body: some View {
         List{
-            ForEach(0..<100) { index in
-                Text("Hello, World! \(index)")
-            }
+            Text("hi")
+            /*ForEach(contacts, id : \.wrappedId) { contact in
+                ContactsRow(contact: contact)
+            }*/
             
         }
         .navigationTitle("Contacts")
@@ -30,6 +34,7 @@ struct ContactsList: View {
         }
         .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
+                 
         }
     }
     
