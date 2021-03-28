@@ -15,34 +15,31 @@ struct ContactsRow: View {
                 Text(contact.wrappedEmoji)
                     .padding()
                     .font(.largeTitle)
-                    .background(Color.secondary.opacity(0.2))
+                    .background(Color.secondary)
                     .cornerRadius(20)
                 VStack(alignment: .leading){
-                    HStack{
-                        Text("Name")
-                                .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                                .foregroundColor(.secondary)
-                                .fontWeight(.black)
-                        Spacer()
-                        if contact.haveALabel {
-                            Text(contact.WrappedLabelName)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .padding(.horizontal,4)
-                                .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                                .background(contact.WrappedLabelColor)
-                                .cornerRadius(10)
-                        }
-                    }
+                    Text("Name")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .fontWeight(.black)
                     Text(contact.wrappedName)
-                        .font(Font.system(.title, design: .rounded).weight(.bold))
+                        .font(.title)
+                        .fontWeight(.bold)
                     
                     HStack{
                         Image(systemName: "dollarsign.square.fill")
                         Text("Balance")
-                        Text("$" + String(format: "%.2f",  contact.balance))
+                        Text("$" + String(format: "%.2f",  contact.balance ))
                         Spacer()
+                        
+                        /*Text(contact.label?.wrappedName ?? "")
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .padding(4)
+                            .font(.caption)
+                            .background(contact.label?.color ?? Color.gray)
+                            .cornerRadius(20)*/
+                            
                     }
                     
                 }
@@ -51,8 +48,7 @@ struct ContactsRow: View {
             
         }
         .font(Font.system(.body, design: .rounded).weight(.semibold))
-        .padding(3)
-        .listRowBackground(Color.secondary.opacity(0.2))
+        .padding()
     }
 }
 /*
