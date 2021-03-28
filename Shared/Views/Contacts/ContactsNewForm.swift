@@ -47,7 +47,18 @@ struct ContactsNewForm: View {
                 #endif
             }
             .font(Font.system(.body, design: .rounded).weight(.semibold))
-            .navigationTitle("New Contact")
+            .toolbar {
+                ToolbarItem(placement:.principal){
+                    Text("\(Image(systemName: "person.2.fill")) New")
+                        .font(Font.system(.title, design: .rounded).weight(.black))
+                }
+                /*ToolbarItem(placement: .primaryAction) {
+                    Button(action :{showingNewContactForm.toggle()}){
+                        Label("New", systemImage: "person.crop.circle.fill.badge.plus")
+                    }
+                }*/
+            }
+            //.navigationTitle("New Contact")
         }
         
     }
@@ -79,8 +90,11 @@ struct NewContactForm : View {
             HStack{
                 Button(action:showEmojiPicker){
                     Text(contact.emoji)
+                        .padding(5)
                         .scaleEffect(animate ? 1.2 : 1)
                         .animation(.easeInOut)
+                        .background(Color.secondary.opacity(0.2))
+                        .cornerRadius(10)
                 }
                 .popover(
                     isPresented: self.$showPopover,
@@ -99,6 +113,7 @@ struct NewContactForm : View {
                 
                 TextField("Name", text: $contact.name)
             }
+            .buttonStyle(BorderlessButtonStyle())
             
             HStack{
                 Text("Select a tag")
@@ -128,10 +143,14 @@ struct NewContactForm : View {
                 Button(action: saveContact){
                     HStack{
                         Spacer()
-                        Text("Save")
+                        Label("Add", systemImage: "plus.circle.fill")
+                            .foregroundColor(.white)
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                            .padding()
                         Spacer()
                     }
                 }
+                .listRowBackground(Color.accentColor )
             }
             
         }

@@ -31,6 +31,10 @@ struct TabBarView: View {
                 NavigationView{
                     Text("settings")
                 }
+            case .budget:
+                NavigationView{
+                    Text("Budget")
+                }
             }
             
             

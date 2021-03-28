@@ -19,24 +19,33 @@ struct ContactsList: View {
                     ContactsRows()
                 }
                 .listStyle(InsetGroupedListStyle())
-          
+                .navigationBarItems(
+                    leading:
+                        Button(action:{showingNewContactForm.toggle()}){
+                            Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                                .foregroundColor(.gray)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        },
+                    
+                    trailing:
+                        Button(action:{showingNewContactForm.toggle()}){
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        }
+                )
             #elseif os(macOS)
             List{
                 ContactsRows()
             }
             #endif
-        }
-        //.navigationTitle("Contacts")
+        } 
         .toolbar {
-            ToolbarItem(placement:.navigation){
+            ToolbarItem(placement:.principal){
                 Text("\(Image(systemName: "person.2.fill")) Contacts")
-                    .font(Font.system(.largeTitle, design: .rounded).weight(.black))
+                    .font(Font.system(.title, design: .rounded).weight(.black))
             }
-            ToolbarItem(placement: .primaryAction) {
-                Button(action :{showingNewContactForm.toggle()}){
-                    Label("New", systemImage: "person.crop.circle.fill.badge.plus")
-                }
-            }
+            
         }
         .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))

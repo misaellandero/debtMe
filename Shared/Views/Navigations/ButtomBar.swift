@@ -18,7 +18,7 @@ struct ButtomBar : View {
                 ButtonFromBar(sectionSelected: $sectionSelected, index: .debts, label: "Debts", image: "dollarsign.square")
                 ButtonFromBar(sectionSelected: $sectionSelected, index: .loans, label: "Loans", image: "dollarsign.square.fill")
                 ButtonFromBar(sectionSelected: $sectionSelected, index: .settings, label: "Settings", image: "gear")
-                
+                ButtonFromBar(sectionSelected: $sectionSelected, index: .budget, label: "Budget", image: "chart.pie.fill")
             }
             .background(BlurdEfectView())
             .cornerRadius(20)
@@ -49,7 +49,7 @@ struct ButtonFromBar: View {
                     .fixedSize(horizontal: true, vertical: false)
             }
             .font(Font.system(.caption2, design: .rounded).weight(.black))
-            .padding()
+            .padding(10)
             .opacity(indexSelected ? 1 : 0.5)
         }
         .accentColor(indexSelected ? .accentColor  : .gray)

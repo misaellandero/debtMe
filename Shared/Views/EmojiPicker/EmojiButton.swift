@@ -51,7 +51,7 @@ struct EmojiButton : View {
         } else {
             VStack{
                 Text(emoji)
-                    .font(.largeTitle)
+                    .font(.title)
                     .padding()
             }
             .background(hovered ? Color.primary.opacity(0.3) : Color.primary.opacity(0.1))

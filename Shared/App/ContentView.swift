@@ -10,7 +10,7 @@ import CoreData
 
 // MARK: - Navigation Options
 enum SectionSelected {
-    case contacts, debts, loans, settings
+    case contacts, debts, loans, settings, budget
 }
 
 struct ContentView: View {
