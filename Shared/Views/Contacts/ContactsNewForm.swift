@@ -11,120 +11,146 @@ struct ContactsNewForm: View {
     
     @State var contact : ContactModel
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
+        NavigationView{
+            Group{
+                
                 #if os(iOS)
-                NavigationView{
-                    Group{
-                        List{
-                            NewContactForm(contact: $contact)
-                        }
-                        .listStyle(InsetGroupedListStyle())
-                    }
-                    .font(Font.system(.body, design: .rounded).weight(.semibold))
-                    .navigationTitle("New Contact")
+                List{
+                    NewContactForm(contact: $contact)
                 }
+                .listStyle(InsetGroupedListStyle())
+                .navigationBarItems(
+                    leading:
+                        Button(action:{
+                            self.presentationMode.wrappedValue.dismiss()
+                        }){
+                            
+                            Label("Return", systemImage: "xmark")
+                            //Image(systemName: "chevron.left.circle.fill")
+                                .foregroundColor(Color.gray)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        },
+                    trailing:
+                        Button(action:{}){
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                        }
+                )
                 #elseif os(macOS)
                 List{
-                    Section(header:
-                                HStack{
-                                    Image(systemName: "person.crop.circle.fill.badge.plus")
-                                    Text("New Contact")
-                                }.font(.headline)
-                    ){
-                        NewContactForm(contact: $contact)
-                    }
+                    NewContactForm(contact: $contact)
                 }
-                .frame(width: 400, height: 150)
                 #endif
+            }
+            .font(Font.system(.body, design: .rounded).weight(.semibold))
+            .toolbar {
+                ToolbarItem(placement:.principal){
+                    Text("\(Image(systemName: "person.2.fill")) New")
+                        .font(Font.system(.title, design: .rounded).weight(.black))
+                }
+                /*ToolbarItem(placement: .primaryAction) {
+                    Button(action :{showingNewContactForm.toggle()}){
+                        Label("New", systemImage: "person.crop.circle.fill.badge.plus")
+                    }
+                }*/
+            }
+            //.navigationTitle("New Contact")
+        }
+        
     }
-     
+    
+    
 }
 
 struct NewContactForm : View {
-
-    @Binding var contact : ContactModel
-    
-    // MARK: - Model View de Coredate
+    //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
-    // MARK: - To close the sheet
-    @Environment(\.presentationMode) var presentationMode
+    
+    @Binding var contact : ContactModel
     // MARK: - Screen Size for determining ipad or iphone screen
     #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
     
-    
-    
     @State private var showPopover: Bool = false
     @State var animate : Bool = false
-    @State private var selectedColor = Color.red
+    
+    @State var labelContact: ContactLabel?
+    
+    // MARK: - To close the sheet
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State var showLabelList = false
     var body: some View {
         Group{
-            Section{
-                HStack{
-                    Button(action:showEmojiPicker){
-                        Text(contact.emoji)
-                            .scaleEffect(animate ? 1.2 : 1)
-                            .animation(.easeInOut)
-                    }
-                    .popover(
-                        isPresented: self.$showPopover,
-                        arrowEdge: .top
-                    ) {
-                        #if os(iOS)
-                        if horizontalSizeClass == .compact {
-                            EmojiSelecter(emoji: $contact.emoji.onChange(showChange))
-                        } else {
-                            EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                        }
-                        #elseif os(macOS)
+            HStack{
+                Button(action:showEmojiPicker){
+                    Text(contact.emoji)
+                        .padding(5)
+                        .scaleEffect(animate ? 1.2 : 1)
+                        .animation(.easeInOut)
+                        .background(Color.secondary.opacity(0.2))
+                        .cornerRadius(10)
+                }
+                .popover(
+                    isPresented: self.$showPopover,
+                    arrowEdge: .top
+                ) {
+                    #if os(iOS)
+                    if horizontalSizeClass == .compact {
+                        EmojiSelecter(emoji: $contact.emoji.onChange(showChange))
+                    } else {
                         EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                        #endif
                     }
-                    
-                    TextField("Name", text: $contact.name)
+                    #elseif os(macOS)
+                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+                    #endif  
                 }
                 
-                HStack{
-                    /*Button(action:showEmojiPicker){
-                        Image(systemName: "circle.fill")
-                            .foregroundColor(AppColorsModel.colors[contact.labelColor].color)
-                    }*/
-                    
-                    TextField("Label", text: $contact.label)
+                TextField("Name", text: $contact.name)
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            
+            HStack{
+                Text("Select a tag")
+                Spacer()
+                Button(action:{
+                    showLabelList.toggle()
+                }){
+                    Group{
+                       Text(labelContact?.wrappedName ?? "Nothing selected")
+                    }
+                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                    .foregroundColor(.white)
+                    .padding(4)
+                    .padding(.horizontal,4)
+                    .background(labelContact?.labelColor ?? Color.gray)
+                    .cornerRadius(10)
+                }
+                .sheet(isPresented: $showLabelList){
+                        NavigationView{
+                            labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                        }
+                        .environment(\.horizontalSizeClass, .compact)
                 }
             }
             
             Section{
-                #if os(iOS)
                 Button(action: saveContact){
                     HStack{
                         Spacer()
-                        Text("Save")
+                        Label("Add", systemImage: "plus.circle.fill")
+                            .foregroundColor(.white)
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                            .padding()
                         Spacer()
                     }
                 }
-                #elseif os(macOS)
-                Spacer()
-                HStack{
-                    Button(action: closeSheet){
-                        HStack{
-                            Spacer()
-                            Label("Close", systemImage: "xmark.circle")
-                            Spacer()
-                        }
-                    }.accentColor(.red)
-                    
-                    Spacer()
-                    Button(action: saveContact){
-                        HStack{
-                            Spacer()
-                            Label("Save", systemImage: "plus.circle")
-                            Spacer()
-                        }
-                    }
-                }
-                #endif
+                .listRowBackground(Color.accentColor )
             }
             
         }
@@ -156,10 +182,9 @@ struct NewContactForm : View {
         newContact.id = UUID()
         newContact.name =  contact.name
         newContact.emoji = contact.emoji
-        closeSheet()
-    }
-    
-    func closeSheet(){
+        newContact.label = self.labelContact
+        
+        try? self.moc.save()
         self.presentationMode.wrappedValue.dismiss()
     }
 }

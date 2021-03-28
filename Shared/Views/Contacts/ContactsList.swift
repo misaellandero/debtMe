@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContactsList: View {
+     
      @State private var showingNewContactForm = false
    
     var body: some View {
@@ -38,7 +39,8 @@ struct ContactsList: View {
                 ContactsRows()
             }
             #endif
-        }.toolbar {
+        } 
+        .toolbar {
             ToolbarItem(placement:.principal){
                 Text("\(Image(systemName: "person.2.fill")) Contacts")
                     .font(Font.system(.title, design: .rounded).weight(.black))
@@ -47,7 +49,6 @@ struct ContactsList: View {
         }
         .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
-                 
         }
     }
     

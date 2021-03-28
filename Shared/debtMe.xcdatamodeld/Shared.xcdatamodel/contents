@@ -25,7 +25,7 @@
     </entity>
     <elements>
         <element name="Contact" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="ContactLabel" positionX="-74.61614990234375" positionY="170.6562805175781" width="128" height="89"/>
-        <element name="Transaction" positionX="132.7147827148438" positionY="127.1940612792969" width="128" height="149"/>
+        <element name="ContactLabel" positionX="-63" positionY="9" width="128" height="89"/>
+        <element name="Transaction" positionX="-36" positionY="9" width="128" height="149"/>
     </elements>
 </model>
