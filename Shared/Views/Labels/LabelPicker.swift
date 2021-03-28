@@ -12,7 +12,7 @@ struct labelPicker: View {
     // MARK: - Contacts label from form
     @Binding var label : ContactLabel?
     @Binding var showLabelList : Bool
-    
+    @State var showFormLabel = false
     var body: some View{
         Group{
             #if os(iOS)
@@ -33,11 +33,17 @@ struct labelPicker: View {
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                     },
                 trailing:
-                    Button(action:{}){
+                    Button(action:{
+                        showFormLabel.toggle()
+                    }){
                         Label("Add", systemImage: "plus.circle.fill")
                             .foregroundColor(.accentColor)
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                     }
+                    .sheet(isPresented: $showFormLabel, content: {
+                        LabelNewForm(showForm: $showFormLabel)
+                            .environment(\.horizontalSizeClass, .compact)
+                    })
             )
             #elseif os(macOS)
             List{
@@ -46,24 +52,16 @@ struct labelPicker: View {
             #endif
         }
         .toolbar{
-            /*ToolbarItem(placement: .status){
-                 Image(systemName: "chevron.left.circle.fill")
-                    .foregroundColor(Color.gray)
-                    .font(Font.system(.title, design: .rounded).weight(.black))
-            }*/
             
             ToolbarItem(placement:.principal){
                 Text("\(Image(systemName: "tag.fill")) Tags")
                     .font(Font.system(.title, design: .rounded).weight(.black))
             }
-            
-            /*ToolbarItem(placement:.primaryAction){
-                
-                    
-                
-            }*/
         }
+        
     }
+    
+    
 }
 
 struct LabelPickerListElements: View {

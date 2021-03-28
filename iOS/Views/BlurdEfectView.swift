@@ -14,7 +14,7 @@ struct BlurdEfectView : View {
     
     var body : some View {
         ZStack{
-            settings.getThemeColor().opacity(0.2)
+            //settings.getThemeColor().opacity(0.2)
             if colorScheme == .light {
                 VisualEffectView(effect: UIBlurEffect(style: .light))
                 

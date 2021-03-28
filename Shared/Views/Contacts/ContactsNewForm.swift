@@ -145,7 +145,7 @@ struct NewContactForm : View {
                         Spacer()
                         Label("Add", systemImage: "plus.circle.fill")
                             .foregroundColor(.white)
-                            .font(Font.system(.title, design: .rounded).weight(.black))
+                            .font(Font.system(.headline, design: .rounded).weight(.black))
                             .padding()
                         Spacer()
                     }
