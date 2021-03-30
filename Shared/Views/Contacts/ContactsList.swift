@@ -35,9 +35,12 @@ struct ContactsList: View {
                         }
                 )
             #elseif os(macOS)
-            List{
-                ContactsRows()
-            }
+        
+                List{
+                    ContactsRows()
+                }
+          
+            
             #endif
         } 
         .toolbar {
@@ -45,7 +48,6 @@ struct ContactsList: View {
                 Text("\(Image(systemName: "person.2.fill")) Contacts")
                     .font(Font.system(.title, design: .rounded).weight(.black))
             }
-            
         }
         .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))

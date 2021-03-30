@@ -132,10 +132,14 @@ struct NewContactForm : View {
                     .cornerRadius(10)
                 }
                 .sheet(isPresented: $showLabelList){
-                        NavigationView{
-                            labelPicker(label: $labelContact, showLabelList: $showLabelList)
-                        }
-                        .environment(\.horizontalSizeClass, .compact)
+                    #if os(iOS)
+                    NavigationView{
+                        labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                    }
+                    .environment(\.horizontalSizeClass, .compact)
+                    #elseif os(macOS)
+                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                    #endif
                 }
             }
             

@@ -10,15 +10,17 @@ import SwiftUI
 @main
 struct debtMeApp: App {
     //Coreda Data
-    let persistenceController = PersistenceController.shared
+    @StateObject var coreData = PersistentCloudKitContainer()
     // User preference settings
     let userPreferences = UserPreferences()
      
     var body: some Scene {
-        WindowGroup {
+        WindowGroup { 
               ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, coreData.persistentContainer.viewContext)
                 .environmentObject(userPreferences)
+                .navigationTitle("")
         }
+        //.windowStyle(HiddenTitleBarWindowStyle())
     }
 }

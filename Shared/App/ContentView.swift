@@ -32,9 +32,11 @@ struct ContentView: View {
                     SideBarView(sectionSelected : $sectionSelected)
                 }
                 #elseif os(macOS)
+                //Text("hi test")
                 SideBarView(sectionSelected : $sectionSelected)
                 #endif
             }
        
     }
+     
 }
