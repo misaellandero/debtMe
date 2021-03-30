@@ -14,10 +14,11 @@ struct ContactsNewForm: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationView{
+       
             Group{
                 
                 #if os(iOS)
+                NavigationView{
                 List{
                     NewContactForm(contact: $contact)
                 }
@@ -40,26 +41,30 @@ struct ContactsNewForm: View {
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
+                .toolbar {
+                    ToolbarItem(placement:.principal){
+                        Text("\(Image(systemName: "person.2.fill")) New")
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                    }
+                    /*ToolbarItem(placement: .primaryAction) {
+                        Button(action :{showingNewContactForm.toggle()}){
+                            Label("New", systemImage: "person.crop.circle.fill.badge.plus")
+                        }
+                    }*/
+                }
+                }
                 #elseif os(macOS)
                 List{
+                    Text("\(Image(systemName: "person.2.fill")) New")
+                        .font(Font.system(.title, design: .rounded).weight(.black))
                     NewContactForm(contact: $contact)
                 }
+                .frame(width: 300, height: 170)
                 #endif
             }
             .font(Font.system(.body, design: .rounded).weight(.semibold))
-            .toolbar {
-                ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "person.2.fill")) New")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
-                }
-                /*ToolbarItem(placement: .primaryAction) {
-                    Button(action :{showingNewContactForm.toggle()}){
-                        Label("New", systemImage: "person.crop.circle.fill.badge.plus")
-                    }
-                }*/
-            }
             //.navigationTitle("New Contact")
-        }
+       
         
     }
     
@@ -116,8 +121,10 @@ struct NewContactForm : View {
             .buttonStyle(BorderlessButtonStyle())
             
             HStack{
+                
                 Text("Select a tag")
                 Spacer()
+                #if os(iOS)
                 Button(action:{
                     showLabelList.toggle()
                 }){
@@ -132,18 +139,35 @@ struct NewContactForm : View {
                     .cornerRadius(10)
                 }
                 .sheet(isPresented: $showLabelList){
-                    #if os(iOS)
+                   
                     NavigationView{
                         labelPicker(label: $labelContact, showLabelList: $showLabelList)
                     }
                     .environment(\.horizontalSizeClass, .compact)
-                    #elseif os(macOS)
-                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
-                    #endif
+                  
                 }
+                #elseif os(macOS)
+                Button(action:{
+                    showLabelList.toggle()
+                }){
+                    Group{
+                       Text(labelContact?.wrappedName ?? "Nothing selected")
+                    }
+                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                    .foregroundColor(labelContact?.labelColor ?? Color.gray)
+                }
+                .popover(isPresented: $showLabelList){
+                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                        .frame(width: 250, height: 200)
+                }
+                
+                #endif
             }
             
+            
+            
             Section{
+                #if os(iOS)
                 Button(action: saveContact){
                     HStack{
                         Spacer()
@@ -155,7 +179,28 @@ struct NewContactForm : View {
                     }
                 }
                 .listRowBackground(Color.accentColor )
+                #elseif os(macOS)
+                HStack{
+                    Button(action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                        
+                    }){
+                        Label("Cancel", systemImage: "xmark")
+                                 
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                            
+                    }
+                    .accentColor(.red)
+                    Spacer()
+                    Button(action: saveContact){
+                        Label("Add", systemImage: "plus.circle.fill")
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                    }
+                    .accentColor(.accentColor)
+                }
+                #endif
             }
+            
             
         }
     }

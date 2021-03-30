@@ -15,7 +15,7 @@ struct SideBarView: View {
     var body: some View {
         NavigationView {
             //Text("hi")
-            List(selection: $sectionSelected) {
+            List(/*selection: $sectionSelected*/) {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
                         .font(Font.system(.title3, design: .rounded).weight(.bold))

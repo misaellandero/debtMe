@@ -46,6 +46,8 @@ struct LabelNewForm: View {
             }
             #elseif os(macOS)
             List{
+                Text("\(Image(systemName: "tag.fill")) New")
+                    .font(Font.system(.title, design: .rounded).weight(.black))
                 LabelForm( showForm: $showForm)
             }
             #endif
@@ -62,6 +64,7 @@ struct LabelForm: View {
     @State var colorSelect : Int = 0
     @Binding var showForm : Bool
     var body: some View {
+        
         TextField("Tag", text: $name)
         Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
             ForEach(0..<AppColorsModel.colors.count){ index in
@@ -91,18 +94,23 @@ struct LabelForm: View {
             .listRowBackground(Color.accentColor )
         }
         #elseif os(macOS)
-        Section{
-            Button(action: saveTag){
-                HStack{
-                    Spacer()
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.white)
+        HStack{
+            Button(action: {
+                
+                showForm.toggle()
+            }){
+                Label("Cancel", systemImage: "xmark")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .padding()
-                    Spacer()
-                }
-            }
-            .listRowBackground(Color.accentColor )
+                          
+            }.accentColor(.red)
+            Spacer()
+            Button(action: saveTag){
+                Label("Add", systemImage: "plus.circle.fill")
+                       
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                          
+            }.accentColor(.accentColor)
+             
         }
         #endif
     }

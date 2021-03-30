@@ -34,22 +34,41 @@ struct ContactsList: View {
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
+                .toolbar {
+                    ToolbarItem(placement:.principal){
+                        Text("\(Image(systemName: "person.2.fill")) Contacts")
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                    }
+                }
             #elseif os(macOS)
         
                 List{
                     ContactsRows()
                 }
+                .toolbar {
+                    
+                    ToolbarItem(placement: .navigation ){
+                        Text("\(Image(systemName: "person.2.fill")) Contacts")
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                    }
+                    
+                    ToolbarItem(placement: .primaryAction ){
+                  
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                                .font(Font.system(.title, design: .rounded).weight(.black))
+                                .onTapGesture {
+                                    showingNewContactForm.toggle()
+                                }
+                    }
+                }
           
             
             #endif
         } 
-        .toolbar {
-            ToolbarItem(placement:.principal){
-                Text("\(Image(systemName: "person.2.fill")) Contacts")
-                    .font(Font.system(.title, design: .rounded).weight(.black))
-            }
-        }
+        /**/
         .sheet(isPresented: $showingNewContactForm){
+            //Text("hi")
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
         }
     }
