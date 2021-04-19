@@ -22,7 +22,7 @@ struct ContactsList: View {
             #if os(iOS) 
                 List{
                     ContactsRows()
-                        .environment(\.managedObjectContext, self.moc)
+                        //.environment(\.managedObjectContext, self.moc)
                 }
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarBackButtonHidden(true)

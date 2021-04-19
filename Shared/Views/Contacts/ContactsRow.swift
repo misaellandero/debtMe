@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContactsRow: View {
-    @State var contact : Contact
+    @ObservedObject var contact : Contact
     var body: some View {
         VStack{
             HStack{

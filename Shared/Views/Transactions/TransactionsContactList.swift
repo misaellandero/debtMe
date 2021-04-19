@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TransactionsContactList: View {
-    @State var contact : Contact
+    @ObservedObject var contact : Contact
     
     //To hide view
     @Environment(\.presentationMode) var presentationMode
@@ -28,7 +28,7 @@ struct TransactionsContactList: View {
                 ContactsRow(contact: contact)
                     .environment(\.managedObjectContext, self.moc)
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
-                    TransactionsRow(date: transaction.transactionCreationDateFormated, amount: transaction.amount, des: transaction.wrappedDes, settled: transaction.settled, dateSettled: transaction.transactionSettledDateFormated, debt: transaction.debt, contactName: transaction.contactName)
+                    TransactionsRow(transaction: transaction)
                     
                 }.onDelete(perform: deleteItem)
             }

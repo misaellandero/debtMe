@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct TransactionsRow: View {
-    @State var date : String
+    @ObservedObject var transaction : Transaction
+    /*@State var date : String
     @State var amount : Double
     @State var des : String
     @State var settled : Bool
     @State var dateSettled : String
     @State var debt : Bool
-    @State var contactName : String
+    @State var contactName : String*/
     @State var showContactName = false
     var body: some View {
         VStack{
@@ -22,42 +23,42 @@ struct TransactionsRow: View {
             HStack{
                 if showContactName {
                         Image(systemName: "person.crop.circle.fill")
-                        Text(contactName)
+                    Text(transaction.contactName)
                             .fontWeight(.bold)
                         Spacer()
                 }
                 Image(systemName: "calendar.badge.clock")
-                Text(date)
+                Text(transaction.transactionCreationDateFormated)
                 if !showContactName {
                     Spacer()
                 }
-                if settled {
+                if transaction.settled {
                     Text("Paid in")
                     Image(systemName: "calendar.badge.clock")
-                    Text(dateSettled)
+                    Text(transaction.transactionSettledDateFormated)
                 }
             }
             .font(.caption)
             .padding(.vertical,1)
             HStack{
-                Text(debt ? "They Owes me" : "I Owe They")
-                    .strikethrough(settled)
-                Image(systemName: debt ? "dollarsign.square.fill" :"dollarsign.square")
+                Text(transaction.debt ? "They Owes me" : "I Owe They")
+                    .strikethrough(transaction.settled)
+                Image(systemName: transaction.debt ? "dollarsign.square.fill" :"dollarsign.square")
                     .foregroundColor(dolarIconColor)
-                Text("$" + String(format: "%.2f",  amount))
-                    .strikethrough(settled)
+                Text("$" + String(format: "%.2f",  transaction.amount))
+                    .strikethrough(transaction.settled)
                 Spacer()
-                Text(settled ?  "Already paid" : "Not paid" )
+                Text(transaction.settled ?  "Already paid" : "Not paid" )
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .padding(4)
                     .font(.caption)
-                    .background(settled ? Color.green : Color.red )
+                    .background(transaction.settled ? Color.green : Color.red )
                     .cornerRadius(20)
             }
-            if des != "No details provided" {
+            if transaction.wrappedDes != "No details provided" {
                 HStack{
-                    Text(des)
+                    Text(transaction.wrappedDes)
                         .foregroundColor(.secondary)
                     Spacer()
                 }
@@ -70,15 +71,15 @@ struct TransactionsRow: View {
     
     var dolarIconColor : Color {
         // They own us and not pay
-        if debt && !settled {
+        if transaction.debt && !transaction.settled {
             return Color.blue
         }
         // They own us and and already pay us
-        else if debt && settled {
+        else if transaction.debt && transaction.settled {
             return Color.orange
         }
         // we own they and havent pay
-        else if !debt && !settled {
+        else if !transaction.debt && !transaction.settled {
             return Color.red
         }
         // we own they and already pay
@@ -88,10 +89,10 @@ struct TransactionsRow: View {
         
     }
 }
-
+/*
 struct TransactionsRow_Previews: PreviewProvider {
     static var previews: some View {
-        
+        /*
         // debt not pay
         TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: false, dateSettled: "14 Mar 2021", debt: true, contactName: "Misael Landero")
                 .previewLayout(.fixed(width: 400, height: 90))
@@ -112,6 +113,7 @@ struct TransactionsRow_Previews: PreviewProvider {
         
         // loans  pay
         TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: true, dateSettled: "14 Mar 2021", debt: false, contactName: "Misael Landero")
-                .previewLayout(.fixed(width: 400, height: 90))
+                .previewLayout(.fixed(width: 400, height: 90))*/
     }
 }
+*/

@@ -39,6 +39,7 @@ struct TabBarView: View {
             
             
             ButtomBar(sectionSelected: $sectionSelected)
+               
         }
         /*TabView(selection: $sectionSelected){
             // MARK: - Contacts
