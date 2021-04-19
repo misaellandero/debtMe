@@ -20,7 +20,6 @@ struct labelPicker: View {
                 LabelPickerListElements(label: $label, showLabelList: $showLabelList)
             }
             .listStyle(InsetGroupedListStyle())
-            .navigationBarBackButtonHidden(true)
             .navigationBarItems(
                 leading:
                     Button(action:{

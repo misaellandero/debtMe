@@ -9,16 +9,23 @@ import SwiftUI
 import CoreData
 
 struct ContactsList: View {
-     
-     @State private var showingNewContactForm = false
-   
+    
+    @State private var showingNewContactForm = false
+    
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+ 
+    #warning("Need to check way update is not showing")
+    
     var body: some View {
         Group{
             #if os(iOS) 
                 List{
                     ContactsRows()
+                        .environment(\.managedObjectContext, self.moc)
                 }
                 .listStyle(InsetGroupedListStyle())
+                .navigationBarBackButtonHidden(true)
                 .navigationBarItems(
                     leading:
                         Button(action:{showingNewContactForm.toggle()}){
@@ -86,8 +93,9 @@ struct ContactsRows : View  {
     
     var body: some View {
         ForEach(contacts, id: \.id){ contact in
-            NavigationLink(destination: ContactsDetail() ){
+            NavigationLink(destination: TransactionsContactList(contact: contact) ){
                 ContactsRow(contact: contact)
+                    .environment(\.managedObjectContext, self.moc)
             }
         }.onDelete(perform: deleteItem)
     }

@@ -40,7 +40,7 @@ struct TransactionsRow: View {
             .font(.caption)
             .padding(.vertical,1)
             HStack{
-                Text(debt ? "They Owes me" : "I Owe")
+                Text(debt ? "They Owes me" : "I Owe They")
                     .strikethrough(settled)
                 Image(systemName: debt ? "dollarsign.square.fill" :"dollarsign.square")
                     .foregroundColor(dolarIconColor)
