@@ -66,8 +66,7 @@ struct TransactionsContactList: View {
             List{
                 ContactsRow(contact: contact)
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
-                    TransactionsRow(date: transaction.transactionCreationDateFormated, amount: transaction.amount, des: transaction.wrappedDes, settled: transaction.settled, dateSettled: transaction.transactionSettledDateFormated, debt: transaction.debt, contactName: transaction.contactName)
-                    
+                    TransactionsRow(transaction: transaction)
                 }
             }
         #endif

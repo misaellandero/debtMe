@@ -92,8 +92,9 @@ struct NewTransactionForm: View {
         DatePicker("Date", selection: $transactionModel.date)
         TextField("Description", text: $transactionModel.des)
         TextField("Amount", text: $transactionModel.amout)
+        #if os(iOS)
             .keyboardType(.decimalPad)
-        
+        #endif
         Picker("Type", selection: $transactionModel.debt){
             ForEach(0..<debtOptions.count){ index in
                 Text(debtOptions[index])
