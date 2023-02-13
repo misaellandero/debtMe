@@ -11,6 +11,20 @@
 		133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
 		133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
 		133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD425A262D3E2A00568EE7 /* TransactionModel.swift */; };
+		1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
+		1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
+		1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */; };
+		1399AD572999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */; };
+		1399AD5D29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */; };
+		1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */; };
+		1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5F29999A7600C87C3D /* PaymentNewForm.swift */; };
+		1399AD6129999A7600C87C3D /* PaymentNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5F29999A7600C87C3D /* PaymentNewForm.swift */; };
+		1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD622999A69A00C87C3D /* PaymentModel.swift */; };
+		1399AD642999A69A00C87C3D /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD622999A69A00C87C3D /* PaymentModel.swift */; };
+		1399AD662999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
+		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
+		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		7F37A92325FF13080049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
 		7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
@@ -80,6 +94,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentsTransactionsList.swift; path = Shared/Views/PaymentsTransactionsList.swift; sourceTree = SOURCE_ROOT; };
+		1399AD5F29999A7600C87C3D /* PaymentNewForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentNewForm.swift; path = Shared/Views/Payments/PaymentNewForm.swift; sourceTree = SOURCE_ROOT; };
+		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
+		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
+		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
 		7F37A92225FF13080049D648 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		7F37A92925FF19600049D648 /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
@@ -146,6 +167,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1399AD582999539A00C87C3D /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */,
+				1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */,
+				1399AD622999A69A00C87C3D /* PaymentModel.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		1399AD5B29995A9D00C87C3D /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				1399AD682999BA0C00C87C3D /* TicketViewAssets */,
+				1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */,
+				1399AD5F29999A7600C87C3D /* PaymentNewForm.swift */,
+				1399AD652999B37300C87C3D /* PaymentRow.swift */,
+			);
+			name = Payments;
+			path = Settings/Shared/Views/Settings/Payments;
+			sourceTree = "<group>";
+		};
+		1399AD682999BA0C00C87C3D /* TicketViewAssets */ = {
+			isa = PBXGroup;
+			children = (
+				1399AD692999BA1E00C87C3D /* Border.swift */,
+			);
+			name = TicketViewAssets;
+			path = Shared/Views/Settings/Shared/Views/Settings/Payments/TicketViewAssets;
+			sourceTree = "<group>";
+		};
 		7F2CD9F2260FE20600E67C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +296,7 @@
 		7F70A24425FEBADF00455AB0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1399AD582999539A00C87C3D /* Payment */,
 				7F70A29025FED1C200455AB0 /* UserPreferences */,
 				7F70A25D25FEBBF900455AB0 /* Transactions */,
 				7F70A25C25FEBBF100455AB0 /* ContactLabels */,
@@ -256,6 +309,7 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1399AD5B29995A9D00C87C3D /* Payments */,
 				7F60634B261040D3004834F1 /* Labels */,
 				7F70A2B025FEF17700455AB0 /* Settings */,
 				7F70A2AF25FEF15C00455AB0 /* Transactions */,
@@ -486,14 +540,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F60635A26104AD5004834F1 /* BlurdEfectView.swift in Sources */,
+				1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */,
 				7F70A29D25FEDC8E00455AB0 /* TabBarView.swift in Sources */,
 				7F6063442610408F004834F1 /* ButtomBar.swift in Sources */,
 				7F76A8E4260EF59C00033790 /* debtMe.xcdatamodeld in Sources */,
+				1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
 				7F70A23225FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsNewForm.swift in Sources */,
+				1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */,
+				1399AD5D29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
+				1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
 				7F76A8EB260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
+				1399AD662999B37300C87C3D /* PaymentRow.swift in Sources */,
 				7F76A903260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,
 				7F60634D261040D3004834F1 /* LabelPicker.swift in Sources */,
 				7F70A24D25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
@@ -514,6 +574,7 @@
 				7F70A23625FEB1F700455AB0 /* Persistence.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
 				7F37A92A25FF19600049D648 /* Emojis.swift in Sources */,
+				1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A8E9260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A28A25FED19300455AB0 /* UserPreferences.swift in Sources */,
 				7F70A23425FEB1F700455AB0 /* ContentView.swift in Sources */,
@@ -535,9 +596,13 @@
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
+				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
+				1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */,
+				1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */,
 				7F70A26D25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
 				7F70A2BF25FEF76300455AB0 /* ContactsDetail.swift in Sources */,
 				7F70A27225FEC00F00455AB0 /* ColorExtension.swift in Sources */,
+				1399AD642999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */,
 				7F76A8EA260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
@@ -546,11 +611,13 @@
 				7F60635426104AB5004834F1 /* LabelNewForm.swift in Sources */,
 				7F70A23725FEB1F700455AB0 /* Persistence.swift in Sources */,
 				7F70A29325FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
+				1399AD572999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A902260EFF1800033790 /* ContactLabel+CoreDataClass.swift in Sources */,
 				7F70A28B25FED19300455AB0 /* UserPreferences.swift in Sources */,
 				7F37A93825FF1A490049D648 /* Emojis.swift in Sources */,
 				7F70A23525FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27F25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
+				1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
 				133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */,
 				7F70A2BA25FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
@@ -558,6 +625,7 @@
 				7F70A2C425FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
 				7F76A904260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,
 				133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */,
+				1399AD6129999A7600C87C3D /* PaymentNewForm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,7 +753,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,7 +776,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -739,7 +807,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -764,7 +832,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

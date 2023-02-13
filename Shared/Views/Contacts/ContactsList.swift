@@ -61,7 +61,7 @@ struct ContactsList: View {
                     
                     ToolbarItem(placement: .primaryAction ){
                   
-                            Label("Add", systemImage: "plus.circle.fill")
+                            Label("Add", systemImage: "person.crop.circle.badge.plus")
                                 .foregroundColor(.accentColor)
                                 .font(Font.system(.title, design: .rounded).weight(.black))
                                 .onTapGesture {

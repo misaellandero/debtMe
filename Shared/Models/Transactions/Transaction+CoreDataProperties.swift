@@ -24,6 +24,7 @@ extension Transaction {
     @NSManaged public var id: UUID?
     @NSManaged public var settled: Bool
     @NSManaged public var contact: Contact?
+    @NSManaged public var payments: NSSet?
     
     // MARK: - Wrapped vars
     
@@ -70,7 +71,31 @@ extension Transaction {
         return contact?.wrappedName ?? "Unknown"
     }
     
-     
+    // MARK: - Array Payments
+    public var paymentsArray: [Payment] {
+        let set = payments as? Set<Payment> ?? []
+        
+        return set.sorted {
+            $0.wrappedDateCreation > $1.wrappedDateCreation
+        }
+    }
+}
+ 
+// MARK: Generated accessors for payments
+extension Transaction {
+
+    @objc(addPaymentsObject:)
+    @NSManaged public func addToPayments(_ value: Payment)
+
+    @objc(removePaymentsObject:)
+    @NSManaged public func removeFromPayments(_ value: Payment)
+
+    @objc(addPayments:)
+    @NSManaged public func addToPayments(_ values: NSSet)
+
+    @objc(removePayments:)
+    @NSManaged public func removeFromPayments(_ values: NSSet)
+
 }
 
 extension Transaction : Identifiable {

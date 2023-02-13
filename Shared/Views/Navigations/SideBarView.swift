@@ -37,7 +37,7 @@ struct SideBarView: View {
                 } 
             }
             .listStyle(SidebarListStyle())
-            .frame(minWidth: 250, idealWidth: 250, maxWidth: 350)
+            .frame(minWidth: 150, idealWidth: 250, maxWidth: 350)
             .toolbar{
                 #if os(iOS)
                 ToolbarItem(placement:.principal){
@@ -66,8 +66,9 @@ struct SideBarView: View {
             }
             
             
-            #if  os(macOS)
             Text("Detail view")
+            Text("Detail view")
+            #if  os(macOS)
             Text("Detail view")
             #endif
            

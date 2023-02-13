@@ -13,6 +13,11 @@ struct ContactsNewForm: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+    
+    @State var labelContact: ContactLabel?
+    
     var body: some View {
        
             Group{
@@ -20,7 +25,7 @@ struct ContactsNewForm: View {
                 #if os(iOS)
                 NavigationView{
                 List{
-                    NewContactForm(contact: $contact)
+                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
                 }
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarItems(
@@ -35,7 +40,7 @@ struct ContactsNewForm: View {
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                         },
                     trailing:
-                        Button(action:{}){
+                        Button(action:saveContact){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
@@ -46,18 +51,13 @@ struct ContactsNewForm: View {
                         Text("\(Image(systemName: "person.2.fill")) New")
                             .font(Font.system(.title, design: .rounded).weight(.black))
                     }
-                    /*ToolbarItem(placement: .primaryAction) {
-                        Button(action :{showingNewContactForm.toggle()}){
-                            Label("New", systemImage: "person.crop.circle.fill.badge.plus")
-                        }
-                    }*/
                 }
                 }
                 #elseif os(macOS)
                 List{
                     Text("\(Image(systemName: "person.2.fill")) New")
                         .font(Font.system(.title, design: .rounded).weight(.black))
-                    NewContactForm(contact: $contact)
+                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
                 }
                 .frame(width: 300, height: 170)
                 #endif
@@ -68,12 +68,21 @@ struct ContactsNewForm: View {
         
     }
     
+    func saveContact(){
+        let newContact = Contact(context: self.moc)
+        newContact.id = UUID()
+        newContact.name =  contact.name
+        newContact.emoji = contact.emoji
+        newContact.label = self.labelContact
+        
+        try? self.moc.save()
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
     
 }
 
-struct NewContactForm : View {
-    //Model View de Coredate
-    @Environment(\.managedObjectContext) var moc
+struct NewContactMultiplatformForm : View {
     
     @Binding var contact : ContactModel
     // MARK: - Screen Size for determining ipad or iphone screen
@@ -84,7 +93,8 @@ struct NewContactForm : View {
     @State private var showPopover: Bool = false
     @State var animate : Bool = false
     
-    @State var labelContact: ContactLabel?
+    @Binding var labelContact: ContactLabel?
+    var saveContact : () -> Void
     
     // MARK: - To close the sheet
     @Environment(\.presentationMode) var presentationMode
@@ -163,9 +173,7 @@ struct NewContactForm : View {
                 
                 #endif
             }
-            
-            
-            
+              
             Section{
                 #if os(iOS)
                 Button(action: saveContact){
@@ -226,16 +234,7 @@ struct NewContactForm : View {
         }
     }
     
-    func saveContact(){
-        let newContact = Contact(context: self.moc)
-        newContact.id = UUID()
-        newContact.name =  contact.name
-        newContact.emoji = contact.emoji
-        newContact.label = self.labelContact
-        
-        try? self.moc.save()
-        self.presentationMode.wrappedValue.dismiss()
-    }
+    
 }
 
 struct ContactsNewForm_Previews: PreviewProvider {

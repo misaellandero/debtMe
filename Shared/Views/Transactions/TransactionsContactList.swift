@@ -22,13 +22,14 @@ struct TransactionsContactList: View {
     
     var body: some View {
         Group{
-            
             #if os(iOS)
             List{
-                ContactsRow(contact: contact)
-                    .environment(\.managedObjectContext, self.moc)
+                Section(){
+                    ContactsRow(contact: contact)
+                        .environment(\.managedObjectContext, self.moc)
+                }
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
-                    TransactionsRow(transaction: transaction)
+                    TransactionsRow(transaction: transaction) 
                     
                 }.onDelete(perform: deleteItem)
             }
@@ -63,11 +64,33 @@ struct TransactionsContactList: View {
                 TransactionsNewForm(contact: contact)
             }
         #elseif os(macOS)
-            List{
+            Section(){
                 ContactsRow(contact: contact)
+            }
+            List{
+                
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
                     TransactionsRow(transaction: transaction)
                 }
+            }
+            .toolbar {
+                ToolbarItem(placement:.automatic){
+                    Text("\(Image(systemName: "dollarsign.square")) Summary")
+                        .font(Font.system(.title, design: .rounded).weight(.black))
+                }
+                
+                ToolbarItem(placement: .automatic ){
+              
+                        Label("Add", systemImage: "doc.badge.plus")
+                            .foregroundColor(.accentColor)
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                            .onTapGesture {
+                                showAddTransaction.toggle()
+                            }
+                }
+            }
+            .sheet(isPresented: $showAddTransaction){
+                TransactionsNewForm(contact: contact)
             }
         #endif
         }

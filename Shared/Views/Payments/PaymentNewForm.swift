@@ -1,26 +1,34 @@
 //
-//  TransactionsNewForm.swift
-//  debtMe (iOS)
+//  PaymentNewForm.swift
+//  debtMe
 //
-//  Created by Francisco Misael Landero Ychante on 18/04/21.
+//  Created by Misael Landero on 12/02/23.
 //
 
 import SwiftUI
 
-struct TransactionsNewForm: View {
+struct PaymentNewForm: View {
     //Model View de Coredata
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
-    @State var transactionModel = TransactionModel(amout: "0.0", des: "", date: Date(), debt: false)
-    @State var contact : Contact
+    
+
+    @State var paymentModel = PaymentModel(amout: "0.0", note: "", date: Date())
+    @State var transaction : Transaction
     var body: some View {
         Group{
             #if os(iOS)
-            NavigationView{
+            NavigationView(){
                 List{
-                    NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: saveTransaction,closeView: closeView)
+                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
                 }
                 .listStyle(InsetGroupedListStyle())
+                .toolbar(){
+                    ToolbarItem(placement:.principal){
+                        Text("\(Image(systemName: "dollarsign.square.fill")) New")
+                            .font(Font.system(.title, design: .rounded).weight(.black))
+                    }
+                }
                 .navigationBarItems(
                     leading:
                         Button(action:{
@@ -34,81 +42,66 @@ struct TransactionsNewForm: View {
                         }
                     ,
                     trailing:
-                        Button(action: saveTransaction){
+                        Button(action:savePayment){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
-                .toolbar {
-                    ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
-                    }
-                    /*ToolbarItem(placement: .primaryAction) {
-                     Button(action :{showingNewContactForm.toggle()}){
-                     Label("New", systemImage: "person.crop.circle.fill.badge.plus")
-                     }
-                     }*/
-                }
             }
             #elseif os(macOS)
             List{
                 Text("\(Image(systemName: "dollarsign.square.fill")) New")
                     .font(Font.system(.title, design: .rounded).weight(.black))
-                NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
-                    saveTransaction()
-                }, closeView: closeView)
+                PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
+                    .padding()
             }
             .frame(width: 300, height: 220)
+            
+            
             #endif
         }
+        
     }
     
     func closeView(){
         self.presentationMode.wrappedValue.dismiss()
     }
     
-    func saveTransaction(){
-        let newTransaction = Transaction(context: moc)
-        newTransaction.id = UUID()
-        newTransaction.dateCreation = transactionModel.date
-        newTransaction.debt = transactionModel.debt
-        newTransaction.des = transactionModel.des
-        newTransaction.amount = transactionModel.amountNumber
-        newTransaction.contact = contact
+    func savePayment(){
+        let payment = Payment(context: moc)
+        payment.id = UUID()
+        payment.date = paymentModel.date
+        payment.notes = paymentModel.note
+        payment.amount = paymentModel.amountNumber
+        payment.transaction = transaction
         
         try? self.moc.save()
         
         closeView()
         
     }
+    
 }
 
-struct NewTransactionMultiPlataformForm: View {
-    @Binding var transactionModel : TransactionModel
-    var saveTransaction : () -> Void
+
+struct PaymentMultiplatformForm: View {
+    
+    @Binding var paymentModel : PaymentModel
+    var savePayment : () -> Void
     var closeView : () -> Void
-    var debtOptions = ["They Owes me" , "I Owe They"]
-    var debtValue = [true, false]
+    
     var body: some View {
-        
-        DatePicker("Date", selection: $transactionModel.date)
-        TextField("Description", text: $transactionModel.des)
-        TextField("Amount", text: $transactionModel.amout)
+        DatePicker("Date", selection: $paymentModel.date)
+        TextField("Note", text: $paymentModel.note)
+        TextField("Amount", text: $paymentModel.amout)
         #if os(iOS)
             .keyboardType(.decimalPad)
         #endif
-        Picker("Type", selection: $transactionModel.debt){
-            ForEach(0..<debtOptions.count){ index in
-                Text(debtOptions[index])
-                    .tag(debtValue[index])
-            }
-        }.pickerStyle(SegmentedPickerStyle())
         
         Section{
             #if os(iOS)
-            Button(action: saveTransaction){
+            Button(action: savePayment){
                 HStack{
                     Spacer()
                     Label("Add", systemImage: "plus.circle.fill")
@@ -129,7 +122,7 @@ struct NewTransactionMultiPlataformForm: View {
                 }
                 .accentColor(.red)
                 Spacer()
-                Button(action: saveTransaction){
+                Button(action: savePayment){
                     Label("Add", systemImage: "plus.circle.fill")
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
@@ -137,7 +130,8 @@ struct NewTransactionMultiPlataformForm: View {
             }
             #endif
         }
+        
     }
+    
 }
-
  
