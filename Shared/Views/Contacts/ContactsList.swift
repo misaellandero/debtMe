@@ -44,7 +44,6 @@ struct ContactsList: View {
                 .toolbar {
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "person.2.fill")) Contacts")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
                     }
                 }
             #elseif os(macOS)
@@ -56,14 +55,12 @@ struct ContactsList: View {
                     
                     ToolbarItem(placement: .navigation ){
                         Text("\(Image(systemName: "person.2.fill")) Contacts")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
                     }
                     
                     ToolbarItem(placement: .primaryAction ){
                   
                             Label("Add", systemImage: "person.crop.circle.badge.plus")
-                                .foregroundColor(.accentColor)
-                                .font(Font.system(.title, design: .rounded).weight(.black))
+                                .foregroundColor(.accentColor) 
                                 .onTapGesture {
                                     showingNewContactForm.toggle()
                                 }

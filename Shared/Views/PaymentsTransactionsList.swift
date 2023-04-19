@@ -15,17 +15,25 @@ struct PaymentsTransactionsList: View {
     //To hide view
     @Environment(\.presentationMode) var presentationMode
     
+    @State var paymentTotal : Double = 0.0
+    
     var body: some View {
       
         ZStack{
             Rectangle()
                 .fill(.clear)
-            ScrollView(.vertical){
-                ForEach(transaction.paymentsArray, id : \.id){ payment in
-                    PaymentRow(payment: payment)
+            VStack{
+                ScrollView(.vertical){
+                    ForEach(transaction.paymentsArray, id : \.id){ payment in
+                        PaymentRow(payment: payment, updateTotal: getTotals)
+                    }
+                    .onAppear(perform: getTotals)
+                    Spacer()
                 }
-                Spacer()
             }
+            
+            TotalsView(amount: transaction.amount, current: $paymentTotal)
+        
         }
          
         #if os(iOS)
@@ -35,7 +43,9 @@ struct PaymentsTransactionsList: View {
         .toolbar {
             ToolbarItem(placement:.principal){
                 Text(transaction.wrappedDes)
-                    .font(Font.system(.title, design: .rounded).weight(.black))
+            }
+            ToolbarItem(placement:.principal){
+                Text("\(Image(systemName: "dollarsign.square")) Summary")
             }
         }
         .navigationBarItems(
@@ -45,7 +55,6 @@ struct PaymentsTransactionsList: View {
                 }){
                     Label("Return", systemImage: "chevron.backward")
                         .foregroundColor(.gray)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 },
             
             trailing:
@@ -54,46 +63,44 @@ struct PaymentsTransactionsList: View {
                 }){
                     Label("Add", systemImage: "plus.circle.fill")
                         .foregroundColor(.accentColor)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
         )
-        .toolbar {
-            ToolbarItem(placement:.principal){
-                Text("\(Image(systemName: "dollarsign.square")) Summary")
-                    .font(Font.system(.title, design: .rounded).weight(.black))
-            }
-        }
         #elseif os(macOS)
         .padding()
         .toolbar {
             ToolbarItem(placement:.automatic){
-                Text(transaction.wrappedDes)
-                    .font(Font.system(.title, design: .rounded).weight(.black))
+                Text(transaction.wrappedDes) 
             }
             
             ToolbarItem(placement: .automatic ){
                 Label("Add", systemImage: "tray.and.arrow.down.fill")
                     .foregroundColor(.accentColor)
-                    .font(Font.system(.title, design: .rounded).weight(.black))
                     .onTapGesture {
                         showAddPayment.toggle()
                     }
             }
         }
         #endif
-        
-       
-        .sheet(isPresented: $showAddPayment){
+        .sheet(isPresented: $showAddPayment.onChange(modalUpdate)){
             PaymentNewForm(transaction: transaction)
         }
        
     }
+    
+    
+    func modalUpdate(_ tag: Bool){
+        getTotals()
+    }
+    
+    func getTotals(){
+        var total = 0.0
+        for payment in transaction.paymentsArray {
+            total += payment.amount
+        }
+        
+        paymentTotal = total
+    }
+    
+   
 }
-
-/*
- struct PaymentsTransactionsList_Previews: PreviewProvider {
-     static var previews: some View {
-         PaymentsTransactionsList()
-     }
- }
- */
+ 

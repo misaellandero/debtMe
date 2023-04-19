@@ -40,14 +40,12 @@ struct LabelNewForm: View {
                 .toolbar{
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "tag.fill")) New")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
                     }
                 }
             }
             #elseif os(macOS)
             List{
-                Text("\(Image(systemName: "tag.fill")) New")
-                    .font(Font.system(.title, design: .rounded).weight(.black))
+                Text("\(Image(systemName: "tag.fill")) New") 
                 LabelForm( showForm: $showForm)
             }
             #endif

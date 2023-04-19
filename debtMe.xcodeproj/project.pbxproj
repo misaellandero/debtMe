@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1304296929EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
+		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
 		133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
 		133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD425A262D3E2A00568EE7 /* TransactionModel.swift */; };
+		138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
+		138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
 		1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
 		1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
 		1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */; };
@@ -94,6 +98,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1304296829EF36BA001203D3 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TotalsView.swift; path = Shared/App/Extensions/TotalsView.swift; sourceTree = SOURCE_ROOT; };
+		138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExtension.swift; sourceTree = "<group>"; };
 		1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentsTransactionsList.swift; path = Shared/Views/PaymentsTransactionsList.swift; sourceTree = SOURCE_ROOT; };
@@ -193,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				1399AD692999BA1E00C87C3D /* Border.swift */,
+				1304296829EF36BA001203D3 /* TotalsView.swift */,
 			);
 			name = TicketViewAssets;
 			path = Shared/Views/Settings/Shared/Views/Settings/Payments/TicketViewAssets;
@@ -374,6 +381,7 @@
 				7F70A27025FEC00F00455AB0 /* ColorExtension.swift */,
 				7F70A26B25FEBFDB00455AB0 /* BindingExtension.swift */,
 				7F70A27725FEC15600455AB0 /* DateFormatterExtension.swift */,
+				138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -541,8 +549,10 @@
 			files = (
 				7F60635A26104AD5004834F1 /* BlurdEfectView.swift in Sources */,
 				1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */,
+				138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				7F70A29D25FEDC8E00455AB0 /* TabBarView.swift in Sources */,
 				7F6063442610408F004834F1 /* ButtomBar.swift in Sources */,
+				1304296929EF36BA001203D3 /* TotalsView.swift in Sources */,
 				7F76A8E4260EF59C00033790 /* debtMe.xcdatamodeld in Sources */,
 				1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
@@ -593,6 +603,7 @@
 				7F76A8E3260EF59B00033790 /* debtMe.xcdatamodeld in Sources */,
 				7F70A2A325FEDC9D00455AB0 /* SideBarView.swift in Sources */,
 				7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */,
+				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
@@ -618,6 +629,7 @@
 				7F70A23525FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27F25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
+				138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */,
 				7F70A2BA25FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
@@ -750,6 +762,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20230419;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -758,6 +771,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
@@ -773,6 +787,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20230419;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -781,6 +796,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
@@ -799,6 +815,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 20230419;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -808,6 +825,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -824,6 +842,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 20230419;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -833,6 +852,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

@@ -11,6 +11,11 @@ import CoreImage
 struct PaymentRow: View {
     
     @ObservedObject var payment : Payment
+    @State var showingAlert = false
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+    
+    let updateTotal: () -> Void
     
     var body: some View {
             VStack{
@@ -25,7 +30,9 @@ struct PaymentRow: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                             Spacer()
-                            Button(action: {}){
+                            Button(action: {
+                                showingAlert.toggle()
+                            }){
                                 Image(systemName:"trash.fill")
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -62,7 +69,7 @@ struct PaymentRow: View {
                             Divider()
                                 .foregroundColor(.secondary)
                         }
-                        Text("$" + String(format: "%.2f",  payment.amount))
+                        Text(payment.amount.toCurrencyString())
                         
                     }
                     
@@ -77,7 +84,23 @@ struct PaymentRow: View {
             }
             .background(TicketViewBackground())
             .frame(maxWidth:500)
+            .alert(isPresented: $showingAlert){
+                Alert(
+                    title: Text("Delete"),
+                    message: Text("Are you sure?\n You won't be able to retrieve this information later."),
+                    primaryButton: .destructive(Text("Delete")) {
+                        delete()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
         
+    }
+    
+    func delete(){
+        self.moc.delete(payment)
+        try? self.moc.save()
+        updateTotal()
     }
     
     func generateBarcode(from string: String) -> Image? {

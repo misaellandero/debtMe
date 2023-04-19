@@ -26,7 +26,6 @@ struct PaymentNewForm: View {
                 .toolbar(){
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
                     }
                 }
                 .navigationBarItems(
@@ -50,12 +49,14 @@ struct PaymentNewForm: View {
                 )
             }
             #elseif os(macOS)
-            List{
-                Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                    .font(Font.system(.title, design: .rounded).weight(.black))
-                PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
-                    .padding()
+            NavigationView(){
+                List{
+                    Text("\(Image(systemName: "dollarsign.square.fill")) New") 
+                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
+                        .padding()
+                }
             }
+            
             .frame(width: 300, height: 220)
             
             
@@ -98,7 +99,7 @@ struct PaymentMultiplatformForm: View {
         #if os(iOS)
             .keyboardType(.decimalPad)
         #endif
-        
+        Spacer()
         Section{
             #if os(iOS)
             Button(action: savePayment){

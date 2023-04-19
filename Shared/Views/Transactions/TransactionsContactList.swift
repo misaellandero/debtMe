@@ -57,7 +57,6 @@ struct TransactionsContactList: View {
             .toolbar {
                 ToolbarItem(placement:.principal){
                     Text("\(Image(systemName: "dollarsign.square")) Summary")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
                 }
             } 
             .sheet(isPresented: $showAddTransaction){
@@ -76,14 +75,12 @@ struct TransactionsContactList: View {
             .toolbar {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "dollarsign.square")) Summary")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
                 }
                 
                 ToolbarItem(placement: .automatic ){
               
                         Label("Add", systemImage: "doc.badge.plus")
-                            .foregroundColor(.accentColor)
-                            .font(Font.system(.title, design: .rounded).weight(.black))
+                            .foregroundColor(.accentColor) 
                             .onTapGesture {
                                 showAddTransaction.toggle()
                             }

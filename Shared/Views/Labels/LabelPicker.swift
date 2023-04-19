@@ -48,20 +48,17 @@ struct labelPicker: View {
                 
                 ToolbarItem(placement:.principal){
                     Text("\(Image(systemName: "tag.fill")) Tags")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
                 }
             }
             #elseif os(macOS)
             List{
                 HStack{
                     Text("\(Image(systemName: "tag.fill")) Tags")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
                     Spacer()
                     Button(action:{
                         showFormLabel.toggle()
                     }){
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                        Label("Add", systemImage: "plus.circle.fill") 
                     }
                     .accentColor(.accentColor)
                     .sheet(isPresented: $showFormLabel, content: {

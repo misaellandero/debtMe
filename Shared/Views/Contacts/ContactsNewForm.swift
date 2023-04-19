@@ -49,14 +49,13 @@ struct ContactsNewForm: View {
                 .toolbar {
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "person.2.fill")) New")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
+                         
                     }
                 }
                 }
                 #elseif os(macOS)
                 List{
-                    Text("\(Image(systemName: "person.2.fill")) New")
-                        .font(Font.system(.title, design: .rounded).weight(.black))
+                    Text("\(Image(systemName: "person.2.fill")) New") 
                     NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
                 }
                 .frame(width: 300, height: 170)

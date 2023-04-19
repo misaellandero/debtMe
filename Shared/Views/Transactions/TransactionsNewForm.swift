@@ -43,7 +43,6 @@ struct TransactionsNewForm: View {
                 .toolbar {
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                            .font(Font.system(.title, design: .rounded).weight(.black))
                     }
                     /*ToolbarItem(placement: .primaryAction) {
                      Button(action :{showingNewContactForm.toggle()}){
@@ -54,8 +53,7 @@ struct TransactionsNewForm: View {
             }
             #elseif os(macOS)
             List{
-                Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                    .font(Font.system(.title, design: .rounded).weight(.black))
+                Text("\(Image(systemName: "dollarsign.square.fill")) New") 
                 NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
                     saveTransaction()
                 }, closeView: closeView)

@@ -13,59 +13,62 @@ struct TabBarView: View {
     
     var body: some View {
         
-        ZStack{
-            switch sectionSelected {
-            case .contacts:
-                NavigationView{
-                    ContactsList()
-                }
-            case .debts:
-                NavigationView{
-                    Text("debts")
-                }
-            case .loans:
-                NavigationView{
-                    Text("lons")
-                }
-            case .settings:
-                NavigationView{
-                    Text("settings")
-                }
-            case .budget:
-                NavigationView{
-                    Text("Budget")
-                }
-            }
+        /*ZStack{
+         switch sectionSelected {
+         case .contacts:
+             NavigationView{
+                 ContactsList()
+             }
+         case .debts:
+             NavigationView{
+                 Text("debts")
+             }
+         case .loans:
+             NavigationView{
+                 Text("lons")
+             }
+         case .settings:
+             NavigationView{
+                 Text("settings")
+             }
+         case .budget:
+             NavigationView{
+                 Text("Budget")
+             }
+         }
+         
+         
+         //ButtomBar(sectionSelected: $sectionSelected)
             
-            
-            ButtomBar(sectionSelected: $sectionSelected)
-               
-        }
-        /*TabView(selection: $sectionSelected){
+     }*/
+        TabView(selection: $sectionSelected){
             // MARK: - Contacts
             NavigationView{
                 ContactsList()
             }
+            .tabItem {
+                Label("Debts", systemImage: "dollarsign.square")
+            }
             .tag(SectionSelected.contacts)
             // MARK: - Debts
             Text("Debts")
-                /*.tabItem {
+                .tabItem {
                     Label("Debts", systemImage: "dollarsign.square")
-                }*/
+                }
                 .tag(SectionSelected.debts)
             // MARK: - Loans
             Text("Loans")
-                /*.tabItem {
+                .tabItem {
                     Label("Loans", systemImage: "dollarsign.square.fill")
-                }*/
+                }
                 .tag(SectionSelected.loans)
             // MARK: - Settings
             Text("Settings")
-                /*.tabItem {
+                .tabItem {
                     Label("Settings", systemImage: "gear")
-                }*/
+                }
                 .tag(SectionSelected.settings)
-        }*/
+        }
         
     }
 }
