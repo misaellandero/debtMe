@@ -18,22 +18,18 @@ struct SideBarView: View {
             List(/*selection: $sectionSelected*/) {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
-                        .font(Font.system(.title3, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Debts"), tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
-                        .font(Font.system(.title3, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Loans"), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
-                        .font(Font.system(.title3, design: .rounded).weight(.bold))
                 }
                 
                 NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
-                        .font(Font.system(.title3, design: .rounded).weight(.bold))
                 } 
             }
             //.listStyle(SidebarListStyle())
@@ -42,14 +38,12 @@ struct SideBarView: View {
                 #if os(iOS)
                 ToolbarItem(placement:.principal){
                     Text("DebtMe")
-                       .font(Font.system(.largeTitle, design: .rounded).weight(.black))
                 }
                 #elseif os(macOS)
                 //Toggle Sidebar Button
                 ToolbarItem(placement: .navigation){
                     
                     Text("\(Image(systemName: "sidebar.left"))")
-                         .font(Font.system(.title, design: .rounded).weight(.bold))
                         .onTapGesture {
                             toggleSidebar()
                         }
