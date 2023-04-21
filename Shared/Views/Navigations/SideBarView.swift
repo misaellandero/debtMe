@@ -36,7 +36,7 @@ struct SideBarView: View {
                         .font(Font.system(.title3, design: .rounded).weight(.bold))
                 } 
             }
-            .listStyle(SidebarListStyle())
+            //.listStyle(SidebarListStyle())
             .frame(minWidth: 150, idealWidth: 250, maxWidth: 350)
             .toolbar{
                 #if os(iOS)

@@ -39,7 +39,6 @@ struct PaymentsTransactionsList: View {
         #if os(iOS)
         
         .background(.ultraThinMaterial)
-        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement:.principal){
                 Text(transaction.wrappedDes)
@@ -49,14 +48,6 @@ struct PaymentsTransactionsList: View {
             }
         }
         .navigationBarItems(
-            leading:
-                Button(action:{
-                        self.presentationMode.wrappedValue.dismiss()
-                }){
-                    Label("Return", systemImage: "chevron.backward")
-                        .foregroundColor(.gray)
-                },
-            
             trailing:
                 Button(action:{
                     showAddPayment.toggle()

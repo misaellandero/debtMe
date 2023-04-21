@@ -34,24 +34,13 @@ struct TransactionsContactList: View {
                 }.onDelete(perform: deleteItem)
             }
             .listStyle(InsetGroupedListStyle())
-            .navigationBarBackButtonHidden(true)
             .navigationBarItems(
-                leading:
-                    Button(action:{
-                            self.presentationMode.wrappedValue.dismiss()
-                    }){
-                        Label("Return", systemImage: "chevron.backward")
-                            .foregroundColor(.gray)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                    },
-                
                 trailing:
                     Button(action:{
                         showAddTransaction.toggle()
                     }){
                         Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                            .foregroundColor(.accentColor) 
                     }
             )
             .toolbar {

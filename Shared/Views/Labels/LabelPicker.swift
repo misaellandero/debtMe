@@ -29,15 +29,13 @@ struct labelPicker: View {
                         Label("Return", systemImage: "xmark")
                         //Image(systemName: "chevron.left.circle.fill")
                             .foregroundColor(Color.gray)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
                     },
                 trailing:
                     Button(action:{
                         showFormLabel.toggle()
                     }){
                         Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                            .foregroundColor(.accentColor) 
                     }
                     .sheet(isPresented: $showFormLabel, content: {
                         LabelNewForm(showForm: $showFormLabel)

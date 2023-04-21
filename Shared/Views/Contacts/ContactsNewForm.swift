@@ -180,7 +180,6 @@ struct NewContactMultiplatformForm : View {
                         Spacer()
                         Label("Add", systemImage: "plus.circle.fill")
                             .foregroundColor(.white)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
                             .padding()
                         Spacer()
                     }

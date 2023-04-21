@@ -117,15 +117,13 @@ struct PaymentMultiplatformForm: View {
             HStack{
                 Button(action: closeView){
                     Label("Cancel", systemImage: "xmark")
-                             
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                              
                         
                 }
                 .accentColor(.red)
                 Spacer()
                 Button(action: savePayment){
-                    Label("Add", systemImage: "plus.circle.fill")
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Label("Add", systemImage: "plus.circle.fill") 
                 }
                 .accentColor(.accentColor)
             }
