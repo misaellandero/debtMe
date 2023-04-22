@@ -30,13 +30,7 @@ struct ContactsNewForm: View {
                         VStack{
                             Spacer()
                             Button(action: saveContact){
-                                HStack{
-                                    Spacer()
-                                    Label("Add", systemImage: "plus.circle.fill")
-                                        .foregroundColor(.white)
-                                        .padding()
-                                    Spacer()
-                                }
+                                ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
                             }
                             .background(Color.accentColor )
                         }
@@ -47,18 +41,18 @@ struct ContactsNewForm: View {
                         Button(action:{
                             self.presentationMode.wrappedValue.dismiss()
                         }){
-                            
-                            Label("Return", systemImage: "xmark")
-                            //Image(systemName: "chevron.left.circle.fill")
-                                .foregroundColor(Color.gray)
+                            LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
                         },
                     trailing:
                         Button(action:saveContact){
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
+                            LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
                         }
                 )
-                .navigationTitle(Text("\(Image(systemName: "person.2.fill")) New"))
+                .toolbar{
+                    ToolbarItem(placement: .principal){
+                        Text("\(Image(systemName: "person.2.fill")) New")
+                    }
+                }
                 }
                 #elseif os(macOS)
                 List{
@@ -68,8 +62,6 @@ struct ContactsNewForm: View {
                 .frame(width: 300, height: 170)
                 #endif
             }
-            .font(Font.system(.body, design: .rounded).weight(.semibold))
-            //.navigationTitle("New Contact")
        
         
     }

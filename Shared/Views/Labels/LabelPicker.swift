@@ -25,29 +25,23 @@ struct labelPicker: View {
                     Button(action:{
                         showLabelList.toggle()
                     }){
-                        
-                        Label("Return", systemImage: "xmark")
-                        //Image(systemName: "chevron.left.circle.fill")
-                            .foregroundColor(Color.gray)
+                        LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
                     },
                 trailing:
                     Button(action:{
                         showFormLabel.toggle()
                     }){
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor) 
+                        LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
                     }
-                    .sheet(isPresented: $showFormLabel, content: {
-                        LabelNewForm(showForm: $showFormLabel)
-                            .environment(\.horizontalSizeClass, .compact)
-                    })
             )
             .toolbar{
-                
                 ToolbarItem(placement:.principal){
                     Text("\(Image(systemName: "tag.fill")) Tags")
                 }
             }
+            .sheet(isPresented: $showFormLabel, content: {
+                LabelNewForm(showForm: $showFormLabel)
+            })
             #elseif os(macOS)
             List{
                 HStack{
@@ -98,7 +92,6 @@ struct LabelPickerListElements: View {
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                     Spacer()
                 }
-                //.background(label.labelColor)
                 .padding()
                 .foregroundColor(Color.white)
             }

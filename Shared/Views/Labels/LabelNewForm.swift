@@ -10,31 +10,38 @@ import SwiftUI
 struct LabelNewForm: View {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
+    
+    @State var name : String = ""
+    @State var colorSelect : Int = 0
+    
     @Binding var showForm : Bool
     var body: some View {
         Group{
             #if os(iOS)
             NavigationView{
-                List{
-                    LabelForm( showForm: $showForm)
+                ZStack{
+                    List{
+                        LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
+                    }
+                    .listStyle(InsetGroupedListStyle())
+                    VStack{
+                        Spacer()
+                        Button(action: saveTag){
+                            ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
+                        }
+                        .background(Color.accentColor)
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
                 .navigationBarItems(
                     leading:
                         Button(action:{
                             showForm.toggle()
                         }){
-                            
-                            Label("Return", systemImage: "xmark")
-                            //Image(systemName: "chevron.left.circle.fill")
-                                .foregroundColor(Color.gray)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                            LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
                         },
                     trailing:
                         Button(action:{}){
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                            LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
                         }
                 )
                 .toolbar{
@@ -46,71 +53,11 @@ struct LabelNewForm: View {
             #elseif os(macOS)
             List{
                 Text("\(Image(systemName: "tag.fill")) New") 
-                LabelForm( showForm: $showForm)
+                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
             }
             #endif
         }
         
-    }
-}
-
- 
-struct LabelForm: View {
-    //Model View de Coredate
-    @Environment(\.managedObjectContext) var moc
-    @State var name : String = ""
-    @State var colorSelect : Int = 0
-    @Binding var showForm : Bool
-    var body: some View {
-        
-        TextField("Tag", text: $name)
-        Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
-            ForEach(0..<AppColorsModel.colors.count){ index in
-                HStack{
-                    Image(systemName: "paintbrush.pointed.fill")
-                    Text(AppColorsModel.colors[index].name)
-                }
-                .foregroundColor(AppColorsModel.colors[index].color)
-                .tag(index)
-            }
-        })
-        .pickerStyle(InlinePickerStyle())
-        .labelsHidden()
-        
-        #if os(iOS)
-        Section{
-            Button(action: saveTag){
-                HStack{
-                    Spacer()
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.white)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .padding()
-                    Spacer()
-                }
-            }
-            .listRowBackground(Color.accentColor )
-        }
-        #elseif os(macOS)
-        HStack{
-            Button(action: {
-                
-                showForm.toggle()
-            }){
-                Label("Cancel", systemImage: "xmark")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                          
-            }.accentColor(.red)
-            Spacer()
-            Button(action: saveTag){
-                Label("Add", systemImage: "plus.circle.fill")
-                       
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                          
-            }.accentColor(.accentColor)
-             
-        }
-        #endif
     }
     
     func saveTag(){
@@ -122,6 +69,61 @@ struct LabelForm: View {
         try? self.moc.save()
         showForm.toggle()
     }
+}
+
+ 
+struct LabelMultiplatformForm: View {
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
     
+    @Binding var name : String
+    @Binding var colorSelect : Int
+    @Binding var showForm : Bool
+    var save : () -> Void
     
+    var body: some View {
+        
+        TextField("Tag", text: $name)
+        #if os(macOS)
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        #endif
+        Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
+            ForEach(0..<AppColorsModel.colors.count){ index in
+                HStack{
+                    Image(systemName: "circle.fill")
+                    Spacer()
+                    Text(AppColorsModel.colors[index].name)
+                    Spacer()
+                }
+                .foregroundColor(AppColorsModel.colors[index].color)
+                .tag(index)
+            }
+        })
+        #if os(iOS)
+        .pickerStyle(WheelPickerStyle())
+        #elseif os(macOS)
+        .pickerStyle(InlinePickerStyle())
+        #endif
+        .labelsHidden()
+        
+        #if os(macOS)
+        HStack{
+            Button(action: {
+                
+                showForm.toggle()
+            }){
+                Label("Cancel", systemImage: "xmark")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                          
+            }.accentColor(.red)
+            Spacer()
+            Button(action: save){
+                Label("Add", systemImage: "plus.circle.fill")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                          
+            }.accentColor(.accentColor)
+             
+        }
+        #endif
+    }
 }

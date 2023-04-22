@@ -29,6 +29,10 @@
 		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
 		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
+		13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
+		13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
+		13C9DFA229F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
 		7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		7F37A92325FF13080049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
 		7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
@@ -107,6 +111,8 @@
 		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
 		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
+		13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSFRounder.swift; sourceTree = "<group>"; };
+		13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelAdd.swift; sourceTree = "<group>"; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
 		7F37A92225FF13080049D648 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		7F37A92925FF19600049D648 /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
@@ -203,6 +209,15 @@
 			);
 			name = TicketViewAssets;
 			path = Shared/Views/Settings/Shared/Views/Settings/Payments/TicketViewAssets;
+			sourceTree = "<group>";
+		};
+		13C9DF9C29F3B61E005D1768 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */,
+				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
+			);
+			path = UIElements;
 			sourceTree = "<group>";
 		};
 		7F2CD9F2260FE20600E67C00 /* Views */ = {
@@ -316,6 +331,7 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13C9DF9C29F3B61E005D1768 /* UIElements */,
 				1399AD5B29995A9D00C87C3D /* Payments */,
 				7F60634B261040D3004834F1 /* Labels */,
 				7F70A2B025FEF17700455AB0 /* Settings */,
@@ -557,6 +573,7 @@
 				1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
 				7F70A23225FEB1F700455AB0 /* debtMeApp.swift in Sources */,
+				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsNewForm.swift in Sources */,
 				1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */,
@@ -574,6 +591,7 @@
 				7F37A93C25FF1A750049D648 /* EmojiButton.swift in Sources */,
 				7F70A24F25FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				7F70A26C25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
+				13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
 				7F70A2BE25FEF76300455AB0 /* ContactsDetail.swift in Sources */,
 				7F70A27125FEC00F00455AB0 /* ColorExtension.swift in Sources */,
 				7F70A27825FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
@@ -603,6 +621,7 @@
 				7F76A8E3260EF59B00033790 /* debtMe.xcdatamodeld in Sources */,
 				7F70A2A325FEDC9D00455AB0 /* SideBarView.swift in Sources */,
 				7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */,
+				13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
 				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
@@ -631,6 +650,7 @@
 				1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
 				138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */,
+				13C9DFA229F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F70A2BA25FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
 				7F37A93525FF1A3E0049D648 /* EmojiPicker.swift in Sources */,
