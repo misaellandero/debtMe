@@ -11,43 +11,14 @@ struct TabBarView: View {
     // MARK: - current section selected
     @State var sectionSelected = SectionSelected.contacts
     
-    var body: some View {
-        
-        /*ZStack{
-         switch sectionSelected {
-         case .contacts:
-             NavigationView{
-                 ContactsList()
-             }
-         case .debts:
-             NavigationView{
-                 Text("debts")
-             }
-         case .loans:
-             NavigationView{
-                 Text("lons")
-             }
-         case .settings:
-             NavigationView{
-                 Text("settings")
-             }
-         case .budget:
-             NavigationView{
-                 Text("Budget")
-             }
-         }
-         
-         
-         //ButtomBar(sectionSelected: $sectionSelected)
-            
-     }*/
+    var body: some View { 
         TabView(selection: $sectionSelected){
             // MARK: - Contacts
             NavigationView{
                 ContactsList()
             }
             .tabItem {
-                Label("Debts", systemImage: "dollarsign.square")
+                Label("Contacts", systemImage: "person.2.fill")
             }
             .tag(SectionSelected.contacts)
             // MARK: - Debts
