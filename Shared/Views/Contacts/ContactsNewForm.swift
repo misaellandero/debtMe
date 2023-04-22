@@ -19,15 +19,29 @@ struct ContactsNewForm: View {
     @State var labelContact: ContactLabel?
     
     var body: some View {
-       
             Group{
-                
                 #if os(iOS)
                 NavigationView{
-                List{
-                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
-                }
-                .listStyle(InsetGroupedListStyle())
+                    ZStack{
+                        List{
+                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
+                        }
+                        .listStyle(InsetGroupedListStyle())
+                        VStack{
+                            Spacer()
+                            Button(action: saveContact){
+                                HStack{
+                                    Spacer()
+                                    Label("Add", systemImage: "plus.circle.fill")
+                                        .foregroundColor(.white)
+                                        .padding()
+                                    Spacer()
+                                }
+                            }
+                            .background(Color.accentColor )
+                        }
+                    }
+                     
                 .navigationBarItems(
                     leading:
                         Button(action:{
@@ -37,21 +51,14 @@ struct ContactsNewForm: View {
                             Label("Return", systemImage: "xmark")
                             //Image(systemName: "chevron.left.circle.fill")
                                 .foregroundColor(Color.gray)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         },
                     trailing:
                         Button(action:saveContact){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
-                .toolbar {
-                    ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "person.2.fill")) New")
-                         
-                    }
-                }
+                .navigationTitle(Text("\(Image(systemName: "person.2.fill")) New"))
                 }
                 #elseif os(macOS)
                 List{
@@ -130,7 +137,6 @@ struct NewContactMultiplatformForm : View {
             .buttonStyle(BorderlessButtonStyle())
             
             HStack{
-                
                 Text("Select a tag")
                 Spacer()
                 #if os(iOS)
@@ -172,19 +178,18 @@ struct NewContactMultiplatformForm : View {
                 
                 #endif
             }
-              
             Section{
                 #if os(iOS)
-                Button(action: saveContact){
-                    HStack{
-                        Spacer()
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.white)
-                            .padding()
-                        Spacer()
-                    }
+               /* Button(action: saveContact){
+                HStack{
+                    Spacer()
+                    Label("Add", systemImage: "plus.circle.fill")
+                        .foregroundColor(.white)
+                        .padding()
+                    Spacer()
                 }
-                .listRowBackground(Color.accentColor )
+            }
+            .listRowBackground(Color.accentColor )*/
                 #elseif os(macOS)
                 HStack{
                     Button(action: {
@@ -206,8 +211,6 @@ struct NewContactMultiplatformForm : View {
                 }
                 #endif
             }
-            
-            
         }
     }
     

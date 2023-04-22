@@ -47,23 +47,18 @@ struct SideBarView: View {
                         .onTapGesture {
                             toggleSidebar()
                         }
-                    
-                    /*Button(action: toggleSidebar, label: {
-                        Text("\(Image(systemName: "sidebar.left"))")
-                            .font(Font.system(.headline, design: .rounded).weight(.bold))
-                        
-                        /*Image(systemName: "sidebar.left")
-                            .font(Font.system(.title, design: .rounded).weight(.black))*/
-                    })*/
                 }
                 #endif
             }
             
             
             Text("Detail view")
+                .frame(minWidth: 400)
             Text("Detail view")
+                .frame(idealWidth: 400)
             #if  os(macOS)
             Text("Detail view")
+                .frame(idealWidth: 400)
             #endif
            
             //.navigationTitle("DebtMe")

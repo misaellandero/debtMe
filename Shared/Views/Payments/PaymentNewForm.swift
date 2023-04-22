@@ -22,12 +22,8 @@ struct PaymentNewForm: View {
                 List{
                     PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
                 }
+                .navigationTitle(Text("\(Image(systemName: "dollarsign.square.fill")) New"))
                 .listStyle(InsetGroupedListStyle())
-                .toolbar(){
-                    ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "dollarsign.square.fill")) New")
-                    }
-                }
                 .navigationBarItems(
                     leading:
                         Button(action:{
@@ -37,14 +33,12 @@ struct PaymentNewForm: View {
                             Label("Return", systemImage: "xmark")
                                 //Image(systemName: "chevron.left.circle.fill")
                                 .foregroundColor(Color.gray)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                     ,
                     trailing:
                         Button(action:savePayment){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
             }
@@ -93,42 +87,53 @@ struct PaymentMultiplatformForm: View {
     var closeView : () -> Void
     
     var body: some View {
-        DatePicker("Date", selection: $paymentModel.date)
-        TextField("Note", text: $paymentModel.note)
-        TextField("Amount", text: $paymentModel.amout)
-        #if os(iOS)
-            .keyboardType(.decimalPad)
-        #endif
-        Spacer()
-        Section{
-            #if os(iOS)
-            Button(action: savePayment){
-                HStack{
-                    Spacer()
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.white)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .padding()
-                    Spacer()
-                }
-            }
-            .listRowBackground(Color.accentColor )
-            #elseif os(macOS)
-            HStack{
-                Button(action: closeView){
-                    Label("Cancel", systemImage: "xmark")
-                              
-                        
-                }
-                .accentColor(.red)
+        ZStack{
+            VStack{
+                DatePicker("Date", selection: $paymentModel.date)
+                TextField("Note", text: $paymentModel.note)
+                TextField("Amount", text: $paymentModel.amout)
+                #if os(iOS)
+                    .keyboardType(.decimalPad)
+                #endif
                 Spacer()
-                Button(action: savePayment){
-                    Label("Add", systemImage: "plus.circle.fill") 
-                }
-                .accentColor(.accentColor)
             }
-            #endif
+            
+            VStack{
+                Spacer()
+                Section{
+                    #if os(iOS)
+                    Button(action: savePayment){
+                        HStack{
+                            Spacer()
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.white)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                                .padding()
+                            Spacer()
+                        }
+                    }
+                    .listRowBackground(Color.accentColor )
+                    #elseif os(macOS)
+                    HStack{
+                        Button(action: closeView){
+                            Label("Cancel", systemImage: "xmark")
+                                      
+                                
+                        }
+                        .accentColor(.red)
+                        Spacer()
+                        Button(action: savePayment){
+                            Label("Add", systemImage: "plus.circle.fill")
+                        }
+                        .accentColor(.accentColor)
+                    }
+                    #endif
+                }
+            }
         }
+        
+       
+        
         
     }
     

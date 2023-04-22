@@ -44,11 +44,6 @@ struct TransactionsNewForm: View {
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "dollarsign.square.fill")) New")
                     }
-                    /*ToolbarItem(placement: .primaryAction) {
-                     Button(action :{showingNewContactForm.toggle()}){
-                     Label("New", systemImage: "person.crop.circle.fill.badge.plus")
-                     }
-                     }*/
                 }
             }
             #elseif os(macOS)
@@ -57,8 +52,9 @@ struct TransactionsNewForm: View {
                 NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
                     saveTransaction()
                 }, closeView: closeView)
+                .padding()
             }
-            .frame(width: 300, height: 220)
+            .frame(width: 400, height: 500)
             #endif
         }
     }
@@ -91,9 +87,17 @@ struct NewTransactionMultiPlataformForm: View {
     var debtValue = [true, false]
     var body: some View {
         
+     
         DatePicker("Date", selection: $transactionModel.date)
-        TextField("Description", text: $transactionModel.des)
-        TextField("Amount", text: $transactionModel.amout)
+            .datePickerStyle(GraphicalDatePickerStyle())
+        Group{
+            TextField("Description", text: $transactionModel.des)
+            TextField("Amount", text: $transactionModel.amout)
+        }
+        #if os(macOS)
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        #endif
+        
         #if os(iOS)
             .keyboardType(.decimalPad)
         #endif

@@ -22,7 +22,6 @@ struct ContactsList: View {
             #if os(iOS) 
                 List{
                     ContactsRows()
-                        //.environment(\.managedObjectContext, self.moc)
                 }
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarBackButtonHidden(true)
@@ -31,14 +30,12 @@ struct ContactsList: View {
                         Button(action:{showingNewContactForm.toggle()}){
                             Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
                                 .foregroundColor(.gray)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         },
                     
                     trailing:
                         Button(action:{showingNewContactForm.toggle()}){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
                 )
                 .toolbar {
@@ -69,10 +66,8 @@ struct ContactsList: View {
           
             
             #endif
-        } 
-        /**/
-        .sheet(isPresented: $showingNewContactForm){
-            //Text("hi")
+        }
+        .sheet(isPresented: $showingNewContactForm){ 
             ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
         }
     }
