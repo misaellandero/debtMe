@@ -68,9 +68,14 @@ struct DebtCoverView: View {
                 .stroke(Color.green, lineWidth: 10)
                 .rotationEffect(.degrees(-90))
                 
-            Text(String(format: "%.0f%%", percentage * 100))
-                .animation(.default)
-                .bold()
+            if #available(iOS 16.0, *) {
+                Text(String(format: "%.0f%%", percentage * 100))
+                    .animation(.default)
+                    .bold()
+            } else {
+                Text(String(format: "%.0f%%", percentage * 100))
+                    .animation(.default)
+            }
         }.animation(.easeIn)
     }
 }
