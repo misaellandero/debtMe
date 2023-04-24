@@ -104,7 +104,7 @@ struct NewTransactionMultiPlataformForm: View {
         
         Picker("Type", selection: $transactionModel.debt){
             ForEach(0..<debtOptions.count){ index in
-                Text(debtOptions[index])
+                Text(LocalizedStringKey(debtOptions[index]))
                     .tag(debtValue[index])
             }
         }.pickerStyle(SegmentedPickerStyle())

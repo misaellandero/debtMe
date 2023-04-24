@@ -136,7 +136,7 @@ struct NewContactMultiplatformForm : View {
                     showLabelList.toggle()
                 }){
                     Group{
-                       Text(labelContact?.wrappedName ?? "Nothing selected")
+                       Text(LocalizedStringKey(labelContact?.wrappedName ?? "Nothing selected"))
                     }
                     .font(Font.system(.caption, design: .rounded).weight(.semibold))
                     .foregroundColor(.white)

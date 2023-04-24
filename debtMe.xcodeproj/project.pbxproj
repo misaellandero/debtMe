@@ -13,6 +13,9 @@
 		133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
 		133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
 		133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD425A262D3E2A00568EE7 /* TransactionModel.swift */; };
+		13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB129F642B7001C0577 /* InfoPlist.strings */; };
+		13465FB629F642B7001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
+		13465FB729F64455001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
 		138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
 		138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
 		1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
@@ -103,6 +106,8 @@
 
 /* Begin PBXFileReference section */
 		1304296829EF36BA001203D3 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TotalsView.swift; path = Shared/App/Extensions/TotalsView.swift; sourceTree = SOURCE_ROOT; };
+		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExtension.swift; sourceTree = "<group>"; };
 		1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -302,6 +307,8 @@
 				7F2CD9F7260FE24100E67C00 /* UIKIT */,
 				7F2CD9F2260FE20600E67C00 /* Views */,
 				7F70A22725FEB1F700455AB0 /* Info.plist */,
+				13465FB429F642B7001C0577 /* Localizable.strings */,
+				13465FB129F642B7001C0577 /* InfoPlist.strings */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -527,6 +534,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 7F70A21425FEB1ED00455AB0;
 			productRefGroup = 7F70A22525FEB1F700455AB0 /* Products */;
@@ -545,6 +553,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70A23825FEB1F700455AB0 /* Assets.xcassets in Resources */,
+				13465FB629F642B7001C0577 /* Localizable.strings in Resources */,
+				13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70A23925FEB1F700455AB0 /* Assets.xcassets in Resources */,
+				13465FB729F64455001C0577 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +673,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		13465FB129F642B7001C0577 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				13465FB229F642B7001C0577 /* es */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		13465FB429F642B7001C0577 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				13465FB529F642B7001C0577 /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7F70A23A25FEB1F700455AB0 /* Debug */ = {

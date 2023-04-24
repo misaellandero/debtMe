@@ -34,7 +34,7 @@ struct TransactionsRow: View {
                 .font(.caption)
                 .padding(.vertical,1)
                 HStack{
-                    Text(transaction.debt ? "They Owes me" : "I Owe They")
+                    Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe They"))
                         .strikethrough(transaction.settled)
                     Image(systemName: transaction.debt ? "dollarsign.square.fill" :"dollarsign.square")
                         .foregroundColor(dolarIconColor)
