@@ -11,8 +11,11 @@ struct TransactionsNewForm: View {
     //Model View de Coredata
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
-    @State var transactionModel = TransactionModel(amout: "0.0", des: "", date: Date(), debt: false)
+    
+    @State var transactionModel = TransactionModel(amout: "", des: "", date: Date(), debt: false)
+    
     @State var contact : Contact
+    
     var body: some View {
         Group{
             #if os(iOS)
@@ -87,7 +90,13 @@ struct NewTransactionMultiPlataformForm: View {
     var debtValue = [true, false]
     var body: some View {
         
-     
+        Picker("Type", selection: $transactionModel.debt){
+            ForEach(0..<debtOptions.count){ index in
+                Text(LocalizedStringKey(debtOptions[index]))
+                    .tag(debtValue[index])
+            }
+        }.pickerStyle(SegmentedPickerStyle())
+        
         DatePicker("Date", selection: $transactionModel.date)
             .datePickerStyle(GraphicalDatePickerStyle())
         Group{
@@ -102,12 +111,7 @@ struct NewTransactionMultiPlataformForm: View {
         #endif
         
         
-        Picker("Type", selection: $transactionModel.debt){
-            ForEach(0..<debtOptions.count){ index in
-                Text(LocalizedStringKey(debtOptions[index]))
-                    .tag(debtValue[index])
-            }
-        }.pickerStyle(SegmentedPickerStyle())
+        
         
         Section{
             #if os(iOS)

@@ -56,7 +56,7 @@ struct ContactsList: View {
                     
                     ToolbarItem(placement: .primaryAction ){
                   
-                            Label("Add", systemImage: "person.crop.circle.badge.plus")
+                            Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor) 
                                 .onTapGesture {
                                     showingNewContactForm.toggle()

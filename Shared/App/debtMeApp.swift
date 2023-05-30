@@ -21,6 +21,5 @@ struct debtMeApp: App {
                 .environmentObject(userPreferences)
                 .navigationTitle("")
         }
-        //.windowStyle(HiddenTitleBarWindowStyle())
     }
 }

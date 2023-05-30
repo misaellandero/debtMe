@@ -34,26 +34,37 @@ struct TransactionsRow: View {
                 .font(.caption)
                 .padding(.vertical,1)
                 HStack{
-                    Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe They"))
-                        .strikethrough(transaction.settled)
-                    Image(systemName: transaction.debt ? "dollarsign.square.fill" :"dollarsign.square")
-                        .foregroundColor(dolarIconColor)
-                    Text("$" + String(format: "%.2f",  transaction.amount))
-                        .strikethrough(transaction.settled)
-                    Spacer()
-                    Text(transaction.settled ?  "Already paid" : "Not paid" )
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                        .padding(4)
-                        .font(.caption)
-                        .background(transaction.settled ? Color.green : Color.red )
-                        .cornerRadius(20)
-                }
-                if transaction.wrappedDes != "No details provided" {
-                    HStack{
+                    if transaction.wrappedDes != "No details provided" {
                         Text(transaction.wrappedDes)
                             .foregroundColor(.secondary)
                         Spacer()
+                        Text(transaction.settled ?  "Already paid" : "Not paid" )
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .padding(4)
+                            .font(.caption)
+                            .background(transaction.settled ? Color.green : Color.red )
+                            .cornerRadius(20)
+                    }
+                }
+                HStack{
+                    Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe They"))
+                        .strikethrough(transaction.settled)
+                    Spacer()
+                    Text(transaction.amount.toCurrencyString())
+                        .strikethrough(transaction.settled)
+                        .foregroundColor(dolarIconColor)
+                   
+                }
+                if transaction.totalBalance > 0  {
+                    Divider()
+                    HStack{
+                        
+                            Text(LocalizedStringKey("Already paid"))
+                            Spacer()
+                            Text(transaction.totalPayments.toCurrencyString())
+                            
+                        
                     }
                 }
                 
@@ -70,7 +81,7 @@ struct TransactionsRow: View {
         }
         // They own us and and already pay us
         else if transaction.debt && transaction.settled {
-            return Color.orange
+            return Color.green
         }
         // we own they and havent pay
         else if !transaction.debt && !transaction.settled {

@@ -44,7 +44,7 @@ struct PaymentsTransactionsList: View {
                 Text(transaction.wrappedDes)
             }
             ToolbarItem(placement:.principal){
-                Text("\(Image(systemName: "dollarsign.square")) Summary")
+                Text("\(Image(systemName: "folder")) Summary")
             }
         }
         .navigationBarItems(
@@ -64,7 +64,7 @@ struct PaymentsTransactionsList: View {
             }
             
             ToolbarItem(placement: .automatic ){
-                Label("Add", systemImage: "tray.and.arrow.down.fill")
+                Label("Add", systemImage: "plus.circle.fill")
                     .foregroundColor(.accentColor)
                     .onTapGesture {
                         showAddPayment.toggle()

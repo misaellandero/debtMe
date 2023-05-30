@@ -13,7 +13,7 @@ struct PaymentNewForm: View {
     @Environment(\.presentationMode) var presentationMode
     
 
-    @State var paymentModel = PaymentModel(amout: "0.0", note: "", date: Date())
+    @State var paymentModel = PaymentModel(amout: "", note: "", date: Date())
     @State var transaction : Transaction
     var body: some View {
         Group{
@@ -43,16 +43,12 @@ struct PaymentNewForm: View {
                 )
             }
             #elseif os(macOS)
-            NavigationView(){
                 List{
-                    Text("\(Image(systemName: "dollarsign.square.fill")) New") 
+                    Text("New") 
                     PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
                         .padding()
                 }
-            }
-            
-            .frame(width: 300, height: 220)
-            
+                .frame(width: 400, height: 500)
             
             #endif
         }
@@ -63,6 +59,7 @@ struct PaymentNewForm: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
+    
     func savePayment(){
         let payment = Payment(context: moc)
         payment.id = UUID()
@@ -71,6 +68,7 @@ struct PaymentNewForm: View {
         payment.amount = paymentModel.amountNumber
         payment.transaction = transaction
         
+        //update balance
         try? self.moc.save()
         
         closeView()
@@ -87,19 +85,18 @@ struct PaymentMultiplatformForm: View {
     var closeView : () -> Void
     
     var body: some View {
-        ZStack{
-            VStack{
-                DatePicker("Date", selection: $paymentModel.date)
-                TextField("Note", text: $paymentModel.note)
-                TextField("Amount", text: $paymentModel.amout)
-                #if os(iOS)
-                    .keyboardType(.decimalPad)
+        Section{
+            DatePicker("Date", selection: $paymentModel.date)
+                .datePickerStyle(GraphicalDatePickerStyle())
+            TextField("Note", text: $paymentModel.note)
+            TextField("Amount", text: $paymentModel.amout)
+            #if os(iOS)
+            .keyboardType(.decimalPad)
+            #endif
+        }
+                #if os(macOS)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 #endif
-                Spacer()
-            }
-            
-            VStack{
-                Spacer()
                 Section{
                     #if os(iOS)
                     Button(action: savePayment){
@@ -117,8 +114,6 @@ struct PaymentMultiplatformForm: View {
                     HStack{
                         Button(action: closeView){
                             Label("Cancel", systemImage: "xmark")
-                                      
-                                
                         }
                         .accentColor(.red)
                         Spacer()
@@ -129,11 +124,9 @@ struct PaymentMultiplatformForm: View {
                     }
                     #endif
                 }
-            }
-        }
-        
-       
-        
+            
+      
+         
         
     }
     

@@ -38,13 +38,13 @@ struct TotalsView: View {
                 
                DebtCoverView(total:amount, current:current)
                         .frame(height:50)
+                        .animation(.easeOut(duration: 1.5))
             }
             .padding()
             .background(Material.ultraThinMaterial)
             .cornerRadius(10)
         }
         .padding()
-        .animation(.easeIn)
     }
 }
  
@@ -68,14 +68,12 @@ struct DebtCoverView: View {
                 .stroke(Color.green, lineWidth: 10)
                 .rotationEffect(.degrees(-90))
                 
-            if #available(iOS 16.0, *) {
+            Group{
                 Text(String(format: "%.0f%%", percentage * 100))
-                    .animation(.default)
-                    .bold()
-            } else {
-                Text(String(format: "%.0f%%", percentage * 100))
-                    .animation(.default)
+                    .animation(.default) 
             }
-        }.animation(.easeIn)
+            .font(Font.caption.weight(.bold))
+            .padding()
+        }
     }
 }

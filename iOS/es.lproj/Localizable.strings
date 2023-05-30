@@ -8,23 +8,11 @@
 "%@ %@" = "%1$@ %2$@";
 
 /* No comment provided by engineer. */
-"%@ Contacts" = "%@ Contactos";
-
-/* No comment provided by engineer. */
-"%@ New" = "%@ Nuevo";
-
-/* No comment provided by engineer. */
 "%@ Summary" = "Resumen de %@";
 
 /* No comment provided by engineer. */
 "%@ Tags" = "Etiquetas de %@";
-
-/* No comment provided by engineer. */
-"%@ New" = "%@ Nuevo";
-
-/* <?xml version="1.0" encoding="UTF-8"?> /
-/ Localizable.strings */
-
+ 
 /* Bundle name */
 "CFBundleName" = "debtMe";
 
@@ -34,7 +22,7 @@
 "%@ New" = "%@ Nuevo";
 "%@ Summary" = "%@ Resumen";
 "%@ Tags" = "%@ Etiquetas";
-"" = "*";
+
 "Amount" = "Monto";
 "Are you sure?\n You won't be able to retrieve this information later." = "¿Estás seguro?\nNo podrás recuperar esta información más tarde.";
 "Balance" = "Saldo";
@@ -59,3 +47,8 @@
 "Description" = "Descripción";
 "Note" = "Nota";
 "Payment" = "Pago";
+"Paid in" = "Pagado el";
+"Already paid" = "Pagado";
+"Not paid" = "No pagado";
+"Contacts" = "Contactos";
+"Settings" = "Ajustes";

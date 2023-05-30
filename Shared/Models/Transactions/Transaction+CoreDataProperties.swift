@@ -45,9 +45,14 @@ extension Transaction {
     public var wrappedDateCreation : Date {
         dateCreation ?? Date()
     }
+    
     //Transaction Settled Date
-    public var wrappedDateSettled : Date {
-        dateSettled ?? Date()
+    public var wrappedDateSettled: Date {
+        if let lastPaymentDate = paymentsArray.first?.wrappedDateCreation {
+            return lastPaymentDate
+        } else {
+            return dateSettled ?? Date()
+        }
     }
     
     // MARK: - Formated Dates
@@ -70,6 +75,29 @@ extension Transaction {
        
         return contact?.wrappedName ?? "Unknown"
     }
+    
+    //Paymenys
+    public var totalPayments : Double {
+        let sum = paymentsArray
+            .map { $0.amount }
+            .reduce(0, +)
+        return sum
+    }
+    
+    //Balance
+    public var totalBalance : Double {
+        let sum = paymentsArray
+            .map { $0.amount }
+            .reduce(0, +)
+        let balance = amount - sum
+        
+        if balance <= 0 {
+            settled = true
+        }
+        
+        return balance
+    }
+    
     
     // MARK: - Array Payments
     public var paymentsArray: [Payment] {

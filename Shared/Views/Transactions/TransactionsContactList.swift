@@ -26,7 +26,6 @@ struct TransactionsContactList: View {
             List{
                 Section(){
                     ContactsRow(contact: contact)
-                        .environment(\.managedObjectContext, self.moc)
                 }
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
                     TransactionsRow(transaction: transaction) 
@@ -45,11 +44,8 @@ struct TransactionsContactList: View {
             )
             .toolbar {
                 ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "dollarsign.square")) Summary")
+                    Text("\(Image(systemName: "folder")) Summary")
                 }
-            } 
-            .sheet(isPresented: $showAddTransaction){
-                TransactionsNewForm(contact: contact)
             }
         #elseif os(macOS)
             Section(){
@@ -60,25 +56,27 @@ struct TransactionsContactList: View {
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
                     TransactionsRow(transaction: transaction)
                 }
+                .onDelete(perform: deleteItem)
             }
             .toolbar {
                 ToolbarItem(placement:.automatic){
-                    Text("\(Image(systemName: "dollarsign.square")) Summary")
+                    Text("\(Image(systemName: "folder")) Summary")
                 }
                 
                 ToolbarItem(placement: .automatic ){
               
-                        Label("Add", systemImage: "doc.badge.plus")
+                        Label("Add", systemImage: "plus.circle.fill")
                             .foregroundColor(.accentColor) 
                             .onTapGesture {
                                 showAddTransaction.toggle()
                             }
                 }
             }
-            .sheet(isPresented: $showAddTransaction){
-                TransactionsNewForm(contact: contact)
-            }
         #endif
+        }
+        
+        .sheet(isPresented: $showAddTransaction){
+            TransactionsNewForm(contact: contact)
         }
     }
     
