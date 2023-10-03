@@ -3,12 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		1304296929EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
+		132B86092ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
+		132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
+		132B860C2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
+		132B860D2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
+		132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */; };
+		132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */; };
 		133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
 		133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
@@ -16,6 +22,14 @@
 		13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB129F642B7001C0577 /* InfoPlist.strings */; };
 		13465FB629F642B7001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
 		13465FB729F64455001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
+		13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
+		13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
+		13874D4A2ACBE0FA007B8FE3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */; };
+		13874D4C2ACBE0FF007B8FE3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13874D4B2ACBE0FF007B8FE3 /* ConfettiSwiftUI */; };
+		13874D532ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */; };
+		13874D542ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */; };
+		13874D552ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */; };
+		13874D562ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */; };
 		138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
 		138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
 		1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
@@ -32,6 +46,8 @@
 		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
 		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		13C73BFE2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */; };
+		13C73BFF2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */; };
 		13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
 		13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
 		13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
@@ -106,8 +122,14 @@
 
 /* Begin PBXFileReference section */
 		1304296829EF36BA001203D3 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TotalsView.swift; path = Shared/App/Extensions/TotalsView.swift; sourceTree = SOURCE_ROOT; };
+		132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPaymentView.swift; sourceTree = "<group>"; };
+		132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelReset.swift; sourceTree = "<group>"; };
+		132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelPayAll.swift; sourceTree = "<group>"; };
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ConfettiPopSoundEffectLong.m4a; sourceTree = "<group>"; };
+		13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ConfettiPopSoundEffect.wav; sourceTree = "<group>"; };
 		138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExtension.swift; sourceTree = "<group>"; };
 		1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Payment+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -116,6 +138,7 @@
 		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
 		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
+		13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListFilter.swift; sourceTree = "<group>"; };
 		13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSFRounder.swift; sourceTree = "<group>"; };
 		13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelAdd.swift; sourceTree = "<group>"; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
@@ -169,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13874D4A2ACBE0FA007B8FE3 /* ConfettiSwiftUI in Frameworks */,
 				7F70A26125FEBC8800455AB0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13874D4C2ACBE0FF007B8FE3 /* ConfettiSwiftUI in Frameworks */,
 				7F70A26325FEBCA100455AB0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,6 +209,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13874D502ACBEB59007B8FE3 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */,
+				13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		1399AD582999539A00C87C3D /* Payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +255,10 @@
 			children = (
 				13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */,
 				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
+				132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */,
+				132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */,
+				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
+				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -282,6 +320,7 @@
 		7F70A21925FEB1EE00455AB0 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				13874D502ACBEB59007B8FE3 /* Sounds */,
 				7F70A24625FEBAF600455AB0 /* App */,
 				7F70A28825FED13100455AB0 /* ViewModel */,
 				7F70A24525FEBAF100455AB0 /* Views */,
@@ -462,6 +501,7 @@
 				7F37A91E25FF081F0049D648 /* TransactionsRow.swift */,
 				7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */,
 				7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */,
+				13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -489,6 +529,9 @@
 			dependencies = (
 			);
 			name = "debtMe (iOS)";
+			packageProductDependencies = (
+				13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */,
+			);
 			productName = "debtMe (iOS)";
 			productReference = 7F70A22425FEB1F700455AB0 /* debtMe.app */;
 			productType = "com.apple.product-type.application";
@@ -506,6 +549,9 @@
 			dependencies = (
 			);
 			name = "debtMe (macOS)";
+			packageProductDependencies = (
+				13874D4B2ACBE0FF007B8FE3 /* ConfettiSwiftUI */,
+			);
 			productName = "debtMe (macOS)";
 			productReference = 7F70A22C25FEB1F700455AB0 /* debtMe.app */;
 			productType = "com.apple.product-type.application";
@@ -537,6 +583,9 @@
 				es,
 			);
 			mainGroup = 7F70A21425FEB1ED00455AB0;
+			packageReferences = (
+				13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 7F70A22525FEB1F700455AB0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -553,8 +602,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70A23825FEB1F700455AB0 /* Assets.xcassets in Resources */,
+				13874D552ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav in Resources */,
 				13465FB629F642B7001C0577 /* Localizable.strings in Resources */,
 				13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */,
+				13874D532ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +615,8 @@
 			files = (
 				7F70A23925FEB1F700455AB0 /* Assets.xcassets in Resources */,
 				13465FB729F64455001C0577 /* Localizable.strings in Resources */,
+				13874D542ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */,
+				13874D562ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,10 +631,12 @@
 				1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */,
 				138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				7F70A29D25FEDC8E00455AB0 /* TabBarView.swift in Sources */,
+				13C73BFE2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */,
 				7F6063442610408F004834F1 /* ButtomBar.swift in Sources */,
 				1304296929EF36BA001203D3 /* TotalsView.swift in Sources */,
 				7F76A8E4260EF59C00033790 /* debtMe.xcdatamodeld in Sources */,
 				1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */,
+				132B86092ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */,
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
 				7F70A23225FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
@@ -594,6 +649,7 @@
 				1399AD662999B37300C87C3D /* PaymentRow.swift in Sources */,
 				7F76A903260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,
 				7F60634D261040D3004834F1 /* LabelPicker.swift in Sources */,
+				132B860C2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */,
 				7F70A24D25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
 				7FCD4253262D33ED00568EE7 /* TransactionsContactList.swift in Sources */,
 				7F60635326104AB5004834F1 /* LabelNewForm.swift in Sources */,
@@ -613,6 +669,7 @@
 				7F70A23625FEB1F700455AB0 /* Persistence.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
 				7F37A92A25FF19600049D648 /* Emojis.swift in Sources */,
+				13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */,
 				1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A8E9260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A28A25FED19300455AB0 /* UserPreferences.swift in Sources */,
@@ -620,6 +677,7 @@
 				7F70A27E25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				7F70A2B925FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				7F70A2C325FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
+				132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,10 +692,12 @@
 				7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */,
 				13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
 				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
+				132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
+				13C73BFF2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */,
 				1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */,
 				1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */,
 				7F70A26D25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
@@ -655,6 +715,9 @@
 				1399AD572999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A902260EFF1800033790 /* ContactLabel+CoreDataClass.swift in Sources */,
 				7F70A28B25FED19300455AB0 /* UserPreferences.swift in Sources */,
+				13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */,
+				132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */,
+				132B860D2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */,
 				7F37A93825FF1A490049D648 /* Emojis.swift in Sources */,
 				7F70A23525FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27F25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
@@ -813,7 +876,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230426;
+				CURRENT_PROJECT_VERSION = 20230828;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -839,7 +902,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230426;
+				CURRENT_PROJECT_VERSION = 20230828;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -868,7 +931,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20230426;
+				CURRENT_PROJECT_VERSION = 20230529;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -896,7 +959,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20230426;
+				CURRENT_PROJECT_VERSION = 20230529;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -945,6 +1008,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+		13874D4B2ACBE0FF007B8FE3 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		7F70A21A25FEB1EE00455AB0 /* debtMe.xcdatamodeld */ = {

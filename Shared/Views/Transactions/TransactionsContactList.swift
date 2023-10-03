@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TransactionsContactList: View {
+    
+    @State var filter : transactionsType = .all
+    
     @ObservedObject var contact : Contact
     
     //To hide view

@@ -20,11 +20,11 @@ struct SideBarView: View {
                     Label("Contacts", systemImage: "person.2.fill")
                 }
                 
-                NavigationLink(destination: Text("Debts"), tag: SectionSelected.debts, selection: $sectionSelected) {
+                NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
                 }
                 
-                NavigationLink(destination: Text("Loans"), tag: SectionSelected.loans, selection: $sectionSelected) {
+                NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                 }
                 

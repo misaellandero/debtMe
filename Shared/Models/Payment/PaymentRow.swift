@@ -73,10 +73,10 @@ struct PaymentRow: View {
                         
                     }
                     
-                    generateBarcode(from: payment.wrappedId.uuidString)?
+                    /*generateBarcode(from: payment.wrappedId.uuidString)?
                         .resizable()
                         .scaledToFit()
-                        .frame(height:100)
+                        .frame(height:100)*/
                     
                 }
                 .padding()

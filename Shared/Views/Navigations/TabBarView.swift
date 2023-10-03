@@ -22,13 +22,13 @@ struct TabBarView: View {
             }
             .tag(SectionSelected.contacts)
             // MARK: - Debts
-            Text("Debts")
+            TransactionsListFilter(isDebt:true)
                 .tabItem {
                     Label("Debts", systemImage: "dollarsign.square")
                 }
                 .tag(SectionSelected.debts)
             // MARK: - Loans
-            Text("Loans")
+            TransactionsListFilter(isDebt:false)
                 .tabItem {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                 }

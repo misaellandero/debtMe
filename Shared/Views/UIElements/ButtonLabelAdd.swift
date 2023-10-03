@@ -19,6 +19,9 @@ struct ButtonLabelAdd: View {
                 .padding()
             Spacer()
         }
+        .background(Color.accentColor )
+        .cornerRadius(10)
+        .padding()
     }
 }
 

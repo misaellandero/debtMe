@@ -31,7 +31,6 @@ struct PaymentNewForm: View {
                         }){
                             
                             Label("Return", systemImage: "xmark")
-                                //Image(systemName: "chevron.left.circle.fill")
                                 .foregroundColor(Color.gray)
                         }
                     ,
@@ -58,14 +57,23 @@ struct PaymentNewForm: View {
     func closeView(){
         self.presentationMode.wrappedValue.dismiss()
     }
-    
+     
     
     func savePayment(){
         let payment = Payment(context: moc)
         payment.id = UUID()
         payment.date = paymentModel.date
         payment.notes = paymentModel.note
-        payment.amount = paymentModel.amountNumber
+        if paymentModel.payAll {
+            if transaction.totalBalance > 0 {
+                payment.amount = transaction.totalBalance
+            }
+        }
+        else
+        {
+            payment.amount = paymentModel.amountNumber
+        }
+        
         payment.transaction = transaction
         
         //update balance
@@ -90,6 +98,8 @@ struct PaymentMultiplatformForm: View {
                 .datePickerStyle(GraphicalDatePickerStyle())
             TextField("Note", text: $paymentModel.note)
             TextField("Amount", text: $paymentModel.amout)
+                .disabled(paymentModel.payAll)
+            Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
             #if os(iOS)
             .keyboardType(.decimalPad)
             #endif
@@ -129,6 +139,21 @@ struct PaymentMultiplatformForm: View {
          
         
     }
+    
+    
+    func changePayAll(_ tag: Bool){
+      
+        var payAll = tag
+        
+        if payAll {
+            paymentModel.amout = "All"
+        } else {
+            paymentModel.amout = "0.0"
+        }
+            
+        
+    }
+    
     
 }
  

@@ -32,7 +32,7 @@ struct ContactsNewForm: View {
                             Button(action: saveContact){
                                 ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
                             }
-                            .background(Color.accentColor )
+                            
                         }
                     }
                      

@@ -29,7 +29,6 @@ struct LabelNewForm: View {
                         Button(action: saveTag){
                             ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
                         }
-                        .background(Color.accentColor)
                     }
                 }
                 .navigationBarItems(

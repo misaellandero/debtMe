@@ -13,6 +13,7 @@ struct PaymentModel {
     var amout : String
     var note : String
     var date : Date
+    var payAll = false
      
     var amountNumber : Double {
         let namount = Double(amout) ?? 0.0
