@@ -146,7 +146,7 @@ struct PaymentMultiplatformForm: View {
         var payAll = tag
         
         if payAll {
-            paymentModel.amout = "All"
+            paymentModel.amout = String(localized: LocalizedStringResource("All"))
         } else {
             paymentModel.amout = "0.0"
         }

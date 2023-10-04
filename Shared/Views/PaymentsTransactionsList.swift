@@ -25,13 +25,20 @@ struct PaymentsTransactionsList: View {
     @State var counterMoneylose = 0
     @State  var bombSoundEffect: AVAudioPlayer?
     
+    @State var alert = false
+    
+    @State var totalBalance = 0.0
+    
     var body: some View {
-      
-        ZStack{ 
-            ScrollView(.vertical){
-                
+    
+       ZStack{
+          
+           
+             ScrollView(.vertical){
+              
+        
                 if transaction.settled {
-                    if transaction.totalBalance != 0  {
+                    if totalBalance != 0  {
                         Button(action: {
                             setTranssationSeatled(settled: false)
                         }){
@@ -55,16 +62,18 @@ struct PaymentsTransactionsList: View {
                         
                         ForEach(transaction.paymentsArray, id : \.id){ payment in
                             PaymentRow(payment: payment, updateTotal: getTotals)
-                            // .fixedSize(horizontal: false, vertical: true)
+                           
                         }
                         
                         EmptyPaymentView()
                     })
                 }
-                 
+         
                 
             }
-            .onAppear(perform: getTotals)
+           
+          
+            .onAppear(perform: getTotals) 
             .padding(.top, 0.03)
             TotalsView(amount: transaction.amount, current: $paymentTotal)
             ConfettiView(counter: $counter)
@@ -88,6 +97,7 @@ struct PaymentsTransactionsList: View {
                     Label("Add", systemImage: "plus.circle.fill")
                         .foregroundColor(.accentColor)
                 }
+                .disabled(transaction.settled)
         )
         #elseif os(macOS)
         .padding()
@@ -102,12 +112,14 @@ struct PaymentsTransactionsList: View {
                     .onTapGesture {
                         showAddPayment.toggle()
                     }
+                    .disabled(transaction.settled)
             }
         }
         #endif
         .sheet(isPresented: $showAddPayment.onChange(modalUpdate)){
             PaymentNewForm(transaction: transaction)
         }
+      
        
     }
     
@@ -123,6 +135,8 @@ struct PaymentsTransactionsList: View {
             total += payment.amount
         }
         paymentTotal = total
+        
+        totalBalance = transaction.totalBalance
     }
     
     func checkforConffeti(){
@@ -140,8 +154,10 @@ struct PaymentsTransactionsList: View {
     
     func setTranssationSeatled(settled: Bool){
         transaction.settled = settled
+        transaction.contact?.sync.toggle()
         //update balance
-        try? self.moc.save()
+        try? self.moc.save() 
+    
         checkforConffeti()
     }
     

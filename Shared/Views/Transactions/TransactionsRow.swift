@@ -12,6 +12,7 @@ struct TransactionsRow: View {
     @State var showContactName = false
     var body: some View {
         NavigationLink(destination: PaymentsTransactionsList(transaction: transaction)){
+
             VStack{
                 HStack{
                     if showContactName {
@@ -54,17 +55,15 @@ struct TransactionsRow: View {
                     Text(transaction.amount.toCurrencyString())
                         .strikethrough(transaction.settled)
                         .foregroundColor(dolarIconColor)
-                   
+                    
                 }
-                if transaction.totalBalance > 0  {
+                
+                if transaction.settled {
                     Divider()
                     HStack{
-                        
-                            Text(LocalizedStringKey("Already paid"))
-                            Spacer()
-                            Text(transaction.totalPayments.toCurrencyString())
-                            
-                        
+                        Text(LocalizedStringKey("Already paid"))
+                        Spacer()
+                        Text(transaction.totalPayments.toCurrencyString())
                     }
                 }
                 

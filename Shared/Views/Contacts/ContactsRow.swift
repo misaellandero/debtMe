@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContactsRow: View {
     @ObservedObject var contact : Contact
+    //Model View de Coredate
+    @Environment(\.managedObjectContext) var moc
+    
     var body: some View {
       
         HStack{

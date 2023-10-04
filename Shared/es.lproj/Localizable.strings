@@ -52,3 +52,10 @@
 "Not paid" = "No pagado";
 "Contacts" = "Contactos";
 "Settings" = "Ajustes";
+
+
+"Nothing around here yet!" = "¡Nada por aqui!";
+"Toggle Status to Unpaid" = "Cambiar a no pagado";
+"Mark as Settled" = "Marcar como pagado";
+"Pay Full Settlement" = "Liquidar todo";
+"All" = "Todo";

@@ -320,6 +320,7 @@
 		7F70A21925FEB1EE00455AB0 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				13465FB429F642B7001C0577 /* Localizable.strings */,
 				13874D502ACBEB59007B8FE3 /* Sounds */,
 				7F70A24625FEBAF600455AB0 /* App */,
 				7F70A28825FED13100455AB0 /* ViewModel */,
@@ -346,7 +347,6 @@
 				7F2CD9F7260FE24100E67C00 /* UIKIT */,
 				7F2CD9F2260FE20600E67C00 /* Views */,
 				7F70A22725FEB1F700455AB0 /* Info.plist */,
-				13465FB429F642B7001C0577 /* Localizable.strings */,
 				13465FB129F642B7001C0577 /* InfoPlist.strings */,
 			);
 			path = iOS;
@@ -880,7 +880,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -906,7 +906,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -940,7 +940,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
@@ -968,7 +968,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;

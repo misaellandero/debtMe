@@ -21,7 +21,7 @@ extension Contact {
     @NSManaged public var name: String?
     @NSManaged public var label: ContactLabel?
     @NSManaged public var transactions: NSSet?
-    
+    @NSManaged public var sync: Bool
     // MARK: - Wrapped vars
     
     // Wrapped id

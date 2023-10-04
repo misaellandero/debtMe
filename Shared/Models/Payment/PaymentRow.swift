@@ -73,28 +73,23 @@ struct PaymentRow: View {
                         
                     }
                     
-                    /*generateBarcode(from: payment.wrappedId.uuidString)?
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height:100)*/
-                    
                 }
                 .padding()
                 Spacer()
+                    .alert(isPresented: $showingAlert){
+                        Alert(
+                            title: Text("Delete"),
+                            message: Text("Are you sure?\n You won't be able to retrieve this information later."),
+                            primaryButton: .destructive(Text("Delete")) {
+                                delete()
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
             }
             .background(TicketViewBackground())
             .frame(maxWidth:500)
-            .alert(isPresented: $showingAlert){
-                Alert(
-                    title: Text("Delete"),
-                    message: Text("Are you sure?\n You won't be able to retrieve this information later."),
-                    primaryButton: .destructive(Text("Delete")) {
-                        delete()
-                    },
-                    secondaryButton: .cancel()
-                )
-            }
-        
+           
     }
     
     func delete(){
