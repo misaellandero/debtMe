@@ -48,6 +48,7 @@ struct TransactionsRow: View {
                             .cornerRadius(20)
                     }
                 }
+                
                 HStack{
                     Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe They"))
                         .strikethrough(transaction.settled)
@@ -65,6 +66,8 @@ struct TransactionsRow: View {
                         Spacer()
                         Text(transaction.totalPayments.toCurrencyString())
                     }
+                } else {
+                    TotalsView(amount: transaction.amount, current: .constant(transaction.totalPayments))
                 }
                 
             }

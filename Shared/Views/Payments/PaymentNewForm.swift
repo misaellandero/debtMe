@@ -75,7 +75,7 @@ struct PaymentNewForm: View {
         }
         
         payment.transaction = transaction
-        
+        payment.transaction!.contact?.sync.toggle()
         //update balance
         try? self.moc.save()
         

@@ -94,6 +94,7 @@ struct PaymentRow: View {
     
     func delete(){
         self.moc.delete(payment)
+        payment.transaction?.contact?.sync.toggle()
         try? self.moc.save()
         updateTotal()
     }

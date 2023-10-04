@@ -74,7 +74,7 @@ struct TransactionsNewForm: View {
         newTransaction.des = transactionModel.des
         newTransaction.amount = transactionModel.amountNumber
         newTransaction.contact = contact
-        
+        newTransaction.contact?.sync.toggle()
         try? self.moc.save()
         
         closeView()
