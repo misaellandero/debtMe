@@ -17,6 +17,8 @@ struct PaymentRow: View {
     
     let updateTotal: () -> Void
     
+    @State var showEditPayment = false
+    
     var body: some View {
             VStack{
                 Spacer()
@@ -25,7 +27,9 @@ struct PaymentRow: View {
                         Text("Payment")
                             .font(.largeTitle)
                         HStack{
-                            Button(action: {}){
+                            Button(action: {
+                                showEditPayment.toggle()
+                            }){
                                 Image(systemName:"square.and.pencil" )
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -89,7 +93,15 @@ struct PaymentRow: View {
             }
             .background(TicketViewBackground())
             .frame(maxWidth:500)
+            .sheet(isPresented: $showEditPayment.onChange(modalUpdate)) {
+                PaymentNewForm(edition:true, payment:payment)
+            }
            
+    }
+    
+    
+    func modalUpdate(_ tag: Bool){
+        updateTotal()
     }
     
     func delete(){

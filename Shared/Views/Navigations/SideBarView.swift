@@ -13,9 +13,42 @@ struct SideBarView: View {
     @State private var isDefaultItemActive = true
     
     var body: some View {
-        NavigationView {
-            //Text("hi")
+      
+        NavigationSplitView {
             List(/*selection: $sectionSelected*/) {
+                NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
+                    Label("Contacts", systemImage: "person.2.fill")
+                }
+                
+                NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
+                    Label("Debts", systemImage: "dollarsign.square")
+                }
+                
+                NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
+                    Label("Loans", systemImage: "dollarsign.square.fill")
+                }
+                
+                NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
+                    Label("Settings", systemImage: "gear")
+                }
+            }
+            .toolbar{
+                ToolbarItem(placement:.navigation){
+                    Text("DebtMe")
+                }
+             }
+             
+          
+          } content: {
+              ContactsList()
+          } detail: {
+              EmptyPaymentView(empty: true)
+          }
+        
+             
+        
+       /* NavigationView {
+            List() {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
                 }
@@ -32,9 +65,10 @@ struct SideBarView: View {
                     Label("Settings", systemImage: "gear")
                 } 
             }
-            //.listStyle(SidebarListStyle())
+            .listStyle(SidebarListStyle())
+            .navigationTitle("DebtMe")
             .frame(minWidth: 150, idealWidth: 250, maxWidth: 350)
-            .toolbar{
+           /* .toolbar{
                 #if os(iOS)
                 ToolbarItem(placement:.principal){
                     Text("DebtMe")
@@ -43,34 +77,41 @@ struct SideBarView: View {
                 //Toggle Sidebar Button
                 ToolbarItem(placement: .navigation){
                     
-                    Text("\(Image(systemName: "sidebar.left"))")
-                        .onTapGesture {
-                            toggleSidebar()
-                        }
+                    toogleSideBarButton()
                 }
                 #endif
             }
-            
+            */
             
             Text("Detail view")
                 .frame(minWidth: 400)
+            
+            
             Text("Detail view")
                 .frame(idealWidth: 400)
-            #if  os(macOS)
+            
+            
             Text("Detail view")
                 .frame(idealWidth: 400)
-            #endif
-           
-            //.navigationTitle("DebtMe")
-        }
+        }*/
     }
     
-    // Toggle Sidebar Function
-    func toggleSidebar() {
-        #if os(macOS)
-            NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-        #endif
+   
+}
+
+struct toogleSideBarButton: View {
+    var body: some View {
+            Button(action: toggleSidebar, label: {
+                Image(systemName: "sidebar.left")
+            })
     }
+}
+
+// Toggle Sidebar Function
+func toggleSidebar() {
+    #if os(macOS)
+        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+    #endif
 }
 
 struct SideBarView_Previews: PreviewProvider {

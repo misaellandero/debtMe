@@ -20,9 +20,7 @@ struct TransactionsContactList: View {
     @Environment(\.managedObjectContext) var moc
     
     @State private var showAddTransaction = false
-    
-    #warning("Need to check way the row delete dont update")
-    
+     
     var body: some View {
         Group{
             #if os(iOS)
@@ -60,7 +58,7 @@ struct TransactionsContactList: View {
                     TransactionsRow(transaction: transaction)
                 }
                 .onDelete(perform: deleteItem)
-            }
+            } 
             .toolbar {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "folder")) Summary")

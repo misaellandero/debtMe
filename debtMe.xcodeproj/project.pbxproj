@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1304296929EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
+		131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
+		131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		132B86092ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
 		132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
 		132B860C2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
@@ -122,6 +124,7 @@
 
 /* Begin PBXFileReference section */
 		1304296829EF36BA001203D3 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TotalsView.swift; path = Shared/App/Extensions/TotalsView.swift; sourceTree = SOURCE_ROOT; };
+		131023662ACF289E00A910B2 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPaymentView.swift; sourceTree = "<group>"; };
 		132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelReset.swift; sourceTree = "<group>"; };
 		132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelPayAll.swift; sourceTree = "<group>"; };
@@ -441,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				7F70A27025FEC00F00455AB0 /* ColorExtension.swift */,
+				131023662ACF289E00A910B2 /* ViewExtension.swift */,
 				7F70A26B25FEBFDB00455AB0 /* BindingExtension.swift */,
 				7F70A27725FEC15600455AB0 /* DateFormatterExtension.swift */,
 				138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */,
@@ -665,6 +669,7 @@
 				7F37A92F25FF19AD0049D648 /* EmojiPicker.swift in Sources */,
 				7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */,
 				7F70A2B425FEF72500455AB0 /* ContactsList.swift in Sources */,
+				131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				7FCD425B262D3E2A00568EE7 /* TransactionModel.swift in Sources */,
 				7F70A23625FEB1F700455AB0 /* Persistence.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
@@ -691,6 +696,7 @@
 				7F70A2A325FEDC9D00455AB0 /* SideBarView.swift in Sources */,
 				7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */,
 				13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
+				131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
 				132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
@@ -880,6 +886,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -906,6 +913,7 @@
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -936,6 +944,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -964,6 +973,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

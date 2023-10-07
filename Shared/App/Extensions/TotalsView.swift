@@ -77,3 +77,25 @@ struct DebtCoverView: View {
         }
     }
 }
+
+struct TotalsViewRow: View {
+    
+    var amount : Double
+    @Binding var current : Double
+    var left : Double {
+        amount - current
+    }
+    
+    var body: some View {
+        HStack{
+            Text("Cover: ")
+            Spacer()
+            Text("\(current.toCurrencyString())")
+        }
+        HStack{
+            Text("Left: ")
+            Spacer()
+            Text("\(left.toCurrencyString())")
+        }
+    }
+}

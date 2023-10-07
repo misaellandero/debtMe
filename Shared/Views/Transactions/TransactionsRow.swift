@@ -67,7 +67,7 @@ struct TransactionsRow: View {
                         Text(transaction.totalPayments.toCurrencyString())
                     }
                 } else {
-                    TotalsView(amount: transaction.amount, current: .constant(transaction.totalPayments))
+                    TotalsViewRow(amount: transaction.amount, current: .constant(transaction.totalPayments))
                 }
                 
             }

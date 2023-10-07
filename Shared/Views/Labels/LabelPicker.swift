@@ -40,7 +40,8 @@ struct labelPicker: View {
                 }
             }
             .sheet(isPresented: $showFormLabel, content: {
-                LabelNewForm(showForm: $showFormLabel)
+                LabelNewForm(showForm: $showFormLabel) 
+                .environment(\.horizontalSizeClass, .compact)
             })
             #elseif os(macOS)
             List{

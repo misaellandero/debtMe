@@ -14,15 +14,18 @@ struct PaymentNewForm: View {
     
 
     @State var paymentModel = PaymentModel(amout: "", note: "", date: Date())
-    @State var transaction : Transaction
+    @State var transaction : Transaction?
+    var edition = false
+    @State var payment: Payment?
+    
     var body: some View {
         Group{
             #if os(iOS)
             NavigationView(){
                 List{
-                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
+                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
                 }
-                .navigationTitle(Text("\(Image(systemName: "dollarsign.square.fill")) New"))
+                .navigationTitle(Text("\(Image(systemName: "dollarsign.square.fill")) \(edition ? "Edit" : "New")"))
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarItems(
                     leading:
@@ -36,51 +39,92 @@ struct PaymentNewForm: View {
                     ,
                     trailing:
                         Button(action:savePayment){
-                            Label("Add", systemImage: "plus.circle.fill")
+                            Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                         }
                 )
             }
             #elseif os(macOS)
                 List{
-                    Text("New") 
-                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: savePayment, closeView: closeView)
+                    Text(edition ? "Edit" : "New")
+                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
                         .padding()
                 }
                 .frame(width: 400, height: 500)
             
             #endif
         }
+        .onAppear(perform: loadDataForEdit)
         
     }
     
     func closeView(){
         self.presentationMode.wrappedValue.dismiss()
     }
-     
     
-    func savePayment(){
-        let payment = Payment(context: moc)
-        payment.id = UUID()
+    func performSaveAcion(){
+        if edition {
+            editPayment()
+        } else {
+            savePayment()
+        }
+    }
+    
+    func loadDataForEdit(){
+        if edition {
+            if let payment {
+                paymentModel.amout = String(payment.amount)
+                paymentModel.date = payment.wrappedDateCreation
+                paymentModel.note = payment.wrappedNotes
+            }
+        }
+    }
+    
+    func editPayment(){
+        if let payment {
         payment.date = paymentModel.date
         payment.notes = paymentModel.note
         if paymentModel.payAll {
-            if transaction.totalBalance > 0 {
-                payment.amount = transaction.totalBalance
+            if payment.transaction!.totalBalance > 0 {
+                payment.amount = payment.transaction!.totalBalance
             }
         }
         else
         {
             payment.amount = paymentModel.amountNumber
         }
-        
-        payment.transaction = transaction
+            
         payment.transaction!.contact?.sync.toggle()
         //update balance
         try? self.moc.save()
-        
         closeView()
-        
+        }
+    }
+    
+    func savePayment(){
+        if let transaction {
+            let payment = Payment(context: moc)
+            payment.id = UUID()
+            payment.date = paymentModel.date
+            payment.notes = paymentModel.note
+            if paymentModel.payAll {
+                if transaction.totalBalance > 0 {
+                    payment.amount = transaction.totalBalance
+                }
+            }
+            else
+            {
+                payment.amount = paymentModel.amountNumber
+            }
+            
+            payment.transaction = transaction
+            payment.transaction!.contact?.sync.toggle()
+            //update balance
+            try? self.moc.save()
+            
+            closeView()
+            
+        }
     }
     
 }
@@ -91,7 +135,7 @@ struct PaymentMultiplatformForm: View {
     @Binding var paymentModel : PaymentModel
     var savePayment : () -> Void
     var closeView : () -> Void
-    
+    var edition = false
     var body: some View {
         Section{
             DatePicker("Date", selection: $paymentModel.date)
@@ -99,7 +143,9 @@ struct PaymentMultiplatformForm: View {
             TextField("Note", text: $paymentModel.note)
             TextField("Amount", text: $paymentModel.amout)
                 .disabled(paymentModel.payAll)
-            Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
+            if !edition {
+                Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
+            }
             #if os(iOS)
             .keyboardType(.decimalPad)
             #endif
