@@ -12,7 +12,7 @@ struct TransactionsNewForm: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     
-    @State var transactionModel = TransactionModel(amout: "", des: "", date: Date(), debt: false)
+    @State var transactionModel = TransactionModel(amout: "", des: "", notes: "", date: Date(), debt: false)
     
     @State var contact : Contact
     
@@ -72,6 +72,7 @@ struct TransactionsNewForm: View {
         newTransaction.dateCreation = transactionModel.date
         newTransaction.debt = transactionModel.debt
         newTransaction.des = transactionModel.des
+        newTransaction.notes = transactionModel.notes
         newTransaction.amount = transactionModel.amountNumber
         newTransaction.contact = contact
         newTransaction.contact?.sync.toggle()
@@ -90,17 +91,26 @@ struct NewTransactionMultiPlataformForm: View {
     var debtValue = [true, false]
     var body: some View {
         
-        Picker("Type", selection: $transactionModel.debt){
-            ForEach(0..<debtOptions.count){ index in
-                Text(LocalizedStringKey(debtOptions[index]))
-                    .tag(debtValue[index])
-            }
-        }.pickerStyle(SegmentedPickerStyle())
+   
+            Picker("Type", selection: $transactionModel.debt){
+                ForEach(0..<debtOptions.count){ index in
+                    Text(LocalizedStringKey(debtOptions[index]))
+                        .tag(debtValue[index])
+                }
+            }.pickerStyle(SegmentedPickerStyle())
         
-        DatePicker("Date", selection: $transactionModel.date)
-            .datePickerStyle(GraphicalDatePickerStyle())
-        Group{
+        
+        Section{
+            DatePicker("Date", selection: $transactionModel.date)
+            #if os(macOS)
+                .datePickerStyle(GraphicalDatePickerStyle())
+            #else
+                .datePickerStyle(CompactDatePickerStyle())
+            #endif
+        }
+        Section{
             TextField("Description", text: $transactionModel.des)
+            TextField("Notes", text: $transactionModel.notes)
             TextField("Amount", text: $transactionModel.amout)
             #if os(iOS)
                 .keyboardType(.decimalPad)

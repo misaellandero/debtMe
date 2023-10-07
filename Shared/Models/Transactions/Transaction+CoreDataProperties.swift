@@ -21,6 +21,7 @@ extension Transaction {
     @NSManaged public var dateSettled: Date?
     @NSManaged public var debt: Bool
     @NSManaged public var des: String?
+    @NSManaged public var notes: String?
     @NSManaged public var id: UUID?
     @NSManaged public var settled: Bool
     @NSManaged public var contact: Contact?
@@ -36,6 +37,11 @@ extension Transaction {
     // Wrapped des
     public var wrappedDes: String {
         des ?? "No details provided"
+    }
+    
+    // Wrapped des
+    public var wrappedNotes: String {
+        notes ?? ""
     }
     
     

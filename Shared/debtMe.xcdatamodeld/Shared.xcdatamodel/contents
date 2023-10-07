@@ -28,6 +28,7 @@
         <attribute name="debt" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="des" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="settled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="transactions" inverseEntity="Contact"/>
         <relationship name="payments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="transaction" inverseEntity="Payment"/>

@@ -145,10 +145,10 @@ struct PaymentMultiplatformForm: View {
                 .disabled(paymentModel.payAll)
             if !edition {
                 Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
+                #if os(iOS)
+                .keyboardType(.decimalPad)
+                #endif
             }
-            #if os(iOS)
-            .keyboardType(.decimalPad)
-            #endif
         }
                 #if os(macOS)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

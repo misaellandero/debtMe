@@ -10,6 +10,7 @@ import Foundation
 struct TransactionModel {
     var amout : String
     var des : String
+    var notes : String
     var date : Date
     var debt : Bool
      

@@ -35,8 +35,26 @@ struct PaymentsTransactionsList: View {
           
            
              ScrollView(.vertical){
-              
-        
+               
+                 Section{
+                     HStack{
+                         Image(systemName: "calendar.badge.clock")
+                         Text(transaction.transactionCreationDateFormated)
+                         
+                         if transaction.settled {
+                             Spacer()
+                             Text("Paid in")
+                             Image(systemName: "calendar.badge.clock")
+                             Text(transaction.transactionSettledDateFormated)
+                         }
+                     }
+                     .font(.caption)
+                     
+                     Text(transaction.wrappedNotes)
+                         .multilineTextAlignment(.leading)
+                     
+                 }
+                 
                 if transaction.settled {
                     if totalBalance != 0  {
                         Button(action: {

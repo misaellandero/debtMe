@@ -72,7 +72,7 @@ struct TransactionsRow: View {
                 
             }
             .font(Font.system(.body, design: .rounded).weight(.semibold))
-            .padding() 
+            .padding()
         }
     }
     
