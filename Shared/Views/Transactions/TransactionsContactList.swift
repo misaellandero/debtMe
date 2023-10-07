@@ -86,7 +86,7 @@ struct TransactionsContactList: View {
         for offset in offsets {
             let transaction =  self.contact.transactionsArray[offset]
             
-            //Delete payment related 
+            //Delete payment related
             for payment in transaction.paymentsArray {
                 self.moc.delete(payment)
             }

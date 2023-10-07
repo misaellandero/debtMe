@@ -25,7 +25,7 @@ struct PaymentNewForm: View {
                 List{
                     PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
                 }
-                .navigationTitle(Text("\(Image(systemName: "dollarsign.square.fill")) \(edition ? "Edit" : "New")"))
+                .navigationTitle(LocalizedStringKey(edition ? "Edit" : "New"))
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarItems(
                     leading:
@@ -158,7 +158,7 @@ struct PaymentMultiplatformForm: View {
                     Button(action: savePayment){
                         HStack{
                             Spacer()
-                            Label("Add", systemImage: "plus.circle.fill")
+                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.white)
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                                 .padding()
@@ -174,7 +174,7 @@ struct PaymentMultiplatformForm: View {
                         .accentColor(.red)
                         Spacer()
                         Button(action: savePayment){
-                            Label("Add", systemImage: "plus.circle.fill")
+                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
                         }
                         .accentColor(.accentColor)
                     }
