@@ -12,6 +12,8 @@ struct ContactsRow: View {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
     
+    var showDetails = false
+    
     var body: some View {
       
         HStack{
@@ -36,12 +38,29 @@ struct ContactsRow: View {
                             .cornerRadius(10)
                     }
                 }
+                 
+                if showDetails {
+                    HStack{
+                        Text(LocalizedStringKey("They Owes me"))
+                        Spacer()
+                        Text(contact.totalDebut.toCurrencyString())
+                            .foregroundColor(.blue)
+                        
+                    }
+                    HStack{
+                        Text(LocalizedStringKey("I Owe They"))
+                        Spacer()
+                        Text(contact.totalOwn.toCurrencyString())
+                            .foregroundColor(.orange)
+                        
+                    }
+                }
                 
-                HStack{
-                    Image(systemName: "banknote.fill")
+                HStack{ 
                     Text("Balance")
-                    Text(contact.balance.toCurrencyString())
                     Spacer()
+                    Text(contact.balance.toCurrencyString())
+                   
                 }
                 
             }

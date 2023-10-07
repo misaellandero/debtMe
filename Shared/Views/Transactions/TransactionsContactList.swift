@@ -26,7 +26,7 @@ struct TransactionsContactList: View {
             #if os(iOS)
             List{
                 Section(){
-                    ContactsRow(contact: contact)
+                    ContactsRow(contact: contact, showDetails: true)
                 }
                 ForEach(contact.transactionsArray, id : \.id){ transaction in
                     TransactionsRow(transaction: transaction) 
@@ -50,7 +50,7 @@ struct TransactionsContactList: View {
             }
         #elseif os(macOS)
             Section(){
-                ContactsRow(contact: contact)
+                ContactsRow(contact: contact, showDetails: true)
             }
             List{
                 
