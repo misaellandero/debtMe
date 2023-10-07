@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactsNewForm: View {
     
-    @State var contact : ContactModel
+    @State var contact = ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1)
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -18,19 +18,23 @@ struct ContactsNewForm: View {
     
     @State var labelContact: ContactLabel?
     
+    var edition = false
+    
+    @State var contactToEdit : Contact?
+    
     var body: some View {
             Group{
                 #if os(iOS)
                 NavigationView{
                     ZStack{
                         List{
-                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
+                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
                         }
                         .listStyle(InsetGroupedListStyle())
                         VStack{
                             Spacer()
-                            Button(action: saveContact){
-                                ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
+                            Button(action: performSaveAcion){
+                                ButtonLabelAdd(label: edition ? "Save": "Add" , systemImage: "plus.circle.fill", foreground: .white)
                             }
                             
                         }
@@ -44,8 +48,8 @@ struct ContactsNewForm: View {
                             LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
                         },
                     trailing:
-                        Button(action:saveContact){
-                            LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
+                        Button(action:performSaveAcion){
+                            LabelSFRounder(label: edition ? "Save": "Add" , systemImage: "plus.circle.fill", foreground: .accentColor)
                         }
                 )
                 .toolbar{
@@ -56,14 +60,44 @@ struct ContactsNewForm: View {
                 }
                 #elseif os(macOS)
                 List{
-                    Text("\(Image(systemName: "person.2.fill")) New") 
-                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: saveContact)
+                    Text(edition ? "Edit" : "New")
+                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
                 }
                 .frame(width: 300, height: 170)
                 #endif
             }
+            .onAppear(perform: loadDataForEdit)
        
         
+    }
+    
+    func loadDataForEdit(){
+        if edition {
+            if let contactToEdit {
+                contact.emoji = contactToEdit.wrappedEmoji
+                contact.name = contactToEdit.wrappedName
+                labelContact = contactToEdit.label
+            }
+        }
+    }
+    
+    func editContact(){
+        if let contactToEdit {
+            contactToEdit.name =  contact.name
+            contactToEdit.emoji = contact.emoji
+            contactToEdit.label = self.labelContact
+            try? self.moc.save()
+            self.presentationMode.wrappedValue.dismiss()
+        }
+        
+    }
+    
+    func performSaveAcion(){
+        if edition {
+            editContact()
+        } else {
+            saveContact()
+        }
     }
     
     func saveContact(){

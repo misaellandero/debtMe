@@ -56,7 +56,7 @@ struct ContactsRow: View {
                     }
                 }
                 
-                HStack{ 
+                HStack{
                     Text("Balance")
                     Spacer()
                     Text(contact.balance.toCurrencyString())

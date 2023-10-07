@@ -20,10 +20,10 @@ struct TransactionsContactList: View {
     @Environment(\.managedObjectContext) var moc
     
     @State private var showAddTransaction = false
-     
+    @State private var showEditContact = false
     var body: some View {
         Group{
-            #if os(iOS)
+           
             List{
                 Section(){
                     ContactsRow(contact: contact, showDetails: true)
@@ -33,52 +33,45 @@ struct TransactionsContactList: View {
                     
                 }.onDelete(perform: deleteItem)
             }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarItems(
-                trailing:
-                    Button(action:{
-                        showAddTransaction.toggle()
-                    }){
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor) 
-                    }
-            )
-            .toolbar {
-                ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "folder")) Summary")
-                }
-            }
-        #elseif os(macOS)
-            Section(){
-                ContactsRow(contact: contact, showDetails: true)
-            }
-            List{
-                
-                ForEach(contact.transactionsArray, id : \.id){ transaction in
-                    TransactionsRow(transaction: transaction)
-                }
-                .onDelete(perform: deleteItem)
-            } 
             .toolbar {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "folder")) Summary")
                 }
+                 
                 
                 ToolbarItem(placement: .automatic ){
-              
+                    
+                    Button(action:{
+                        showEditContact.toggle()
+                    }){
+                        Label("Edit", systemImage: "square.and.pencil")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                
+                ToolbarItem(placement: .automatic ){
+                    
+                    Button(action:{
+                        showAddTransaction.toggle()
+                    }){
                         Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor) 
-                            .onTapGesture {
-                                showAddTransaction.toggle()
-                            }
+                            .foregroundColor(.accentColor)
+                    }
                 }
             }
-        #endif
+            .sheet(isPresented: $showAddTransaction){
+                TransactionsNewForm(contact: contact)
+            }
+            .sheet(isPresented: $showEditContact){
+                ContactsNewForm(edition: true, contactToEdit: contact)
+            }
+            #if os(iOS)
+            .listStyle(InsetGroupedListStyle())
+            #endif
+           
+      
         }
-        
-        .sheet(isPresented: $showAddTransaction){
-            TransactionsNewForm(contact: contact)
-        }
+     
     }
     
     func deleteItem(at offsets: IndexSet) {

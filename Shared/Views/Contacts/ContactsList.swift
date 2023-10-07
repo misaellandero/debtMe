@@ -55,12 +55,12 @@ struct ContactsList: View {
                     }
                     
                     ToolbarItem(placement: .primaryAction ){
-                  
+                        Button(action:{
+                            showingNewContactForm.toggle()
+                        }){
                             Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor) 
-                                .onTapGesture {
-                                    showingNewContactForm.toggle()
-                                }
+                                .foregroundColor(.accentColor)
+                        }
                     }
                 }
           
@@ -68,7 +68,7 @@ struct ContactsList: View {
             #endif
         }
         .sheet(isPresented: $showingNewContactForm){ 
-            ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1))
+            ContactsNewForm()
         }
     }
     
