@@ -102,7 +102,7 @@ struct ContactsRows : View  {
                return Array(contacts)
            } else {
                return contacts.filter { contact in
-                   contact.name?.localizedCaseInsensitiveContains(searchQuery) == true  
+                   contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
                }
            }
        }
