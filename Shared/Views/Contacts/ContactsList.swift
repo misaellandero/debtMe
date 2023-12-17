@@ -14,15 +14,17 @@ struct ContactsList: View {
     
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
- 
-    #warning("Need to check way update is not showing")
     
+    @State var searchQuery = ""
+     
     var body: some View {
         Group{
             #if os(iOS) 
+            ZStack{
                 List{
-                    ContactsRows()
+                    ContactsRows(searchQuery: $searchQuery)
                 }
+                .searchable(text: $searchQuery)
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(
@@ -43,15 +45,23 @@ struct ContactsList: View {
                         Text("\(Image(systemName: "person.2.fill")) Contacts")
                     }
                 }
+            }
+             
             #elseif os(macOS)
         
                 List{
-                    ContactsRows()
+                    ContactsRows(searchQuery: $searchQuery)
                 }
                 .toolbar {
                     
                     ToolbarItem(placement: .navigation ){
                         Text("\(Image(systemName: "person.2.fill")) Contacts")
+                           
+                    }
+                     
+                    ToolbarItem(placement: .navigation ){
+                        SearchTextField(searchQuery: $searchQuery)
+                            
                     }
                     
                     ToolbarItem(placement: .primaryAction ){
@@ -63,11 +73,12 @@ struct ContactsList: View {
                         }
                     }
                 }
+            
           
             
             #endif
         }
-        .sheet(isPresented: $showingNewContactForm){ 
+        .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm()
         }
     }
@@ -82,25 +93,56 @@ struct ContactsRows : View  {
     @Environment(\.managedObjectContext) var moc
   
     @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
+     
+    @Binding var searchQuery : String
+    
+    // Computed property to filter contacts based on search query
+       var filteredContacts: [Contact] {
+           if searchQuery.isEmpty {
+               return Array(contacts)
+           } else {
+               return contacts.filter { contact in
+                   contact.name?.localizedCaseInsensitiveContains(searchQuery) == true  
+               }
+           }
+       }
     
     var body: some View {
-        ForEach(contacts, id: \.id){ contact in
-            NavigationLink(destination: TransactionsContactList(contact: contact) ){
+        
+        /*Section {
+            SearchTextField(searchQuery: $searchQuery)
+                .padding()
+        }*/
+        
+        ForEach(filteredContacts, id: \.id) { contact in
+            NavigationLink(destination: TransactionsContactList(contact: contact)) {
                 ContactsRow(contact: contact)
                     .environment(\.managedObjectContext, self.moc)
             }
-        }.onDelete(perform: deleteItem)
+        }
+        .onDelete(perform: deleteItem)
     }
     
+ 
+    
     func deleteItem(at offsets: IndexSet) {
-        
-        for offset in offsets {
-            let contact =  self.contacts[offset]
-            self.moc.delete(contact)
-        }
-         
-        try? self.moc.save()
-        
+           for offset in offsets {
+               let contact = self.filteredContacts[offset]
+               
+               for transaction in contact.transactionsArray {
+                  
+                   for payment in transaction.paymentsArray {
+                       //Delete payment related
+                       self.moc.delete(payment)
+                   }
+                   //Delete transactions related
+                   self.moc.delete(transaction)
+               }
+               
+            
+               self.moc.delete(contact)
+           }
+           try? self.moc.save()
        }
 }
 

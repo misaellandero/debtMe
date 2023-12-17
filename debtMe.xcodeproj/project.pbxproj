@@ -54,6 +54,8 @@
 		13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
 		13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
 		13C9DFA229F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
+		13DC6CDC2B2E8060007361A8 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */; };
+		13DC6CDD2B2E8060007361A8 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */; };
 		7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		7F37A92325FF13080049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
 		7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
@@ -144,6 +146,7 @@
 		13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListFilter.swift; sourceTree = "<group>"; };
 		13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSFRounder.swift; sourceTree = "<group>"; };
 		13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelAdd.swift; sourceTree = "<group>"; };
+		13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
 		7F37A92225FF13080049D648 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		7F37A92925FF19600049D648 /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
@@ -262,6 +265,7 @@
 				132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */,
 				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
 				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
+				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -672,6 +676,7 @@
 				131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				7FCD425B262D3E2A00568EE7 /* TransactionModel.swift in Sources */,
 				7F70A23625FEB1F700455AB0 /* Persistence.swift in Sources */,
+				13DC6CDC2B2E8060007361A8 /* SearchTextField.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
 				7F37A92A25FF19600049D648 /* Emojis.swift in Sources */,
 				13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */,
@@ -715,6 +720,7 @@
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
 				7F70A2B525FEF72500455AB0 /* ContactsList.swift in Sources */,
 				7F76A8EC260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
+				13DC6CDD2B2E8060007361A8 /* SearchTextField.swift in Sources */,
 				7F60635426104AB5004834F1 /* LabelNewForm.swift in Sources */,
 				7F70A23725FEB1F700455AB0 /* Persistence.swift in Sources */,
 				7F70A29325FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
