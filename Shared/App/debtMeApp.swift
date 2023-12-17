@@ -19,8 +19,7 @@ struct debtMeApp: App {
               ContentView()
                 .environment(\.managedObjectContext, coreData.persistentContainer.viewContext)
                 .environmentObject(userPreferences)
-                .navigationTitle("")
-                .font(Font.system(.headline, design: .rounded).weight(.black))
+                .navigationTitle("") 
         }
     }
 }

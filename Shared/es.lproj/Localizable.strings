@@ -27,13 +27,13 @@
 "Are you sure?\n You won't be able to retrieve this information later." = "¿Estás seguro?\nNo podrás recuperar esta información más tarde.";
 "Balance" = "Saldo";
 "Chose An Emoji" = "Elige un Emoji";
-"Cover: " = "Pagado: ";
+"Cover " = "Pagado ";
 "DebtMe" = "DebtMe";
 "Debts" = "Deudas";
 "Delete" = "Borrar";
 "Detail view" = "Vista detallada";
 "Hello, World!" = "¡Hola, mundo!";
-"Left: " = "Restante: ";
+"Left " = "Restante ";
 "Loans" = "Préstamos";
 "Name" = "Nombre";
 "Nothing selected" = "Nada seleccionado";
@@ -42,7 +42,7 @@
 "Tag" = "Etiqueta";
 "Add" = "Agregar";
 "They Owes me" = "Me Debe";
-"I Owe They" = "Le Debo";
+"I Owe Them" = "Le Debo";
 "Date" = "Fecha";
 "Description" = "Descripción";
 "Note" = "Nota";

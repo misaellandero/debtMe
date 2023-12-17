@@ -48,7 +48,7 @@ struct ContactsRow: View {
                         
                     }
                     HStack{
-                        Text(LocalizedStringKey("I Owe They"))
+                        Text(LocalizedStringKey("I Owe Them"))
                         Spacer()
                         Text(contact.totalOwn.toCurrencyString())
                             .foregroundColor(.orange)

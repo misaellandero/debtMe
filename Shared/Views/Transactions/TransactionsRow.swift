@@ -50,7 +50,7 @@ struct TransactionsRow: View {
                 }
                 
                 HStack{
-                    Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe They"))
+                    Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe Them"))
                         .strikethrough(transaction.settled)
                     Spacer()
                     Text(transaction.amount.toCurrencyString())

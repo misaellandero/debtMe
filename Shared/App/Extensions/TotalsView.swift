@@ -20,11 +20,11 @@ struct TotalsView: View {
             Spacer()
             HStack{
                 VStack(alignment: .trailing){
-                    Text("Total: ")
+                    Text("Total ")
                         .bold()
-                    Text("Cover: ")
+                    Text("Cover ")
                         .bold()
-                    Text("Left: ")
+                    Text("Left ")
                         .bold()
                 }
                 
@@ -88,12 +88,12 @@ struct TotalsViewRow: View {
     
     var body: some View {
         HStack{
-            Text("Cover: ")
+            Text("Cover ")
             Spacer()
             Text("\(current.toCurrencyString())")
         }
         HStack{
-            Text("Left: ")
+            Text("Left ")
             Spacer()
             Text("\(left.toCurrencyString())")
         }

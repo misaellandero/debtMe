@@ -87,7 +87,7 @@ struct NewTransactionMultiPlataformForm: View {
     @Binding var transactionModel : TransactionModel
     var saveTransaction : () -> Void
     var closeView : () -> Void
-    var debtOptions = ["They Owes me" , "I Owe They"]
+    var debtOptions = ["They Owes me" , "I Owe Them"]
     var debtValue = [true, false]
     var body: some View {
         

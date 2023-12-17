@@ -29,6 +29,8 @@ struct PaymentsTransactionsList: View {
     
     @State var totalBalance = 0.0
     
+    @State var showMore = false
+    
     var body: some View {
     
        ZStack{
@@ -36,24 +38,13 @@ struct PaymentsTransactionsList: View {
            
              ScrollView(.vertical){
                
-                 Section{
-                     HStack{
-                         Image(systemName: "calendar.badge.clock")
-                         Text(transaction.transactionCreationDateFormated)
-                         
-                         if transaction.settled {
-                             Spacer()
-                             Text("Paid in")
-                             Image(systemName: "calendar.badge.clock")
-                             Text(transaction.transactionSettledDateFormated)
-                         }
-                     }
-                     .font(.caption)
+                 Section{ 
                      
                      Text(transaction.wrappedNotes)
                          .multilineTextAlignment(.leading)
                      
                  }
+                 .padding(.horizontal)
                  
                 if transaction.settled {
                     if totalBalance != 0  {

@@ -28,15 +28,26 @@ struct ContactsNewForm: View {
                 NavigationView{
                     ZStack{
                         List{
-                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
+                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion, edition: edition)
                         }
                         .listStyle(InsetGroupedListStyle())
-                        VStack{
-                            Spacer()
-                            Button(action: performSaveAcion){
-                                ButtonLabelAdd(label: edition ? "Save": "Add" , systemImage: "plus.circle.fill", foreground: .white)
-                            }
-                            
+                         VStack{
+                             Spacer()
+                             Button(action: performSaveAcion){
+                                 HStack{
+                                     Spacer()
+                                     Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
+                                         .foregroundColor(.white)
+                                         .font(Font.system(.headline, design: .rounded).weight(.black))
+                                         .padding()
+                                     Spacer()
+                                 }
+                                 
+                                 .padding(.vertical, 15)
+                             }
+                             .background(Color.accentColor)
+                             .cornerRadius(10)
+                             .padding()
                         }
                     }
                      
@@ -54,7 +65,8 @@ struct ContactsNewForm: View {
                 )
                 .toolbar{
                     ToolbarItem(placement: .principal){
-                        Text("\(Image(systemName: "person.2.fill")) New")
+                        Text("\(Image(systemName: "person.2.fill")) ") +
+                        Text((edition ? LocalizedStringKey("Edit") : LocalizedStringKey("New")))
                     }
                 }
                 }
@@ -132,6 +144,9 @@ struct NewContactMultiplatformForm : View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var showLabelList = false
+    
+    var edition = false
+    
     var body: some View {
         Group{
             HStack{
@@ -188,6 +203,7 @@ struct NewContactMultiplatformForm : View {
                   
                 }
                 #elseif os(macOS)
+                
                 Button(action:{
                     showLabelList.toggle()
                 }){
@@ -206,6 +222,8 @@ struct NewContactMultiplatformForm : View {
             }
             Section{
                 #if os(iOS)
+               
+               
                /* Button(action: saveContact){
                 HStack{
                     Spacer()
@@ -267,5 +285,6 @@ struct NewContactMultiplatformForm : View {
 struct ContactsNewForm_Previews: PreviewProvider {
     static var previews: some View {
         ContactsNewForm(contact: ContactModel(name: "", emoji: "🙂", label: "", labelColor: 2))
+  
     }
 }
