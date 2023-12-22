@@ -8,49 +8,50 @@
 import SwiftUI
 import CoreData
 
+enum shortMode {
+    case alfabethAsc, alfabethDes, amountAsc, amountDes
+}
+
 struct ContactsList: View {
     
     @State private var showingNewContactForm = false
     
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
+      
+    @FetchRequest(entity: ContactLabel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ContactLabel.name, ascending: true)]) var labels: FetchedResults<ContactLabel>
     
     @State var searchQuery = ""
-     
+    
+    @State var selectedTag : String = "All"
+    
+    @State var shortMode : shortMode = .alfabethAsc
+    
     var body: some View {
         Group{
             #if os(iOS) 
-            ZStack{
+          
                 List{
-                    ContactsRows(searchQuery: $searchQuery)
+                    ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
                 }
                 .searchable(text: $searchQuery)
                 .listStyle(InsetGroupedListStyle())
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(
-                    leading:
-                        Button(action:{showingNewContactForm.toggle()}){
-                            Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
-                                .foregroundColor(.gray)
-                        },
-                    
                     trailing:
                         Button(action:{showingNewContactForm.toggle()}){
                             Label("Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                         }
                 )
-                .toolbar {
-                    ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "person.2.fill")) Contacts")
-                    }
-                }
-            }
-             
+                .navigationBarTitle(Text("Contacts"))
+              
+            
             #elseif os(macOS)
         
                 List{
-                    ContactsRows(searchQuery: $searchQuery)
+                    ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
+                
                 }
                 .toolbar {
                     
@@ -74,9 +75,52 @@ struct ContactsList: View {
                     }
                 }
             
-          
-            
             #endif
+        }
+        .toolbar{
+            ToolbarItem(placement: .cancellationAction) {
+                Menu {
+                    Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
+                    
+                    Button(action: {
+                        shortMode = .alfabethAsc
+                    }) {
+                        Label("Ascending A-Z", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                    }
+                    Button(action: {
+                        shortMode = .alfabethDes
+                    }) {
+                        Label("Descending Z-A", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                    }
+                    Divider()
+                    
+                    Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
+                    
+                    Button(action: {
+                        shortMode = .amountAsc
+                    }) {
+                        Label("Lower First", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                    }
+                    Button(action: {
+                        shortMode = .amountDes
+                    }) {
+                        Label("Higher First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                    }
+                    Divider()
+                    
+                    Label("Tags", systemImage: "tag")
+                  
+                    Picker(selection: $selectedTag, label: Text("Filter by tag")) {
+                        Text("All").tag("All")
+                        ForEach(labels){ label in
+                            Text(label.wrappedName).tag(label.wrappedName)
+                        }
+                    }
+                } label: {
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
         }
         .sheet(isPresented: $showingNewContactForm){
             ContactsNewForm()
@@ -91,28 +135,66 @@ struct ContactsList: View {
 struct ContactsRows : View  {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
+    
   
     @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
      
     @Binding var searchQuery : String
     
+    @Binding var shortMode : shortMode
+    
+    @Binding var selectedTag : String
+  
+    
     // Computed property to filter contacts based on search query
-       var filteredContacts: [Contact] {
-           if searchQuery.isEmpty {
-               return Array(contacts)
-           } else {
-               return contacts.filter { contact in
-                   contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
-               }
-           }
-       }
+ /*      var filteredContacts: [Contact] {
+  if searchQuery.isEmpty {
+      return Array(contacts)
+  } else {
+      
+      return contacts.filter { contact in
+          contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
+      }
+  }
+}
+*/
+    var filteredContacts: [Contact] {
+        let sortedContacts: [Contact]
+        
+        switch shortMode {
+        case .alfabethAsc:
+            sortedContacts = contacts.sorted { $0.name ?? "" < $1.name ?? "" }
+        case .alfabethDes:
+            sortedContacts = contacts.sorted { $0.name ?? "" > $1.name ?? "" }
+        case .amountAsc:
+            sortedContacts = contacts.sorted { $0.balance < $1.balance  }
+        case .amountDes:
+            sortedContacts = contacts.sorted { $0.balance  > $1.balance  }
+        }
+        
+        let filteredByTag: [Contact]
+         
+         if selectedTag == "All" {
+             // No tag selected, use all contacts
+             filteredByTag = sortedContacts
+         } else {
+             // Filter contacts based on the selected tag
+             filteredByTag = sortedContacts.filter { contact in
+                 contact.label?.wrappedName == selectedTag
+             }
+         }
+         
+         if searchQuery.isEmpty {
+             return filteredByTag
+         } else {
+             // Further filter contacts based on the search query
+             return filteredByTag.filter { contact in
+                 contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
+             }
+         }
+    }
     
     var body: some View {
-        
-        /*Section {
-            SearchTextField(searchQuery: $searchQuery)
-                .padding()
-        }*/
         
         ForEach(filteredContacts, id: \.id) { contact in
             NavigationLink(destination: TransactionsContactList(contact: contact)) {
@@ -121,6 +203,7 @@ struct ContactsRows : View  {
             }
         }
         .onDelete(perform: deleteItem)
+      
     }
     
  
