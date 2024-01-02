@@ -81,3 +81,13 @@
 "Show" = "Mostrar";
 "Hide" = "Ocultar";
 "Settled" = "Saldadas";
+
+
+"Delete Contact" = "Eliminar contacto";
+"This contact has unsettled transactions and balance is not Zero. Are you sure you want to delete?" = "Este contacto tiene transacciones pendientes y el saldo no es cero. ¿Estás seguro de que quieres eliminarlo?";
+"Cancel" = "Cancelar";
+"Delete" = "Eliminar";
+
+"Delete Transaction" = "Eliminar transacción";
+"This transaction is unsettled and has recorded payments. Are you sure you want to delete?" = "Esta transacción no está saldada y tiene pagos registrados. ¿Estás seguro de que quieres eliminarla?";
+ 

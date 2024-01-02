@@ -182,6 +182,7 @@ struct ContactsRows : View  {
          }
     }
     
+    //Safe measures for delete
     @State private var showAlertDeletContact = false
     @State private var contactToDelete: Contact?
     

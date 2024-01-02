@@ -28,29 +28,34 @@ struct TransactionsContactList: View {
     @AppStorage("showSettled") var showSettled: Bool = true
     
     // Computed property to filter and order transactions
-     var filteredAndOrderedTransactions: [Transaction] {
-         var filteredTransactions = contact.transactionsArray
-
-         // Filter based on settled status
-         if !showSettled {
-             filteredTransactions = filteredTransactions.filter { !$0.settled }
-         }
-
-         // Order transactions based on shortMode
-         switch shortMode {
-         case .amountAsc:
-             filteredTransactions.sort { $0.amount < $1.amount }
-         default :
-             filteredTransactions.sort { $0.amount > $1.amount }
+    var filteredAndOrderedTransactions: [Transaction] {
+        var filteredTransactions = contact.transactionsArray
         
-         }
-
-         return filteredTransactions
-     }
+        // Filter based on settled status
+        if !showSettled {
+            filteredTransactions = filteredTransactions.filter { !$0.settled }
+        }
+        
+        // Order transactions based on shortMode
+        switch shortMode {
+        case .amountAsc:
+            filteredTransactions.sort { $0.amount < $1.amount }
+        default :
+            filteredTransactions.sort { $0.amount > $1.amount }
+            
+        }
+        
+        return filteredTransactions
+    }
+    
+    
+    //Safe measures for delete
+    @State private var showAlertDeletTransaction = false
+    @State private var transactionToDelete: Transaction?
     
     var body: some View {
         Group{
-           
+            
             List{
                 Section(){
                     ContactsRow(contact: contact, showDetails: true)
@@ -64,7 +69,7 @@ struct TransactionsContactList: View {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "folder")) Summary")
                 }
-                 
+                
                 
                 ToolbarItem(placement: .automatic ){
                     
@@ -102,13 +107,13 @@ struct TransactionsContactList: View {
                             Label("Higher First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
                         }
                         Divider()
-                         
+                        
                         Button(action: {
                             showSettled.toggle()
                         }) {
                             Label(NSLocalizedString((showSettled ? "Hide" : "Show") + " Settled", comment: ""), systemImage: showSettled ? "eye.slash" :"eye") 
                         }
-                       
+                        
                     } label: {
                         Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .foregroundColor(.gray)
@@ -122,31 +127,56 @@ struct TransactionsContactList: View {
             .sheet(isPresented: $showEditContact){
                 ContactsNewForm(edition: true, contactToEdit: contact)
             }
-            #if os(iOS)
+#if os(iOS)
             .listStyle(InsetGroupedListStyle())
-            #endif
-           
-      
-        }
-     
-    }
-    
-    func deleteItem(at offsets: IndexSet) {
-        
-        for offset in offsets {
-            let transaction =  filteredAndOrderedTransactions[offset]
-            
-            //Delete payment related
-            for payment in transaction.paymentsArray {
-                self.moc.delete(payment)
+#endif
+            .alert(isPresented: $showAlertDeletTransaction) {
+                Alert(
+                    title: Text("Delete Transaction"),
+                    message: Text("This transaction is unsettled and has recorded payments. Are you sure you want to delete?"),
+                    primaryButton: .default(Text("Cancel")),
+                    secondaryButton: .destructive(Text("Delete")) {
+                        // Perform the deletion when the user confirms
+                        if let transactionToDelete = transactionToDelete {
+                            performDeletion(for: transactionToDelete)
+                        }
+                    }
+                )
             }
             
-            self.moc.delete(transaction)
         }
-         
-        try? self.moc.save()
         
-       }
+    }
+    
+    
+    
+    //check is safe to delete
+    func deleteItem(at offsets: IndexSet) {
+        for offset in offsets {
+            
+            let transaction = self.filteredAndOrderedTransactions[offset]
+            
+            if !transaction.settled && transaction.paymentsArray.count != 0 {
+                transactionToDelete = transaction
+                showAlertDeletTransaction = true
+            } else {
+                performDeletion(for: transaction)
+            }
+            
+        }
+    }
+    
+    // Helper method to perform deletion
+    func performDeletion(for transaction: Transaction) {
+        
+        //Delete payment related
+        for payment in transaction.paymentsArray {
+            self.moc.delete(payment)
+        }
+        
+        self.moc.delete(transaction)
+        
+        try? self.moc.save()
+    }
+    
 }
-
- 
