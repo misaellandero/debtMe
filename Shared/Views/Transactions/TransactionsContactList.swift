@@ -21,6 +21,33 @@ struct TransactionsContactList: View {
     
     @State private var showAddTransaction = false
     @State private var showEditContact = false
+    
+    
+    //Filter and order
+    @State var shortMode : shortMode = .amountAsc
+    @AppStorage("showSettled") var showSettled: Bool = true
+    
+    // Computed property to filter and order transactions
+     var filteredAndOrderedTransactions: [Transaction] {
+         var filteredTransactions = contact.transactionsArray
+
+         // Filter based on settled status
+         if !showSettled {
+             filteredTransactions = filteredTransactions.filter { !$0.settled }
+         }
+
+         // Order transactions based on shortMode
+         switch shortMode {
+         case .amountAsc:
+             filteredTransactions.sort { $0.amount < $1.amount }
+         default :
+             filteredTransactions.sort { $0.amount > $1.amount }
+        
+         }
+
+         return filteredTransactions
+     }
+    
     var body: some View {
         Group{
            
@@ -28,9 +55,8 @@ struct TransactionsContactList: View {
                 Section(){
                     ContactsRow(contact: contact, showDetails: true)
                 }
-                ForEach(contact.transactionsArray, id : \.id){ transaction in
-                    TransactionsRow(transaction: transaction) 
-                    
+                ForEach(filteredAndOrderedTransactions, id: \.id) { transaction in
+                    TransactionsRow(transaction: transaction)
                 }.onDelete(perform: deleteItem)
             }
             .toolbar {
@@ -58,6 +84,37 @@ struct TransactionsContactList: View {
                             .foregroundColor(.accentColor)
                     }
                 }
+                
+                ToolbarItem(placement: .primaryAction) {
+                    Menu {
+                        
+                        Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
+                        
+                        Button(action: {
+                            shortMode = .amountAsc
+                        }) {
+                            Label("Lower First", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                        }
+                        Button(action: {
+                            shortMode = .amountDes
+                        }) {
+                            Label("Higher First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                        }
+                        Divider()
+                         
+                        Button(action: {
+                            showSettled.toggle()
+                        }) {
+                            
+                            Label((showSettled ? "Hidde" : "Show") + " " + "Settled", systemImage: showSettled ? "eye.slash" :"eye")
+                        }
+                       
+                    } label: {
+                        Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .foregroundColor(.gray)
+                    }
+                }
+                
             }
             .sheet(isPresented: $showAddTransaction){
                 TransactionsNewForm(contact: contact)

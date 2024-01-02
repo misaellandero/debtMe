@@ -144,20 +144,8 @@ struct ContactsRows : View  {
     @Binding var shortMode : shortMode
     
     @Binding var selectedTag : String
+   
   
-    
-    // Computed property to filter contacts based on search query
- /*      var filteredContacts: [Contact] {
-  if searchQuery.isEmpty {
-      return Array(contacts)
-  } else {
-      
-      return contacts.filter { contact in
-          contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
-      }
-  }
-}
-*/
     var filteredContacts: [Contact] {
         let sortedContacts: [Contact]
         

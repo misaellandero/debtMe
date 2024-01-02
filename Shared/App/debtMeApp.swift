@@ -13,10 +13,10 @@ struct debtMeApp: App {
     @StateObject var coreData = PersistentCloudKitContainer()
     // User preference settings
     let userPreferences = UserPreferences()
-     
+    
     var body: some Scene {
         WindowGroup { 
-              ContentView()
+            ContentView()
                 .environment(\.managedObjectContext, coreData.persistentContainer.viewContext)
                 .environmentObject(userPreferences)
                 .navigationTitle("") 
