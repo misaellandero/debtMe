@@ -65,3 +65,19 @@
 
 "􀊫 Search" = "􀊫 Buscar";
 "Search" = "Buscar";
+
+"Sort alphabetically" = "Ordenar alfabéticamente";
+"Ascending A-Z" = "Ascendente A-Z";
+"Descending Z-A" = "Descendente Z-A";
+"Sort by Amount" = "Ordenar por cantidad";
+"Lower First" = "Menor primero";
+"Higher First" = "Mayor primero";
+"Tags" = "Etiquetas";
+"Filter by tag" = "Filtrar por etiqueta";
+"All" = "Todos";
+
+"Show Settled" = "Mostrar saldadas";
+"Hide Settled" = "Ocultar saldadas";
+"Show" = "Mostrar";
+"Hide" = "Ocultar";
+"Settled" = "Saldadas";

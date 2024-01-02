@@ -182,6 +182,10 @@ struct ContactsRows : View  {
          }
     }
     
+    @State private var showAlertDeletContact = false
+    @State private var contactToDelete: Contact?
+    
+    
     var body: some View {
         
         ForEach(filteredContacts, id: \.id) { contact in
@@ -191,30 +195,56 @@ struct ContactsRows : View  {
             }
         }
         .onDelete(perform: deleteItem)
-      
+        .alert(isPresented: $showAlertDeletContact) {
+            Alert(
+                title: Text("Delete Contact"),
+                message: Text("This contact has unsettled transactions and balance is not Zero. Are you sure you want to delete?"),
+                primaryButton: .default(Text("Cancel")),
+                secondaryButton: .destructive(Text("Delete")) {
+                    // Perform the deletion when the user confirms
+                    if let contactToDelete = contactToDelete {
+                        performDeletion(for: contactToDelete)
+                    }
+                }
+            )
+        }
     }
     
- 
     
+    
+    
+ //check is safe to delete
     func deleteItem(at offsets: IndexSet) {
-           for offset in offsets {
-               let contact = self.filteredContacts[offset]
-               
-               for transaction in contact.transactionsArray {
-                  
-                   for payment in transaction.paymentsArray {
-                       //Delete payment related
-                       self.moc.delete(payment)
-                   }
-                   //Delete transactions related
-                   self.moc.delete(transaction)
-               }
-               
+        for offset in offsets {
             
-               self.moc.delete(contact)
-           }
-           try? self.moc.save()
-       }
+            let contact = self.filteredContacts[offset]
+            
+            if contact.balance != 0 && contact.transactionsArray.count != 0 {
+                contactToDelete = contact
+                showAlertDeletContact = true
+            } else {
+                performDeletion(for: contact)
+            }
+            
+        }
+    }
+    
+    // Helper method to perform deletion
+    func performDeletion(for contact: Contact) {
+        for transaction in contact.transactionsArray {
+            for payment in transaction.paymentsArray {
+                // Delete payment related
+                self.moc.delete(payment)
+            }
+            // Delete transactions related
+            self.moc.delete(transaction)
+        }
+        
+        // Delete contact
+        self.moc.delete(contact)
+        
+        try? self.moc.save()
+    }
 }
 
 struct ContactsList_Previews: PreviewProvider {

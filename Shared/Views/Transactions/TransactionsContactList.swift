@@ -106,8 +106,7 @@ struct TransactionsContactList: View {
                         Button(action: {
                             showSettled.toggle()
                         }) {
-                            
-                            Label((showSettled ? "Hidde" : "Show") + " " + "Settled", systemImage: showSettled ? "eye.slash" :"eye")
+                            Label(NSLocalizedString((showSettled ? "Hide" : "Show") + " Settled", comment: ""), systemImage: showSettled ? "eye.slash" :"eye") 
                         }
                        
                     } label: {
