@@ -57,7 +57,8 @@ struct TransactionsContactList: View {
                 }
                 ForEach(filteredAndOrderedTransactions, id: \.id) { transaction in
                     TransactionsRow(transaction: transaction)
-                }.onDelete(perform: deleteItem)
+                }
+                .onDelete(perform: deleteItem)
             }
             .toolbar {
                 ToolbarItem(placement:.automatic){
@@ -134,7 +135,7 @@ struct TransactionsContactList: View {
     func deleteItem(at offsets: IndexSet) {
         
         for offset in offsets {
-            let transaction =  self.contact.transactionsArray[offset]
+            let transaction =  filteredAndOrderedTransactions[offset]
             
             //Delete payment related
             for payment in transaction.paymentsArray {
