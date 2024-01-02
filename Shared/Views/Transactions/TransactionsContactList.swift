@@ -22,6 +22,8 @@ struct TransactionsContactList: View {
     @State private var showAddTransaction = false
     @State private var showEditContact = false
     
+    @State var searchQuery = ""
+    
     
     //Filter and order
     @AppStorage("shortModeTransactions") var shortMode: shortMode = .amountAsc
@@ -45,7 +47,17 @@ struct TransactionsContactList: View {
             
         }
         
-        return filteredTransactions
+        if searchQuery.isEmpty {
+            return filteredTransactions
+        } else {
+            // Further filter transactions based on the search query
+            return filteredTransactions.filter { transaction in
+                let descriptionMatches = transaction.wrappedDes.localizedCaseInsensitiveContains(searchQuery) == true
+                let notesMatches = transaction.wrappedNotes.localizedCaseInsensitiveContains(searchQuery) == true
+                return descriptionMatches || notesMatches
+            }
+        }
+         
     }
     
     
@@ -65,6 +77,9 @@ struct TransactionsContactList: View {
                 }
                 .onDelete(perform: deleteItem)
             }
+            #if os(iOS)
+            .searchable(text: $searchQuery)
+            #endif
             .toolbar {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "folder")) Summary")
@@ -80,6 +95,13 @@ struct TransactionsContactList: View {
                             .foregroundColor(.accentColor)
                     }
                 }
+                
+                #if os(macOS)
+                ToolbarItem(placement: .automatic ){
+                    SearchTextField(searchQuery: $searchQuery)
+                        
+                }
+                #endif
                 
                 ToolbarItem(placement: .automatic ){
                     
