@@ -24,8 +24,8 @@ struct TransactionsContactList: View {
     
     
     //Filter and order
-    @State var shortMode : shortMode = .amountAsc
-    @AppStorage("showSettled") var showSettled: Bool = true
+    @AppStorage("shortModeTransactions") var shortMode: shortMode = .amountAsc
+    @AppStorage("showSettledTransactions") var showSettled: Bool = true
     
     // Computed property to filter and order transactions
     var filteredAndOrderedTransactions: [Transaction] {

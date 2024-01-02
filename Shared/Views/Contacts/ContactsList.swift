@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-enum shortMode {
+enum shortMode : String {
     case alfabethAsc, alfabethDes, amountAsc, amountDes
 }
 
@@ -23,9 +23,10 @@ struct ContactsList: View {
     
     @State var searchQuery = ""
     
+ 
     @State var selectedTag : String = "All"
     
-    @State var shortMode : shortMode = .alfabethAsc
+    @AppStorage("shortModeContacts") var shortMode: shortMode = .alfabethAsc
     
     var body: some View {
         Group{
