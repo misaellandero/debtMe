@@ -27,18 +27,21 @@ struct TabBarView: View {
                     Label("Debts", systemImage: "dollarsign.square")
                 }
                 .tag(SectionSelected.debts)
+                .disabled(true)
             // MARK: - Loans
             TransactionsListFilter(isDebt:false)
                 .tabItem {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                 }
                 .tag(SectionSelected.loans)
+                .disabled(true)
             // MARK: - Settings
             Text("Settings")
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(SectionSelected.settings)
+                .disabled(true)
         }
         
     }

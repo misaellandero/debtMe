@@ -23,14 +23,18 @@ struct SideBarView: View {
                 NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
                 }
+                .disabled(true)
                 
                 NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                 }
+                .disabled(true)
                 
                 NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                 }
+                .disabled(true)
+                
             }
             .toolbar{
                 ToolbarItem(placement:.navigation){
