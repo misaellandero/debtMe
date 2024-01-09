@@ -80,9 +80,13 @@ struct PaymentsTransactionsList: View {
          
                 
             }
-           
-          
-            .onAppear(perform: getTotals) 
+            .onAppear(perform: getTotals)
+            .onDisappear(perform: {
+                //update here to avoid view to reload before time
+                //this would update contact balance
+                self.transaction.contact?.sync.toggle()
+                try? self.moc.save()
+            })
             .padding(.top, 0.03)
             TotalsView(amount: transaction.amount, current: $paymentTotal)
             ConfettiView(counter: $counter)
@@ -125,6 +129,16 @@ struct PaymentsTransactionsList: View {
             }
         }
         #endif
+        .toolbar {
+            ToolbarItem(placement: .automatic ){
+                Label("Add", systemImage: "plus.circle.fill")
+                    .foregroundColor(.accentColor)
+                    .onTapGesture {
+                        showAddPayment.toggle()
+                    }
+                    .disabled(transaction.settled)
+            }
+        }
         .sheet(isPresented: $showAddPayment.onChange(modalUpdate)){
             PaymentNewForm(transaction: transaction)
         }
@@ -161,13 +175,12 @@ struct PaymentsTransactionsList: View {
         playAudio()
     }
     
-    func setTranssationSeatled(settled: Bool){
-        transaction.settled = settled
-        transaction.contact?.sync.toggle()
-        //update balance
-        try? self.moc.save() 
     
+    func setTranssationSeatled(settled: Bool) {
+        transaction.settled = settled
         checkforConffeti()
+        try? self.moc.save()
+         
     }
     
     func playAudio(){

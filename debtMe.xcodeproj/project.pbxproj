@@ -24,6 +24,8 @@
 		13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB129F642B7001C0577 /* InfoPlist.strings */; };
 		13465FB629F642B7001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
 		13465FB729F64455001C0577 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13465FB429F642B7001C0577 /* Localizable.strings */; };
+		1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
+		1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
 		13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D4A2ACBE0FA007B8FE3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */; };
@@ -132,6 +134,7 @@
 		132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelPayAll.swift; sourceTree = "<group>"; };
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
 		13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ConfettiPopSoundEffectLong.m4a; sourceTree = "<group>"; };
 		13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ConfettiPopSoundEffect.wav; sourceTree = "<group>"; };
@@ -263,6 +266,7 @@
 				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
 				132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */,
 				132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */,
+				1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */,
 				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
 				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
 				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
@@ -665,6 +669,7 @@
 				7F70A2A225FEDC9D00455AB0 /* SideBarView.swift in Sources */,
 				7F37A93C25FF1A750049D648 /* EmojiButton.swift in Sources */,
 				7F70A24F25FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
+				1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
 				7F70A26C25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
 				13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
 				7F70A2BE25FEF76300455AB0 /* ContactsDetail.swift in Sources */,
@@ -695,6 +700,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
 				7F70A23325FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				7F70A24E25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
 				7F76A8E3260EF59B00033790 /* debtMe.xcdatamodeld in Sources */,
@@ -902,8 +908,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -929,8 +939,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

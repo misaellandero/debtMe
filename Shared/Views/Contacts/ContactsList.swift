@@ -37,14 +37,7 @@ struct ContactsList: View {
                 }
                 .searchable(text: $searchQuery)
                 .listStyle(InsetGroupedListStyle())
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(
-                    trailing:
-                        Button(action:{showingNewContactForm.toggle()}){
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
-                )
+                .navigationBarBackButtonHidden(true) 
                 .navigationBarTitle(Text("Contacts"))
               
             
@@ -58,31 +51,31 @@ struct ContactsList: View {
                     
                     ToolbarItem(placement: .navigation ){
                         Text("\(Image(systemName: "person.2.fill")) Contacts")
-                           
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
                     }
                      
                     ToolbarItem(placement: .navigation ){
                         SearchTextField(searchQuery: $searchQuery)
                             
                     }
-                    
-                    ToolbarItem(placement: .primaryAction ){
-                        Button(action:{
-                            showingNewContactForm.toggle()
-                        }){
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
-                    }
                 }
             
             #endif
         }
+        
         .toolbar{
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(placement: .primaryAction ){
+                Button(action:{
+                    showingNewContactForm.toggle()
+                }){
+                    Label("Add", systemImage: "plus.circle.fill") .font(Font.system(.headline, design: .rounded).weight(.black))
+                        .foregroundColor(.accentColor)
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
-                    
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
                     Button(action: {
                         shortMode = .alfabethAsc
                     }) {
@@ -97,6 +90,7 @@ struct ContactsList: View {
                     
                     Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
                     
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
                     Button(action: {
                         shortMode = .amountAsc
                     }) {
@@ -110,7 +104,8 @@ struct ContactsList: View {
                     Divider()
                     
                     Label("Tags", systemImage: "tag")
-                  
+                    
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
                     Picker(selection: $selectedTag, label: Text("Filter by tag")) {
                         Text("All").tag("All")
                         ForEach(labels){ label in
@@ -118,7 +113,7 @@ struct ContactsList: View {
                         }
                     }
                 } label: {
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")   .font(Font.system(.headline, design: .rounded).weight(.black))
                         .foregroundColor(.gray)
                 }
             }
@@ -136,8 +131,7 @@ struct ContactsList: View {
 struct ContactsRows : View  {
     //Model View de Coredate
     @Environment(\.managedObjectContext) var moc
-    
-  
+     
     @FetchRequest(entity: Contact.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Contact.name, ascending: true)]) var contacts: FetchedResults<Contact>
      
     @Binding var searchQuery : String

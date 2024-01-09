@@ -43,6 +43,7 @@ struct TabBarView: View {
                 .tag(SectionSelected.settings)
                 .disabled(true)
         }
+        .font(Font.system(.body, design: .rounded).weight(.black))
         
     }
 }

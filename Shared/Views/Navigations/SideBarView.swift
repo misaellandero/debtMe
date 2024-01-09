@@ -18,24 +18,29 @@ struct SideBarView: View {
             List(/*selection: $sectionSelected*/) {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 
                 NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 .disabled(true)
                 
                 NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 .disabled(true)
                 
                 NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 .disabled(true)
                 
             }
+            
             .toolbar{
                 ToolbarItem(placement:.navigation){
                     Text("DebtMe")
@@ -48,6 +53,7 @@ struct SideBarView: View {
           } detail: {
               EmptyPaymentView(empty: true)
           }
+          .font(Font.system(.body, design: .rounded).weight(.black))
         
              
         

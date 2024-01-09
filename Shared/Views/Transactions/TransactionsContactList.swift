@@ -27,14 +27,14 @@ struct TransactionsContactList: View {
     
     //Filter and order
     @AppStorage("shortModeTransactions") var shortMode: shortMode = .amountAsc
-    @AppStorage("showSettledTransactions") var showSettled: Bool = true
+  
     
     // Computed property to filter and order transactions
     var filteredAndOrderedTransactions: [Transaction] {
         var filteredTransactions = contact.transactionsArray
         
         // Filter based on settled status
-        if !showSettled {
+        if !contact.hideSettled {
             filteredTransactions = filteredTransactions.filter { !$0.settled }
         }
         
@@ -76,6 +76,28 @@ struct TransactionsContactList: View {
                     TransactionsRow(transaction: transaction)
                 }
                 .onDelete(perform: deleteItem)
+                
+                if !contact.hideSettled {
+                  
+                        
+                    Button(action: {
+                        contact.hideSettled.toggle()
+                        try? self.moc.save()
+                    }) { 
+                        HStack{
+                            Spacer()
+                            VStack{
+                                Image(.notSeePig)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100) 
+                                    ButtonLabelShowSetled()
+                            }
+                            Spacer()
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
             #if os(iOS)
             .searchable(text: $searchQuery)
@@ -131,9 +153,10 @@ struct TransactionsContactList: View {
                         Divider()
                         
                         Button(action: {
-                            showSettled.toggle()
+                            contact.hideSettled.toggle()
+                            try? self.moc.save()
                         }) {
-                            Label(NSLocalizedString((showSettled ? "Hide" : "Show") + " Settled", comment: ""), systemImage: showSettled ? "eye.slash" :"eye") 
+                            Label(NSLocalizedString((contact.hideSettled ? "Hide" : "Show") + " Settled", comment: ""), systemImage: contact.hideSettled ? "eye.slash" :"eye")
                         }
                         
                     } label: {

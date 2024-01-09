@@ -72,7 +72,7 @@ struct ContactsNewForm: View {
                 }
                 #elseif os(macOS)
                 List{
-                    Text(edition ? "Edit" : "New")
+                    Text(edition ? "Edit Contact" : "New Contact")
                     NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
                 }
                 .frame(width: 300, height: 170)

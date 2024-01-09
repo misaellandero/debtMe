@@ -94,8 +94,7 @@ struct PaymentNewForm: View {
             payment.amount = paymentModel.amountNumber
         }
             
-        payment.transaction!.contact?.sync.toggle()
-        //update balance
+        
         try? self.moc.save()
         closeView()
         }
@@ -117,8 +116,7 @@ struct PaymentNewForm: View {
                 payment.amount = paymentModel.amountNumber
             }
             
-            payment.transaction = transaction
-            payment.transaction!.contact?.sync.toggle()
+            payment.transaction = transaction 
             //update balance
             try? self.moc.save()
             
