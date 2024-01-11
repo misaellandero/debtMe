@@ -20,37 +20,37 @@ struct PaymentNewForm: View {
     
     var body: some View {
         Group{
-            #if os(iOS)
-            NavigationView(){
-                List{
-                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
-                }
-                .navigationTitle(LocalizedStringKey(edition ? "Edit" : "New"))
-                .listStyle(InsetGroupedListStyle())
-                .navigationBarItems(
-                    leading:
-                        Button(action:{
-                            closeView()
-                        }){
-                            
-                            Label("Return", systemImage: "xmark")
-                                .foregroundColor(Color.gray)
-                        }
-                    ,
-                    trailing:
-                        Button(action:savePayment){
-                            Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
-                )
-            }
-            #elseif os(macOS)
+           
+            #if os(macOS)
                 List{
                     Text(edition ? "Edit" : "New")
                     PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
                         .padding()
                 }
                 .frame(width: 400, height: 500)
+            #else
+            NavigationView(){
+                List{
+                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
+                }
+                .navigationTitle(LocalizedStringKey(edition ? "Edit" : "New"))
+                .listStyle(InsetGroupedListStyle())
+              
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction ){
+                        Button(action: closeView){
+                            Label("Return", systemImage: "xmark")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    ToolbarItem(placement: .primaryAction ){
+                        Button(action: savePayment){
+                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                }
+            }
             
             #endif
         }

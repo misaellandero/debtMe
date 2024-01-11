@@ -102,8 +102,16 @@ struct PaymentsTransactionsList: View {
                 Text("\(Image(systemName: "folder")) Summary")
             }
         }
-        .navigationBarItems(
-            trailing:
+        #elseif os(macOS)
+        .padding()
+        .toolbar {
+            ToolbarItem(placement:.automatic){
+                Text(transaction.wrappedDes) 
+            }
+        }
+        #endif
+        .toolbar {
+            ToolbarItem(placement: .automatic ){
                 Button(action:{
                     showAddPayment.toggle()
                 }){
@@ -111,32 +119,6 @@ struct PaymentsTransactionsList: View {
                         .foregroundColor(.accentColor)
                 }
                 .disabled(transaction.settled)
-        )
-        #elseif os(macOS)
-        .padding()
-        .toolbar {
-            ToolbarItem(placement:.automatic){
-                Text(transaction.wrappedDes) 
-            }
-            
-            ToolbarItem(placement: .automatic ){
-                Label("Add", systemImage: "plus.circle.fill")
-                    .foregroundColor(.accentColor)
-                    .onTapGesture {
-                        showAddPayment.toggle()
-                    }
-                    .disabled(transaction.settled)
-            }
-        }
-        #endif
-        .toolbar {
-            ToolbarItem(placement: .automatic ){
-                Label("Add", systemImage: "plus.circle.fill")
-                    .foregroundColor(.accentColor)
-                    .onTapGesture {
-                        showAddPayment.toggle()
-                    }
-                    .disabled(transaction.settled)
             }
         }
         .sheet(isPresented: $showAddPayment.onChange(modalUpdate)){

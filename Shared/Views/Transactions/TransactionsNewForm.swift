@@ -15,16 +15,48 @@ struct TransactionsNewForm: View {
     @State var transactionModel = TransactionModel(amout: "", des: "", notes: "", date: Date(), debt: false)
     
     @State var contact : Contact
+    @State var edition : Bool = false
     
     var body: some View {
         Group{
-            #if os(iOS)
+          
+            #if os(macOS)
+            List{
+                Text("\(Image(systemName: "dollarsign.square.fill")) New") 
+                NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
+                    saveTransaction()
+                }, closeView: closeView)
+                .padding()
+            }
+            .frame(width: 400, height: 500)
+            #else
             NavigationView{
-                List{
-                    NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: saveTransaction,closeView: closeView)
+                ZStack{
+                    List{
+                        NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: saveTransaction,closeView: closeView)
+                    }
+                    .listStyle(InsetGroupedListStyle())
+                    VStack{
+                        Spacer()
+                        Button(action: saveTransaction){
+                            HStack{
+                                Spacer()
+                                Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
+                                    .foregroundColor(.white)
+                                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                                    .padding()
+                                Spacer()
+                            }
+                            
+                            .padding(.vertical, 15)
+                        }
+                        .background(Color.accentColor)
+                        .cornerRadius(10)
+                        .padding()
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
-                .navigationBarItems(
+                
+                /*.navigationBarItems(
                     leading:
                         Button(action:{
                             closeView()
@@ -42,22 +74,27 @@ struct TransactionsNewForm: View {
                                 .foregroundColor(.accentColor)
                                 .font(Font.system(.headline, design: .rounded).weight(.black))
                         }
-                )
+                )*/
                 .toolbar {
+                    ToolbarItem(placement: .cancellationAction){
+                        Button(action:{
+                            closeView()
+                        }){
+                           Label("Return", image: "xmark")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    ToolbarItem(placement: .confirmationAction){
+                        Button(action: saveTransaction){
+                           Label(edition ? "Save": "Add", image: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "dollarsign.square.fill")) New")
                     }
                 }
             }
-            #elseif os(macOS)
-            List{
-                Text("\(Image(systemName: "dollarsign.square.fill")) New") 
-                NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
-                    saveTransaction()
-                }, closeView: closeView)
-                .padding()
-            }
-            .frame(width: 400, height: 500)
             #endif
         }
     }
@@ -111,8 +148,10 @@ struct NewTransactionMultiPlataformForm: View {
         Section{
             TextField("Description", text: $transactionModel.des)
             TextField("Notes", text: $transactionModel.notes)
+            #if os(macOS)
             TextField("Amount", text: $transactionModel.amout)
-            #if os(iOS)
+            #else
+            TextField("Amount", text: $transactionModel.amout)
                 .keyboardType(.decimalPad)
             #endif
         }
@@ -124,19 +163,19 @@ struct NewTransactionMultiPlataformForm: View {
         
         
         Section{
-            #if os(iOS)
-            Button(action: saveTransaction){
-                HStack{
-                    Spacer()
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.white)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .padding()
-                    Spacer()
-                }
+          
+           /* Button(action: saveTransaction){
+            HStack{
+                Spacer()
+                Label("Add", systemImage: "plus.circle.fill")
+                    .foregroundColor(.white)
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .padding()
+                Spacer()
             }
-            .listRowBackground(Color.accentColor )
-            #elseif os(macOS)
+        }
+        .listRowBackground(Color.accentColor )*/
+            #if os(macOS)
             HStack{
                 Button(action: closeView){
                     Label("Cancel", systemImage: "xmark")
