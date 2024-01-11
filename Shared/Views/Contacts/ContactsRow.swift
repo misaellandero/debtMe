@@ -15,60 +15,98 @@ struct ContactsRow: View {
     var showDetails = false
     
     var body: some View {
-      
-        HStack{
-            Text(contact.wrappedEmoji)
-                .padding()
-                .font(.largeTitle)
-                .background(Color.secondary.opacity(0.2))
-                .cornerRadius(20)
-            VStack(alignment: .leading){
-                
-                HStack{
-                    Text(contact.wrappedName)
-                        .font(Font.system(.title, design: .rounded).weight(.bold))
-                    Spacer()
-                    if contact.haveALabel {
-                        Text(contact.WrappedLabelName)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(4)
-                            .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                            .background(contact.WrappedLabelColor)
-                            .cornerRadius(10)
-                    }
+        
+        VStack(alignment: .leading){
+            HStack{
+                VStack{
+                    Text(contact.wrappedEmoji)
+                        .padding()
+                        .font(.largeTitle)
+                        .background(Color.secondary.opacity(0.2))
+                        .cornerRadius(20)
+                    
                 }
-                 
-                if showDetails {
-                    HStack{
-                        Text(LocalizedStringKey("They Owes me"))
+                
+                VStack(alignment: .leading){
+                    
+                    HStack{ 
+#if os(visionOS)
+                        Text(contact.wrappedName)
+#else
+                        Text(contact.wrappedName)
+                            .font(Font.system(.title, design: .rounded).weight(.bold))
+                        
                         Spacer()
-                        Text(contact.totalDebut.toCurrencyString())
-                            .foregroundColor(.blue)
+                        if contact.haveALabel {
+                            Text(contact.WrappedLabelName)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(4)
+                                .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                                .background(contact.WrappedLabelColor)
+                                .cornerRadius(10)
+                        }
+#endif
                         
                     }
-                    HStack{
-                        Text(LocalizedStringKey("I Owe Them"))
-                        Spacer()
-                        Text(contact.totalOwn.toCurrencyString())
-                            .foregroundColor(.orange)
+                    
+                    if showDetails {
+                        HStack{
+                            Text(LocalizedStringKey("They Owes me"))
+                            Spacer()
+                            Text(contact.totalDebut.toCurrencyString())
+                                .foregroundColor(.blue)
+                            
+                        }
+                        HStack{
+                            Text(LocalizedStringKey("I Owe Them"))
+                            Spacer()
+                            Text(contact.totalOwn.toCurrencyString())
+                                .foregroundColor(.orange)
+                            
+                        }
+                    }
+                    
+#if os(visionOS)
+                    VStack(alignment: .leading){
+                        Text("Balance")
+                        
+                        Text(contact.balance.toCurrencyString())
                         
                     }
+#else
+                    HStack{
+                        Text("Balance")
+                        
+                        Spacer()
+                        Text(contact.balance.toCurrencyString())
+                        
+                    }
+#endif
+                    
+                    
+                    
                 }
-                
-                HStack{
-                    Text("Balance")
-                    Spacer()
-                    Text(contact.balance.toCurrencyString())
-                   
-                }
-                
+                Spacer()
             }
-            Spacer()
+            
+            .font(Font.system(.body, design: .rounded).weight(.semibold))
+            .padding(3)
+            .listRowBackground(Color.secondary.opacity(0.2))
+            
+#if os(visionOS)
+            if contact.haveALabel {
+                HStack{
+                    Image(systemName: "circle.fill")
+                        .foregroundColor(contact.WrappedLabelColor)
+                    Text(contact.WrappedLabelName)
+                        .fontWeight(.bold)
+                        .padding(4)
+                        .cornerRadius(10)
+                }
+            }
+#endif
         }
         
-        .font(Font.system(.body, design: .rounded).weight(.semibold))
-        .padding(3)
-        .listRowBackground(Color.secondary.opacity(0.2))
     }
 }

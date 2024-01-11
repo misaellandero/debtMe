@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ButtonLabelShowSetled: View {
-    var label : String = "Mostrar saldadas"
+    var label : String = "Show Settled"
     var systemImage: String = "eye"
     var foreground : Color = .white
     var body: some View { 

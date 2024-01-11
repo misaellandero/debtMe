@@ -31,7 +31,9 @@ struct ContentView: View {
                 } else {
                     SideBarView(sectionSelected : $sectionSelected)
                 }
-                #elseif os(macOS)
+                #elseif os(visionOS)
+                TabBarView()
+                #else
                 SideBarView(sectionSelected : $sectionSelected)
                 #endif
             }

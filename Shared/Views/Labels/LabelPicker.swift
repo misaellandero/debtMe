@@ -15,35 +15,7 @@ struct labelPicker: View {
     @State var showFormLabel = false
     var body: some View{
         Group{
-            #if os(iOS)
-            List{
-                LabelPickerListElements(label: $label, showLabelList: $showLabelList)
-            }
-            .listStyle(InsetGroupedListStyle())
-            .navigationBarItems(
-                leading:
-                    Button(action:{
-                        showLabelList.toggle()
-                    }){
-                        LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
-                    },
-                trailing:
-                    Button(action:{
-                        showFormLabel.toggle()
-                    }){
-                        LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
-                    }
-            )
-            .toolbar{
-                ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "tag.fill")) Tags")
-                }
-            }
-            .sheet(isPresented: $showFormLabel, content: {
-                LabelNewForm(showForm: $showFormLabel) 
-                .environment(\.horizontalSizeClass, .compact)
-            })
-            #elseif os(macOS)
+            #if os(macOS)
             List{
                 HStack{
                     Text("\(Image(systemName: "tag.fill")) Tags")
@@ -62,6 +34,58 @@ struct labelPicker: View {
                 Divider()
                 LabelPickerListElements(label: $label, showLabelList: $showLabelList)
             }
+            #else
+            ZStack{
+                List{
+                    LabelPickerListElements(label: $label, showLabelList: $showLabelList)
+                    
+                    Button(action: {
+                        showFormLabel.toggle()
+                    }){
+                        HStack{
+                            Spacer()
+                            Label("New" , systemImage: "plus.circle.fill")
+                                .foregroundColor(.white)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                                .padding()
+                            Spacer()
+                        }
+                        
+                        .padding(.vertical, 15)
+                    }
+                    .listRowBackground(Color.accentColor)
+                     
+                }
+                .listStyle(InsetGroupedListStyle())
+              
+            }
+            
+            
+            .toolbar{
+                ToolbarItem(placement: .cancellationAction){
+                    Button(action:{
+                        showLabelList.toggle()
+                    }){
+                       Label("Return", image: "xmark")
+                            .foregroundColor(.red)
+                    }
+                }
+                /*ToolbarItem(placement: .confirmationAction){
+                    Button(action: {
+                        showFormLabel.toggle()
+                    }){
+                       Label("New", image: "plus.circle.fill")
+                            .foregroundColor(.accentColor)
+                    }
+                }*/
+                ToolbarItem(placement:.principal){
+                    Text("\(Image(systemName: "tag.fill")) Tags")
+                }
+            }
+            .sheet(isPresented: $showFormLabel, content: {
+                LabelNewForm(showForm: $showFormLabel)
+                .environment(\.horizontalSizeClass, .compact)
+            })
             #endif
         }
         
@@ -85,19 +109,7 @@ struct LabelPickerListElements: View {
     var body: some View {
         
         ForEach(labels, id: \.id){ label in
-            #if os(iOS)
-            Button(action:{setLabel(label: label)}){
-                HStack{
-                    Spacer()
-                    Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                    Spacer()
-                }
-                .padding()
-                .foregroundColor(Color.white)
-            }
-            .listRowBackground(label.labelColor)
-            #elseif os(macOS)
+            #if os(macOS)
                 HStack{
                     Spacer()
                     Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
@@ -113,8 +125,19 @@ struct LabelPickerListElements: View {
                 .onHover { isHovered in
                     self.hovered = isHovered
                 }
-                //.foregroundColor(Color.white)
-            
+            #else
+            Button(action:{setLabel(label: label)}){
+                HStack{
+                    Spacer()
+                    Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Spacer()
+                }
+                .padding()
+                .foregroundColor(Color.white)
+            }
+            .listRowBackground(label.labelColor)
+           
             #endif
         }.onDelete(perform: deleteItem)
         

@@ -17,7 +17,12 @@ struct LabelNewForm: View {
     @Binding var showForm : Bool
     var body: some View {
         Group{
-            #if os(iOS)
+            #if os(macOS)
+            List{
+                Text("\(Image(systemName: "tag.fill")) New") 
+                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
+            }
+            #else
             NavigationView{
                 ZStack{
                     List{
@@ -27,11 +32,25 @@ struct LabelNewForm: View {
                     VStack{
                         Spacer()
                         Button(action: saveTag){
-                            ButtonLabelAdd(label: "Add", systemImage: "plus.circle.fill", foreground: .white)
+                            HStack{
+                                Spacer()
+                                Label( "Add" , systemImage: "plus.circle.fill")
+                                    .foregroundColor(.white)
+                                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                                    .padding()
+                                Spacer()
+                            }
+                            
+                            .padding(.vertical, 15)
                         }
-                    }
+                        .background(Color.accentColor)
+                        .cornerRadius(10)
+                        .padding()
+                   }
+                    
+                    
                 }
-                .navigationBarItems(
+               /* .navigationBarItems(
                     leading:
                         Button(action:{
                             showForm.toggle()
@@ -42,17 +61,26 @@ struct LabelNewForm: View {
                         Button(action:{}){
                             LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
                         }
-                )
+                )*/
                 .toolbar{
+                    ToolbarItem(placement: .cancellationAction){
+                        Button(action:{
+                            showForm.toggle()
+                        }){
+                           Label("Return", image: "xmark")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    ToolbarItem(placement: .confirmationAction){
+                        Button(action: saveTag){
+                           Label("Add", image: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "tag.fill")) New")
                     }
                 }
-            }
-            #elseif os(macOS)
-            List{
-                Text("\(Image(systemName: "tag.fill")) New") 
-                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
             }
             #endif
         }
@@ -90,18 +118,17 @@ struct LabelMultiplatformForm: View {
             ForEach(0..<AppColorsModel.colors.count){ index in
                 HStack{
                     Image(systemName: "circle.fill")
-                    Spacer()
+                        .foregroundColor(AppColorsModel.colors[index].color)
                     Text(AppColorsModel.colors[index].name)
-                    Spacer()
                 }
-                .foregroundColor(AppColorsModel.colors[index].color)
+                .padding()
                 .tag(index)
             }
         })
-        #if os(iOS)
-        .pickerStyle(WheelPickerStyle())
-        #elseif os(macOS)
+        #if os(macOS)
         .pickerStyle(InlinePickerStyle())
+        #else
+        .pickerStyle(NavigationLinkPickerStyle())
         #endif
         .labelsHidden()
         

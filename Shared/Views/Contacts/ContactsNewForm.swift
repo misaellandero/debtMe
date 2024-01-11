@@ -24,7 +24,13 @@ struct ContactsNewForm: View {
     
     var body: some View {
             Group{
-                #if os(iOS)
+                #if os(macOS)
+                List{
+                    Text(edition ? "Edit Contact" : "New Contact")
+                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
+                }
+                .frame(width: 300, height: 170)
+                #else
                 NavigationView{
                     ZStack{
                         List{
@@ -50,32 +56,27 @@ struct ContactsNewForm: View {
                              .padding()
                         }
                     }
-                     
-                .navigationBarItems(
-                    leading:
+                .toolbar{
+                    ToolbarItem(placement: .cancellationAction){
                         Button(action:{
                             self.presentationMode.wrappedValue.dismiss()
                         }){
-                            LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
-                        },
-                    trailing:
-                        Button(action:performSaveAcion){
-                            LabelSFRounder(label: edition ? "Save": "Add" , systemImage: "plus.circle.fill", foreground: .accentColor)
+                           Label("Return", image: "xmark")
+                                .foregroundColor(.red)
                         }
-                )
-                .toolbar{
+                    }
+                    ToolbarItem(placement: .confirmationAction){
+                        Button(action: performSaveAcion){
+                           Label(edition ? "Save": "Add", image: "plus.circle.fill")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
                     ToolbarItem(placement: .principal){
                         Text("\(Image(systemName: "person.2.fill")) ") +
                         Text((edition ? LocalizedStringKey("Edit") : LocalizedStringKey("New")))
                     }
                 }
                 }
-                #elseif os(macOS)
-                List{
-                    Text(edition ? "Edit Contact" : "New Contact")
-                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
-                }
-                .frame(width: 300, height: 170)
                 #endif
             }
             .onAppear(perform: loadDataForEdit)
@@ -162,15 +163,18 @@ struct NewContactMultiplatformForm : View {
                     isPresented: self.$showPopover,
                     arrowEdge: .top
                 ) {
-                    #if os(iOS)
+                   
+                    #if os(macOS)
+                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+                    #elseif os(visionOS)
+                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+                    #else
                     if horizontalSizeClass == .compact {
                         EmojiSelecter(emoji: $contact.emoji.onChange(showChange))
                     } else {
                         EmojiPicker(emoji: $contact.emoji.onChange(showChange))
                     }
-                    #elseif os(macOS)
-                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                    #endif  
+                    #endif
                 }
                 
                 TextField("Name", text: $contact.name)
@@ -180,7 +184,22 @@ struct NewContactMultiplatformForm : View {
             HStack{
                 Text("Select a tag")
                 Spacer()
-                #if os(iOS)
+                #if os(macOS)
+                
+                Button(action:{
+                    showLabelList.toggle()
+                }){
+                    Group{
+                       Text(labelContact?.wrappedName ?? "Nothing selected")
+                    }
+                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                    .foregroundColor(labelContact?.labelColor ?? Color.gray)
+                }
+                .popover(isPresented: $showLabelList){
+                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                        .frame(width: 250, height: 200)
+                }
+                #else
                 Button(action:{
                     showLabelList.toggle()
                 }){
@@ -202,38 +221,10 @@ struct NewContactMultiplatformForm : View {
                     .environment(\.horizontalSizeClass, .compact)
                   
                 }
-                #elseif os(macOS)
-                
-                Button(action:{
-                    showLabelList.toggle()
-                }){
-                    Group{
-                       Text(labelContact?.wrappedName ?? "Nothing selected")
-                    }
-                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundColor(labelContact?.labelColor ?? Color.gray)
-                }
-                .popover(isPresented: $showLabelList){
-                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
-                        .frame(width: 250, height: 200)
-                }
-                
                 #endif
             }
             Section{
-                #if os(iOS)
-               
-               
-               /* Button(action: saveContact){
-                HStack{
-                    Spacer()
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.white)
-                        .padding()
-                    Spacer()
-                }
-            }
-            .listRowBackground(Color.accentColor )*/
+                #if os(iOS) 
                 #elseif os(macOS)
                 HStack{
                     Button(action: {

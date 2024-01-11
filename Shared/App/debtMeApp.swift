@@ -17,7 +17,6 @@ struct debtMeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .font(Font.system(.headline, design: .rounded).weight(.black))
                 .environment(\.managedObjectContext, coreData.persistentContainer.viewContext)
                 .environmentObject(userPreferences)
                 .navigationTitle("")

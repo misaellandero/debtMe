@@ -15,6 +15,8 @@ extension View {
         }
 #elseif os(macOS)
         self
+#else
+        self
 #endif
     }
 }

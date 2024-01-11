@@ -17,6 +17,63 @@
 		132B860D2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
 		132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */; };
 		132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */; };
+		1331BD5F2B4F38C200C0A15F /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 1331BD5E2B4F38C200C0A15F /* RealityKitContent */; };
+		1331BD712B4F397F00C0A15F /* debtMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A21C25FEB1EE00455AB0 /* debtMeApp.swift */; };
+		1331BD722B4F398D00C0A15F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A21D25FEB1EE00455AB0 /* ContentView.swift */; };
+		1331BD732B4F399600C0A15F /* ConfettiPopSoundEffectLong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */; };
+		1331BD742B4F399600C0A15F /* ConfettiPopSoundEffect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */; };
+		1331BD752B4F399D00C0A15F /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A28925FED19300455AB0 /* UserPreferences.swift */; };
+		1331BD762B4F399D00C0A15F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A21E25FEB1EE00455AB0 /* Persistence.swift */; };
+		1331BD772B4F39A400C0A15F /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
+		1331BD782B4F39A400C0A15F /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
+		1331BD792B4F39A400C0A15F /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
+		1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */; };
+		1331BD7B2B4F39A400C0A15F /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
+		1331BD7C2B4F39A400C0A15F /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
+		1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */; };
+		1331BD7E2B4F39A400C0A15F /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
+		1331BD7F2B4F39AB00C0A15F /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
+		1331BD802B4F39AB00C0A15F /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		1331BD812B4F39AB00C0A15F /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
+		1331BD822B4F39AB00C0A15F /* PaymentsTransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5C29995AD400C87C3D /* PaymentsTransactionsList.swift */; };
+		1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD5F29999A7600C87C3D /* PaymentNewForm.swift */; };
+		1331BD842B4F39B000C0A15F /* LabelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60634C261040D3004834F1 /* LabelPicker.swift */; };
+		1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60635226104AB5004834F1 /* LabelNewForm.swift */; };
+		1331BD862B4F39B600C0A15F /* TransactionsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */; };
+		1331BD872B4F39B600C0A15F /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
+		1331BD882B4F39B600C0A15F /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
+		1331BD892B4F39B600C0A15F /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
+		1331BD8A2B4F39BD00C0A15F /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A93B25FF1A750049D648 /* EmojiButton.swift */; };
+		1331BD8B2B4F39BD00C0A15F /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92E25FF19AD0049D648 /* EmojiPicker.swift */; };
+		1331BD8C2B4F39C100C0A15F /* ContactsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A2BD25FEF76300455AB0 /* ContactsDetail.swift */; };
+		1331BD8D2B4F39C100C0A15F /* ContactsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A2B325FEF72500455AB0 /* ContactsList.swift */; };
+		1331BD8E2B4F39C100C0A15F /* ContactsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A2C225FEF77100455AB0 /* ContactsNewForm.swift */; };
+		1331BD8F2B4F39C100C0A15F /* ContactsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A2B825FEF73C00455AB0 /* ContactsRow.swift */; };
+		1331BD912B4F39C400C0A15F /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A29C25FEDC8E00455AB0 /* TabBarView.swift */; };
+		1331BD922B4F39C400C0A15F /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A2A125FEDC9D00455AB0 /* SideBarView.swift */; };
+		1331BD932B4F39CA00C0A15F /* Payment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD532999538A00C87C3D /* Payment+CoreDataProperties.swift */; };
+		1331BD942B4F39CA00C0A15F /* Payment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD522999538A00C87C3D /* Payment+CoreDataClass.swift */; };
+		1331BD952B4F39CA00C0A15F /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD622999A69A00C87C3D /* PaymentModel.swift */; };
+		1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A27D25FEC78400455AB0 /* AppColorsModel.swift */; };
+		1331BD972B4F39D000C0A15F /* UserPreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A29125FED1E700455AB0 /* UserPreferencesModel.swift */; };
+		1331BD982B4F39D500C0A15F /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A24725FEBBCF00455AB0 /* Transaction+CoreDataClass.swift */; };
+		1331BD992B4F39D500C0A15F /* Transaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A24825FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift */; };
+		1331BD9A2B4F39D500C0A15F /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD425A262D3E2A00568EE7 /* TransactionModel.swift */; };
+		1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A8FF260EFF1800033790 /* ContactLabel+CoreDataClass.swift */; };
+		1331BD9C2B4F39DD00C0A15F /* ContactLabel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A900260EFF1800033790 /* ContactLabel+CoreDataProperties.swift */; };
+		1331BD9D2B4F39E200C0A15F /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92925FF19600049D648 /* Emojis.swift */; };
+		1331BD9E2B4F39E800C0A15F /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A8E7260EF5F800033790 /* Contact+CoreDataClass.swift */; };
+		1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
+		1331BDA02B4F39E800C0A15F /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A8E8260EF5F800033790 /* Contact+CoreDataProperties.swift */; };
+		1331BDA12B4F39EF00C0A15F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
+		1331BDA22B4F39F200C0A15F /* debtMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A21A25FEB1EE00455AB0 /* debtMe.xcdatamodeld */; };
+		1331BDA62B4F727C00C0A15F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331BDA52B4F727B00C0A15F /* CloudKit.framework */; };
+		1331BDA82B4F728400C0A15F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1331BDA72B4F728400C0A15F /* ConfettiSwiftUI */; };
+		1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A27725FEC15600455AB0 /* DateFormatterExtension.swift */; };
+		1331BDAB2B4F731B00C0A15F /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
+		1331BDAC2B4F731B00C0A15F /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A27025FEC00F00455AB0 /* ColorExtension.swift */; };
+		1331BDAD2B4F731B00C0A15F /* CurrencyExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */; };
+		1331BDAE2B4F731B00C0A15F /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A26B25FEBFDB00455AB0 /* BindingExtension.swift */; };
 		133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A91E25FF081F0049D648 /* TransactionsRow.swift */; };
 		133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4252262D33ED00568EE7 /* TransactionsContactList.swift */; };
 		133FC754270C099F00CDB741 /* TransactionsNewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCD4256262D3B7B00568EE7 /* TransactionsNewForm.swift */; };
@@ -132,6 +189,14 @@
 		132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPaymentView.swift; sourceTree = "<group>"; };
 		132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelReset.swift; sourceTree = "<group>"; };
 		132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelPayAll.swift; sourceTree = "<group>"; };
+		1331BD442B4F37BB00C0A15F /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		1331BD4D2B4F37BC00C0A15F /* ImageBasedLighting.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = ImageBasedLighting.skybox; sourceTree = "<group>"; };
+		1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1331BD522B4F37BE00C0A15F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1331BD542B4F37BE00C0A15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "debtMe (visionOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1331BDA52B4F727B00C0A15F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/XROS.platform/Developer/SDKs/XROS1.0.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "debtMe (visionOS).entitlements"; sourceTree = "<group>"; };
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
@@ -197,6 +262,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1331BD592B4F38C200C0A15F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1331BDA82B4F728400C0A15F /* ConfettiSwiftUI in Frameworks */,
+				1331BD5F2B4F38C200C0A15F /* RealityKitContent in Frameworks */,
+				1331BDA62B4F727C00C0A15F /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7F70A22125FEB1F700455AB0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -218,6 +293,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1331BD422B4F37BB00C0A15F /* visionOS */ = {
+			isa = PBXGroup;
+			children = (
+				1331BD4D2B4F37BC00C0A15F /* ImageBasedLighting.skybox */,
+				1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */,
+				1331BD542B4F37BE00C0A15F /* Info.plist */,
+				1331BD512B4F37BE00C0A15F /* Preview Content */,
+			);
+			path = visionOS;
+			sourceTree = "<group>";
+		};
+		1331BD432B4F37BB00C0A15F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				1331BD442B4F37BB00C0A15F /* RealityKitContent */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		1331BD512B4F37BE00C0A15F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1331BD522B4F37BE00C0A15F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		13874D502ACBEB59007B8FE3 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,10 +421,13 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
+				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
 				7F70A21925FEB1EE00455AB0 /* Shared */,
 				7F70A22625FEB1F700455AB0 /* iOS */,
 				7F70A22D25FEB1F700455AB0 /* macOS */,
+				1331BD422B4F37BB00C0A15F /* visionOS */,
+				1331BD432B4F37BB00C0A15F /* Packages */,
 				7F70A22525FEB1F700455AB0 /* Products */,
 				7F70A25F25FEBC8800455AB0 /* Frameworks */,
 			);
@@ -348,6 +453,7 @@
 			children = (
 				7F70A22425FEB1F700455AB0 /* debtMe.app */,
 				7F70A22C25FEB1F700455AB0 /* debtMe.app */,
+				1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -442,6 +548,7 @@
 		7F70A25F25FEBC8800455AB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1331BDA52B4F727B00C0A15F /* CloudKit.framework */,
 				7F70A26225FEBCA100455AB0 /* CloudKit.framework */,
 				7F70A26025FEBC8800455AB0 /* CloudKit.framework */,
 			);
@@ -528,6 +635,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1331BD5B2B4F38C200C0A15F /* debtMe (visionOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1331BD6E2B4F38C400C0A15F /* Build configuration list for PBXNativeTarget "debtMe (visionOS)" */;
+			buildPhases = (
+				1331BD582B4F38C200C0A15F /* Sources */,
+				1331BD592B4F38C200C0A15F /* Frameworks */,
+				1331BD5A2B4F38C200C0A15F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "debtMe (visionOS)";
+			packageProductDependencies = (
+				1331BD5E2B4F38C200C0A15F /* RealityKitContent */,
+				1331BDA72B4F728400C0A15F /* ConfettiSwiftUI */,
+			);
+			productName = debtMe;
+			productReference = 1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */;
+			productType = "com.apple.product-type.application";
+		};
 		7F70A22325FEB1F700455AB0 /* debtMe (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F70A23C25FEB1F700455AB0 /* Build configuration list for PBXNativeTarget "debtMe (iOS)" */;
@@ -574,9 +702,12 @@
 		7F70A21525FEB1ED00455AB0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					1331BD5B2B4F38C200C0A15F = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					7F70A22325FEB1F700455AB0 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -604,11 +735,22 @@
 			targets = (
 				7F70A22325FEB1F700455AB0 /* debtMe (iOS) */,
 				7F70A22B25FEB1F700455AB0 /* debtMe (macOS) */,
+				1331BD5B2B4F38C200C0A15F /* debtMe (visionOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1331BD5A2B4F38C200C0A15F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1331BD742B4F399600C0A15F /* ConfettiPopSoundEffect.wav in Resources */,
+				1331BDA12B4F39EF00C0A15F /* Assets.xcassets in Resources */,
+				1331BD732B4F399600C0A15F /* ConfettiPopSoundEffectLong.m4a in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7F70A22225FEB1F700455AB0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -635,6 +777,64 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1331BD582B4F38C200C0A15F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1331BD9D2B4F39E200C0A15F /* Emojis.swift in Sources */,
+				1331BD912B4F39C400C0A15F /* TabBarView.swift in Sources */,
+				1331BD7B2B4F39A400C0A15F /* ConfettiView.swift in Sources */,
+				1331BD892B4F39B600C0A15F /* TransactionsContactList.swift in Sources */,
+				1331BD7F2B4F39AB00C0A15F /* PaymentRow.swift in Sources */,
+				1331BD952B4F39CA00C0A15F /* PaymentModel.swift in Sources */,
+				1331BD9E2B4F39E800C0A15F /* Contact+CoreDataClass.swift in Sources */,
+				1331BD8F2B4F39C100C0A15F /* ContactsRow.swift in Sources */,
+				1331BD792B4F39A400C0A15F /* ButtonLabelShowSetled.swift in Sources */,
+				1331BD972B4F39D000C0A15F /* UserPreferencesModel.swift in Sources */,
+				1331BDAB2B4F731B00C0A15F /* ViewExtension.swift in Sources */,
+				1331BD992B4F39D500C0A15F /* Transaction+CoreDataProperties.swift in Sources */,
+				1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */,
+				1331BD8A2B4F39BD00C0A15F /* EmojiButton.swift in Sources */,
+				1331BD982B4F39D500C0A15F /* Transaction+CoreDataClass.swift in Sources */,
+				1331BD8B2B4F39BD00C0A15F /* EmojiPicker.swift in Sources */,
+				1331BD9A2B4F39D500C0A15F /* TransactionModel.swift in Sources */,
+				1331BDA02B4F39E800C0A15F /* Contact+CoreDataProperties.swift in Sources */,
+				1331BD712B4F397F00C0A15F /* debtMeApp.swift in Sources */,
+				1331BD8C2B4F39C100C0A15F /* ContactsDetail.swift in Sources */,
+				1331BD822B4F39AB00C0A15F /* PaymentsTransactionsList.swift in Sources */,
+				1331BD752B4F399D00C0A15F /* UserPreferences.swift in Sources */,
+				1331BDA22B4F39F200C0A15F /* debtMe.xcdatamodeld in Sources */,
+				1331BD7C2B4F39A400C0A15F /* ButtonLabelReset.swift in Sources */,
+				1331BD862B4F39B600C0A15F /* TransactionsListFilter.swift in Sources */,
+				1331BD932B4F39CA00C0A15F /* Payment+CoreDataProperties.swift in Sources */,
+				1331BD842B4F39B000C0A15F /* LabelPicker.swift in Sources */,
+				1331BD722B4F398D00C0A15F /* ContentView.swift in Sources */,
+				1331BDAC2B4F731B00C0A15F /* ColorExtension.swift in Sources */,
+				1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */,
+				1331BD872B4F39B600C0A15F /* TransactionsNewForm.swift in Sources */,
+				1331BD762B4F399D00C0A15F /* Persistence.swift in Sources */,
+				1331BD802B4F39AB00C0A15F /* Border.swift in Sources */,
+				1331BD782B4F39A400C0A15F /* ButtonLabelAdd.swift in Sources */,
+				1331BD7E2B4F39A400C0A15F /* EmptyPaymentView.swift in Sources */,
+				1331BDAD2B4F731B00C0A15F /* CurrencyExtension.swift in Sources */,
+				1331BDAE2B4F731B00C0A15F /* BindingExtension.swift in Sources */,
+				1331BD8D2B4F39C100C0A15F /* ContactsList.swift in Sources */,
+				1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */,
+				1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */,
+				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
+				1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */,
+				1331BD812B4F39AB00C0A15F /* TotalsView.swift in Sources */,
+				1331BD882B4F39B600C0A15F /* TransactionsRow.swift in Sources */,
+				1331BD772B4F39A400C0A15F /* LabelSFRounder.swift in Sources */,
+				1331BD8E2B4F39C100C0A15F /* ContactsNewForm.swift in Sources */,
+				1331BD942B4F39CA00C0A15F /* Payment+CoreDataClass.swift in Sources */,
+				1331BD922B4F39C400C0A15F /* SideBarView.swift in Sources */,
+				1331BD9C2B4F39DD00C0A15F /* ContactLabel+CoreDataProperties.swift in Sources */,
+				1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */,
+				1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7F70A22025FEB1F700455AB0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -775,6 +975,76 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1331BD6F2B4F38C400C0A15F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "debtMe (visionOS).entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"visionOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 63AJC847ZW;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = visionOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Debug;
+		};
+		1331BD702B4F38C400C0A15F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "debtMe (visionOS).entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"visionOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 63AJC847ZW;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = visionOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Release;
+		};
 		7F70A23A25FEB1F700455AB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -908,12 +1178,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -939,12 +1209,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1010,6 +1280,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1331BD6E2B4F38C400C0A15F /* Build configuration list for PBXNativeTarget "debtMe (visionOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1331BD6F2B4F38C400C0A15F /* Debug */,
+				1331BD702B4F38C400C0A15F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7F70A21825FEB1ED00455AB0 /* Build configuration list for PBXProject "debtMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1051,6 +1330,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1331BD5E2B4F38C200C0A15F /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+		1331BDA72B4F728400C0A15F /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
 		13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;

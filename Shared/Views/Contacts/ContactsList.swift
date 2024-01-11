@@ -30,40 +30,38 @@ struct ContactsList: View {
     
     var body: some View {
         Group{
-            #if os(iOS) 
-          
-                List{
-                    ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
-                }
-                .searchable(text: $searchQuery)
-                .listStyle(InsetGroupedListStyle())
-                .navigationBarBackButtonHidden(true) 
-                .navigationBarTitle(Text("Contacts"))
-              
-            
-            #elseif os(macOS)
-        
-                List{
-                    ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
+            #if os(macOS)
+            List{
+                ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
                 
+            }
+            .toolbar {
+                
+                ToolbarItem(placement: .navigation ){
+                    Text("\(Image(systemName: "person.2.fill")) Contacts")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                .toolbar {
+                
+                ToolbarItem(placement: .navigation ){
+                    SearchTextField(searchQuery: $searchQuery)
                     
-                    ToolbarItem(placement: .navigation ){
-                        Text("\(Image(systemName: "person.2.fill")) Contacts")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
-                    }
-                     
-                    ToolbarItem(placement: .navigation ){
-                        SearchTextField(searchQuery: $searchQuery)
-                            
-                    }
                 }
+            }
+            #else
+            
+            List{
+                ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
+            }
+            .searchable(text: $searchQuery)
+            .listStyle(InsetGroupedListStyle())
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle(Text("Contacts"))
             
             #endif
         }
         
         .toolbar{
+            
             ToolbarItem(placement: .primaryAction ){
                 Button(action:{
                     showingNewContactForm.toggle()
@@ -72,6 +70,7 @@ struct ContactsList: View {
                         .foregroundColor(.accentColor)
                 }
             }
+            
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")

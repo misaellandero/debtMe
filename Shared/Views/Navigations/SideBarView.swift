@@ -13,7 +13,7 @@ struct SideBarView: View {
     @State private var isDefaultItemActive = true
     
     var body: some View {
-      
+       
         NavigationSplitView {
             List(/*selection: $sectionSelected*/) {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
@@ -53,57 +53,8 @@ struct SideBarView: View {
           } detail: {
               EmptyPaymentView(empty: true)
           }
-          .font(Font.system(.body, design: .rounded).weight(.black))
+         
         
-             
-        
-       /* NavigationView {
-            List() {
-                NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
-                    Label("Contacts", systemImage: "person.2.fill")
-                }
-                
-                NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
-                    Label("Debts", systemImage: "dollarsign.square")
-                }
-                
-                NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
-                    Label("Loans", systemImage: "dollarsign.square.fill")
-                }
-                
-                NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
-                    Label("Settings", systemImage: "gear")
-                } 
-            }
-            .listStyle(SidebarListStyle())
-            .navigationTitle("DebtMe")
-            .frame(minWidth: 150, idealWidth: 250, maxWidth: 350)
-           /* .toolbar{
-                #if os(iOS)
-                ToolbarItem(placement:.principal){
-                    Text("DebtMe")
-                }
-                #elseif os(macOS)
-                //Toggle Sidebar Button
-                ToolbarItem(placement: .navigation){
-                    
-                    toogleSideBarButton()
-                }
-                #endif
-            }
-            */
-            
-            Text("Detail view")
-                .frame(minWidth: 400)
-            
-            
-            Text("Detail view")
-                .frame(idealWidth: 400)
-            
-            
-            Text("Detail view")
-                .frame(idealWidth: 400)
-        }*/
     }
     
    

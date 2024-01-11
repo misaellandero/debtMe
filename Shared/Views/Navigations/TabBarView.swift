@@ -11,7 +11,7 @@ struct TabBarView: View {
     // MARK: - current section selected
     @State var sectionSelected = SectionSelected.contacts
     
-    var body: some View { 
+    var body: some View {  
         TabView(selection: $sectionSelected){
             // MARK: - Contacts
             NavigationView{
