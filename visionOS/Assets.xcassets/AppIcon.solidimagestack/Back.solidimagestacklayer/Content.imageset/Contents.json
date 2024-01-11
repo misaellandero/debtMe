@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "fondoIcono.png",
       "idiom" : "vision",
       "scale" : "2x"
     }

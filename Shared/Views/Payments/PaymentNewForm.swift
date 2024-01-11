@@ -139,32 +139,25 @@ struct PaymentMultiplatformForm: View {
             DatePicker("Date", selection: $paymentModel.date)
                 .datePickerStyle(GraphicalDatePickerStyle())
             TextField("Note", text: $paymentModel.note)
+                #if os(macOS)
             TextField("Amount", text: $paymentModel.amout)
                 .disabled(paymentModel.payAll)
-            if !edition {
-                Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
-                #if os(iOS)
+                #else
+            TextField("Amount", text: $paymentModel.amout)
+                .disabled(paymentModel.payAll)
                 .keyboardType(.decimalPad)
                 #endif
+            if !edition {
+                Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
+               
             }
         }
                 #if os(macOS)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 #endif
                 Section{
-                    #if os(iOS)
-                    Button(action: savePayment){
-                        HStack{
-                            Spacer()
-                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.white)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                                .padding()
-                            Spacer()
-                        }
-                    }
-                    .listRowBackground(Color.accentColor )
-                    #elseif os(macOS)
+                   
+                    #if os(macOS)
                     HStack{
                         Button(action: closeView){
                             Label("Cancel", systemImage: "xmark")
@@ -176,6 +169,18 @@ struct PaymentMultiplatformForm: View {
                         }
                         .accentColor(.accentColor)
                     }
+                    #else
+                    Button(action: savePayment){
+                        HStack{
+                            Spacer()
+                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
+                                .foregroundColor(.white)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                                .padding()
+                            Spacer()
+                        }
+                    }
+                    .listRowBackground(Color.accentColor )
                     #endif
                 }
             

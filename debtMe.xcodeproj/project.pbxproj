@@ -11,6 +11,7 @@
 		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
+		131A85D92B4FA39600927E54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */; };
 		132B86092ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
 		132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */; };
 		132B860C2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */; };
@@ -65,7 +66,6 @@
 		1331BD9E2B4F39E800C0A15F /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A8E7260EF5F800033790 /* Contact+CoreDataClass.swift */; };
 		1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92225FF13080049D648 /* ContactModel.swift */; };
 		1331BDA02B4F39E800C0A15F /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F76A8E8260EF5F800033790 /* Contact+CoreDataProperties.swift */; };
-		1331BDA12B4F39EF00C0A15F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
 		1331BDA22B4F39F200C0A15F /* debtMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A21A25FEB1EE00455AB0 /* debtMe.xcdatamodeld */; };
 		1331BDA62B4F727C00C0A15F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331BDA52B4F727B00C0A15F /* CloudKit.framework */; };
 		1331BDA82B4F728400C0A15F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1331BDA72B4F728400C0A15F /* ConfettiSwiftUI */; };
@@ -746,7 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1331BD742B4F399600C0A15F /* ConfettiPopSoundEffect.wav in Resources */,
-				1331BDA12B4F39EF00C0A15F /* Assets.xcassets in Resources */,
+				131A85D92B4FA39600927E54 /* Assets.xcassets in Resources */,
 				1331BD732B4F399600C0A15F /* ConfettiPopSoundEffectLong.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
