@@ -7,25 +7,25 @@
 
 import SwiftUI
 
-struct TransactionsNewForm: View {
+struct TransactionsForm: View {
     //Model View de Coredata
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     
     @State var transactionModel = TransactionModel(amout: "", des: "", notes: "", date: Date(), debt: false)
     
-    @State var contact : Contact
+    @State var contact : Contact?
     @State var edition : Bool = false
+    @State var transaction: Transaction?
     
     var body: some View {
         Group{
           
             #if os(macOS)
             List{
-                Text("\(Image(systemName: "dollarsign.square.fill")) New") 
-                NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: {
-                    saveTransaction()
-                }, closeView: closeView)
+                Text("\(Image(systemName: "dollarsign.square.fill")) ") +
+                Text(edition ? "Edit" : "New")
+                TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction:performSaveAcion, closeView: closeView, edition: edition)
                 .padding()
             }
             .frame(width: 400, height: 500)
@@ -33,12 +33,12 @@ struct TransactionsNewForm: View {
             NavigationView{
                 ZStack{
                     List{
-                        NewTransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: saveTransaction,closeView: closeView)
+                        TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
                     }
                     .listStyle(InsetGroupedListStyle())
                     VStack{
                         Spacer()
-                        Button(action: saveTransaction){
+                        Button(action: performSaveAcion){
                             HStack{
                                 Spacer()
                                 Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
@@ -55,26 +55,6 @@ struct TransactionsNewForm: View {
                         .padding()
                     }
                 }
-                
-                /*.navigationBarItems(
-                    leading:
-                        Button(action:{
-                            closeView()
-                        }){
-                            
-                            Label("Return", systemImage: "xmark")
-                                //Image(systemName: "chevron.left.circle.fill")
-                                .foregroundColor(Color.gray)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                        }
-                    ,
-                    trailing:
-                        Button(action: saveTransaction){
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                        }
-                )*/
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
@@ -85,7 +65,7 @@ struct TransactionsNewForm: View {
                         }
                     }
                     ToolbarItem(placement: .confirmationAction){
-                        Button(action: saveTransaction){
+                        Button(action: performSaveAcion){
                            Label(edition ? "Save": "Add", image: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                         }
@@ -97,10 +77,45 @@ struct TransactionsNewForm: View {
             }
             #endif
         }
+        .onAppear(perform: loadDataForEdit)
     }
     
     func closeView(){
         self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    func loadDataForEdit(){
+        if edition {
+            if let transaction {
+                transactionModel.amout = String(transaction.amount)
+                transactionModel.des = transaction.wrappedDes
+                transactionModel.notes = transaction.wrappedNotes
+                transactionModel.date = transaction.wrappedDateCreation
+                transactionModel.debt = transaction.debt
+            }
+        }
+    }
+    func performSaveAcion(){
+        if edition {
+            editTransaction()
+        } else {
+            saveTransaction()
+        }
+    }
+    
+    func editTransaction(){
+        if let transaction {
+            transaction.amount = transactionModel.amountNumber
+            transaction.des = transactionModel.des
+            transaction.notes = transactionModel.notes
+            transaction.dateCreation = transactionModel.date
+            transaction.settled = transactionModel.settled
+            transaction.debt = transactionModel.debt
+            
+            try? self.moc.save()
+            closeView()
+        }
+        
     }
     
     func saveTransaction(){
@@ -120,12 +135,15 @@ struct TransactionsNewForm: View {
     }
 }
 
-struct NewTransactionMultiPlataformForm: View {
+struct TransactionMultiPlataformForm: View {
+    
     @Binding var transactionModel : TransactionModel
     var saveTransaction : () -> Void
     var closeView : () -> Void
     var debtOptions = ["They Owes me" , "I Owe Them"]
     var debtValue = [true, false]
+    var edition = false
+    
     var body: some View {
         
    
@@ -163,18 +181,6 @@ struct NewTransactionMultiPlataformForm: View {
         
         
         Section{
-          
-           /* Button(action: saveTransaction){
-            HStack{
-                Spacer()
-                Label("Add", systemImage: "plus.circle.fill")
-                    .foregroundColor(.white)
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
-                    .padding()
-                Spacer()
-            }
-        }
-        .listRowBackground(Color.accentColor )*/
             #if os(macOS)
             HStack{
                 Button(action: closeView){
@@ -185,7 +191,7 @@ struct NewTransactionMultiPlataformForm: View {
                 .accentColor(.red)
                 Spacer()
                 Button(action: saveTransaction){
-                    Label("Add", systemImage: "plus.circle.fill") 
+                    Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
                 }
                 .accentColor(.accentColor)
             }

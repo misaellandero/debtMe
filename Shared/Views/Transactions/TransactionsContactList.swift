@@ -77,8 +77,13 @@ struct TransactionsContactList: View {
                 }
                 .onDelete(perform: deleteItem)
                 
+                //No records
+                if filteredAndOrderedTransactions.count < 1 {
+                    
+                }
+                
+                //HideSettled info
                 if !contact.hideSettled {
-                  
                         
                     Button(action: {
                         contact.hideSettled.toggle()
@@ -98,6 +103,7 @@ struct TransactionsContactList: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
+                
             }
             #if os(iOS)
             .searchable(text: $searchQuery)
@@ -167,7 +173,7 @@ struct TransactionsContactList: View {
                 
             }
             .sheet(isPresented: $showAddTransaction){
-                TransactionsNewForm(contact: contact)
+                TransactionsForm(contact: contact)
             }
             .sheet(isPresented: $showEditContact){
                 ContactsNewForm(edition: true, contactToEdit: contact)

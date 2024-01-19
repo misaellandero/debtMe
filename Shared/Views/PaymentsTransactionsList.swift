@@ -15,6 +15,7 @@ struct PaymentsTransactionsList: View {
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var transaction : Transaction
     @State var showAddPayment = false
+    @State var showEditTransaction = false
     
     //To hide view
     @Environment(\.presentationMode) var presentationMode
@@ -112,6 +113,15 @@ struct PaymentsTransactionsList: View {
         #endif
         .toolbar {
             ToolbarItem(placement: .automatic ){
+                
+                Button(action:{
+                    showEditTransaction.toggle()
+                }){
+                    Label("Edit", systemImage: "square.and.pencil")
+                        .foregroundColor(.accentColor)
+                }
+            }
+            ToolbarItem(placement: .automatic ){
                 Button(action:{
                     showAddPayment.toggle()
                 }){
@@ -120,9 +130,13 @@ struct PaymentsTransactionsList: View {
                 }
                 .disabled(transaction.settled)
             }
+           
         }
         .sheet(isPresented: $showAddPayment.onChange(modalUpdate)){
             PaymentNewForm(transaction: transaction)
+        }
+        .sheet(isPresented: $showEditTransaction.onChange(modalUpdate)){
+            TransactionsForm(edition: true, transaction: transaction)
         }
       
        

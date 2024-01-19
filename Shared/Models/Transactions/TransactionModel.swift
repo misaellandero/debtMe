@@ -13,6 +13,7 @@ struct TransactionModel {
     var notes : String
     var date : Date
     var debt : Bool
+    var settled = false
      
     var amountNumber : Double {
         let namount = Double(amout) ?? 0.0

@@ -96,3 +96,4 @@
 "Delete Transaction" = "Eliminar transacción";
 "This transaction is unsettled and has recorded payments. Are you sure you want to delete?" = "Esta transacción no está saldada y tiene pagos registrados. ¿Estás seguro de que quieres eliminarla?";
  
+"Return" = "Regresar";

@@ -9,12 +9,14 @@ import SwiftUI
 
 struct EmptyPaymentView: View {
     var empty = false
+    var image : ImageResource = .cromaPig
+    var text : LocalizedStringKey = "Nothing around here yet!"
     var body: some View {
         VStack{
             if empty {
-                Text("Nothing around here yet!")
+                Text(text)
             }
-            Image(.cromaPig)
+            Image(image)
                 .resizable()
                 .scaledToFit()
                 .padding()

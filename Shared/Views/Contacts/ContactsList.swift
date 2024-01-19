@@ -31,10 +31,7 @@ struct ContactsList: View {
     var body: some View {
         Group{
             #if os(macOS)
-            List{
-                ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
-                
-            }
+            ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag, showingNewContactForm: $showingNewContactForm)
             .toolbar {
                 
                 ToolbarItem(placement: .navigation ){
@@ -49,9 +46,7 @@ struct ContactsList: View {
             }
             #else
             
-            List{
-                ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag)
-            }
+            ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag, showingNewContactForm: $showingNewContactForm)
             .searchable(text: $searchQuery)
             .listStyle(InsetGroupedListStyle())
             .navigationBarBackButtonHidden(true)
@@ -138,6 +133,8 @@ struct ContactsRows : View  {
     @Binding var shortMode : shortMode
     
     @Binding var selectedTag : String
+    
+    @Binding var showingNewContactForm : Bool
    
   
     var filteredContacts: [Contact] {
@@ -182,27 +179,40 @@ struct ContactsRows : View  {
     
     
     var body: some View {
-        
-        ForEach(filteredContacts, id: \.id) { contact in
-            NavigationLink(destination: TransactionsContactList(contact: contact)) {
-                ContactsRow(contact: contact)
-                    .environment(\.managedObjectContext, self.moc)
+        //No records yet
+        if filteredContacts.isEmpty {
+            EmptyPaymentView(empty: true)
+            Button {
+                showingNewContactForm.toggle()
+            } label: {
+                Label("New Contact", systemImage: "plus.circle.fill")
             }
-        }
-        .onDelete(perform: deleteItem)
-        .alert(isPresented: $showAlertDeletContact) {
-            Alert(
-                title: Text("Delete Contact"),
-                message: Text("This contact has unsettled transactions and balance is not Zero. Are you sure you want to delete?"),
-                primaryButton: .default(Text("Cancel")),
-                secondaryButton: .destructive(Text("Delete")) {
-                    // Perform the deletion when the user confirms
-                    if let contactToDelete = contactToDelete {
-                        performDeletion(for: contactToDelete)
+            .buttonStyle(BorderedProminentButtonStyle())
+            
+        } else {
+            List{
+                ForEach(filteredContacts, id: \.id) { contact in
+                    NavigationLink(destination: TransactionsContactList(contact: contact)) {
+                        ContactsRow(contact: contact)
+                            .environment(\.managedObjectContext, self.moc)
                     }
                 }
-            )
-        }
+                .onDelete(perform: deleteItem)
+            }
+            .alert(isPresented: $showAlertDeletContact) {
+                Alert(
+                    title: Text("Delete Contact"),
+                    message: Text("This contact has unsettled transactions and balance is not Zero. Are you sure you want to delete?"),
+                    primaryButton: .default(Text("Cancel")),
+                    secondaryButton: .destructive(Text("Delete")) {
+                        // Perform the deletion when the user confirms
+                        if let contactToDelete = contactToDelete {
+                            performDeletion(for: contactToDelete)
+                        }
+                    }
+                )
+            }
+        } 
     }
     
     
