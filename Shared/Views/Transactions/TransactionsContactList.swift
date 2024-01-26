@@ -67,47 +67,68 @@ struct TransactionsContactList: View {
     
     var body: some View {
         Group{
-            
-            List{
-                Section(){
-                    ContactsRow(contact: contact, showDetails: true)
-                }
-                ForEach(filteredAndOrderedTransactions, id: \.id) { transaction in
-                    TransactionsRow(transaction: transaction)
-                }
-                .onDelete(perform: deleteItem)
-                
-                //No records
-                if filteredAndOrderedTransactions.count < 1 {
+           
+                List{
+                    Section(){
+                        ContactsRow(contact: contact, showDetails: true)
+                    }
+                  
+                    ForEach(filteredAndOrderedTransactions, id: \.id) { transaction in
+                        TransactionsRow(transaction: transaction)
+                    }
+                    .onDelete(perform: deleteItem)
                     
-                }
-                
-                //HideSettled info
-                if !contact.hideSettled {
-                        
-                    Button(action: {
-                        contact.hideSettled.toggle()
-                        try? self.moc.save()
-                    }) { 
+                    //No records
+                    if contact.transactionsArray.isEmpty {
                         HStack{
                             Spacer()
                             VStack{
-                                Image(.notSeePig)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100) 
-                                    ButtonLabelShowSetled()
+                                EmptyPaymentView(empty: true)
+                                Button {
+                                    showAddTransaction.toggle()
+                                } label: {
+                                    Label("New Transaction", systemImage: "plus.circle.fill")
+                                        .foregroundColor(.white)
+                                }
+                                .buttonStyle(BorderedProminentButtonStyle())
                             }
                             Spacer()
                         }
+                         
+                        
+                    } else {
+                        //HideSettled info
+                        if !contact.hideSettled {
+                            
+                            Button(action: {
+                                contact.hideSettled.toggle()
+                                try? self.moc.save()
+                            }) {
+                                HStack{
+                                    Spacer()
+                                    VStack{
+                                        Image(.notSeePig)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 100)
+                                        ButtonLabelShowSetled()
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
+                  
+                    
                 }
-                
-            }
-            #if os(iOS)
-            .searchable(text: $searchQuery)
-            #endif
+                #if os(iOS)
+                .searchable(text: $searchQuery)
+                #endif
+            
+            
+        }
+            
             .toolbar {
                 ToolbarItem(placement:.automatic){
                     Text("\(Image(systemName: "folder")) Summary")
@@ -195,7 +216,7 @@ struct TransactionsContactList: View {
                 )
             }
             
-        }
+        
         
     }
     

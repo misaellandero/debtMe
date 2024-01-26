@@ -97,3 +97,18 @@
 "This transaction is unsettled and has recorded payments. Are you sure you want to delete?" = "Esta transacción no está saldada y tiene pagos registrados. ¿Estás seguro de que quieres eliminarla?";
  
 "Return" = "Regresar";
+
+"No records found!" = "¡No se encontro nada!";
+
+"Track Debts and Loads" = "Registra deudas y prestamos";
+"Track your transactions with friends and family, keep an easy record of what you debt and own" = "Registra tus transacciones con amigos y familiares, lleva un registro fácil de lo que debes y prestas";
+
+"iCloud Sync" = "Sincronización con iCloud";
+"Keep all your devices up to date using iCloud sync" = "Mantén todos tus dispositivos sincronizados con iCloud";
+
+"Universal App" = "Aplicación universal";
+"Get the app on your iPhone, iPad, Mac and VisionPro" = "Obtén la aplicación en tu iPhone, iPad, Mac y VisionPro";
+
+"Welcome to" = "Bienvenido a";
+"debtMe" = "debtMe";
+"A simple app to register small loans between friends and family" = "Una aplicación sencilla para registrar pequeños préstamos entre amigos y familiares";

@@ -35,7 +35,6 @@ struct PaymentsTransactionsList: View {
     var body: some View {
     
        ZStack{
-          
            
              ScrollView(.vertical){
                
@@ -146,6 +145,9 @@ struct PaymentsTransactionsList: View {
     func modalUpdate(_ tag: Bool){
         getTotals()
         checkforConffeti()
+        if transaction.paymentsArray.count > 1 {
+            AppReviewRequest.requestReviewIfNeeded()
+        }
     }
     
     func getTotals(){

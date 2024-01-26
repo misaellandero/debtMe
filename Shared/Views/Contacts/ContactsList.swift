@@ -179,17 +179,6 @@ struct ContactsRows : View  {
     
     
     var body: some View {
-        //No records yet
-        if filteredContacts.isEmpty {
-            EmptyPaymentView(empty: true)
-            Button {
-                showingNewContactForm.toggle()
-            } label: {
-                Label("New Contact", systemImage: "plus.circle.fill")
-            }
-            .buttonStyle(BorderedProminentButtonStyle())
-            
-        } else {
             List{
                 ForEach(filteredContacts, id: \.id) { contact in
                     NavigationLink(destination: TransactionsContactList(contact: contact)) {
@@ -198,6 +187,64 @@ struct ContactsRows : View  {
                     }
                 }
                 .onDelete(perform: deleteItem)
+                
+                //No match for filter or search
+                if contacts.isEmpty {
+                    HStack{
+                        Spacer()
+                        VStack{
+                            EmptyPaymentView(empty: true)
+                            Button {
+                                
+                                showingNewContactForm.toggle()
+                            } label: {
+                                
+                                Label("New Contact", systemImage: "plus.circle.fill")
+                                    .foregroundColor(.white)
+                            }
+                            .buttonStyle(BorderedProminentButtonStyle())
+                        }
+                        Spacer()
+                    }
+                    
+                }
+                
+                //No records yet
+                if filteredContacts.isEmpty && !contacts.isEmpty {
+                    HStack{
+                        Spacer()
+                        VStack{
+                            EmptyPaymentView(empty: true, text: "No records found!")
+                           
+                            Button {
+                                
+                                showingNewContactForm.toggle()
+                            } label: {
+                                
+                                Label("New Contact", systemImage: "plus.circle.fill")
+                                    .foregroundColor(.white)
+                            }
+                            .buttonStyle(BorderedProminentButtonStyle())
+                            
+                            
+                            Button {
+                                selectedTag = "All"
+                                searchQuery = ""
+                            } label: {
+                                
+                                Label("Show All", systemImage: "eyes")
+                                    .foregroundColor(.white)
+                            }
+                            .tint(.blue)
+                            .buttonStyle(BorderedProminentButtonStyle())
+                            
+                        }
+                        Spacer()
+                    }
+                    
+                    
+                }
+                
             }
             .alert(isPresented: $showAlertDeletContact) {
                 Alert(
@@ -212,7 +259,7 @@ struct ContactsRows : View  {
                     }
                 )
             }
-        } 
+         
     }
     
     

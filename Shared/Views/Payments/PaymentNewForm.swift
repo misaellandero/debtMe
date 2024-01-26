@@ -59,7 +59,7 @@ struct PaymentNewForm: View {
     }
     
     func closeView(){
-        self.presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss() 
     }
     
     func performSaveAcion(){

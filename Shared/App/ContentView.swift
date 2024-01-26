@@ -24,7 +24,8 @@ struct ContentView: View {
     @State var sectionSelected : SectionSelected? = .contacts
   
     var body: some View {
-            Group{
+            ZStack{
+                
                 #if os(iOS)
                 if horizontalSizeClass == .compact {
                     TabBarView()
@@ -36,6 +37,8 @@ struct ContentView: View {
                 #else
                 SideBarView(sectionSelected : $sectionSelected)
                 #endif
+                
+                WellcomeView()
             }
        
     }
