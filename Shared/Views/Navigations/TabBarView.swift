@@ -36,12 +36,14 @@ struct TabBarView: View {
                 .tag(SectionSelected.loans)
                 .disabled(true)
             // MARK: - Settings
-            Text("Settings")
+                NavigationView{
+                    SettingsList()
+                }
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(SectionSelected.settings)
-                .disabled(true)
+                 
         }
         .font(Font.system(.body, design: .rounded).weight(.black))
         

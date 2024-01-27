@@ -94,6 +94,21 @@
 		13545D762B5ACE9900BBD6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
 		1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
 		1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
+		1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
+		1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
+		1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
+		1369E1BB2B64420F005388C2 /* FeaturesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BA2B64420F005388C2 /* FeaturesList.swift */; };
+		1369E1BC2B64420F005388C2 /* FeaturesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BA2B64420F005388C2 /* FeaturesList.swift */; };
+		1369E1BD2B64420F005388C2 /* FeaturesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BA2B64420F005388C2 /* FeaturesList.swift */; };
+		1369E1BF2B644288005388C2 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BE2B644288005388C2 /* WhatsNewView.swift */; };
+		1369E1C02B644288005388C2 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BE2B644288005388C2 /* WhatsNewView.swift */; };
+		1369E1C12B644288005388C2 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1BE2B644288005388C2 /* WhatsNewView.swift */; };
+		1369E1C32B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */; };
+		1369E1C42B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */; };
+		1369E1C52B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */; };
+		1369E1C82B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
+		1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
+		1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
 		13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D4A2ACBE0FA007B8FE3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */; };
@@ -223,6 +238,11 @@
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
+		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
+		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeaturesList.swift; path = Shared/Views/WhatsNew/FeaturesList.swift; sourceTree = "<group>"; };
+		1369E1BE2B644288005388C2 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
+		1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtMeAppHeaderView.swift; sourceTree = "<group>"; };
+		1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutThisAppView.swift; sourceTree = "<group>"; };
 		13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ConfettiPopSoundEffectLong.m4a; sourceTree = "<group>"; };
 		13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ConfettiPopSoundEffect.wav; sourceTree = "<group>"; };
@@ -331,6 +351,7 @@
 			children = (
 				1327EE542B61C072002DFB66 /* WellcomeView.swift */,
 				1327EE582B61C73E002DFB66 /* FeatureView.swift */,
+				1369E1BE2B644288005388C2 /* WhatsNewView.swift */,
 			);
 			path = WhatsNew;
 			sourceTree = "<group>";
@@ -368,6 +389,14 @@
 				1331BD522B4F37BE00C0A15F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1369E1C62B644489005388C2 /* AboutThisApp */ = {
+			isa = PBXGroup;
+			children = (
+				1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */,
+			);
+			path = AboutThisApp;
 			sourceTree = "<group>";
 		};
 		13874D502ACBEB59007B8FE3 /* Sounds */ = {
@@ -414,6 +443,7 @@
 		13C9DF9C29F3B61E005D1768 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
+				1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */,
 				13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */,
 				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
 				13E6DBB32B62DBB500B3BE60 /* ButtonLabelContinue.swift */,
@@ -480,6 +510,7 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
+				1369E1BA2B64420F005388C2 /* FeaturesList.swift */,
 				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
 				7F70A21925FEB1EE00455AB0 /* Shared */,
@@ -555,6 +586,7 @@
 			isa = PBXGroup;
 			children = (
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
+				1369E1C62B644489005388C2 /* AboutThisApp */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
 				1399AD5B29995A9D00C87C3D /* Payments */,
@@ -691,6 +723,7 @@
 		7F70A2B025FEF17700455AB0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1369E1B62B64406B005388C2 /* SettingsList.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -859,9 +892,11 @@
 				1331BDAB2B4F731B00C0A15F /* ViewExtension.swift in Sources */,
 				1331BD992B4F39D500C0A15F /* Transaction+CoreDataProperties.swift in Sources */,
 				1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */,
+				1369E1BD2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				1331BD8A2B4F39BD00C0A15F /* EmojiButton.swift in Sources */,
 				1331BD982B4F39D500C0A15F /* Transaction+CoreDataClass.swift in Sources */,
 				1331BD8B2B4F39BD00C0A15F /* EmojiPicker.swift in Sources */,
+				1369E1C52B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
 				1331BD9A2B4F39D500C0A15F /* TransactionModel.swift in Sources */,
 				1331BDA02B4F39E800C0A15F /* Contact+CoreDataProperties.swift in Sources */,
 				1331BD712B4F397F00C0A15F /* debtMeApp.swift in Sources */,
@@ -885,9 +920,11 @@
 				1331BD782B4F39A400C0A15F /* ButtonLabelAdd.swift in Sources */,
 				13E6DBB62B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				1331BD7E2B4F39A400C0A15F /* EmptyPaymentView.swift in Sources */,
+				1369E1C12B644288005388C2 /* WhatsNewView.swift in Sources */,
 				1331BDAD2B4F731B00C0A15F /* CurrencyExtension.swift in Sources */,
 				1331BDAE2B4F731B00C0A15F /* BindingExtension.swift in Sources */,
 				1331BD8D2B4F39C100C0A15F /* ContactsList.swift in Sources */,
+				1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */,
 				1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */,
 				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
@@ -901,6 +938,7 @@
 				1331BD9C2B4F39DD00C0A15F /* ContactLabel+CoreDataProperties.swift in Sources */,
 				1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */,
 				1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */,
+				1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */,
 				13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -925,12 +963,14 @@
 				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsForm.swift in Sources */,
+				1369E1C82B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */,
 				1327EE552B61C072002DFB66 /* WellcomeView.swift in Sources */,
 				1399AD5D29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
 				1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
 				7F76A8EB260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
 				1399AD662999B37300C87C3D /* PaymentRow.swift in Sources */,
+				1369E1BB2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				7F76A903260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,
 				7F60634D261040D3004834F1 /* LabelPicker.swift in Sources */,
 				132B860C2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */,
@@ -950,6 +990,7 @@
 				7F70A27825FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
 				7F37A92F25FF19AD0049D648 /* EmojiPicker.swift in Sources */,
 				7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */,
+				1369E1C32B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
 				7F70A2B425FEF72500455AB0 /* ContactsList.swift in Sources */,
 				131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				7FCD425B262D3E2A00568EE7 /* TransactionModel.swift in Sources */,
@@ -967,6 +1008,8 @@
 				7F70A2B925FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 				13E6DBB42B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
+				1369E1BF2B644288005388C2 /* WhatsNewView.swift in Sources */,
+				1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */,
 				7F70A2C325FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
 				132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
 			);
@@ -986,7 +1029,9 @@
 				131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
 				132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
+				1369E1C42B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
+				1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
@@ -1000,10 +1045,12 @@
 				1399AD642999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				1327EE562B61C074002DFB66 /* WellcomeView.swift in Sources */,
 				7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */,
+				1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				7F76A8EA260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
 				7F70A2B525FEF72500455AB0 /* ContactsList.swift in Sources */,
 				7F76A8EC260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
+				1369E1C02B644288005388C2 /* WhatsNewView.swift in Sources */,
 				13DC6CDD2B2E8060007361A8 /* SearchTextField.swift in Sources */,
 				7F60635426104AB5004834F1 /* LabelNewForm.swift in Sources */,
 				7F70A23725FEB1F700455AB0 /* Persistence.swift in Sources */,
@@ -1031,6 +1078,7 @@
 				7F76A904260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,
 				133FC754270C099F00CDB741 /* TransactionsForm.swift in Sources */,
 				1399AD6129999A7600C87C3D /* PaymentNewForm.swift in Sources */,
+				1369E1BC2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				13E6DBB12B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1327,7 +1375,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -1357,7 +1405,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

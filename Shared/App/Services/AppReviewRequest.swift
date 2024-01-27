@@ -24,12 +24,18 @@ enum AppReviewRequest {
         
         if thisVersion != version {
             if runsSinceLastRequest >= threshold {
-              
-                if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive}) as? UIWindowScene {
-                    SKStoreReviewController.requestReview(in: scene)
-                    version = thisVersion
-                    runsSinceLastRequest = 0
-                }
+                          
+            #if os(iOS)
+            if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive}) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+                version = thisVersion
+                runsSinceLastRequest = 0
+            }
+            #else
+            SKStoreReviewController.requestReview()
+            version = thisVersion
+            runsSinceLastRequest = 0
+            #endif
                 
             }
         } else {

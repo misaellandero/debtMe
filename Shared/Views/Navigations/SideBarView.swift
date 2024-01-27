@@ -33,7 +33,7 @@ struct SideBarView: View {
                 }
                 .disabled(true)
                 
-                NavigationLink(destination: Text("Settings"), tag: SectionSelected.settings, selection: $sectionSelected) {
+                NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
@@ -50,8 +50,9 @@ struct SideBarView: View {
           
           } content: {
               ContactsList()
+              
           } detail: {
-              EmptyPaymentView(empty: true)
+              EmptyPaymentView(empty: true) 
           }
          
         

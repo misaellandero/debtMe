@@ -15,57 +15,46 @@ struct WellcomeView: View {
      
     @State var isVisible : Bool = true
     
+    @State var debuAllwayShow = false
+    
     var body: some View {
         Group{
             if isVisible {
-                Group{
-                    VStack{
-                        Spacer()
+                
+                    Group{
                         VStack{
-                            AppIconView()
-                                .frame(height: 150)
-                            VStack(){
-                                Text("Wellcome to")
-                                    .font(.headline)
-                                HStack{
-                                    Text("debtMe")
-                                        .font(.largeTitle.weight(.bold))
-                                    + Text(getCurrentAppVersion())
-                                        .font(.callout)
-                                        .baselineOffset(10)
-                                }
-                            }
-                        }
-                        .padding()
-                        Spacer()
-                        Text("A simple app to register small loans between friends and family")
-                        
-                        Spacer()
-                        ScrollView(.vertical){
-                            ForEach(features, id: \.id ) { feature in
-                                FeatureView(feature: feature)
-                            }
-                            .padding()
-                        }
-                        Spacer()
-                        
-                        Button(action: {
-                            withAnimation(.easeInOut) {
-                                isVisible.toggle()
-                            }
+                            Spacer()
+                            DebtMeAppHeaderView()
+                            Spacer()
+                            Text("A simple app to register small loans between friends and family")
                             
-                        }, label: {
-                            ButtonLabelContinue()
-                        })
-                        
-                        Spacer()
-                        
+                            Spacer()
+                            ScrollView(.vertical){
+                                FeaturesList(features: features)
+                            }
+                            Spacer()
+                            
+                            Button(action: {
+                                withAnimation(.easeInOut) {
+                                    isVisible.toggle()
+                                }
+                                
+                            }, label: {
+                                ButtonLabelContinue()
+                            })
+                            .buttonStyle(PlainButtonStyle())
+                            Spacer()
+                            
+                        }
                     }
-                }
-                .background(Material.ultraThin)
-                //.cornerRadius(10)
-                //.padding()
-                .transition(.move(edge: .bottom))
+                    .background(Material.ultraThin)
+                    .cornerRadius(10)
+                    .padding()
+                    .transition(.move(edge: .bottom))
+                    .fixedSize(horizontal: true, vertical: false)
+                    .shadow(radius: 10)
+                
+               
             }
         }
         .onAppear(perform: showWhatsNew)
@@ -73,6 +62,15 @@ struct WellcomeView: View {
     
     // Check if app if app has been started after update
     func showWhatsNew() {
+        #if DEBUG
+        if debuAllwayShow {
+            isVisible = true
+            return
+            
+        }
+        #endif
+        
+        
         let newVersion = getCurrentAppVersion()
         let oldVersion = UserDefaults.standard.string(forKey: "savedVersion") ?? "1.0.0"
         
