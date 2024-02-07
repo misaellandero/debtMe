@@ -21,23 +21,23 @@ struct SideBarView: View {
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 
-                NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
+                /*NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                .disabled(true)
+                //.disabled(true)
                 
                 NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                .disabled(true)
+                //.disabled(true)*/
                 
                 NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                .disabled(true)
+                //.disabled(true)
                 
             }
             

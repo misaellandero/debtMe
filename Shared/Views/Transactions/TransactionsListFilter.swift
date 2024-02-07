@@ -24,7 +24,7 @@ struct TransactionsListFilter: View {
     @State var transactionsArray = [Transaction]()
     
     var body: some View {
-        NavigationView{
+       // NavigationView{
             List{
                 ForEach(transactionsArray, id : \.id){ transaction in
                     TransactionsRow(transaction: transaction)
@@ -35,7 +35,7 @@ struct TransactionsListFilter: View {
             #endif
             .navigationTitle(isDebt ? "Debts" : "Loans")
             .onAppear(perform: loadTransactions)
-        }
+        //}
     }
     
     func loadTransactions() {
@@ -43,10 +43,8 @@ struct TransactionsListFilter: View {
         var nonDebtTransactions: [Transaction] = []
         
         for transaction in transactions {
-            if transaction.debt == isDebt {
+            if transaction.debt == true {
                 debtTransactions.append(transaction)  // Debts
-            } else {
-                nonDebtTransactions.append(transaction)  // Non-debts
             }
         }
         

@@ -14,9 +14,9 @@ struct SettingsList: View {
                 NavigationLink(destination: WhatsNewView()) {
                     Label("About this App", systemImage: "star.bubble.fill")
                 }
-                NavigationLink(destination: WhatsNewView()) {
-                    Label("What's New?", systemImage: "star.bubble.fill")
-                }
+               /* NavigationLink(destination: AboutThisAppView()) {
+                    Label("What's New?", systemImage: "info.bubble.fill")
+                }*/
             }
         }
         .navigationTitle("Settings")

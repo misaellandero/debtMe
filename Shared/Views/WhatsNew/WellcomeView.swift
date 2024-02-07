@@ -15,19 +15,26 @@ struct WellcomeView: View {
      
     @State var isVisible : Bool = true
     
-    @State var debuAllwayShow = false
+    @State var debuAllwayShow = true
     
     var body: some View {
         Group{
             if isVisible {
                 
+                HStack{
+                    #if os(iOS)
+                    #else
+                    Spacer()
+                        .layoutPriority(1)
+                    #endif
+                    
                     Group{
                         VStack{
                             Spacer()
                             DebtMeAppHeaderView()
                             Spacer()
                             Text("A simple app to register small loans between friends and family")
-                            
+                            .padding()
                             Spacer()
                             ScrollView(.vertical){
                                 FeaturesList(features: features)
@@ -51,8 +58,20 @@ struct WellcomeView: View {
                     .cornerRadius(10)
                     .padding()
                     .transition(.move(edge: .bottom))
-                    .fixedSize(horizontal: true, vertical: false)
                     .shadow(radius: 10)
+                    .layoutPriority(1)
+                    #if os(macOS)
+                    .frame(width: 500)
+                    #endif
+                    
+                    
+                    #if os(iOS)
+                    #else
+                    Spacer()
+                        .layoutPriority(1)
+                    #endif
+                    
+                }
                 
                
             }
