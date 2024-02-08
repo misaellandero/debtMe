@@ -11,12 +11,12 @@ struct SettingsList: View {
     var body: some View {
         List{
             Section{
-                NavigationLink(destination: WhatsNewView()) {
+                /*  NavigationLink(destination: WhatsNewView()) {
                     Label("About this App", systemImage: "star.bubble.fill")
-                }
-               /* NavigationLink(destination: AboutThisAppView()) {
-                    Label("What's New?", systemImage: "info.bubble.fill")
                 }*/
+              NavigationLink(destination: AboutThisAppView()) {
+                    Label("What's New?", systemImage: "info.bubble.fill")
+                }
             }
         }
         .navigationTitle("Settings")

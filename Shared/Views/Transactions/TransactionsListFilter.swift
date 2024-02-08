@@ -30,7 +30,10 @@ struct TransactionsListFilter: View {
                     TransactionsRow(transaction: transaction)
                 }
             }
-            #if os(iOS)
+        
+            #if os(macOS)
+            .listStyle(DefaultListStyle())
+            #else
             .listStyle(InsetGroupedListStyle())
             #endif
             .navigationTitle(isDebt ? "Debts" : "Loans")
@@ -39,12 +42,15 @@ struct TransactionsListFilter: View {
     }
     
     func loadTransactions() {
+        
         var debtTransactions: [Transaction] = []
         var nonDebtTransactions: [Transaction] = []
         
         for transaction in transactions {
             if transaction.debt == true {
                 debtTransactions.append(transaction)  // Debts
+            } else {
+                nonDebtTransactions.append(transaction)
             }
         }
         

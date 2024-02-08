@@ -22,28 +22,32 @@ struct TabBarView: View {
             }
             .tag(SectionSelected.contacts)
             // MARK: - Debts
-            TransactionsListFilter(isDebt:true)
-                .tabItem {
-                    Label("Debts", systemImage: "dollarsign.square")
-                }
-                .tag(SectionSelected.debts)
-                .disabled(true)
+            NavigationView{
+                TransactionsListFilter(isDebt:true)
+            }
+            .tabItem {
+                Label("Debts", systemImage: "dollarsign.square")
+            }
+            .tag(SectionSelected.debts)
+            
             // MARK: - Loans
-            TransactionsListFilter(isDebt:false)
-                .tabItem {
-                    Label("Loans", systemImage: "dollarsign.square.fill")
-                }
-                .tag(SectionSelected.loans)
-                .disabled(true)
+            NavigationView{
+                TransactionsListFilter(isDebt:false)
+            }
+            .tabItem {
+                Label("Loans", systemImage: "dollarsign.square.fill")
+            }
+            .tag(SectionSelected.loans)
+            
             // MARK: - Settings
-                NavigationView{
-                    SettingsList()
-                }
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-                .tag(SectionSelected.settings)
-                 
+            NavigationView{
+                SettingsList()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
+            .tag(SectionSelected.settings)
+            
         }
         .font(Font.system(.body, design: .rounded).weight(.black))
         
