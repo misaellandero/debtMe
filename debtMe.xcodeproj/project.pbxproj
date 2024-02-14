@@ -232,7 +232,7 @@
 		1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1331BD522B4F37BE00C0A15F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1331BD542B4F37BE00C0A15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "debtMe (visionOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1331BD5C2B4F38C200C0A15F /* debtMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = debtMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1331BDA52B4F727B00C0A15F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/XROS.platform/Developer/SDKs/XROS1.0.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "debtMe (visionOS).entitlements"; sourceTree = "<group>"; };
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -542,7 +542,7 @@
 			children = (
 				7F70A22425FEB1F700455AB0 /* debtMe.app */,
 				7F70A22C25FEB1F700455AB0 /* debtMe.app */,
-				1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */,
+				1331BD5C2B4F38C200C0A15F /* debtMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -749,7 +749,7 @@
 				1331BDA72B4F728400C0A15F /* ConfettiSwiftUI */,
 			);
 			productName = debtMe;
-			productReference = 1331BD5C2B4F38C200C0A15F /* debtMe (visionOS).app */;
+			productReference = 1331BD5C2B4F38C200C0A15F /* debtMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7F70A22325FEB1F700455AB0 /* debtMe (iOS) */ = {
@@ -1114,7 +1114,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "debtMe (visionOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20240208;
 				DEVELOPMENT_ASSET_PATHS = "\"visionOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
@@ -1123,6 +1123,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = visionOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1130,7 +1131,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = debtMe;
 				SDKROOT = xros;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -1150,7 +1151,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "debtMe (visionOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20240208;
 				DEVELOPMENT_ASSET_PATHS = "\"visionOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
@@ -1159,6 +1160,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = visionOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1166,7 +1168,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = debtMe;
 				SDKROOT = xros;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1296,13 +1298,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240101;
+				CURRENT_PROJECT_VERSION = 20240213;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1328,13 +1330,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240101;
+				CURRENT_PROJECT_VERSION = 20240213;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1363,7 +1365,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240101;
+				CURRENT_PROJECT_VERSION = 20240213;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1375,7 +1377,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -1393,7 +1395,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240101;
+				CURRENT_PROJECT_VERSION = 20240213;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1405,7 +1407,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

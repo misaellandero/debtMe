@@ -50,9 +50,10 @@ struct SideBarView: View {
           
           } content: {
               ContactsList()
-              
+                  .navigationSplitViewColumnWidth(min: 500, ideal: 700, max: .infinity)
           } detail: {
-              EmptyPaymentView(empty: true) 
+              EmptyPaymentView(empty: true)
+                  .navigationSplitViewColumnWidth(min: 500, ideal: 700, max: .infinity)
           }
          
         
