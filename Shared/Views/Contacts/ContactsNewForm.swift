@@ -29,7 +29,6 @@ struct ContactsNewForm: View {
                     Text(edition ? "Edit Contact" : "New Contact")
                     NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
                 }
-                .frame(width: 300, height: 170)
                 #else
                 NavigationView{
                     ZStack{
@@ -146,7 +145,12 @@ struct NewContactMultiplatformForm : View {
     
     @State var showLabelList = false
     
+    // Contacts label list
+    @FetchRequest(entity: ContactLabel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ContactLabel.name, ascending: true)]) var labels: FetchedResults<ContactLabel>
+    
     var edition = false
+    
+    @State var showFormLabel = false
     
     var body: some View {
         Group{
@@ -182,10 +186,32 @@ struct NewContactMultiplatformForm : View {
             .buttonStyle(BorderlessButtonStyle())
             
             HStack{
-                Text("Select a tag")
-                Spacer()
                 #if os(macOS)
+                 
+                Picker(selection: $labelContact) {
+                    ForEach(labels, id: \.id){ label in
+                        Text(label.wrappedName)
+                            .tag(Optional(label))
+                    }
+                } label: {
+                    Label(labelContact?.wrappedName ?? "Select a tag", systemImage: "tag.fill")
+                        .foregroundStyle(labelContact?.labelColor ?? .secondary)
+                   
+                }
+                .pickerStyle(MenuPickerStyle())
                 
+                Button(action: {
+                    showFormLabel.toggle()
+                }){
+                    Label("New" , systemImage: "plus.circle.fill")
+                }
+                .buttonStyle(BorderedButtonStyle())
+                .sheet(isPresented: $showFormLabel, content: {
+                    LabelNewForm(showForm: $showFormLabel)
+                    .environment(\.horizontalSizeClass, .compact)
+                })
+                //labelPicker(label: $labelContact, showLabelList: $showLabelList)
+                /*
                 Button(action:{
                     showLabelList.toggle()
                 }){
@@ -198,7 +224,7 @@ struct NewContactMultiplatformForm : View {
                 .popover(isPresented: $showLabelList){
                     labelPicker(label: $labelContact, showLabelList: $showLabelList)
                         .frame(width: 250, height: 200)
-                }
+                }*/
                 #else
                 Button(action:{
                     showLabelList.toggle()
@@ -248,6 +274,7 @@ struct NewContactMultiplatformForm : View {
             }
         }
     }
+    
     
     func showChange(_ tag: String){
         self.animate = true

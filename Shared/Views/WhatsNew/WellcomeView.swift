@@ -83,7 +83,7 @@ struct WellcomeView: View {
     func showWhatsNew() {
         #if DEBUG
         if debuAllwayShow {
-            isVisible = true
+            isVisible = false
             return
             
         }

@@ -16,12 +16,15 @@ struct LabelNewForm: View {
     
     @Binding var showForm : Bool
     var body: some View {
-        Group{
+      
             #if os(macOS)
-            List{
-                Text("\(Image(systemName: "tag.fill")) New") 
+        VStack{
+                Text("\(Image(systemName: "tag.fill")) New")
                 LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
+                   
             }
+            .frame(maxHeight: 150)
+            .padding()
             #else
             NavigationView{
                 ZStack{
@@ -83,7 +86,7 @@ struct LabelNewForm: View {
                 }
             }
             #endif
-        }
+     
         
     }
     
@@ -110,10 +113,28 @@ struct LabelMultiplatformForm: View {
     
     var body: some View {
         
-        TextField("Tag", text: $name)
+        TextField("Name", text: $name)
         #if os(macOS)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         #endif
+       
+        
+        #if os(macOS)
+        ScrollView{
+            Picker(selection: $colorSelect) {
+                ForEach(0..<AppColorsModel.colors.count){ index in
+                    Text(AppColorsModel.colors[index].name)
+                    .tag(index)
+                }
+            } label: {
+                Image(systemName: "tag.fill")
+                    .foregroundStyle(AppColorsModel.colors[colorSelect].color)
+            }
+             
+        }
+        
+        #else
+        
         Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
             ForEach(0..<AppColorsModel.colors.count){ index in
                 HStack{
@@ -125,31 +146,33 @@ struct LabelMultiplatformForm: View {
                 .tag(index)
             }
         })
-        #if os(macOS)
-        .pickerStyle(InlinePickerStyle())
-        #else
-        .pickerStyle(NavigationLinkPickerStyle())
-        #endif
         .labelsHidden()
+         .pickerStyle(NavigationLinkPickerStyle())
+        #endif
+         
         
         #if os(macOS)
+        Spacer()
         HStack{
             Button(action: {
-                
                 showForm.toggle()
+                
             }){
                 Label("Cancel", systemImage: "xmark")
+                
+                .foregroundStyle(.red)
                         .font(Font.system(.headline, design: .rounded).weight(.black))
-                          
-            }.accentColor(.red)
+                    
+            }
             Spacer()
             Button(action: save){
                 Label("Add", systemImage: "plus.circle.fill")
+                    .foregroundStyle(Color.accentColor)
                         .font(Font.system(.headline, design: .rounded).weight(.black))
-                          
-            }.accentColor(.accentColor)
-             
+            }
+            
         }
+      
         #endif
     }
 }
