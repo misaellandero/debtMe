@@ -1,0 +1,30 @@
+
+/*Politica Privacidad*/
+"Privacy_Text" =
+"This is the privacy policy of Misael Landero, its products and services.
+
+Misael Landero does not sell, monetize, analyze or collect any type of information from its users. All applications that support data synchronization use iCloud, and the information is not accessible to the developer.
+
+Some applications also use geolocation services and maps, which are provided by Apple and required each time they are used on your device, you can disable these services in the settings section of your device.
+
+For more information on Apple's privacy policy, its services or iCloud visit www.apple.com/legal/privacy";
+
+/*Terminos y condiciones*/
+"Terms_Text" = "
+This is a legal contract between you (hereinafter referred to as the user) and Misael Landero (hereinafter the developer).
+
+This application is provided as is with no guarantees or promises.
+
+By using this application you agree that your iCloud account will be used to backup and sync your data
+
+At all times you are solely responsible for the information you save within this application and its protection and it will be your duty to comply with the legislation of your country in this regard.
+
+The information that you store is safely stored on your device and in iCloud, by using this App it is understood that you agree to this.
+
+The developer will not provide or provide backups of this information nor does it promise to recover it in case it is lost, in fact it is not technically possible for the developer to access your information as it is safeguarded in your iCloud account and on your devices.
+
+The developer disclaims any responsibility related to the loss, leakage, theft or unwanted or unauthorized modification of the information stored in the app.
+
+The developer will not be responsible for possible damages to your device resulting from the use of beta or final versions of this App.";
+  
+ 

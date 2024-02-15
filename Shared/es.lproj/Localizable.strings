@@ -117,13 +117,31 @@
 "Settings" = "Configuraciones";
 "What's New?" = "¿Qué hay de nuevo?";
 "About this App" = "Acerca de esta App";
+ 
+"Thanks" = "Gracias";
 
-"legalText" =
-"Esta es la política de privacidad de Misael Landero sus productos y servicios.
+" for their comments and ideas. If you have a suggestion or found an error, please send an email to hola@misaellandero.com." = " por sus comentarios e ideas, si tienen una sugerencia o encontraron un error por favor manden un correo a hola@misaellandero.com.";
+
+"Hi, my name is Misael. I like to help companies grow their businesses. Creating elegant and inclusive websites and apps." = "Hola, mi nombre es Misael, me gusta ayudar a las compañias y personas a crear applicaciones elegantes e inclusivas para hacer crecer sus negocios.";
+"Contact Me" = "Contactame";
+
+"Or via mail hola@misaellandero.com" = "Por Correo hola@misaellandero.com";
+
+"Wellcome to" = "Bievenidos a";
+
+"Terms and conditions" = "Terminos y condiciones";
+
+"Learn More" = "Sobre Mi";
+
+"Privacy Policy" = "Politica de Privacidad";
+
+/*Politica Privacidad*/
+"Privacy_Text" = "Esta es la política de privacidad de Misael Landero sus productos y servicios.
 
 Misael Landero no vende, monetiza, analiza o colecta ningún tipo de información de sus usuarios. Todas las aplicaciones que soportan sincronización de datos utilizan iCloud, y la información no es accesible para el desarrollador algunas aplicaciones también utilizan servicios de geolocalización y mapas, los cuales son proporcionados por Apple y requeridos cada vez que se usen en su dispositivo, puede deshabilitar estos servicios en la sección de ajustes de su dispositivo. Para mas información sobre la política de privacidad de Apple, sus servicio o iCloud visite www.apple.com/legal/privacy";
 
-"legalPrivacy" = "
+/*Terminos y condiciones*/
+"Terms_Text" = "
 Este un contrato legal entre usted (de ahora en adelante denominado el usuario) y Misael Landero (de ahora en adelante el desarrollador).
 
 Esta aplicación se entrega tal y como es sin garantías ni promesas.
@@ -138,6 +156,13 @@ El desarrollador no proveerá ni proporcionará respaldos de esta información n
 
 El desarrollador se deslinda de cualquier responsabilidad relacionada con la perdida, filtración, robo o modificación no deseaba o no autorizada de la información almacenada en la app.
 
-El desarrollador no se hará responsable de posibles daños a su dispositivo resultado del uso de versiones beta o finales de esta App.
+El desarrollador no se hará responsable de posibles daños a su dispositivo resultado del uso de versiones beta o finales de esta App.";
+  
+ "Security" = "Seguridad";
 
-Ultima Actulización 17 septiembre 2020";
+"When you turn on this option, the device will require your FaceID, TouchID, or passcode to unlock the app." = "Al activar esta opción se pedira que uses FaceID, TouchID o tu código para desbloquear esta app.";
+
+"Lock Upon Exit" = "Bloquear al salir";
+
+"Unlock to see your data" = "Desbloquea para ver tus datos";
+"Unlock" = "Desbloquear";

@@ -49,7 +49,7 @@ struct TabBarView: View {
             .tag(SectionSelected.settings)
             
         }
-        .font(Font.system(.body, design: .rounded).weight(.black))
+        .font(Font.system(.body, design: .rounded))
         
     }
 }

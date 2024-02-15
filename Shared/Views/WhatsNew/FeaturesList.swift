@@ -13,7 +13,13 @@ struct FeaturesList: View {
     
     var body: some View {
         ForEach(features, id: \.id ) { feature in
-            FeatureView(feature: feature)
+            if feature.title == "Thanks" {
+                Section{
+                    FeatureView(feature: feature)
+                }
+            } else {
+                FeatureView(feature: feature)
+            }
         }
         .padding()
     }

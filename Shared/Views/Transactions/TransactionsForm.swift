@@ -31,29 +31,26 @@ struct TransactionsForm: View {
             .frame(width: 400, height: 500)
             #else
             NavigationView{
-                ZStack{
+                VStack{
                     List{
                         TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
+                        Section{
+                            Button(action: performSaveAcion){
+                                HStack{
+                                    Spacer()
+                                    Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
+                                        .foregroundColor(.white)
+                                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                                        .padding()
+                                    Spacer()
+                                }
+                            }
+                            .listRowBackground(Color.accentColor)
+                            .cornerRadius(10)
+                        }
                     }
                     .listStyle(InsetGroupedListStyle())
-                    VStack{
-                        Spacer()
-                        Button(action: performSaveAcion){
-                            HStack{
-                                Spacer()
-                                Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
-                                    .foregroundColor(.white)
-                                    .font(Font.system(.headline, design: .rounded).weight(.black))
-                                    .padding()
-                                Spacer()
-                            }
-                            
-                            .padding(.vertical, 15)
-                        }
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
-                        .padding()
-                    }
+                  
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction){

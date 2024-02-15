@@ -109,6 +109,12 @@
 		1369E1C82B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
 		1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
 		1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */; };
+		136D56722B7E75E800E82EA5 /* LegalAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56712B7E75E800E82EA5 /* LegalAppView.swift */; };
+		136D56732B7E75E800E82EA5 /* LegalAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56712B7E75E800E82EA5 /* LegalAppView.swift */; };
+		136D56742B7E75E800E82EA5 /* LegalAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56712B7E75E800E82EA5 /* LegalAppView.swift */; };
+		136D56782B7EAA5400E82EA5 /* LockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56772B7EAA5400E82EA5 /* LockedView.swift */; };
+		136D56792B7EAA5400E82EA5 /* LockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56772B7EAA5400E82EA5 /* LockedView.swift */; };
+		136D567A2B7EAA5400E82EA5 /* LockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D56772B7EAA5400E82EA5 /* LockedView.swift */; };
 		13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */; };
 		13874D4A2ACBE0FA007B8FE3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 13874D492ACBE0FA007B8FE3 /* ConfettiSwiftUI */; };
@@ -239,10 +245,14 @@
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
 		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
-		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeaturesList.swift; path = Shared/Views/WhatsNew/FeaturesList.swift; sourceTree = "<group>"; };
+		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesList.swift; sourceTree = "<group>"; };
 		1369E1BE2B644288005388C2 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtMeAppHeaderView.swift; sourceTree = "<group>"; };
 		1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutThisAppView.swift; sourceTree = "<group>"; };
+		136D56712B7E75E800E82EA5 /* LegalAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalAppView.swift; sourceTree = "<group>"; };
+		136D56752B7EA2F300E82EA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		136D56762B7EA2F300E82EA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		136D56772B7EAA5400E82EA5 /* LockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LockedView.swift; path = Shared/Views/LockedView.swift; sourceTree = SOURCE_ROOT; };
 		13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		13874D512ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ConfettiPopSoundEffectLong.m4a; sourceTree = "<group>"; };
 		13874D522ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ConfettiPopSoundEffect.wav; sourceTree = "<group>"; };
@@ -349,6 +359,7 @@
 		1327EE532B61C058002DFB66 /* WhatsNew */ = {
 			isa = PBXGroup;
 			children = (
+				1369E1BA2B64420F005388C2 /* FeaturesList.swift */,
 				1327EE542B61C072002DFB66 /* WellcomeView.swift */,
 				1327EE582B61C73E002DFB66 /* FeatureView.swift */,
 				1369E1BE2B644288005388C2 /* WhatsNewView.swift */,
@@ -395,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				1369E1C72B6444A0005388C2 /* AboutThisAppView.swift */,
+				136D56712B7E75E800E82EA5 /* LegalAppView.swift */,
 			);
 			path = AboutThisApp;
 			sourceTree = "<group>";
@@ -510,7 +522,6 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
-				1369E1BA2B64420F005388C2 /* FeaturesList.swift */,
 				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
 				7F70A21925FEB1EE00455AB0 /* Shared */,
@@ -586,7 +597,6 @@
 			isa = PBXGroup;
 			children = (
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
-				1369E1C62B644489005388C2 /* AboutThisApp */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
 				1399AD5B29995A9D00C87C3D /* Payments */,
@@ -607,6 +617,7 @@
 				7F70A26A25FEBFB000455AB0 /* Extensions */,
 				7F70A21C25FEB1EE00455AB0 /* debtMeApp.swift */,
 				7F70A21D25FEB1EE00455AB0 /* ContentView.swift */,
+				136D56772B7EAA5400E82EA5 /* LockedView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -723,6 +734,7 @@
 		7F70A2B025FEF17700455AB0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1369E1C62B644489005388C2 /* AboutThisApp */,
 				1369E1B62B64406B005388C2 /* SettingsList.swift */,
 			);
 			path = Settings;
@@ -817,9 +829,9 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 				es,
+				Base,
+				en,
 			);
 			mainGroup = 7F70A21425FEB1ED00455AB0;
 			packageReferences = (
@@ -894,6 +906,7 @@
 				1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */,
 				1369E1BD2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				1331BD8A2B4F39BD00C0A15F /* EmojiButton.swift in Sources */,
+				136D56742B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
 				1331BD982B4F39D500C0A15F /* Transaction+CoreDataClass.swift in Sources */,
 				1331BD8B2B4F39BD00C0A15F /* EmojiPicker.swift in Sources */,
 				1369E1C52B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
@@ -927,6 +940,7 @@
 				1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */,
 				1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */,
+				136D567A2B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
 				1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */,
 				1331BD812B4F39AB00C0A15F /* TotalsView.swift in Sources */,
@@ -1005,11 +1019,13 @@
 				7F70A28A25FED19300455AB0 /* UserPreferences.swift in Sources */,
 				7F70A23425FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27E25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
+				136D56722B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
 				7F70A2B925FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 				13E6DBB42B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				1369E1BF2B644288005388C2 /* WhatsNewView.swift in Sources */,
 				1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */,
+				136D56782B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				7F70A2C325FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
 				132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
 			);
@@ -1048,6 +1064,7 @@
 				1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				7F76A8EA260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
+				136D56792B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				7F70A2B525FEF72500455AB0 /* ContactsList.swift in Sources */,
 				7F76A8EC260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
 				1369E1C02B644288005388C2 /* WhatsNewView.swift in Sources */,
@@ -1063,6 +1080,7 @@
 				132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */,
 				132B860D2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */,
 				7F37A93825FF1A490049D648 /* Emojis.swift in Sources */,
+				136D56732B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
 				7F70A23525FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27F25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
@@ -1090,6 +1108,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				13465FB229F642B7001C0577 /* es */,
+				136D56762B7EA2F300E82EA5 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1098,6 +1117,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				13465FB529F642B7001C0577 /* es */,
+				136D56752B7EA2F300E82EA5 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1183,6 +1203,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1242,6 +1263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1298,7 +1320,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240214;
+				CURRENT_PROJECT_VERSION = 20240215;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1309,7 +1331,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
@@ -1330,7 +1352,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240214;
+				CURRENT_PROJECT_VERSION = 20240215;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1341,7 +1363,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = iphoneos;
@@ -1365,7 +1387,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240213;
+				CURRENT_PROJECT_VERSION = 20240214;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1377,7 +1399,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -1395,7 +1417,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240213;
+				CURRENT_PROJECT_VERSION = 20240214;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1407,7 +1429,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

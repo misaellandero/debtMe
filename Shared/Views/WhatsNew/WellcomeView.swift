@@ -81,13 +81,13 @@ struct WellcomeView: View {
     
     // Check if app if app has been started after update
     func showWhatsNew() {
-        #if DEBUG
+        
+       /* #if DEBUG
         if debuAllwayShow {
             isVisible = false
             return
-            
         }
-        #endif
+        #endif*/
         
         
         let newVersion = getCurrentAppVersion()
@@ -113,7 +113,7 @@ struct WellcomeView: View {
     }
     
     // Check if whatsNew is required to be show
-    func shouldShowWhatsNew(currentVersion: String, newVersion: String, showMinorUpdates: Bool = false) -> Bool {
+    func shouldShowWhatsNew(currentVersion: String, newVersion: String, showMinorUpdates: Bool = true) -> Bool {
         var currentVersionParts = currentVersion.split(separator: ".")
         var newVersionParts = newVersion.split(separator: ".")
         
