@@ -25,7 +25,7 @@ struct FeaturesList: View {
             FeatureView(feature: whatsNewFeatures.thanksSection)
         }
         
-        Section(){
+        Section(header: Text("All Features")){
             ForEach(features, id: \.id ) { feature in
                 if !feature.newOnThisVersion {
                         FeatureView(feature: feature)
