@@ -24,30 +24,7 @@ struct SettingsList: View {
     
     var body: some View {
         List{
-            // MARK: - About this App
-            Section(header:
-                        Text("About this App")
-                .bold()
-                .foregroundColor(.secondary)
-            ){
-                
-                NavigationLink(destination: AboutThisAppView()) {
-                    Label("Learn More", systemImage: "info.bubble.fill")
-                }
-                NavigationLink(destination: WhatsNewView()) {
-                    Label("What's New?", systemImage: "star.bubble.fill")
-                }
-                
-                NavigationLink(destination:   LegalAppView(headerImage: "hand.raised", title: "Terms and conditions", text: "Terms_Text")) {
-                    Label("Terms and conditions", systemImage: "hand.raised.fill")
-                }
-                NavigationLink(destination:   LegalAppView(headerImage: "lock.shield", title: "Privacy Policy", text: "Privacy_Text")) {
-                    Label("Privacy Policy", systemImage: "lock.shield.fill")
-                }
-                
-                
-            }
-            
+          
             // MARK: - Contacts Tab
             Section(header:
                         Text("Contacts Tab")
@@ -92,6 +69,29 @@ struct SettingsList: View {
                     }
                 }
             
+            // MARK: - About this App
+            Section(header:
+                        Text("About this App")
+                .bold()
+                .foregroundColor(.secondary)
+            ){
+                
+                NavigationLink(destination: AboutThisAppView()) {
+                    Label("Learn More", systemImage: "info.bubble.fill")
+                }
+                NavigationLink(destination: WhatsNewView()) {
+                    Label("What's New?", systemImage: "star.bubble.fill")
+                }
+                
+                NavigationLink(destination:   LegalAppView(headerImage: "hand.raised", title: "Terms and conditions", text: "Terms_Text")) {
+                    Label("Terms and conditions", systemImage: "hand.raised.fill")
+                }
+                NavigationLink(destination:   LegalAppView(headerImage: "lock.shield", title: "Privacy Policy", text: "Privacy_Text")) {
+                    Label("Privacy Policy", systemImage: "lock.shield.fill")
+                }
+                
+                
+            }
             // MARK: - Footer
             Section{
                 VStack{

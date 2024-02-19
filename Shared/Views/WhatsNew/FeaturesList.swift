@@ -13,7 +13,7 @@ struct FeaturesList: View {
     
     var body: some View {
         
-        Section(header: Text("Whats new?")){
+        Section(){
             ForEach(features, id: \.id ) { feature in
                 if feature.newOnThisVersion {
                         FeatureView(feature: feature)
@@ -21,11 +21,11 @@ struct FeaturesList: View {
             }
         }
         
-        Section(header: Text("Thanks")){
+        Section(){
             FeatureView(feature: whatsNewFeatures.thanksSection)
         }
         
-        Section(header: Text("All Features")){
+        Section(){
             ForEach(features, id: \.id ) { feature in
                 if !feature.newOnThisVersion {
                         FeatureView(feature: feature)

@@ -33,7 +33,7 @@ struct whatsNewFeatures {
         
         Feature(image:"macbook.and.iphone", title: "Universal App", des: "Get the app on your iPhone, iPad, Mac and VisionPro",color: .green, newOnThisVersion: false),
         
-        Feature(image:"sum", title: "Summary", des: "Now you can view the summary and balance directly within the Contacts tab. Head to Settings if you wish to disable this feature.",color: .indigo, newOnThisVersion: false)
+        Feature(image:"sum", title: "Summary", des: "Now you can view the summary and balance directly within the Contacts tab. Head to Settings if you wish to disable this feature.",color: .indigo, newOnThisVersion: true)
         
         
     ]

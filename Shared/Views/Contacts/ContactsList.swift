@@ -224,7 +224,7 @@ struct ContactsRows : View  {
                                     Text("Balance")
                                         .font(.caption)
                                     Text(balance.toCurrencyString())
-                                        .foregroundStyle(balance > 0 ? Color.primary : Color.red)
+                                        .foregroundStyle(balance >= 0 ? Color.primary : Color.red)
                                     
                                 }
                             case .debts:
@@ -264,7 +264,7 @@ struct ContactsRows : View  {
                                     Text("Balance")
                                         .font(.caption)
                                     Text(balance.toCurrencyString())
-                                        .foregroundStyle(balance > 0 ? Color.primary : Color.red)
+                                        .foregroundStyle(balance >= 0 ? Color.primary : Color.red)
                                     
                                 }
                             }
@@ -278,7 +278,11 @@ struct ContactsRows : View  {
                                     .tag(option)
                             }
                         }
+                        #if os(visionOS)
+                        .pickerStyle(MenuPickerStyle())
+                        #else
                         .pickerStyle(SegmentedPickerStyle())
+                        #endif
                     }
                 }
                 
