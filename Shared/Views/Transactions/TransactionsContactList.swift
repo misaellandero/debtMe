@@ -199,9 +199,9 @@ struct TransactionsContactList: View {
             .sheet(isPresented: $showEditContact){
                 ContactsNewForm(edition: true, contactToEdit: contact)
             }
-#if os(iOS)
+            #if os(iOS)
             .listStyle(InsetGroupedListStyle())
-#endif
+            #endif
             .alert(isPresented: $showAlertDeletTransaction) {
                 Alert(
                     title: Text("Delete Transaction"),
