@@ -54,14 +54,14 @@ struct ContactsRow: View {
                         HStack{
                             Text(LocalizedStringKey("They Owes me"))
                             Spacer()
-                            Text(contact.totalDebut.toCurrencyString())
+                            Text(contact.totalLoans.toCurrencyString())
                                 .foregroundColor(.blue)
                             
                         }
                         HStack{
                             Text(LocalizedStringKey("I Owe Them"))
                             Spacer()
-                            Text(contact.totalOwn.toCurrencyString())
+                            Text(contact.totalDebt.toCurrencyString())
                                 .foregroundColor(.orange)
                             
                         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum transactionsType {
-    case all, debts, loads
+    case all, debts, loans
 }
 
 struct TransactionsListFilter: View {
@@ -55,9 +55,9 @@ struct TransactionsListFilter: View {
         }
         
         if isDebt {
-            transactionsArray = debtTransactions
-        } else {
             transactionsArray = nonDebtTransactions
+        } else {
+            transactionsArray = debtTransactions
         }
         
     }

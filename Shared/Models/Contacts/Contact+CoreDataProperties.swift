@@ -71,7 +71,7 @@ extension Contact {
      
     
     //How much money do they owe us
-    public var totalDebut : Double {
+    public var totalLoans : Double {
         let sum = transactionsArray
             //Not pay and they own us
             .filter { $0.settled == false && $0.debt == true }
@@ -82,7 +82,7 @@ extension Contact {
     }
     
     //How much money do we owe them
-    public var totalOwn : Double {
+    public var totalDebt : Double {
         let sum = transactionsArray
             //Not pay and they own us
             .filter { $0.settled == false && $0.debt == false }
@@ -92,7 +92,7 @@ extension Contact {
     }
     
     public var balance : Double {
-        let sum = totalDebut - totalOwn
+        let sum = totalLoans - totalDebt
         return sum
     }
 

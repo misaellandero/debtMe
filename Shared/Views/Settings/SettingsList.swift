@@ -19,7 +19,9 @@ struct SettingsList: View {
     let context = LAContext()
     @State private var error: NSError?
     @AppStorage("lockOnClose") var  lockOnClose: Bool = false
-     
+    @AppStorage("ShowSummary") var ShowSummary = true
+    
+    
     var body: some View {
         List{
             // MARK: - About this App
@@ -43,6 +45,26 @@ struct SettingsList: View {
                     Label("Privacy Policy", systemImage: "lock.shield.fill")
                 }
                 
+                
+            }
+            
+            // MARK: - Contacts Tab
+            Section(header:
+                        Text("Contacts Tab")
+                .bold()
+                .foregroundColor(.secondary)
+            ){
+                
+                // MARK: - Show Summary
+                HStack{
+                    Label("Show Summary", systemImage: "sum")
+                     
+                    Spacer()
+                    Toggle(isOn: $ShowSummary) {
+                        Text("Show Summary")
+                    }
+                    .labelsHidden()
+                }
                 
             }
             

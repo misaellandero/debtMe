@@ -9,19 +9,31 @@ import SwiftUI
 
 struct FeaturesList: View {
     
-    var features = whatsNewFeatures.newFeatures
+    var features = whatsNewFeatures.appFeatures
     
     var body: some View {
-        ForEach(features, id: \.id ) { feature in
-            if feature.title == "Thanks" {
-                Section{
-                    FeatureView(feature: feature)
+        
+        Section(header: Text("Whats new?")){
+            ForEach(features, id: \.id ) { feature in
+                if feature.newOnThisVersion {
+                        FeatureView(feature: feature)
                 }
-            } else {
-                FeatureView(feature: feature)
             }
         }
-        .padding()
+        
+        Section(header: Text("Thanks")){
+            FeatureView(feature: whatsNewFeatures.thanksSection)
+        }
+        
+        Section(header: Text("All Features")){
+            ForEach(features, id: \.id ) { feature in
+                if !feature.newOnThisVersion {
+                        FeatureView(feature: feature)
+                }
+            }
+        }
+        
+      
     }
 }
 

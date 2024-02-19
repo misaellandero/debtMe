@@ -12,6 +12,13 @@ enum shortMode : String {
     case alfabethAsc, alfabethDes, amountAsc, amountDes
 }
 
+enum summaryMenu: String, CaseIterable {
+    case balance = "Balance"
+    case loans = "Loans"
+    case debts = "Debts"
+    case all = "All"
+}
+
 struct ContactsList: View {
     
     @State private var showingNewContactForm = false
@@ -135,8 +142,36 @@ struct ContactsRows : View  {
     @Binding var selectedTag : String
     
     @Binding var showingNewContactForm : Bool
+    
+    
+    @AppStorage("summarySelectd") var summarySelectd: summaryMenu = .balance
+    @AppStorage("ShowSummary") var ShowSummary = true
    
-  
+    var balance : Double {
+        var total = 0.0
+        for contact in filteredContacts {
+            total += contact.balance
+        }
+        return total
+    }
+    
+    var loans : Double {
+        var total = 0.0
+        for contact in filteredContacts {
+            total += contact.totalLoans
+        }
+        return total
+    }
+    
+    var debts : Double {
+        var total = 0.0
+        for contact in filteredContacts {
+            total += contact.totalDebt
+        }
+        return total
+    }
+    
+    
     var filteredContacts: [Contact] {
         let sortedContacts: [Contact]
         
@@ -180,6 +215,73 @@ struct ContactsRows : View  {
     
     var body: some View {
             List{
+                if ShowSummary {
+                    Section(){
+                        Group{
+                            switch summarySelectd {
+                            case .balance:
+                                VStack(alignment: .leading){
+                                    Text("Balance")
+                                        .font(.caption)
+                                    Text(balance.toCurrencyString())
+                                        .foregroundStyle(balance > 0 ? Color.primary : Color.red)
+                                    
+                                }
+                            case .debts:
+                                VStack(alignment: .leading){
+                                    Text(LocalizedStringKey("Debts"))
+                                        .font(.caption)
+                                    Text("-" + debts.toCurrencyString())
+                                        .foregroundColor(.red)
+                                    
+                                }
+                            case .loans:
+                                VStack(alignment: .leading){
+                                    Text(LocalizedStringKey("Loans"))
+                                        .font(.caption)
+                                        
+                                    Text(loans.toCurrencyString())
+                                        .foregroundColor(.blue)
+                                    
+                                }
+                            case .all:
+                                VStack(alignment: .leading){
+                                    Text(LocalizedStringKey("They Owes me"))
+                                        .font(.caption)
+                                        
+                                    Text(loans.toCurrencyString())
+                                        .foregroundColor(.blue)
+                                    
+                                }
+                                VStack(alignment: .leading){
+                                    Text(LocalizedStringKey("I Owe Them"))
+                                        .font(.caption)
+                                    Text("-" + debts.toCurrencyString())
+                                        .foregroundColor(.red)
+                                    
+                                }
+                                VStack(alignment: .leading){
+                                    Text("Balance")
+                                        .font(.caption)
+                                    Text(balance.toCurrencyString())
+                                        .foregroundStyle(balance > 0 ? Color.primary : Color.red)
+                                    
+                                }
+                            }
+                        }
+                        .bold()
+                        .font(.largeTitle)
+                        
+                        Picker("Summary", selection: $summarySelectd) {
+                            ForEach(summaryMenu.allCases, id:\.self ){ option in
+                                Text(LocalizedStringKey(option.rawValue))
+                                    .tag(option)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                }
+                
                 ForEach(filteredContacts, id: \.id) { contact in
                     NavigationLink(destination: TransactionsContactList(contact: contact)) {
                         ContactsRow(contact: contact)
@@ -259,7 +361,6 @@ struct ContactsRows : View  {
                     }
                 )
             }
-         
     }
     
     
