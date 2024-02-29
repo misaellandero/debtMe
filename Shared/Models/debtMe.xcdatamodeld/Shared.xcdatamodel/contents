@@ -22,9 +22,10 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="payments" inverseEntity="Transaction"/>
     </entity>
-    <entity name="Services" representedClassName="Services" syncable="YES" codeGenerationType="class">
+    <entity name="Services" representedClassName="Services" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="des" optional="YES" attributeType="String"/>
+        <attribute name="expense" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="frequency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="frequency_date" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

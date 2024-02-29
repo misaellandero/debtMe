@@ -12,12 +12,18 @@ struct TransactionsForm: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     
+    @State var edition : Bool = false
+    
+    
+    //Data if is edition
+    @State var transaction: Transaction?
+    //Data if is new
     @State var transactionModel = TransactionModel(amout: "", des: "", notes: "", date: Date(), debt: false)
     
+    //To asosiate the transaction
     @State var contact : Contact?
-    @State var edition : Bool = false
-    @State var transaction: Transaction?
-    
+   
+   
     var body: some View {
         Group{
           

@@ -139,6 +139,18 @@
 		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
 		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		13C2F5AB2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
+		13C2F5AC2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
+		13C2F5AD2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
+		13C2F5AF2B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
+		13C2F5B02B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
+		13C2F5B12B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
+		13C2F5B32B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
+		13C2F5B42B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
+		13C2F5B52B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
+		13C2F5B72B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
+		13C2F5B82B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
+		13C2F5B92B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
 		13C73BFE2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */; };
 		13C73BFF2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */; };
 		13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */; };
@@ -147,6 +159,12 @@
 		13C9DFA229F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */; };
 		13DC6CDC2B2E8060007361A8 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */; };
 		13DC6CDD2B2E8060007361A8 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */; };
+		13E1F5922B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */; };
+		13E1F5932B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */; };
+		13E1F5942B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */; };
+		13E1F5952B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
+		13E1F5962B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
+		13E1F5972B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
 		13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
 		13E6DBB12B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
 		13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
@@ -164,7 +182,6 @@
 		7F37A93825FF1A490049D648 /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A92925FF19600049D648 /* Emojis.swift */; };
 		7F37A93C25FF1A750049D648 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A93B25FF1A750049D648 /* EmojiButton.swift */; };
 		7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37A93B25FF1A750049D648 /* EmojiButton.swift */; };
-		7F6063442610408F004834F1 /* ButtomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6063432610408F004834F1 /* ButtomBar.swift */; };
 		7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F606347261040A4004834F1 /* VisualEffectView.swift */; };
 		7F60634D261040D3004834F1 /* LabelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60634C261040D3004834F1 /* LabelPicker.swift */; };
 		7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F60634C261040D3004834F1 /* LabelPicker.swift */; };
@@ -264,10 +281,16 @@
 		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
 		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
+		13C2F5AA2B90030400150A01 /* BillsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsList.swift; sourceTree = "<group>"; };
+		13C2F5AE2B9003FB00150A01 /* BillsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsRow.swift; sourceTree = "<group>"; };
+		13C2F5B22B9008A000150A01 /* BillsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsForm.swift; sourceTree = "<group>"; };
+		13C2F5B62B901EF300150A01 /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
 		13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListFilter.swift; sourceTree = "<group>"; };
 		13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSFRounder.swift; sourceTree = "<group>"; };
 		13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelAdd.swift; sourceTree = "<group>"; };
 		13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services+CoreDataClass.swift"; sourceTree = "<group>"; };
+		13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		13E6DBB32B62DBB500B3BE60 /* ButtonLabelContinue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelContinue.swift; sourceTree = "<group>"; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
@@ -275,7 +298,6 @@
 		7F37A92925FF19600049D648 /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		7F37A92E25FF19AD0049D648 /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		7F37A93B25FF1A750049D648 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
-		7F6063432610408F004834F1 /* ButtomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtomBar.swift; sourceTree = "<group>"; };
 		7F606347261040A4004834F1 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		7F60634C261040D3004834F1 /* LabelPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPicker.swift; sourceTree = "<group>"; };
 		7F60635226104AB5004834F1 /* LabelNewForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelNewForm.swift; sourceTree = "<group>"; };
@@ -452,6 +474,16 @@
 			path = Shared/Views/Settings/Shared/Views/Settings/Payments/TicketViewAssets;
 			sourceTree = "<group>";
 		};
+		13C2F5A92B9002EE00150A01 /* Bills */ = {
+			isa = PBXGroup;
+			children = (
+				13C2F5AA2B90030400150A01 /* BillsList.swift */,
+				13C2F5AE2B9003FB00150A01 /* BillsRow.swift */,
+				13C2F5B22B9008A000150A01 /* BillsForm.swift */,
+			);
+			path = Bills;
+			sourceTree = "<group>";
+		};
 		13C9DF9C29F3B61E005D1768 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +499,16 @@
 				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
 			);
 			path = UIElements;
+			sourceTree = "<group>";
+		};
+		13E1F5982B86FD8B0032B7B2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */,
+				13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */,
+				13C2F5B62B901EF300150A01 /* ServicesModel.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		13E6DBAE2B61CEA800B3BE60 /* AppIcon */ = {
@@ -582,6 +624,7 @@
 			isa = PBXGroup;
 			children = (
 				7F70A21A25FEB1EE00455AB0 /* debtMe.xcdatamodeld */,
+				13E1F5982B86FD8B0032B7B2 /* Services */,
 				1327EE5A2B61C76F002DFB66 /* Features */,
 				1399AD582999539A00C87C3D /* Payment */,
 				7F70A29025FED1C200455AB0 /* UserPreferences */,
@@ -596,6 +639,7 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13C2F5A92B9002EE00150A01 /* Bills */,
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
@@ -702,7 +746,6 @@
 		7F70A29B25FEDC4B00455AB0 /* Navigations */ = {
 			isa = PBXGroup;
 			children = (
-				7F6063432610408F004834F1 /* ButtomBar.swift */,
 				7F70A29C25FEDC8E00455AB0 /* TabBarView.swift */,
 				7F70A2A125FEDC9D00455AB0 /* SideBarView.swift */,
 			);
@@ -901,7 +944,10 @@
 				1331BD8F2B4F39C100C0A15F /* ContactsRow.swift in Sources */,
 				1331BD792B4F39A400C0A15F /* ButtonLabelShowSetled.swift in Sources */,
 				1331BD972B4F39D000C0A15F /* UserPreferencesModel.swift in Sources */,
+				13C2F5B92B901EF300150A01 /* ServicesModel.swift in Sources */,
 				1331BDAB2B4F731B00C0A15F /* ViewExtension.swift in Sources */,
+				13E1F5942B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */,
+				13E1F5972B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */,
 				1331BD992B4F39D500C0A15F /* Transaction+CoreDataProperties.swift in Sources */,
 				1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */,
 				1369E1BD2B64420F005388C2 /* FeaturesList.swift in Sources */,
@@ -927,10 +973,12 @@
 				1327EE522B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
 				1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */,
 				13E6DBB82B62ED8000B3BE60 /* FeatureView.swift in Sources */,
+				13C2F5B12B9003FB00150A01 /* BillsRow.swift in Sources */,
 				1331BD872B4F39B600C0A15F /* TransactionsForm.swift in Sources */,
 				1331BD762B4F399D00C0A15F /* Persistence.swift in Sources */,
 				1331BD802B4F39AB00C0A15F /* Border.swift in Sources */,
 				1331BD782B4F39A400C0A15F /* ButtonLabelAdd.swift in Sources */,
+				13C2F5B52B9008A100150A01 /* BillsForm.swift in Sources */,
 				13E6DBB62B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				1331BD7E2B4F39A400C0A15F /* EmptyPaymentView.swift in Sources */,
 				1369E1C12B644288005388C2 /* WhatsNewView.swift in Sources */,
@@ -940,6 +988,7 @@
 				1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */,
 				1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */,
+				13C2F5AD2B90030400150A01 /* BillsList.swift in Sources */,
 				136D567A2B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
 				1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */,
@@ -966,19 +1015,21 @@
 				138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				7F70A29D25FEDC8E00455AB0 /* TabBarView.swift in Sources */,
 				13C73BFE2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */,
-				7F6063442610408F004834F1 /* ButtomBar.swift in Sources */,
 				1304296929EF36BA001203D3 /* TotalsView.swift in Sources */,
 				7F76A8E4260EF59C00033790 /* debtMe.xcdatamodeld in Sources */,
 				1399AD632999A69A00C87C3D /* PaymentModel.swift in Sources */,
 				132B86092ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */,
+				13E1F5952B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */,
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
 				1327EE502B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
 				7F70A23225FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsForm.swift in Sources */,
+				13C2F5AB2B90030400150A01 /* BillsList.swift in Sources */,
 				1369E1C82B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */,
+				13C2F5B72B901EF300150A01 /* ServicesModel.swift in Sources */,
 				1327EE552B61C072002DFB66 /* WellcomeView.swift in Sources */,
 				1399AD5D29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
 				1399AD542999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
@@ -1005,6 +1056,7 @@
 				7F37A92F25FF19AD0049D648 /* EmojiPicker.swift in Sources */,
 				7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */,
 				1369E1C32B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
+				13C2F5B32B9008A100150A01 /* BillsForm.swift in Sources */,
 				7F70A2B425FEF72500455AB0 /* ContactsList.swift in Sources */,
 				131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				7FCD425B262D3E2A00568EE7 /* TransactionModel.swift in Sources */,
@@ -1017,9 +1069,11 @@
 				1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A8E9260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A28A25FED19300455AB0 /* UserPreferences.swift in Sources */,
+				13C2F5AF2B9003FB00150A01 /* BillsRow.swift in Sources */,
 				7F70A23425FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27E25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				136D56722B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
+				13E1F5922B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */,
 				7F70A2B925FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 				13E6DBB42B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
@@ -1035,6 +1089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13C2F5B42B9008A100150A01 /* BillsForm.swift in Sources */,
 				1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
 				7F70A23325FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				7F70A24E25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
@@ -1063,9 +1118,11 @@
 				7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */,
 				1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				7F76A8EA260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
+				13C2F5AC2B90030400150A01 /* BillsList.swift in Sources */,
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
 				136D56792B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				7F70A2B525FEF72500455AB0 /* ContactsList.swift in Sources */,
+				13E1F5932B86FD800032B7B2 /* Services+CoreDataClass.swift in Sources */,
 				7F76A8EC260EF5F900033790 /* Contact+CoreDataProperties.swift in Sources */,
 				1369E1C02B644288005388C2 /* WhatsNewView.swift in Sources */,
 				13DC6CDD2B2E8060007361A8 /* SearchTextField.swift in Sources */,
@@ -1078,12 +1135,14 @@
 				13E6DBB72B62ED7F00B3BE60 /* FeatureView.swift in Sources */,
 				13874D482ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */,
 				132B860A2ACBC37F00ADFED4 /* EmptyPaymentView.swift in Sources */,
+				13C2F5B82B901EF300150A01 /* ServicesModel.swift in Sources */,
 				132B860D2ACBCAFD00ADFED4 /* ButtonLabelReset.swift in Sources */,
 				7F37A93825FF1A490049D648 /* Emojis.swift in Sources */,
 				136D56732B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
 				7F70A23525FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27F25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				1399AD552999538A00C87C3D /* Payment+CoreDataClass.swift in Sources */,
+				13E1F5962B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */,
 				138B249529E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				133FC753270C099D00CDB741 /* TransactionsContactList.swift in Sources */,
 				1327EE512B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
@@ -1091,6 +1150,7 @@
 				7F70A2BA25FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB52B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
+				13C2F5B02B9003FB00150A01 /* BillsRow.swift in Sources */,
 				7F37A93525FF1A3E0049D648 /* EmojiPicker.swift in Sources */,
 				7F70A2C425FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
 				7F76A904260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,

@@ -21,7 +21,7 @@ struct TabBarView: View {
                 Label("Contacts", systemImage: "person.2.fill")
             }
             .tag(SectionSelected.contacts)
-            // MARK: - Debts
+            /* // MARK: - Debts
             NavigationView{
                 TransactionsListFilter(isDebt:true)
             }
@@ -30,12 +30,21 @@ struct TabBarView: View {
             }
             .tag(SectionSelected.debts)
             
-            // MARK: - Loans
+           // MARK: - Loans
             NavigationView{
                 TransactionsListFilter(isDebt:false)
             }
             .tabItem {
                 Label("Loans", systemImage: "dollarsign.square.fill")
+            }
+            .tag(SectionSelected.loans)
+             */
+            // MARK: - Bills
+            NavigationView{
+                BillsList()
+            }
+            .tabItem {
+                Label("Bills", systemImage: "chart.bar.doc.horizontal")
             }
             .tag(SectionSelected.loans)
             

@@ -15,29 +15,31 @@ struct SideBarView: View {
     var body: some View {
        
         NavigationSplitView {
-            List(/*selection: $sectionSelected*/) {
+            List() {
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                
+                /*
                 NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
                     Label("Debts", systemImage: "dollarsign.square")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                //.disabled(true)
                 
                 NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
+                }*/
+                
+                NavigationLink(destination: BillsList(), tag: SectionSelected.bills, selection: $sectionSelected) {
+                    Label("Bills", systemImage: "chart.bar.doc.horizontal")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                //.disabled(true)
                 
                 NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                //.disabled(true)
                 
             }
             

@@ -11,7 +11,7 @@ import LocalAuthentication
 
 // MARK: - Navigation Options
 enum SectionSelected {
-    case contacts, debts, loans, settings, budget
+    case contacts, debts, loans, settings, budget,bills
 }
 
 struct ContentView: View {
