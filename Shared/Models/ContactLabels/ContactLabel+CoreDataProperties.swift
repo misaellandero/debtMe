@@ -20,6 +20,7 @@ extension ContactLabel {
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var contacts: NSSet?
+    @NSManaged public var services: NSSet?
     
     // MARK: - Wrapped vars
     
@@ -68,6 +69,24 @@ extension ContactLabel {
     @NSManaged public func removeFromContacts(_ values: NSSet)
 
 }
+
+// MARK: Generated accessors for services
+extension ContactLabel {
+
+    @objc(addServicesObject:)
+    @NSManaged public func addToServices(_ value: Services)
+
+    @objc(removeServicesObject:)
+    @NSManaged public func removeFromServices(_ value: Services)
+
+    @objc(addServices:)
+    @NSManaged public func addToServices(_ values: NSSet)
+
+    @objc(removeServices:)
+    @NSManaged public func removeFromAervices(_ values: NSSet)
+
+}
+
 
 extension ContactLabel : Identifiable {
 

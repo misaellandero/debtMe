@@ -41,7 +41,7 @@ struct TabBarView: View {
              */
             // MARK: - Bills
             NavigationView{
-                BillsList()
+                ServicesList()
             }
             .tabItem {
                 Label("Bills", systemImage: "chart.bar.doc.horizontal")

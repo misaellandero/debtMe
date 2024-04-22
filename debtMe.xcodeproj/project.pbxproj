@@ -139,15 +139,15 @@
 		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
 		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
-		13C2F5AB2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
-		13C2F5AC2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
-		13C2F5AD2B90030400150A01 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* BillsList.swift */; };
-		13C2F5AF2B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
-		13C2F5B02B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
-		13C2F5B12B9003FB00150A01 /* BillsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* BillsRow.swift */; };
-		13C2F5B32B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
-		13C2F5B42B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
-		13C2F5B52B9008A100150A01 /* BillsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* BillsForm.swift */; };
+		13C2F5AB2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
+		13C2F5AC2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
+		13C2F5AD2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
+		13C2F5AF2B9003FB00150A01 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */; };
+		13C2F5B02B9003FB00150A01 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */; };
+		13C2F5B12B9003FB00150A01 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */; };
+		13C2F5B32B9008A100150A01 /* ServicesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* ServicesForm.swift */; };
+		13C2F5B42B9008A100150A01 /* ServicesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* ServicesForm.swift */; };
+		13C2F5B52B9008A100150A01 /* ServicesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B22B9008A000150A01 /* ServicesForm.swift */; };
 		13C2F5B72B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
 		13C2F5B82B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
 		13C2F5B92B901EF300150A01 /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5B62B901EF300150A01 /* ServicesModel.swift */; };
@@ -281,9 +281,9 @@
 		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
 		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
-		13C2F5AA2B90030400150A01 /* BillsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsList.swift; sourceTree = "<group>"; };
-		13C2F5AE2B9003FB00150A01 /* BillsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsRow.swift; sourceTree = "<group>"; };
-		13C2F5B22B9008A000150A01 /* BillsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsForm.swift; sourceTree = "<group>"; };
+		13C2F5AA2B90030400150A01 /* ServicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesList.swift; sourceTree = "<group>"; };
+		13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
+		13C2F5B22B9008A000150A01 /* ServicesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesForm.swift; sourceTree = "<group>"; };
 		13C2F5B62B901EF300150A01 /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
 		13C73BFD2A9D2AB6009CB8CE /* TransactionsListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListFilter.swift; sourceTree = "<group>"; };
 		13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSFRounder.swift; sourceTree = "<group>"; };
@@ -474,14 +474,14 @@
 			path = Shared/Views/Settings/Shared/Views/Settings/Payments/TicketViewAssets;
 			sourceTree = "<group>";
 		};
-		13C2F5A92B9002EE00150A01 /* Bills */ = {
+		13C2F5A92B9002EE00150A01 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				13C2F5AA2B90030400150A01 /* BillsList.swift */,
-				13C2F5AE2B9003FB00150A01 /* BillsRow.swift */,
-				13C2F5B22B9008A000150A01 /* BillsForm.swift */,
+				13C2F5AA2B90030400150A01 /* ServicesList.swift */,
+				13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */,
+				13C2F5B22B9008A000150A01 /* ServicesForm.swift */,
 			);
-			path = Bills;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		13C9DF9C29F3B61E005D1768 /* UIElements */ = {
@@ -639,7 +639,7 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				13C2F5A92B9002EE00150A01 /* Bills */,
+				13C2F5A92B9002EE00150A01 /* Services */,
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
@@ -973,12 +973,12 @@
 				1327EE522B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
 				1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */,
 				13E6DBB82B62ED8000B3BE60 /* FeatureView.swift in Sources */,
-				13C2F5B12B9003FB00150A01 /* BillsRow.swift in Sources */,
+				13C2F5B12B9003FB00150A01 /* ServiceRow.swift in Sources */,
 				1331BD872B4F39B600C0A15F /* TransactionsForm.swift in Sources */,
 				1331BD762B4F399D00C0A15F /* Persistence.swift in Sources */,
 				1331BD802B4F39AB00C0A15F /* Border.swift in Sources */,
 				1331BD782B4F39A400C0A15F /* ButtonLabelAdd.swift in Sources */,
-				13C2F5B52B9008A100150A01 /* BillsForm.swift in Sources */,
+				13C2F5B52B9008A100150A01 /* ServicesForm.swift in Sources */,
 				13E6DBB62B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				1331BD7E2B4F39A400C0A15F /* EmptyPaymentView.swift in Sources */,
 				1369E1C12B644288005388C2 /* WhatsNewView.swift in Sources */,
@@ -988,7 +988,7 @@
 				1369E1CA2B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1331BD962B4F39D000C0A15F /* AppColorsModel.swift in Sources */,
 				1331BD852B4F39B000C0A15F /* LabelNewForm.swift in Sources */,
-				13C2F5AD2B90030400150A01 /* BillsList.swift in Sources */,
+				13C2F5AD2B90030400150A01 /* ServicesList.swift in Sources */,
 				136D567A2B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
 				1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */,
@@ -1026,7 +1026,7 @@
 				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsForm.swift in Sources */,
-				13C2F5AB2B90030400150A01 /* BillsList.swift in Sources */,
+				13C2F5AB2B90030400150A01 /* ServicesList.swift in Sources */,
 				1369E1C82B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				1399AD6029999A7600C87C3D /* PaymentNewForm.swift in Sources */,
 				13C2F5B72B901EF300150A01 /* ServicesModel.swift in Sources */,
@@ -1056,7 +1056,7 @@
 				7F37A92F25FF19AD0049D648 /* EmojiPicker.swift in Sources */,
 				7F37A91F25FF081F0049D648 /* TransactionsRow.swift in Sources */,
 				1369E1C32B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
-				13C2F5B32B9008A100150A01 /* BillsForm.swift in Sources */,
+				13C2F5B32B9008A100150A01 /* ServicesForm.swift in Sources */,
 				7F70A2B425FEF72500455AB0 /* ContactsList.swift in Sources */,
 				131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				7FCD425B262D3E2A00568EE7 /* TransactionModel.swift in Sources */,
@@ -1069,7 +1069,7 @@
 				1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A8E9260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
 				7F70A28A25FED19300455AB0 /* UserPreferences.swift in Sources */,
-				13C2F5AF2B9003FB00150A01 /* BillsRow.swift in Sources */,
+				13C2F5AF2B9003FB00150A01 /* ServiceRow.swift in Sources */,
 				7F70A23425FEB1F700455AB0 /* ContentView.swift in Sources */,
 				7F70A27E25FEC78400455AB0 /* AppColorsModel.swift in Sources */,
 				136D56722B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
@@ -1089,7 +1089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13C2F5B42B9008A100150A01 /* BillsForm.swift in Sources */,
+				13C2F5B42B9008A100150A01 /* ServicesForm.swift in Sources */,
 				1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
 				7F70A23325FEB1F700455AB0 /* debtMeApp.swift in Sources */,
 				7F70A24E25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
@@ -1118,7 +1118,7 @@
 				7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */,
 				1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */,
 				7F76A8EA260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
-				13C2F5AC2B90030400150A01 /* BillsList.swift in Sources */,
+				13C2F5AC2B90030400150A01 /* ServicesList.swift in Sources */,
 				7F70A27925FEC15700455AB0 /* DateFormatterExtension.swift in Sources */,
 				136D56792B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				7F70A2B525FEF72500455AB0 /* ContactsList.swift in Sources */,
@@ -1150,7 +1150,7 @@
 				7F70A2BA25FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB52B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
-				13C2F5B02B9003FB00150A01 /* BillsRow.swift in Sources */,
+				13C2F5B02B9003FB00150A01 /* ServiceRow.swift in Sources */,
 				7F37A93525FF1A3E0049D648 /* EmojiPicker.swift in Sources */,
 				7F70A2C425FEF77100455AB0 /* ContactsNewForm.swift in Sources */,
 				7F76A904260EFF1800033790 /* ContactLabel+CoreDataProperties.swift in Sources */,

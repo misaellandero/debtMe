@@ -1,5 +1,5 @@
 //
-//  BillsList.swift
+//  ServicesList.swift
 //  debtMe
 //
 //  Created by Misael Landero on 28/02/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BillsList: View {
+struct ServicesList: View {
   
     @State var showNewBill = false
     
@@ -28,13 +28,13 @@ struct BillsList: View {
             }
         }
         .sheet(isPresented: $showNewBill, content: {
-            BillsForm()
+            ServicesForm()
         })
     }
 }
 
 #Preview {
     NavigationStack{
-        BillsList()
+        ServicesList()
     }
 }

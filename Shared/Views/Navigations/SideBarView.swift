@@ -31,7 +31,7 @@ struct SideBarView: View {
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }*/
                 
-                NavigationLink(destination: BillsList(), tag: SectionSelected.bills, selection: $sectionSelected) {
+                NavigationLink(destination: ServicesList(), tag: SectionSelected.bills, selection: $sectionSelected) {
                     Label("Bills", systemImage: "chart.bar.doc.horizontal")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }

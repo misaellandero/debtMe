@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import SwiftUI
 
 extension Services {
 
@@ -24,6 +24,8 @@ extension Services {
     @NSManaged public var id: UUID?
     @NSManaged public var image: Data?
     @NSManaged public var name: String?
+    @NSManaged public var color: Int16
+    @NSManaged public var label: ContactLabel?
     
     // MARK: - Wrapped vars
     
@@ -42,6 +44,19 @@ extension Services {
         name ?? "No name"
     }
     
+    // Wrapped color
+    public var wrappedColor: Color {
+        AppColorsModel.colors[Int(color)].color
+    }
+    
+    // MARK: - Computed properties
+    //Have a label
+    public var haveALabel : Bool {
+        if label != nil {
+            return true
+        }
+        return false
+    }
 
 }
 
