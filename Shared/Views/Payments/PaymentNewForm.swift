@@ -40,8 +40,8 @@ struct PaymentNewForm: View {
                     ToolbarItem(placement: .cancellationAction ){
                         Button(action: closeView){
                             Label("Return", systemImage: "xmark")
-                                .foregroundColor(.red)
                         }
+                        .tint(.red)
                     }
                     ToolbarItem(placement: .primaryAction ){
                         Button(action: savePayment){
@@ -160,9 +160,9 @@ struct PaymentMultiplatformForm: View {
                     #if os(macOS)
                     HStack{
                         Button(action: closeView){
-                            Label("Cancel", systemImage: "xmark")
+                            Label("Return", systemImage: "xmark") 
                         }
-                        .accentColor(.red)
+                        .tint(.red)
                         Spacer()
                         Button(action: savePayment){
                             Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")

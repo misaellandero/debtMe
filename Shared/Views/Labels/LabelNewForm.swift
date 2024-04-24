@@ -70,9 +70,9 @@ struct LabelNewForm: View {
                         Button(action:{
                             showForm.toggle()
                         }){
-                           Label("Return", image: "xmark")
-                                .foregroundColor(.red)
+                            Label("Return", systemImage: "xmark")
                         }
+                        .tint(.red)
                     }
                     ToolbarItem(placement: .confirmationAction){
                         Button(action: saveTag){

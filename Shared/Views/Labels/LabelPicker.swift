@@ -66,9 +66,9 @@ struct labelPicker: View {
                     Button(action:{
                         showLabelList.toggle()
                     }){
-                       Label("Return", image: "xmark")
-                            .foregroundColor(.red)
+                        Label("Return", systemImage: "xmark")
                     }
+                    .tint(.red)
                 }
                 /*ToolbarItem(placement: .confirmationAction){
                     Button(action: {

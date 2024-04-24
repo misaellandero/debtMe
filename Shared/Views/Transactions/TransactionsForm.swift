@@ -63,9 +63,9 @@ struct TransactionsForm: View {
                         Button(action:{
                             closeView()
                         }){
-                           Label("Return", image: "xmark")
-                                .foregroundColor(.red)
+                            Label("Return", systemImage: "xmark")
                         }
+                        .tint(.red)
                     }
                     ToolbarItem(placement: .confirmationAction){
                         Button(action: performSaveAcion){
@@ -187,11 +187,9 @@ struct TransactionMultiPlataformForm: View {
             #if os(macOS)
             HStack{
                 Button(action: closeView){
-                    Label("Cancel", systemImage: "xmark")
-                              
-                        
+                    Label("Return", systemImage: "xmark")
                 }
-                .accentColor(.red)
+                .tint(.red)
                 Spacer()
                 Button(action: saveTransaction){
                     Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")

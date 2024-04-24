@@ -23,13 +23,14 @@ struct ServicesForm: View {
     
     var body: some View {
         Group{
-#if os(macOS)
+        #if os(macOS)
             List{
                 Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
                 Text(edition ? "Edit" : "New")
+                ServiceMultiPlataformForm(service: $serviceModel, label: $labelContact, save: {})
             }
             
-#else
+        #else
             NavigationStack{
                 List{
                     ServiceMultiPlataformForm(service: $serviceModel, label: $labelContact, save: {})
@@ -40,13 +41,14 @@ struct ServicesForm: View {
                         Button(action:{
                             closeView()
                         }){
-                            Label("Return", image: "xmark")
-                                .foregroundColor(.red)
+                            Label("Return", systemImage: "xmark")
+                                
                         }
+                        .tint(.red)
                     }
                     ToolbarItem(placement: .confirmationAction){
                         Button(action: performSaveAcion){
-                            Label(edition ? "Save": "Add", image: "plus.circle.fill")
+                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
                                 .foregroundColor(.accentColor)
                         }
                     }
@@ -70,6 +72,10 @@ struct ServicesForm: View {
         } else {
             //saveTransaction()
         }
+    }
+    
+    func saveService(){
+        let service = Services(context: moc)
     }
 }
 
@@ -99,13 +105,11 @@ struct ServiceMultiPlataformForm : View {
                 TextField("Description", text: $service.des)
             }
             Section{
-               
-                
                 DatePicker("Payment date", selection: $service.frequencyDate, displayedComponents: .date)
                     
                 Picker("Frequency", selection: $service.frecuencyIndex) {
                     ForEach(0..<ServicesModel.frequency.count) { index in
-                        Text(ServicesModel.frequency[index]).tag(index)
+                        Text(LocalizedStringKey(ServicesModel.frequency[index])).tag(index)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
@@ -114,13 +118,13 @@ struct ServiceMultiPlataformForm : View {
                 case 0: //"Daily":
                     Text("Daily Fee")
                 case 1, 2: //"Weekly","Biweekly":
-                    Text("\(ServicesModel.frequency[service.frecuencyIndex])") + Text(" Fee each ") + Text("\(service.dayName ?? "")")
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
                     
                 case 3, 4, 5: //"Monthly", "Quarterly", "Semester":
-                    Text("\(ServicesModel.frequency[service.frecuencyIndex])") + Text(" Fee each ") + Text("\(service.frequencyDay ?? 0)")
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay ?? 0)")
                     
                 case 6: //"Yearly":
-                    Text("\(ServicesModel.frequency[service.frecuencyIndex])") + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
                     
                 default:
                     Text("Select Frequency")
@@ -128,7 +132,47 @@ struct ServiceMultiPlataformForm : View {
                 
             }
             Section{
+            #if os(macOS)
+            TextField("Amount", text: $service.amout)
+            #else
+            TextField("Amount", text: $service.amout)
+            .keyboardType(.decimalPad)
+            #endif
+            }
+            
+            Section {
+                Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill") , content: {
+                    ForEach(0..<AppColorsModel.colors.count){ index in
+                        HStack{
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(AppColorsModel.colors[index].color)
+                            Text(AppColorsModel.colors[index].name)
+                        }
+                        .padding()
+                        .tag(index)
+                    }
+                })
+                .pickerStyle(NavigationLinkPickerStyle())
+            }
+            
+            
+            Section(footer: Text("Preview")){
+                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
+            }
+            
+            Section{
 #if os(iOS)
+                Button(action: save){
+                    HStack{
+                        Spacer()
+                        Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
+                            .foregroundColor(.white)
+                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                            .padding()
+                        Spacer()
+                    }
+                }
+                .listRowBackground(Color.accentColor )
 #elseif os(macOS)
                 HStack{
                     Button(action: {
@@ -152,12 +196,5 @@ struct ServiceMultiPlataformForm : View {
             }
         }
     }
-    var dayName: String? {
-        //"Day Name"
-        let day = service.frequencyDay
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE" // "EEEE" gives full name of the day (e.g., Monday)
-        return dateFormatter.string(from: DateComponents(day: day).date!)
-        
-    }
+ 
 }

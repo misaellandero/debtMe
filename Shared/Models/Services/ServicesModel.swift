@@ -11,7 +11,7 @@ struct ServicesModel {
     
     // Arrays for date selection
     static var frequency = ["Daily", "Weekly", "Biweekly", "Monthly", "Quarterly", "Semester", "Yearly"]
-    static let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    static let daysOfWeek : [LocalizedStringKey] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     static let daysOfMonth = Array(1...31)
     static let months = Array(1...12)
     static let years = Array(1...31)
@@ -19,6 +19,7 @@ struct ServicesModel {
     
     
     var amout : String = ""
+    
     var des : String = ""
     var expense : Bool = true
     var frecuencyIndex : Int = 0

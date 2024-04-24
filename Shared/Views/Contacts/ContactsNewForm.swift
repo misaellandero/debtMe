@@ -60,9 +60,9 @@ struct ContactsNewForm: View {
                         Button(action:{
                             self.presentationMode.wrappedValue.dismiss()
                         }){
-                           Label("Return", image: "xmark")
-                                .foregroundColor(.red)
+                            Label("Return", systemImage: "xmark")
                         }
+                        .tint(.red)
                     }
                     ToolbarItem(placement: .confirmationAction){
                         Button(action: performSaveAcion){
@@ -257,12 +257,9 @@ struct NewContactMultiplatformForm : View {
                             self.presentationMode.wrappedValue.dismiss()
                         
                     }){
-                        Label("Cancel", systemImage: "xmark")
-                                 
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                            
+                        Label("Return", systemImage: "xmark")
                     }
-                    .accentColor(.red)
+                    .tint(.red)
                     Spacer()
                     Button(action: saveContact){
                         Label("Add", systemImage: "plus.circle.fill")

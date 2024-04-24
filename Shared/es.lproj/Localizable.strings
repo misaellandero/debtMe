@@ -170,3 +170,36 @@ El desarrollador no se hará responsable de posibles daños a su dispositivo res
 "Contacts Tab" = "Pestaña contactos";
 "Summary" = "Resumen";
 "Now you can view the summary and balance directly within the Contacts tab. Head to Settings if you wish to disable this feature"= "hora puedes ver el resumen y el balance directamente dentro de la pestaña de Contactos. Dirígete a Configuración si deseas desactivar esta función";
+
+"Service Name" = "Nombre del Servicio";
+"Description" = "Descripción";
+"Payment date" = "Fecha de Pago";
+"Frequency" = "Frecuencia";
+"Daily Fee" = "Cuota Diaria";
+"Weekly" = "Cuota Semanal";
+"Biweekly" = "Cuota Quincenal";
+"Monthly" = "Cuota Mensual";
+"Quarterly" = "Cuota Trimestral";
+"Semester" = "Cuota Semestral";
+"Yearly" = "Cuota Anual";
+"of" = "de";
+"Select Frequency" = "Seleccionar Frecuencia";
+
+
+"Daily" = "Diario";
+"Weekly" = "Semanal";
+"Biweekly" = "Quincenal";
+"Monthly" = "Mensual";
+"Quarterly" = "Trimestral";
+"Semester" = "Semestral";
+"Yearly" = "Anual";
+
+"Sunday" = "Domingo";
+"Monday" = "Lunes";
+"Tuesday" = "Martes";
+"Wednesday" = "Miércoles";
+"Thursday" = "Jueves";
+"Friday" = "Viernes";
+"Saturday" = "Sábado";
+" Fee each " = " pagar el ";
+" of " = " de ";
