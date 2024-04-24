@@ -19,7 +19,7 @@ struct ServicesModel {
     
     
     var amout : String = ""
-    
+    var label : String = ""
     var des : String = ""
     var expense : Bool = true
     var frecuencyIndex : Int = 0

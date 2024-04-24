@@ -141,7 +141,8 @@ struct ServiceMultiPlataformForm : View {
             }
             
             Section {
-                Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill") , content: {
+                LabelsPickerView(label: $label)
+                Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill"), content: {
                     ForEach(0..<AppColorsModel.colors.count){ index in
                         HStack{
                             Image(systemName: "circle.fill")

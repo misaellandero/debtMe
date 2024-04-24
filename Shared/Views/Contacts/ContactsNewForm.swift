@@ -209,22 +209,7 @@ struct NewContactMultiplatformForm : View {
                 .sheet(isPresented: $showFormLabel, content: {
                     LabelNewForm(showForm: $showFormLabel)
                     .environment(\.horizontalSizeClass, .compact)
-                })
-                //labelPicker(label: $labelContact, showLabelList: $showLabelList)
-                /*
-                Button(action:{
-                    showLabelList.toggle()
-                }){
-                    Group{
-                       Text(labelContact?.wrappedName ?? "Nothing selected")
-                    }
-                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundColor(labelContact?.labelColor ?? Color.gray)
-                }
-                .popover(isPresented: $showLabelList){
-                    labelPicker(label: $labelContact, showLabelList: $showLabelList)
-                        .frame(width: 250, height: 200)
-                }*/
+                }) 
                 #else
                 Button(action:{
                     showLabelList.toggle()

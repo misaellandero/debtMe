@@ -39,12 +39,12 @@ struct TabBarView: View {
             }
             .tag(SectionSelected.loans)
              */
-            // MARK: - Bills
+            // MARK: - Services
             NavigationView{
                 ServicesList()
             }
             .tabItem {
-                Label("Bills", systemImage: "chart.bar.doc.horizontal")
+                Label("Services", systemImage: "chart.bar.doc.horizontal")
             }
             .tag(SectionSelected.loans)
             
