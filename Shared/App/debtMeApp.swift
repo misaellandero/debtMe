@@ -20,6 +20,8 @@ struct debtMeApp: App {
                 .environment(\.managedObjectContext, coreData.persistentContainer.viewContext)
                 .environmentObject(userPreferences)
                 .navigationTitle("")
+               
+                    
         }
     }
 }

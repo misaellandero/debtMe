@@ -110,7 +110,7 @@ struct LabelMultiplatformForm: View {
     @Binding var colorSelect : Int
     @Binding var showForm : Bool
     var save : () -> Void
-    
+    var serviceLabelMode = false
     var body: some View {
         
         TextField("Name", text: $name)
@@ -118,7 +118,7 @@ struct LabelMultiplatformForm: View {
         .textFieldStyle(RoundedBorderTextFieldStyle())
         #endif
        
-        
+        if !serviceLabelMode{
         #if os(macOS)
         ScrollView{
             Picker(selection: $colorSelect) {
@@ -132,9 +132,9 @@ struct LabelMultiplatformForm: View {
             }
              
         }
-        
+
         #else
-        
+
         Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
             ForEach(0..<AppColorsModel.colors.count){ index in
                 HStack{
@@ -149,6 +149,8 @@ struct LabelMultiplatformForm: View {
         .labelsHidden()
          .pickerStyle(NavigationLinkPickerStyle())
         #endif
+        }
+      
          
         
         #if os(macOS)

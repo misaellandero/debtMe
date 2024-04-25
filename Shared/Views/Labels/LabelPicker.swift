@@ -51,7 +51,7 @@ struct labelPicker: View {
                             Spacer()
                         }
                         
-                        .padding(.vertical, 15)
+                       // .padding(.vertical, 15)
                     }
                     .listRowBackground(Color.accentColor)
                      

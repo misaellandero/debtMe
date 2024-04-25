@@ -18,27 +18,97 @@ struct LabelsPickerView: View {
     @FetchRequest(entity: ContactLabel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ContactLabel.name, ascending: true)]) var labels: FetchedResults<ContactLabel>
     
     var serviceLabelMode = false
+    @State var showFormLabel = false
+    
+    @Environment(\.presentationMode) var presentationMode
+    
+    
     var body: some View {
-        Picker(selection: $label, label: Label("Tag", systemImage: "tag.fill")) {
-            ForEach(labels, id: \.id){ label in
-                HStack{
-                    Image(systemName: serviceLabelMode ? "" :  "circle.fill")
-                    Text(label.wrappedName)
+       
+            Group{
+                List{
+                    ForEach(labels, id: \.id){ label in
+                            
+                            if serviceLabelMode {
+                                if label.labelForService {
+                                    HStack{
+                                        Image(systemName: serviceLabelMode ? "" :  "circle.fill")
+                                        Text(label.wrappedName)
+                                    }
+                                    .foregroundStyle(serviceLabelMode ? .primary : label.labelColor)
+                                    .tag(Optional(label))
+                                    .onTapGesture {
+                                        setLabel(label: label)
+                                    }
+                                }
+                            } else {
+                                if label.labelForService {
+                                } else {
+                                    HStack{
+                                        Image(systemName: serviceLabelMode ? "" :  "circle.fill")
+                                        Text(label.wrappedName)
+                                    }
+                                    .foregroundStyle(serviceLabelMode ? .primary : label.labelColor)
+                                    .tag(Optional(label))
+                                    .onTapGesture {
+                                        setLabel(label: label)
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                    .onDelete(perform: deleteItem)
                 }
-                .foregroundStyle(serviceLabelMode ? .primary : label.labelColor)
-                .tag(label)
+               
+                      
             }
-        }
-        #if os(macOS)
-        .datePickerStyle(DefaultDatePickerStyle())
-        #else
-        .pickerStyle(NavigationLinkPickerStyle())
-        #endif
+            .sheet(isPresented: $showFormLabel, content: {
+                LabelNewForm(showForm: $showFormLabel)
+                .environment(\.horizontalSizeClass, .compact)
+            })
+            .toolbar{
+                ToolbarItem(placement:.principal){
+                    Text("\(Image(systemName: "tag.fill")) Tags")
+                }
+                ToolbarItem(placement: .confirmationAction){
+                    Button(action: {
+                        showFormLabel.toggle()
+                    }){
+                       Label("Add", image: "plus.circle.fill")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }
+               
+       
+           
         
         
     }
+    
+    func deleteItem(at offsets: IndexSet) {
+        
+        for offset in offsets {
+            let labels =  self.labels[offset]
+            self.moc.delete(labels)
+        }
+         
+        try? self.moc.save()
+        
+       }
+    
+    func setLabel(label: ContactLabel){
+        self.label = label
+        presentationMode.wrappedValue.dismiss()
+    }
+    
 }
 
 #Preview {
-    LabelsPickerView(label: .constant(.none))
+    NavigationStack{
+        List{
+            LabelsPickerView(label: .constant(.none))
+        }
+    }
 }

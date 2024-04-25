@@ -21,7 +21,7 @@ extension ContactLabel {
     @NSManaged public var name: String?
     @NSManaged public var contacts: NSSet?
     @NSManaged public var services: NSSet?
-    
+    @NSManaged public var labelForService: Bool
     // MARK: - Wrapped vars
     
     // Wrapped id

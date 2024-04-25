@@ -42,14 +42,15 @@ struct ServicesForm: View {
                             closeView()
                         }){
                             Label("Return", systemImage: "xmark")
-                                
                         }
+                        
                         .tint(.red)
                     }
                     ToolbarItem(placement: .confirmationAction){
                         Button(action: performSaveAcion){
-                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
+                            Label(edition ? "Save": "Add", systemImage: "plus")
                                 .foregroundColor(.accentColor)
+                            
                         }
                     }
                     ToolbarItem(placement:.principal){
@@ -80,7 +81,10 @@ struct ServicesForm: View {
 }
 
 #Preview {
-    ServicesForm()
+    NavigationStack{
+        ServicesForm()
+    }
+    
 }
 
 
@@ -97,6 +101,9 @@ struct ServiceMultiPlataformForm : View {
     @Binding var label: ContactLabel?
     var save : () -> Void
     var edition = false
+    
+    @State var showLabelList = false
+    @State var showFormLabel = false
     
     var body: some View {
         Group{
@@ -141,7 +148,18 @@ struct ServiceMultiPlataformForm : View {
             }
             
             Section {
-                LabelsPickerView(label: $label)
+                
+                NavigationLink(destination: {
+                    LabelsPickerView(label:$label, serviceLabelMode: true)
+                }, label: {
+                    HStack{
+                        Label("Tag", systemImage: "tag.fill")
+                        Spacer()
+                        Text(label?.name ?? "")
+                    }
+                })
+                
+                
                 Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill"), content: {
                     ForEach(0..<AppColorsModel.colors.count){ index in
                         HStack{
@@ -196,6 +214,9 @@ struct ServiceMultiPlataformForm : View {
 #endif
             }
         }
+        .sheet(isPresented: $showFormLabel, content: {
+            labelPicker(label: $label, showLabelList: $showLabelList)
+        })
     }
  
 }
