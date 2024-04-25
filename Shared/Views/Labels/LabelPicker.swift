@@ -109,6 +109,7 @@ struct LabelPickerListElements: View {
     var body: some View {
         
         ForEach(labels, id: \.id){ label in
+            if !label.labelForService {
             #if os(macOS)
                 HStack{
                     Spacer()
@@ -137,8 +138,10 @@ struct LabelPickerListElements: View {
                 .foregroundColor(Color.white)
             }
             .listRowBackground(label.labelColor)
-           
+
             #endif
+            }
+           
         }.onDelete(perform: deleteItem)
         
     }

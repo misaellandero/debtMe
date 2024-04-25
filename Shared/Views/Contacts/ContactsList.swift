@@ -110,7 +110,10 @@ struct ContactsList: View {
                     Picker(selection: $selectedTag, label: Text("Filter by tag")) {
                         Text("All").tag("All")
                         ForEach(labels){ label in
-                            Text(label.wrappedName).tag(label.wrappedName)
+                            if !label.labelForService {
+                                Text(label.wrappedName).tag(label.wrappedName)
+                            }
+                            
                         }
                     }
                 } label: {

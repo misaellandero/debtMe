@@ -64,7 +64,7 @@ struct LabelsPickerView: View {
                       
             }
             .sheet(isPresented: $showFormLabel, content: {
-                LabelNewForm(showForm: $showFormLabel)
+                LabelNewForm(showForm: $showFormLabel, serviceLabelMode: true)
                 .environment(\.horizontalSizeClass, .compact)
             })
             .toolbar{

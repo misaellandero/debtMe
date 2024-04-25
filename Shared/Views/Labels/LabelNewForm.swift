@@ -15,12 +15,13 @@ struct LabelNewForm: View {
     @State var colorSelect : Int = 0
     
     @Binding var showForm : Bool
+    var serviceLabelMode = false
     var body: some View {
       
             #if os(macOS)
         VStack{
                 Text("\(Image(systemName: "tag.fill")) New")
-                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
+                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
                    
             }
             .frame(maxHeight: 150)
@@ -29,7 +30,7 @@ struct LabelNewForm: View {
             NavigationView{
                 ZStack{
                     List{
-                        LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag)
+                        LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
                     }
                     .listStyle(InsetGroupedListStyle())
                     VStack{
@@ -95,6 +96,7 @@ struct LabelNewForm: View {
         newTag.id = UUID()
         newTag.name =  self.name
         newTag.color = Int16(self.colorSelect)
+        newTag.labelForService = serviceLabelMode
         
         try? self.moc.save()
         showForm.toggle()
