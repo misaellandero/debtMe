@@ -19,7 +19,7 @@ struct ServicesForm: View {
     @State var service: Services?
     //Data if is new
     @State var serviceModel = ServicesModel()
-    @State var labelContact: ContactLabel?
+    @State var serviceLabel: ContactLabel?
     
     var body: some View {
         Group{
@@ -27,13 +27,13 @@ struct ServicesForm: View {
             List{
                 Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
                 Text(edition ? "Edit" : "New")
-                ServiceMultiPlataformForm(service: $serviceModel, label: $labelContact, save: {})
+                ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion)
             }
             
         #else
             NavigationStack{
                 List{
-                    ServiceMultiPlataformForm(service: $serviceModel, label: $labelContact, save: {})
+                    ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion)
                 }
                 .listStyle(InsetGroupedListStyle())
                 .toolbar {
@@ -71,12 +71,23 @@ struct ServicesForm: View {
         if edition {
             //editTransaction()
         } else {
-            //saveTransaction()
+            saveService()
         }
     }
     
     func saveService(){
         let service = Services(context: moc)
+        service.id = UUID()
+        service.amount = serviceModel.amountNumber
+        service.color = Int16(serviceModel.colorIndex)
+        service.des = serviceModel.des
+        service.expense =  serviceModel.expense
+        service.frequency = Int16(serviceModel.frecuencyIndex)
+        service.frequency_date = serviceModel.frequencyDate
+        service.label = serviceLabel
+        try? self.moc.save()
+        closeView()
+        
     }
 }
 

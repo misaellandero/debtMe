@@ -20,7 +20,7 @@ extension Services {
     @NSManaged public var des: String?
     @NSManaged public var expense: Bool
     @NSManaged public var frequency: Int16
-    @NSManaged public var frequency_date: Int16
+    @NSManaged public var frequency_date: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var image: Data?
     @NSManaged public var name: String?
