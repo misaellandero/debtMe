@@ -16,7 +16,22 @@ struct ContactsRow: View {
     
     var body: some View {
         
-        VStack(alignment: .leading){
+        ZStack(alignment: .leading){
+            VStack{
+                HStack{
+                    Spacer()
+                    if contact.haveALabel {
+                        Text(contact.WrappedLabelName)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(4)
+                            .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                            .background(contact.WrappedLabelColor)
+                            .cornerRadius(10)
+                    }
+                }
+                Spacer()
+            }
             HStack{
                 VStack{
                     Text(contact.wrappedEmoji)
@@ -35,17 +50,6 @@ struct ContactsRow: View {
 #else
                         Text(contact.wrappedName)
                             .font(Font.system(.title, design: .rounded).weight(.bold))
-                        
-                        Spacer()
-                        if contact.haveALabel {
-                            Text(contact.WrappedLabelName)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                                .background(contact.WrappedLabelColor)
-                                .cornerRadius(10)
-                        }
 #endif
                         
                     }

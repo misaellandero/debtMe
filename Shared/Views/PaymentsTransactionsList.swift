@@ -43,6 +43,8 @@ struct PaymentsTransactionsList: View {
                      Text(transaction.wrappedNotes)
                          .multilineTextAlignment(.leading)
                      
+                     ImageView(photoData: transaction.image)
+                     
                  }
                  .padding(.horizontal)
                  

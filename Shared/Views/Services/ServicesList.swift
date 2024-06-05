@@ -11,11 +11,14 @@ struct ServicesList: View {
   
     @State var showNewBill = false
     
+    @FetchRequest(entity: Services.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Services.name, ascending: true)]) var services: FetchedResults<Services>
+    
+    
     var body: some View {
-        List{
-            Text("Bill Row")
+        List(services){ service in
+            ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: "")
         }
-        .navigationBarTitle(Text("Bills"))
+        .navigationTitle("Bills") 
         .toolbar{
             
             ToolbarItem(placement: .primaryAction ){

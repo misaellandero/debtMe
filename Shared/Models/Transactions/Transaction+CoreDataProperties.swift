@@ -26,6 +26,7 @@ extension Transaction {
     @NSManaged public var settled: Bool
     @NSManaged public var contact: Contact?
     @NSManaged public var payments: NSSet?
+    @NSManaged public var image: Data?
     
     // MARK: - Wrapped vars
     

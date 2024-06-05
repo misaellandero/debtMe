@@ -94,6 +94,15 @@
 		13545D762B5ACE9900BBD6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
 		1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
 		1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
+		135C71DA2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */; };
+		135C71DB2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */; };
+		135C71DC2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */; };
+		135C71DE2C0F9AAE0048C3B7 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */; };
+		135C71DF2C0F9AAE0048C3B7 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */; };
+		135C71E02C0F9AAE0048C3B7 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */; };
+		135C71E32C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
+		135C71E42C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
+		135C71E52C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
 		1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
@@ -264,6 +273,9 @@
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
+		135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/ImageView.swift; sourceTree = SOURCE_ROOT; };
+		135C71E22C10C8350048C3B7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
 		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesList.swift; sourceTree = "<group>"; };
 		1369E1BE2B644288005388C2 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
@@ -428,6 +440,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		135C71E12C10C6840048C3B7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		1369E1C62B644489005388C2 /* AboutThisApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +510,7 @@
 		13C9DF9C29F3B61E005D1768 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
+				135C71E12C10C6840048C3B7 /* Images */,
 				1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */,
 				13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */,
 				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
@@ -501,6 +521,8 @@
 				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
 				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
 				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
+				135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */,
+				135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -718,6 +740,7 @@
 				7F70A26B25FEBFDB00455AB0 /* BindingExtension.swift */,
 				7F70A27725FEC15600455AB0 /* DateFormatterExtension.swift */,
 				138B249329E0AC3F002C3FD2 /* CurrencyExtension.swift */,
+				135C71E22C10C8350048C3B7 /* ImageExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -942,6 +965,7 @@
 				1331BD912B4F39C400C0A15F /* TabBarView.swift in Sources */,
 				1331BD7B2B4F39A400C0A15F /* ConfettiView.swift in Sources */,
 				1331BD892B4F39B600C0A15F /* TransactionsContactList.swift in Sources */,
+				135C71DC2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */,
 				1331BD7F2B4F39AB00C0A15F /* PaymentRow.swift in Sources */,
 				1331BD952B4F39CA00C0A15F /* PaymentModel.swift in Sources */,
 				1327EE5E2B61C781002DFB66 /* Feature.swift in Sources */,
@@ -976,6 +1000,7 @@
 				1331BD842B4F39B000C0A15F /* LabelPicker.swift in Sources */,
 				1331BD722B4F398D00C0A15F /* ContentView.swift in Sources */,
 				1331BDAC2B4F731B00C0A15F /* ColorExtension.swift in Sources */,
+				135C71E52C10C8350048C3B7 /* ImageExtension.swift in Sources */,
 				1327EE522B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
 				1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */,
 				13E6DBB82B62ED8000B3BE60 /* FeatureView.swift in Sources */,
@@ -1006,6 +1031,7 @@
 				1331BD922B4F39C400C0A15F /* SideBarView.swift in Sources */,
 				1331BD9C2B4F39DD00C0A15F /* ContactLabel+CoreDataProperties.swift in Sources */,
 				1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */,
+				135C71E02C0F9AAE0048C3B7 /* ImageView.swift in Sources */,
 				1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */,
 				1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */,
 				13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
@@ -1016,6 +1042,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135C71DE2C0F9AAE0048C3B7 /* ImageView.swift in Sources */,
 				7F60635A26104AD5004834F1 /* BlurdEfectView.swift in Sources */,
 				1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */,
 				138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
@@ -1054,6 +1081,7 @@
 				7F37A93C25FF1A750049D648 /* EmojiButton.swift in Sources */,
 				7F70A24F25FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
+				135C71E32C10C8350048C3B7 /* ImageExtension.swift in Sources */,
 				1327EE592B61C73F002DFB66 /* FeatureView.swift in Sources */,
 				7F70A26C25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
 				13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
@@ -1072,6 +1100,7 @@
 				13DC6CDC2B2E8060007361A8 /* SearchTextField.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
 				7F37A92A25FF19600049D648 /* Emojis.swift in Sources */,
+				135C71DA2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */,
 				13874D472ACBE0CF007B8FE3 /* ConfettiView.swift in Sources */,
 				1399AD562999538A00C87C3D /* Payment+CoreDataProperties.swift in Sources */,
 				7F76A8E9260EF5F900033790 /* Contact+CoreDataClass.swift in Sources */,
@@ -1118,9 +1147,12 @@
 				1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */,
 				1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */,
 				7F70A26D25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
+				135C71E42C10C8350048C3B7 /* ImageExtension.swift in Sources */,
 				7F70A2BF25FEF76300455AB0 /* ContactsDetail.swift in Sources */,
 				7F70A27225FEC00F00455AB0 /* ColorExtension.swift in Sources */,
+				135C71DF2C0F9AAE0048C3B7 /* ImageView.swift in Sources */,
 				1399AD642999A69A00C87C3D /* PaymentModel.swift in Sources */,
+				135C71DB2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */,
 				1327EE562B61C074002DFB66 /* WellcomeView.swift in Sources */,
 				7F60634E261040D3004834F1 /* LabelPicker.swift in Sources */,
 				1369E1C92B6444A0005388C2 /* AboutThisAppView.swift in Sources */,

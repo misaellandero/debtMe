@@ -95,6 +95,7 @@ struct TransactionsForm: View {
                 transactionModel.notes = transaction.wrappedNotes
                 transactionModel.date = transaction.wrappedDateCreation
                 transactionModel.debt = transaction.debt
+                transactionModel.photo = transaction.image
             }
         }
     }
@@ -114,7 +115,7 @@ struct TransactionsForm: View {
             transaction.dateCreation = transactionModel.date
             transaction.settled = transactionModel.settled
             transaction.debt = transactionModel.debt
-            
+            transaction.image =  transactionModel.photo
             try? self.moc.save()
             closeView()
         }
@@ -130,6 +131,7 @@ struct TransactionsForm: View {
         newTransaction.notes = transactionModel.notes
         newTransaction.amount = transactionModel.amountNumber
         newTransaction.contact = contact
+        newTransaction.image = transactionModel.photo
         newTransaction.contact?.sync.toggle()
         try? self.moc.save()
         
@@ -180,7 +182,7 @@ struct TransactionMultiPlataformForm: View {
         .textFieldStyle(RoundedBorderTextFieldStyle())
         #endif
         
-        
+        ImagePickerView(photoData: $transactionModel.photo)
         
         
         Section{

@@ -14,6 +14,7 @@ struct TransactionModel {
     var date : Date
     var debt : Bool
     var settled = false
+    var photo : Data?
      
     var amountNumber : Double {
         let namount = Double(amout) ?? 0.0

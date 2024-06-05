@@ -182,7 +182,11 @@ struct ServiceMultiPlataformForm : View {
                         .tag(index)
                     }
                 })
+                #if os(iOS)
                 .pickerStyle(NavigationLinkPickerStyle())
+                #else
+                .pickerStyle(DefaultPickerStyle())
+                #endif
             }
             
             

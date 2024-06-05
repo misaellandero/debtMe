@@ -49,7 +49,53 @@ extension Services {
         AppColorsModel.colors[Int(color)].color
     }
     
+    //Wrapped Frecuency Date
+    public var frequencyDate : Date {
+        frequency_date ??  Date()
+    }
+    
     // MARK: - Computed properties
+
+    //Days and months
+    var frequencyDay: Int {
+        let date = frequencyDate
+        let calendar = Calendar.current
+        return calendar.component(.day, from: date)
+    }
+    var frequencyMonth: Int {
+        let date = frequencyDate
+        let calendar = Calendar.current
+        return calendar.component(.month, from: date)
+    }
+    
+    
+    var dayName: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE" // "EEEE" gives full name of the day (e.g., Monday)
+        return dateFormatter.string(from: frequencyDate)
+        
+    }
+    
+    var monthName: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM" // "MMMM" gives full name of the month (e.g., February)
+        return dateFormatter.string(from: frequencyDate)
+    }
+    
+    //Frecuency String
+    public var frecuencyString : String {
+        switch frequency {
+        case 0 ://"Daily":
+            return NSLocalizedString("Daily Fee", comment: "")
+        case 1,2 : //"Weekly","Biweekly":
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  (dayName ?? "")
+        case 3,4,5:   //"Monthly", "Quarterly", "Semester":
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  String(frequencyDay)
+        default:
+            return "Daily Fee"
+        }
+    }
+    
     //Have a label
     public var haveALabel : Bool {
         if label != nil {
