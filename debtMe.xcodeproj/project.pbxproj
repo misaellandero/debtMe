@@ -103,6 +103,9 @@
 		135C71E32C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
 		135C71E42C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
 		135C71E52C10C8350048C3B7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E22C10C8350048C3B7 /* ImageExtension.swift */; };
+		135C71E72C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
+		135C71E82C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
+		135C71E92C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
 		1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
@@ -276,6 +279,7 @@
 		135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/ImageView.swift; sourceTree = SOURCE_ROOT; };
 		135C71E22C10C8350048C3B7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		135C71E62C10D72A0048C3B7 /* DetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageView.swift; sourceTree = "<group>"; };
 		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
 		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesList.swift; sourceTree = "<group>"; };
 		1369E1BE2B644288005388C2 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
@@ -591,6 +595,7 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
+				135C71E62C10D72A0048C3B7 /* DetailImageView.swift */,
 				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
 				7F70A21925FEB1EE00455AB0 /* Shared */,
@@ -1023,6 +1028,7 @@
 				136D567A2B7EAA5400E82EA5 /* LockedView.swift in Sources */,
 				1331BD7D2B4F39A400C0A15F /* ButtonLabelPayAll.swift in Sources */,
 				1331BDAA2B4F731B00C0A15F /* DateFormatterExtension.swift in Sources */,
+				135C71E92C10D72A0048C3B7 /* DetailImageView.swift in Sources */,
 				1331BD812B4F39AB00C0A15F /* TotalsView.swift in Sources */,
 				1331BD882B4F39B600C0A15F /* TransactionsRow.swift in Sources */,
 				1331BD772B4F39A400C0A15F /* LabelSFRounder.swift in Sources */,
@@ -1113,6 +1119,7 @@
 				7F70A2B925FEF73C00455AB0 /* ContactsRow.swift in Sources */,
 				13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 				13E6DBB42B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
+				135C71E72C10D72A0048C3B7 /* DetailImageView.swift in Sources */,
 				1369E1BF2B644288005388C2 /* WhatsNewView.swift in Sources */,
 				1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */,
 				136D56782B7EAA5400E82EA5 /* LockedView.swift in Sources */,
@@ -1140,6 +1147,7 @@
 				133FC752270C099B00CDB741 /* TransactionsRow.swift in Sources */,
 				1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
+				135C71E82C10D72A0048C3B7 /* DetailImageView.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
 				1327EE5D2B61C781002DFB66 /* Feature.swift in Sources */,

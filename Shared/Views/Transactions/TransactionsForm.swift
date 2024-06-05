@@ -182,7 +182,7 @@ struct TransactionMultiPlataformForm: View {
         .textFieldStyle(RoundedBorderTextFieldStyle())
         #endif
         
-        ImagePickerView(photoData: $transactionModel.photo)
+        ImagePickerView(photoData: $transactionModel.photo, imagename: transactionModel.des)
         
         
         Section{

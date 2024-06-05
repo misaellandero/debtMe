@@ -51,8 +51,13 @@ extension UIImage {
 #elseif os(macOS)
 extension NSImage {
     func jpegData(quality: JPEGQuality) -> Data? {
-        return self.jpegData(compressionQuality: quality.value)
+        guard let tiffRepresentation = self.tiffRepresentation,
+              let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else {
+            return nil
+        }
+        return bitmapImage.representation(using: .jpeg, properties: [.compressionFactor: quality.value])
     }
 }
+
 
 #endif
