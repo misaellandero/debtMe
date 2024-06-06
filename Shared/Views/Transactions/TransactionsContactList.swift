@@ -26,7 +26,7 @@ struct TransactionsContactList: View {
     
     
     //Filter and order
-    @AppStorage("shortModeTransactions") var shortMode: shortMode = .amountAsc
+    @AppStorage("shortModeTransactions") var shortMode: shortMode = .dateCreationDes
   
     
     // Computed property to filter and order transactions
@@ -42,9 +42,19 @@ struct TransactionsContactList: View {
         switch shortMode {
         case .amountAsc:
             filteredTransactions.sort { $0.amount < $1.amount }
-        default :
+        case .amountDes :
             filteredTransactions.sort { $0.amount > $1.amount }
-            
+        case .dateCreationAsc:
+            filteredTransactions.sort { $0.wrappedDateCreation < $1.wrappedDateCreation }
+        case .dateCreationDes:
+            filteredTransactions.sort { $0.wrappedDateCreation > $1.wrappedDateCreation }
+        case .dateSettledAsc:
+            filteredTransactions.sort { $0.wrappedDateSettled < $1.wrappedDateSettled }
+        case .dateSettledDes:
+            filteredTransactions.sort { $0.wrappedDateSettled > $1.wrappedDateSettled }
+        default:
+            //same like creaation des
+            filteredTransactions.sort { $0.wrappedDateCreation > $1.wrappedDateCreation }
         }
         
         if searchQuery.isEmpty {
@@ -165,6 +175,7 @@ struct TransactionsContactList: View {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         
+                        //Order by Amount
                         Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
                         
                         Button(action: {
@@ -177,6 +188,35 @@ struct TransactionsContactList: View {
                         }) {
                             Label("Higher First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
                         }
+                        
+                        //Order by Date
+                        
+                        Divider()
+                        Label("Sort by Date", systemImage: "arrow.up.and.down.text.horizontal")
+                        
+                        Button(action: {
+                            shortMode = .dateCreationAsc
+                        }) {
+                            Label("Oldest Creation First", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                        }
+                        Button(action: {
+                            shortMode = .dateCreationDes
+                        }) {
+                            Label("Newest Creation First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                        }
+                        
+                        Button(action: {
+                            shortMode = .dateSettledAsc
+                        }) {
+                            Label("Oldest Settled First", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                        }
+                        Button(action: {
+                            shortMode = .dateSettledDes
+                        }) {
+                            Label("Newest Settled First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                        }
+                        
+                        //Payed
                         Divider()
                         
                         Button(action: {

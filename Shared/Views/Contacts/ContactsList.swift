@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 enum shortMode : String {
-    case alfabethAsc, alfabethDes, amountAsc, amountDes
+    case alfabethAsc, alfabethDes, amountAsc, amountDes, dateCreationAsc, dateCreationDes, dateSettledAsc, dateSettledDes
 }
 
 enum summaryMenu: String, CaseIterable {
@@ -187,6 +187,8 @@ struct ContactsRows : View  {
             sortedContacts = contacts.sorted { $0.balance < $1.balance  }
         case .amountDes:
             sortedContacts = contacts.sorted { $0.balance  > $1.balance  }
+        default:
+            sortedContacts = contacts.sorted { $0.name ?? "" < $1.name ?? "" }
         }
         
         let filteredByTag: [Contact]
