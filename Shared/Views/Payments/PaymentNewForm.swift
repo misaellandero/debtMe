@@ -76,6 +76,7 @@ struct PaymentNewForm: View {
                 paymentModel.amout = String(payment.amount)
                 paymentModel.date = payment.wrappedDateCreation
                 paymentModel.note = payment.wrappedNotes
+                paymentModel.photo = payment.image
             }
         }
     }
@@ -84,6 +85,7 @@ struct PaymentNewForm: View {
         if let payment {
         payment.date = paymentModel.date
         payment.notes = paymentModel.note
+        payment.image = paymentModel.photo
         if paymentModel.payAll {
             if payment.transaction!.totalBalance > 0 {
                 payment.amount = payment.transaction!.totalBalance
@@ -106,6 +108,7 @@ struct PaymentNewForm: View {
             payment.id = UUID()
             payment.date = paymentModel.date
             payment.notes = paymentModel.note
+            payment.image = paymentModel.photo
             if paymentModel.payAll {
                 if transaction.totalBalance > 0 {
                     payment.amount = transaction.totalBalance
@@ -151,6 +154,10 @@ struct PaymentMultiplatformForm: View {
                 Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
                
             }
+        }
+        
+        Section{
+            ImagePickerView(photoData: $paymentModel.photo)
         }
                 #if os(macOS)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

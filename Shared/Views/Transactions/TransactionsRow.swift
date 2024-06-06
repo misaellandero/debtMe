@@ -14,22 +14,14 @@ struct TransactionsRow: View {
         NavigationLink(destination: PaymentsTransactionsList(transaction: transaction)){
 
             VStack{
+               
+                
                 HStack{
                     if showContactName {
                         Image(systemName: "person.crop.circle.fill")
                         Text(transaction.contactName)
                             .fontWeight(.bold)
                         Spacer()
-                    }
-                    Image(systemName: "calendar.badge.clock")
-                    Text(transaction.transactionCreationDateFormated)
-                    if !showContactName {
-                        Spacer()
-                    }
-                    if transaction.settled {
-                        Text("Paid in")
-                        Image(systemName: "calendar.badge.clock")
-                        Text(transaction.transactionSettledDateFormated)
                     }
                 }
                 .font(.caption)
@@ -48,6 +40,17 @@ struct TransactionsRow: View {
                             .cornerRadius(20)
                     }
                 }
+                VStack(alignment:.leading){
+                    Label(transaction.transactionCreationDateFormated, systemImage: "calendar.badge.clock")
+                    
+                    HStack{
+                        if transaction.settled {
+                            Label("Paid in", systemImage: "calendar.badge.clock")
+                            Text(transaction.transactionSettledDateFormated)
+                        }
+                    }
+                }
+                .font(.caption)
                 
                 HStack{
                     Text(LocalizedStringKey(transaction.debt ? "They Owes me" : "I Owe Them"))
@@ -99,31 +102,4 @@ struct TransactionsRow: View {
 
 
  
-/*
-struct TransactionsRow_Previews: PreviewProvider {
-    static var previews: some View {
-        /*
-        // debt not pay
-        TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: false, dateSettled: "14 Mar 2021", debt: true, contactName: "Misael Landero")
-                .previewLayout(.fixed(width: 400, height: 90))
-                .preferredColorScheme(.dark)
-        // debt  pay
-        TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: true, dateSettled: "14 Mar 2021", debt: true, contactName: "Misael Landero", showContactName: true)
-                .previewLayout(.fixed(width: 400, height: 90))
-        
-        // loans not pay
-        TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: false, dateSettled: "14 Mar 2021", debt: false, contactName: "Misael Landero")
-                .previewLayout(.fixed(width: 400, height: 90))
-                .preferredColorScheme(.dark)
-        
-        // loans  pay
-        TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: true, dateSettled: "14 Mar 2021", debt: false, contactName: "Misael Landero")
-                .previewLayout(.fixed(width: 400, height: 90))
-                .preferredColorScheme(.dark)
-        
-        // loans  pay
-        TransactionsRow(date: "10 Mar 2021", amount: 5, des: "Money for candies", settled: true, dateSettled: "14 Mar 2021", debt: false, contactName: "Misael Landero")
-                .previewLayout(.fixed(width: 400, height: 90))*/
-    }
-}
-*/
+ 

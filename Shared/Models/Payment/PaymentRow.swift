@@ -80,16 +80,19 @@ struct PaymentRow: View {
                 }
                 .padding()
                 Spacer()
-                    .alert(isPresented: $showingAlert){
-                        Alert(
-                            title: Text("Delete"),
-                            message: Text("Are you sure?\n You won't be able to retrieve this information later."),
-                            primaryButton: .destructive(Text("Delete")) {
-                                delete()
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
+                ImageView(photoData: payment.image, imagename: payment.wrappedNotes)
+                    .frame(height: 100)
+                    .padding()
+            }
+            .alert(isPresented: $showingAlert){
+                Alert(
+                    title: Text("Delete"),
+                    message: Text("Are you sure?\n You won't be able to retrieve this information later."),
+                    primaryButton: .destructive(Text("Delete")) {
+                        delete()
+                    },
+                    secondaryButton: .cancel()
+                )
             }
             .background(TicketViewBackground())
             .frame(maxWidth:500)

@@ -62,6 +62,14 @@ struct DetailImageView: View {
             )
             
             VStack{
+                if imageName != ""{
+                    Text(imageName)
+                        .font(.title)
+                        .padding()
+                        .background(Material.ultraThin)
+                        .cornerRadius(10)
+                }
+                
                 Spacer()
                 HStack{
                     
@@ -71,11 +79,11 @@ struct DetailImageView: View {
                      image: createImage()!
                  )) {
                         Label("Share", systemImage: "square.and.arrow.up")
-                            .foregroundColor(.white)
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                      #if os(macOS)
                             .buttonStyle(DefaultButtonStyle())
-                     #else 
+                     #else
+                            .foregroundColor(.white)
                             .padding()
                             .background(Color.accentColor)
                             .cornerRadius(20)

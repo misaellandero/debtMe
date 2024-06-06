@@ -277,7 +277,7 @@
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
 		135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
-		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/ImageView.swift; sourceTree = SOURCE_ROOT; };
+		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/Images/ImageView.swift; sourceTree = SOURCE_ROOT; };
 		135C71E22C10C8350048C3B7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		135C71E62C10D72A0048C3B7 /* DetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageView.swift; sourceTree = "<group>"; };
 		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
@@ -447,6 +447,9 @@
 		135C71E12C10C6840048C3B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				135C71E62C10D72A0048C3B7 /* DetailImageView.swift */,
+				135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */,
+				135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -525,8 +528,6 @@
 				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
 				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
 				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
-				135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */,
-				135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -595,7 +596,6 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
-				135C71E62C10D72A0048C3B7 /* DetailImageView.swift */,
 				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
 				7F70A21925FEB1EE00455AB0 /* Shared */,

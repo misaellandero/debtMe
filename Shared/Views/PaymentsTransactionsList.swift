@@ -38,15 +38,17 @@ struct PaymentsTransactionsList: View {
            
              ScrollView(.vertical){
                
-                 Section{ 
+                 Section{
+                     
+                     ImageView(photoData: transaction.image, imagename: transaction.wrappedDes)
+                         .frame(width: 100)
+                     TransactionsRow(transaction: transaction, showContactName: false)
                      
                      Text(transaction.wrappedNotes)
                          .multilineTextAlignment(.leading)
                      
-                     ImageView(photoData: transaction.image)
-                     
                  }
-                 .padding(.horizontal)
+                 
                  
                 if transaction.settled {
                     if totalBalance != 0  {

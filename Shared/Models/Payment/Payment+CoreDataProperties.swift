@@ -20,6 +20,7 @@ extension Payment {
     @NSManaged public var amount: Double
     @NSManaged public var date: Date?
     @NSManaged public var transaction: Transaction?
+    @NSManaged public var image: Data?
     
     // MARK: - Wrapped vars
     
