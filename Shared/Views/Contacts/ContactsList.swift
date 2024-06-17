@@ -12,10 +12,17 @@ enum shortMode : String {
     case alfabethAsc, alfabethDes, amountAsc, amountDes, dateCreationAsc, dateCreationDes, dateSettledAsc, dateSettledDes
 }
 
-enum summaryMenu: String, CaseIterable {
+enum summaryContactsMenu: String, CaseIterable {
     case balance = "Balance"
     case loans = "Loans"
     case debts = "Debts"
+    case all = "All"
+}
+
+enum summaryServicesMenu: String, CaseIterable {
+    case balance = "Balance"
+    case income = "Income"
+    case expense = "Expenses"
     case all = "All"
 }
 
@@ -147,7 +154,7 @@ struct ContactsRows : View  {
     @Binding var showingNewContactForm : Bool
     
     
-    @AppStorage("summarySelectd") var summarySelectd: summaryMenu = .balance
+    @AppStorage("summarySelectd") var summarySelectd: summaryContactsMenu = .balance
     @AppStorage("ShowSummary") var ShowSummary = true
    
     var balance : Double {
@@ -278,7 +285,7 @@ struct ContactsRows : View  {
                         .font(.largeTitle)
                         
                         Picker("Summary", selection: $summarySelectd) {
-                            ForEach(summaryMenu.allCases, id:\.self ){ option in
+                            ForEach(summaryContactsMenu.allCases, id:\.self ){ option in
                                 Text(LocalizedStringKey(option.rawValue))
                                     .tag(option)
                             }

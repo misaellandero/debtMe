@@ -25,7 +25,7 @@ struct ServicesModel {
     var frecuencyIndex : Int = 0
      
     var frequencyDate : Date = Date()
-    var image: Image = Image(.cromaPig)
+    var image: Data?
     var name : String = ""
     var colorIndex: Int = 0
     

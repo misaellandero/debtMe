@@ -13,38 +13,43 @@ struct ServiceRow: View {
     var Amount: String
     var frequency: String
     var limitDate: String
+    var image : Data?
     var body: some View {
         HStack{
-            VStack{
+            ImageView(photoData: image, showModalDetail: false, shadowRadius: 0)
+                .scaledToFill()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+                .disabled(true)
+            VStack(alignment:.leading){
+                Text(ServiceName)
                 Text("Pay Before ")
-                    .font(.caption) +
+                    .font(.caption)
                 Text(limitDate)
                     .font(.caption)
-                Text(ServiceName)
-                
-                
             }
             Spacer()
-            VStack{
+            VStack(alignment:.trailing){
+                Text(Amount)
                 Text(LocalizedStringKey(frequency))
                     .font(.caption)
-                Text(Amount)
-                
+                    .multilineTextAlignment(.trailing)
             }
             
         }
         .bold()
         .foregroundColor(.white)
-        .padding()
         .listRowBackground(BgColor)
         
     }
 }
 
 #Preview {
-    List{
+    let image =  UIImage(resource: .cromaPig)
+    let imagedata = image.jpegData(quality: .high)
+    return List{
         Section(header: Text("Credit Cards")){
-            ServiceRow(BgColor: .red, ServiceName: "Santader Credit card",Amount: "$2,500",frequency: "Montly",limitDate : "04 mar")
+            ServiceRow(BgColor: .red, ServiceName: "Santader Credit card",Amount: "$2,500",frequency: "Montly",limitDate : "04 mar", image: imagedata)
             ServiceRow(BgColor: .blue, ServiceName: "BBVA Credit card",Amount: "$1,500",frequency: "Monthly",limitDate : "05 mar")
             ServiceRow(BgColor: .gray, ServiceName: "Amex Credit card",Amount: "$750",frequency: "Monthly",limitDate : "15 mar")
         }

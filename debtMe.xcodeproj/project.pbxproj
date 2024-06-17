@@ -106,6 +106,9 @@
 		135C71E72C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
 		135C71E82C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
 		135C71E92C10D72A0048C3B7 /* DetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C71E62C10D72A0048C3B7 /* DetailImageView.swift */; };
+		136125712C1A815C00C42551 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136125702C1A815C00C42551 /* LocalNotification.swift */; };
+		136125722C1A815C00C42551 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136125702C1A815C00C42551 /* LocalNotification.swift */; };
+		136125732C1A815C00C42551 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136125702C1A815C00C42551 /* LocalNotification.swift */; };
 		1369E1B72B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
 		1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1369E1B62B64406B005388C2 /* SettingsList.swift */; };
@@ -154,6 +157,9 @@
 		1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD652999B37300C87C3D /* PaymentRow.swift */; };
 		1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
+		13A2FDED2C1FD63600DD820F /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */; };
+		13A2FDEE2C1FD63600DD820F /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */; };
+		13A2FDEF2C1FD63600DD820F /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */; };
 		13C2F5AB2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AC2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AD2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
@@ -280,6 +286,7 @@
 		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/Images/ImageView.swift; sourceTree = SOURCE_ROOT; };
 		135C71E22C10C8350048C3B7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		135C71E62C10D72A0048C3B7 /* DetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageView.swift; sourceTree = "<group>"; };
+		136125702C1A815C00C42551 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		1369E1B62B64406B005388C2 /* SettingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsList.swift; sourceTree = "<group>"; };
 		1369E1BA2B64420F005388C2 /* FeaturesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesList.swift; sourceTree = "<group>"; };
 		1369E1BE2B644288005388C2 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
@@ -301,6 +308,7 @@
 		1399AD622999A69A00C87C3D /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		1399AD652999B37300C87C3D /* PaymentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentRow.swift; path = Shared/Models/Payment/PaymentRow.swift; sourceTree = SOURCE_ROOT; };
 		1399AD692999BA1E00C87C3D /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Border.swift; path = Shared/Models/Payment/Border.swift; sourceTree = SOURCE_ROOT; };
+		13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
 		13C2F5AA2B90030400150A01 /* ServicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesList.swift; sourceTree = "<group>"; };
 		13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
 		13C2F5B22B9008A000150A01 /* ServicesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesForm.swift; sourceTree = "<group>"; };
@@ -394,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				1327EE4F2B6050A4002DFB66 /* AppReviewRequest.swift */,
+				136125702C1A815C00C42551 /* LocalNotification.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -508,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				13C2F5AA2B90030400150A01 /* ServicesList.swift */,
+				13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */,
 				13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */,
 				13C2F5B22B9008A000150A01 /* ServicesForm.swift */,
 			);
@@ -991,6 +1001,7 @@
 				13877CD92BD9823F00E5B20A /* LabelsPickerView.swift in Sources */,
 				1331BD8B2B4F39BD00C0A15F /* EmojiPicker.swift in Sources */,
 				1369E1C52B644431005388C2 /* DebtMeAppHeaderView.swift in Sources */,
+				13A2FDEF2C1FD63600DD820F /* ServiceDetailView.swift in Sources */,
 				1331BD9A2B4F39D500C0A15F /* TransactionModel.swift in Sources */,
 				1331BDA02B4F39E800C0A15F /* Contact+CoreDataProperties.swift in Sources */,
 				1331BD712B4F397F00C0A15F /* debtMeApp.swift in Sources */,
@@ -1010,6 +1021,7 @@
 				1331BD9F2B4F39E800C0A15F /* ContactModel.swift in Sources */,
 				13E6DBB82B62ED8000B3BE60 /* FeatureView.swift in Sources */,
 				13C2F5B12B9003FB00150A01 /* ServiceRow.swift in Sources */,
+				136125732C1A815C00C42551 /* LocalNotification.swift in Sources */,
 				1331BD872B4F39B600C0A15F /* TransactionsForm.swift in Sources */,
 				1331BD762B4F399D00C0A15F /* Persistence.swift in Sources */,
 				1331BD802B4F39AB00C0A15F /* Border.swift in Sources */,
@@ -1062,6 +1074,7 @@
 				7F606348261040A4004834F1 /* VisualEffectView.swift in Sources */,
 				1327EE502B6050A4002DFB66 /* AppReviewRequest.swift in Sources */,
 				7F70A23225FEB1F700455AB0 /* debtMeApp.swift in Sources */,
+				136125712C1A815C00C42551 /* LocalNotification.swift in Sources */,
 				13C9DFA129F3BEE6005D1768 /* ButtonLabelAdd.swift in Sources */,
 				7F37A92325FF13080049D648 /* ContactModel.swift in Sources */,
 				7FCD4257262D3B7B00568EE7 /* TransactionsForm.swift in Sources */,
@@ -1104,6 +1117,7 @@
 				1327EE5C2B61C781002DFB66 /* Feature.swift in Sources */,
 				7F70A23625FEB1F700455AB0 /* Persistence.swift in Sources */,
 				13DC6CDC2B2E8060007361A8 /* SearchTextField.swift in Sources */,
+				13A2FDED2C1FD63600DD820F /* ServiceDetailView.swift in Sources */,
 				7F70A29225FED1E700455AB0 /* UserPreferencesModel.swift in Sources */,
 				7F37A92A25FF19600049D648 /* Emojis.swift in Sources */,
 				135C71DA2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */,
@@ -1140,6 +1154,7 @@
 				7F70A2A325FEDC9D00455AB0 /* SideBarView.swift in Sources */,
 				7F37A93F25FF1A980049D648 /* EmojiButton.swift in Sources */,
 				13C9DF9F29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
+				136125722C1A815C00C42551 /* LocalNotification.swift in Sources */,
 				131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */,
 				1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */,
 				132B86102ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
@@ -1204,6 +1219,7 @@
 				133FC754270C099F00CDB741 /* TransactionsForm.swift in Sources */,
 				1399AD6129999A7600C87C3D /* PaymentNewForm.swift in Sources */,
 				13877CD82BD9823F00E5B20A /* LabelsPickerView.swift in Sources */,
+				13A2FDEE2C1FD63600DD820F /* ServiceDetailView.swift in Sources */,
 				1369E1BC2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				13E6DBB12B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 			);
@@ -1428,7 +1444,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240215;
+				CURRENT_PROJECT_VERSION = 20240606;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1460,7 +1476,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240215;
+				CURRENT_PROJECT_VERSION = 20240606;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1495,7 +1511,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240214;
+				CURRENT_PROJECT_VERSION = 20240606;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1525,7 +1541,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20240214;
+				CURRENT_PROJECT_VERSION = 20240606;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

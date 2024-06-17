@@ -27,13 +27,13 @@ struct ServicesForm: View {
             List{
                 Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
                 Text(edition ? "Edit" : "New")
-                ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion)
+                ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
             }
             
         #else
             NavigationStack{
                 List{
-                    ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion)
+                    ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
                 }
                 .listStyle(InsetGroupedListStyle())
                 .toolbar {
@@ -61,6 +61,7 @@ struct ServicesForm: View {
             
 #endif
         }
+        .onAppear(perform:loadData)
     }
     
     func closeView(){
@@ -69,9 +70,41 @@ struct ServicesForm: View {
     
     func performSaveAcion(){
         if edition {
-            //editTransaction()
+            editService()
         } else {
             saveService()
+        }
+    }
+    
+    func loadData(){
+        if edition{
+            if let service {
+                serviceModel.amout = String(service.amount)
+                serviceModel.colorIndex = Int(service.color)
+                serviceModel.name = service.wrappedName
+                serviceModel.des = service.wrappedDes
+                serviceModel.expense = service.expense
+                serviceModel.frecuencyIndex = Int(service.frequency)
+                serviceModel.frequencyDate = service.frequencyDate
+                serviceLabel = service.label
+                serviceModel.image = service.image
+            }
+        }
+    }
+    
+    func editService(){
+        if let service {
+            service.amount = serviceModel.amountNumber
+            service.color = Int16(serviceModel.colorIndex)
+            service.name = serviceModel.name
+            service.des = serviceModel.des
+            service.expense =  serviceModel.expense
+            service.frequency = Int16(serviceModel.frecuencyIndex)
+            service.frequency_date = serviceModel.frequencyDate
+            service.label = serviceLabel
+            service.image = serviceModel.image
+            try? self.moc.save()
+            closeView()
         }
     }
     
@@ -80,11 +113,13 @@ struct ServicesForm: View {
         service.id = UUID()
         service.amount = serviceModel.amountNumber
         service.color = Int16(serviceModel.colorIndex)
+        service.name = serviceModel.name
         service.des = serviceModel.des
         service.expense =  serviceModel.expense
         service.frequency = Int16(serviceModel.frecuencyIndex)
         service.frequency_date = serviceModel.frequencyDate
         service.label = serviceLabel
+        service.image = serviceModel.image
         try? self.moc.save()
         closeView()
         
@@ -115,12 +150,16 @@ struct ServiceMultiPlataformForm : View {
     
     @State var showLabelList = false
     @State var showFormLabel = false
-    
+    @FocusState private var amountIsFocuse: Bool
     var body: some View {
         Group{
             Section{
-                TextField("Service Name", text: $service.name)
+                TextField("Name", text: $service.name)
                 TextField("Description", text: $service.des)
+                Picker("Type", selection: $service.expense) {
+                    Text("Expense").tag(true)
+                    Text("Income").tag(false)
+                }
             }
             Section{
                 DatePicker("Payment date", selection: $service.frequencyDate, displayedComponents: .date)
@@ -155,6 +194,15 @@ struct ServiceMultiPlataformForm : View {
             #else
             TextField("Amount", text: $service.amout)
             .keyboardType(.decimalPad)
+            .focused($amountIsFocuse)
+            .toolbar{
+             ToolbarItemGroup(placement: .keyboard){
+                  Spacer()
+                  Button("Done"){
+                     amountIsFocuse = false
+                   }
+               }
+           }
             #endif
             }
             
@@ -187,11 +235,13 @@ struct ServiceMultiPlataformForm : View {
                 #else
                 .pickerStyle(DefaultPickerStyle())
                 #endif
+                
+                ImagePickerView(photoData: $service.image)
             }
             
             
             Section(footer: Text("Preview")){
-                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
+                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image)
             }
             
             Section{
@@ -221,7 +271,7 @@ struct ServiceMultiPlataformForm : View {
                     .accentColor(.red)
                     Spacer()
                     Button(action: save){
-                        Label("Add", systemImage: "plus.circle.fill")
+                        Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                     }
                     .accentColor(.accentColor)
@@ -229,6 +279,7 @@ struct ServiceMultiPlataformForm : View {
 #endif
             }
         }
+       
         .sheet(isPresented: $showFormLabel, content: {
             labelPicker(label: $label, showLabelList: $showLabelList)
         })

@@ -18,7 +18,8 @@ struct ImageView: View {
     @State var showFullScreenImage = false
     
     var imagename = ""
-    
+    var showModalDetail = true
+    var shadowRadius : CGFloat = 10
     var body: some View {
         Group{
             if let photoData {
@@ -27,9 +28,10 @@ struct ImageView: View {
                      Image(nsImage: image)
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(10)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(shadowRadius)
+                        .shadow(radius: shadowRadius)
                         .onTapGesture {
+                            if !showModalDetail {return}
                             showFullScreenImage.toggle()
                         }
                 }
@@ -44,9 +46,10 @@ struct ImageView: View {
                      Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(10)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(shadowRadius)
+                        .shadow(radius: shadowRadius)
                         .onTapGesture {
+                            if !showModalDetail {return}
                             showFullScreenImage.toggle()
                         }
                 }
@@ -54,14 +57,14 @@ struct ImageView: View {
                    placeHolderImage
                        .resizable()
                        .scaledToFit()
-                       .cornerRadius(10)
+                       .cornerRadius(shadowRadius)
                }
                 #endif
             } else if placeHolder {
                 placeHolderImage
                     .resizable()
                     .scaledToFit()
-                    .cornerRadius(10)
+                    .cornerRadius(shadowRadius)
             }
         }
         .sheet(isPresented: $showFullScreenImage, content: {
