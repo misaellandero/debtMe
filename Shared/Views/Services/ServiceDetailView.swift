@@ -14,16 +14,23 @@ struct ServiceDetailView: View {
         List{
             
             Section{
-                ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image)
+                ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
                 Text(service.wrappedDes)
                     .multilineTextAlignment(.leading)
+                    .foregroundStyle(.white)
             }
+            .listRowBackground(service.wrappedColor)
             Section("History"){
-                
+                AmountUpdateList(service: service)
             }
         }
         .navigationTitle(service.wrappedName)
         .toolbar{
+            #if os(macOS)
+            ToolbarItem(placement:.automatic){
+                Text(service.wrappedName)
+            }
+            #endif
             ToolbarItem(placement:.primaryAction){
                 Button(action:{
                     showEdit.toggle()

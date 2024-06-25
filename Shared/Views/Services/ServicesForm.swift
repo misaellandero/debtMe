@@ -12,7 +12,7 @@ struct ServicesForm: View {
     @Environment(\.managedObjectContext) var moc
     //Modal presentation
     @Environment(\.presentationMode) var presentationMode
-    
+    @Environment(\.dismiss) var dismiss
     @State var edition : Bool = false
     
     //Data if is edition
@@ -24,12 +24,40 @@ struct ServicesForm: View {
     var body: some View {
         Group{
         #if os(macOS)
+ 
+
+        Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
+        Text(edition ? "Edit" : "New")
+            .font(Font.system(.headline, design: .rounded).weight(.black))
+            
             List{
-                Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
-                Text(edition ? "Edit" : "New")
+                
+                
                 ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
             }
+            .frame(width: 500, height: 500)
             
+            HStack{
+                Button(action: {
+                    dismiss()
+                    
+                }){
+                    Label("Cancel", systemImage: "xmark")
+                    
+                    .foregroundStyle(.red)
+                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                        
+                }
+                Spacer()
+                Button(action: {
+                    performSaveAcion()
+                }){
+                    Label("Add", systemImage: "plus.circle.fill")
+                        .foregroundStyle(Color.accentColor)
+                            .font(Font.system(.headline, design: .rounded).weight(.black))
+                }
+                
+            }
         #else
             NavigationStack{
                 List{
@@ -62,6 +90,9 @@ struct ServicesForm: View {
 #endif
         }
         .onAppear(perform:loadData)
+        #if os(macOS)
+        .padding()
+        #endif
     }
     
     func closeView(){
@@ -103,6 +134,13 @@ struct ServicesForm: View {
             service.frequency_date = serviceModel.frequencyDate
             service.label = serviceLabel
             service.image = serviceModel.image
+            
+            let amountUpdate = AmountUpdate(context: moc)
+            amountUpdate.id = UUID()
+            amountUpdate.amount = serviceModel.amountNumber
+            amountUpdate.updateDate = Date()
+            amountUpdate.service = service
+            
             try? self.moc.save()
             closeView()
         }
@@ -120,6 +158,12 @@ struct ServicesForm: View {
         service.frequency_date = serviceModel.frequencyDate
         service.label = serviceLabel
         service.image = serviceModel.image
+        
+        let amountUpdate = AmountUpdate(context: moc)
+        amountUpdate.id = UUID()
+        amountUpdate.amount = serviceModel.amountNumber
+        amountUpdate.updateDate = Date()
+        amountUpdate.service = service
         try? self.moc.save()
         closeView()
         
@@ -151,8 +195,10 @@ struct ServiceMultiPlataformForm : View {
     @State var showLabelList = false
     @State var showFormLabel = false
     @FocusState private var amountIsFocuse: Bool
+    
+    @State var showTagPicker = false
     var body: some View {
-        Group{
+        
             Section{
                 TextField("Name", text: $service.name)
                 TextField("Description", text: $service.des)
@@ -198,9 +244,11 @@ struct ServiceMultiPlataformForm : View {
             .toolbar{
              ToolbarItemGroup(placement: .keyboard){
                   Spacer()
-                  Button("Done"){
-                     amountIsFocuse = false
-                   }
+                 if amountIsFocuse {
+                     Button("Done"){
+                        amountIsFocuse = false
+                      }
+                 }
                }
            }
             #endif
@@ -208,6 +256,15 @@ struct ServiceMultiPlataformForm : View {
             
             Section {
                 
+                #if os(macOS)
+                Button( label != nil ? (label?.wrappedName ?? "Select a tag") : "Select a tag", systemImage: "tag", action: {
+                    showTagPicker.toggle()
+                })
+                    .sheet(isPresented: $showTagPicker, content: {
+                        LabelsPickerView(label:$label, serviceLabelMode: true)
+                            .frame(width: 250, height: 200)
+                    })
+                #else
                 NavigationLink(destination: {
                     LabelsPickerView(label:$label, serviceLabelMode: true)
                 }, label: {
@@ -217,14 +274,20 @@ struct ServiceMultiPlataformForm : View {
                         Text(label?.name ?? "")
                     }
                 })
+                #endif
+              
                 
                 
                 Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill"), content: {
                     ForEach(0..<AppColorsModel.colors.count){ index in
                         HStack{
+                            #if os(iOS)
                             Image(systemName: "circle.fill")
                                 .foregroundColor(AppColorsModel.colors[index].color)
+                            
                             Text(AppColorsModel.colors[index].name)
+                            #elseif os(macOS)
+                            Text(AppColorsModel.colors[index].name)       #endif
                         }
                         .padding()
                         .tag(index)
@@ -233,7 +296,7 @@ struct ServiceMultiPlataformForm : View {
                 #if os(iOS)
                 .pickerStyle(NavigationLinkPickerStyle())
                 #else
-                .pickerStyle(DefaultPickerStyle())
+                .pickerStyle(MenuPickerStyle())
                 #endif
                 
                 ImagePickerView(photoData: $service.image)
@@ -241,7 +304,9 @@ struct ServiceMultiPlataformForm : View {
             
             
             Section(footer: Text("Preview")){
-                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image)
+                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
+                    .padding()
+                    .background(service.color)
             }
             
             Section{
@@ -257,28 +322,9 @@ struct ServiceMultiPlataformForm : View {
                     }
                 }
                 .listRowBackground(Color.accentColor )
-#elseif os(macOS)
-                HStack{
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                        
-                    }){
-                        Label("Cancel", systemImage: "xmark")
-                        
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                        
-                    }
-                    .accentColor(.red)
-                    Spacer()
-                    Button(action: save){
-                        Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                    }
-                    .accentColor(.accentColor)
-                }
 #endif
             }
-        }
+        
        
         .sheet(isPresented: $showFormLabel, content: {
             labelPicker(label: $label, showLabelList: $showLabelList)

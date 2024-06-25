@@ -21,11 +21,17 @@ struct LabelsPickerView: View {
     @State var showFormLabel = false
     
     @Environment(\.presentationMode) var presentationMode
-    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
        
             Group{
+                #if os(macOS)
+
+                Text("\(Image(systemName: "tag.fill")) Tags")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+
+                #endif
                 List{
                     ForEach(labels, id: \.id){ label in
                             
@@ -60,14 +66,41 @@ struct LabelsPickerView: View {
                         }
                     .onDelete(perform: deleteItem)
                 }
-               
-                      
+                #if os(macOS)
+                
+                HStack{
+                    Button(action: {
+                        dismiss()
+                        
+                    }){
+                        Label("Cancel", systemImage: "xmark")
+                        
+                        .foregroundStyle(.red)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                            
+                    }
+                    Spacer()
+                    Button(action: {
+                        showFormLabel.toggle()
+                    }){
+                        Label("Add", systemImage: "plus.circle.fill")
+                            .foregroundStyle(Color.accentColor)
+                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                    }
+                    
+                }
+                
+                #endif
             }
             .sheet(isPresented: $showFormLabel, content: {
                 LabelNewForm(showForm: $showFormLabel, serviceLabelMode: true)
                 .environment(\.horizontalSizeClass, .compact)
             })
             .toolbar{
+                #if os(macOS)
+                EmptyView()
+                #else
+                
                 ToolbarItem(placement:.principal){
                     Text("\(Image(systemName: "tag.fill")) Tags")
                 }
@@ -75,15 +108,29 @@ struct LabelsPickerView: View {
                     Button(action: {
                         showFormLabel.toggle()
                     }){
-                       Label("Add", image: "plus.circle.fill")
+                       Label("Add", systemImage: "plus.circle.fill")
+                             .labelStyle(.titleAndIcon)
+                        #if os(iOS)
                             .foregroundColor(.accentColor)
+                        #endif
                     }
+                    
                 }
+                ToolbarItem(placement: .destructiveAction){
+                    Button(action: {
+                        dismiss()
+                    }){
+                       Label("Cancel", systemImage: "xmark")
+                            .labelStyle(.titleAndIcon)
+                            .foregroundColor(.red)
+                    }
+                    
+                }
+                #endif
             }
-               
-       
-           
-        
+            #if os(macOS)
+                .padding()
+            #endif
         
     }
     

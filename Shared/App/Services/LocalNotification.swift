@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LocalNotification {
-    
+    #if os(iOS)
     static func schedule(id: String, title: String, body: String, date: Date, isTimeSensitive: Bool) {
         // Solicitar permiso para enviar notificaciones
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
@@ -49,4 +49,5 @@ struct LocalNotification {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
         print("Notification with ID: \(id) has been cancelled.")
     }
+    #endif
 }

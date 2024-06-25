@@ -26,6 +26,7 @@ extension Services {
     @NSManaged public var name: String?
     @NSManaged public var color: Int16
     @NSManaged public var label: ContactLabel?
+    @NSManaged public var amountUpdates: NSSet?
     
     // MARK: - Wrapped vars
     
@@ -103,6 +104,32 @@ extension Services {
         }
         return false
     }
+    
+    // MARK: - Array AmountUpdates
+    public var amountUpdatesArray: [AmountUpdate] {
+        let set = amountUpdates as? Set<AmountUpdate> ?? []
+        
+        return set.sorted {
+            $0.wrappedUpdateDate > $1.wrappedUpdateDate
+        }
+    }
+
+}
+
+// MARK: Generated accessors for amountUpdates
+extension Services {
+
+    @objc(addAmountUpdatesObject:)
+    @NSManaged public func addToAmountUpdates(_ value: AmountUpdate)
+
+    @objc(removeAmountUpdatesObject:)
+    @NSManaged public func removeFromAmountUpdates(_ value: AmountUpdate)
+
+    @objc(addAmountUpdates:)
+    @NSManaged public func addToAmountUpdates(_ values: NSSet)
+
+    @objc(removeAmountUpdates:)
+    @NSManaged public func removeFromAmountUpdates(_ values: NSSet)
 
 }
 

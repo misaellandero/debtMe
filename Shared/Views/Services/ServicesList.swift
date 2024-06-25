@@ -11,18 +11,71 @@ struct ServicesList: View {
   
     @State var showNewBill = false
     
+    @FetchRequest(entity: ContactLabel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ContactLabel.name, ascending: true)]) var labels: FetchedResults<ContactLabel>
+    
     @FetchRequest(entity: Services.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Services.name, ascending: true)]) var services: FetchedResults<Services>
     
     // Computed property to calculate the total amount
     var totalExpenses: Double {
-        services.filter { $0.expense }.reduce(0) { $0 + $1.amount }
+        filteredServices.filter { $0.expense }.reduce(0) { $0 + $1.amount }
     }
     var totalIncome: Double {
-        services.filter { !$0.expense }.reduce(0) { $0 + $1.amount }
+        filteredServices.filter { !$0.expense }.reduce(0) { $0 + $1.amount }
     }
     
     var balance: Double{
         totalIncome - totalExpenses
+    }
+    
+    @State var selectedTag = "All"
+    
+    @State var searchQuery = ""
+    
+    @State var sortedMode : sortModeServices = .alfabethAsc
+    
+    var filteredServices : [Services] {
+        let sortedServices: [Services]
+        
+        switch sortedMode {
+        case .alfabethAsc :
+            sortedServices = services.sorted{
+                $0.name ?? "" < $1.name ?? ""
+            }
+        case .alfabethDes:
+            sortedServices = services.sorted{
+                $0.name ?? "" < $1.name ?? ""
+            }
+        case .amountAsc:
+            sortedServices = services.sorted{
+                $0.name ?? "" < $1.name ?? ""
+            }
+        case .amountDes:
+            sortedServices = services.sorted{
+                $0.name ?? "" < $1.name ?? ""
+            }
+        }
+        
+        let filteredByTag: [Services]
+         
+         if selectedTag == "All" {
+             // No tag selected, use all contacts
+             filteredByTag = sortedServices
+         } else {
+             // Filter contacts based on the selected tag
+             filteredByTag = sortedServices.filter { service in
+                 service.label?.wrappedName == selectedTag
+             }
+         }
+        
+        if searchQuery.isEmpty {
+            return filteredByTag
+        } else {
+            // Further filter contacts based on the search query
+            return filteredByTag.filter { contact in
+                contact.name?.localizedCaseInsensitiveContains(searchQuery) == true
+            }
+        }
+        
     }
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -102,15 +155,28 @@ struct ServicesList: View {
                 }
             }
             
-            ForEach(services) { service in
+            ForEach(filteredServices) { service in
                 NavigationLink(destination: ServiceDetailView(service: service) ) {
-                    ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image)
+                    ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
                 }
+                .listRowBackground(service.wrappedColor)
             }
             .onDelete(perform: deleteService)
         }
-        .navigationTitle("Bills") 
         .toolbar{
+            #if os(macOS)
+            ToolbarItem(placement: .navigation ){
+                Text("\(Image(systemName: "chart.bar.doc.horizontal")) Bills")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+            }
+            ToolbarItem(placement: .navigation ){
+                SearchTextField(searchQuery: $searchQuery)
+                
+            }
+            
+            #endif
+            
+            
             ToolbarItem(placement: .primaryAction ){
                 Button(action:{
                     showNewBill.toggle()
@@ -119,10 +185,63 @@ struct ServicesList: View {
                         .foregroundColor(.accentColor)
                 }
             }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Button(action: {
+                        sortedMode = .alfabethAsc
+                    }) {
+                        Label("Ascending A-Z", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                    }
+                    Button(action: {
+                        sortedMode = .alfabethDes
+                    }) {
+                        Label("Descending Z-A", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                    }
+                    Divider()
+                    
+                    Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
+                    
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Button(action: {
+                        sortedMode = .amountAsc
+                    }) {
+                        Label("Lower First", systemImage: "platter.filled.top.and.arrow.up.iphone")
+                    }
+                    Button(action: {
+                        sortedMode = .amountDes
+                    }) {
+                        Label("Higher First", systemImage: "platter.filled.bottom.and.arrow.down.iphone")
+                    }
+                    Divider()
+                    
+                    Label("Tags", systemImage: "tag")
+                    
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Picker(selection: $selectedTag, label: Text("Filter by tag")) {
+                        Text("All").tag("All")
+                        ForEach(labels){ label in
+                            if !label.labelForService {
+                                Text(label.wrappedName).tag(label.wrappedName)
+                            }
+                            
+                        }
+                    }
+                } label: {
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")   .font(Font.system(.headline, design: .rounded).weight(.black))
+                        .foregroundColor(.gray)
+                }
+            }
         }
         .sheet(isPresented: $showNewBill, content: {
             ServicesForm()
         })
+        #if os(iOS)
+        .navigationTitle("Bills")
+        .searchable(text: $searchQuery)
+        #endif
     }
     private func deleteService(at offsets: IndexSet) {
            for index in offsets {

@@ -14,38 +14,56 @@ struct ServiceRow: View {
     var frequency: String
     var limitDate: String
     var image : Data?
+    var expense : Bool = true
     var body: some View {
-        HStack{
-            ImageView(photoData: image, showModalDetail: false, shadowRadius: 0)
-                .scaledToFill()
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                .disabled(true)
-            VStack(alignment:.leading){
-                Text(ServiceName)
-                Text("Pay Before ")
-                    .font(.caption)
-                Text(limitDate)
-                    .font(.caption)
+        VStack{
+            HStack{
+                ImageView(photoData: image, showModalDetail: false, shadowRadius: 0)
+                    .scaledToFill()
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+                    .disabled(true)
+                VStack(alignment:.leading){
+                    Text(ServiceName)
+                    Text("Pay Before ")
+                        .font(.caption)
+                    Text(limitDate)
+                        .font(.caption)
+                }
+                Spacer()
+                VStack(alignment:.trailing){
+                    Text(Amount)
+                    Text(LocalizedStringKey(frequency))
+                        .font(.caption)
+                        .multilineTextAlignment(.trailing)
+                }
+                
             }
-            Spacer()
-            VStack(alignment:.trailing){
-                Text(Amount)
-                Text(LocalizedStringKey(frequency))
-                    .font(.caption)
-                    .multilineTextAlignment(.trailing)
+            .bold()
+            .foregroundColor(.white)
+            .listRowBackground(BgColor)
+            HStack{
+                Spacer()
+                Text(expense ? "Expense" : "Income") 
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(4)
+                    .font(Font.system(.caption, design: .rounded).weight(.semibold))
+                    .background(expense ? .red :  .green)
+                    .cornerRadius(10)
             }
-            
         }
-        .bold()
-        .foregroundColor(.white)
-        .listRowBackground(BgColor)
         
     }
 }
 
 #Preview {
+    #if os(macOS) 
+    let image =  NSImage(resource: .cromaPig)
+    #else
+    
     let image =  UIImage(resource: .cromaPig)
+    #endif
     let imagedata = image.jpegData(quality: .high)
     return List{
         Section(header: Text("Credit Cards")){
