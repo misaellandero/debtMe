@@ -16,6 +16,16 @@ struct SideBarView: View {
        
         NavigationSplitView {
             List() {
+                Label(
+                    title: { Text("DebtMe")
+                        .font(Font.system(.largeTitle, design: .rounded).weight(.black)) },
+                    icon: {  Image(.pig)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30) }
+                )
+                .labelStyle(.titleAndIcon)
+               
                 NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
                     Label("Contacts", systemImage: "person.2.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
@@ -43,11 +53,21 @@ struct SideBarView: View {
                 
             }
             
-            .toolbar{
+           /* .toolbar{
                 ToolbarItem(placement:.navigation){
-                    Text("DebtMe")
+                    Label(
+                        title: { Text("DebtMe")
+                            .font(Font.system(.headline, design: .rounded).weight(.black)) },
+                        icon: {  Image(.pig)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20) }
+                    )
+                    .labelStyle(.titleAndIcon)
+                   
+                    
                 }
-             }
+             }*/
              
           
           } content: {
@@ -68,6 +88,7 @@ struct toogleSideBarButton: View {
     var body: some View {
             Button(action: toggleSidebar, label: {
                 Image(systemName: "sidebar.left")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
             })
     }
 }

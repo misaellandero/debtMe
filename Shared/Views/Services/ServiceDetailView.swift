@@ -18,7 +18,7 @@ struct ServiceDetailView: View {
                 Text(service.wrappedDes)
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(.white)
-            }
+            } 
             .listRowBackground(service.wrappedColor)
             Section("History"){
                 AmountUpdateList(service: service)

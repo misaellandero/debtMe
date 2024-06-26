@@ -55,6 +55,15 @@ extension Services {
         frequency_date ??  Date()
     }
     
+    //Wrapped Amount
+    public var wrappedAmount : Double {
+        if expense {
+            return -amount
+        } else {
+            return amount
+        }
+    }
+    
     // MARK: - Computed properties
 
     //Days and months

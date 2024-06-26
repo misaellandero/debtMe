@@ -31,7 +31,12 @@ struct ServicesList: View {
     
     @State var searchQuery = ""
     
-    @State var sortedMode : sortModeServices = .alfabethAsc
+    @State var startDate = Date()
+    
+    @State var endDate =  Date()
+    
+    
+    @State var sortedMode : sortModeServices = .amountDes
     
     var filteredServices : [Services] {
         let sortedServices: [Services]
@@ -43,15 +48,15 @@ struct ServicesList: View {
             }
         case .alfabethDes:
             sortedServices = services.sorted{
-                $0.name ?? "" < $1.name ?? ""
+                $0.name ?? "" > $1.name ?? ""
             }
         case .amountAsc:
             sortedServices = services.sorted{
-                $0.name ?? "" < $1.name ?? ""
+                $0.wrappedAmount  < $1.wrappedAmount
             }
         case .amountDes:
             sortedServices = services.sorted{
-                $0.name ?? "" < $1.name ?? ""
+                $0.wrappedAmount > $1.wrappedAmount
             }
         }
         
@@ -84,6 +89,15 @@ struct ServicesList: View {
         
     var body: some View {
         List{
+            Section(content: {
+                DatePicker("Start Date", selection: $startDate)
+                     
+                DatePicker("End Date", selection: $endDate)
+                    
+            }, header: {
+                Label("Date frame", systemImage: "calendar")
+            })
+            
             if ShowSummary {
                 Section(){
                     Group{
@@ -164,6 +178,7 @@ struct ServicesList: View {
             .onDelete(perform: deleteService)
         }
         .toolbar{
+            
             #if os(macOS)
             ToolbarItem(placement: .navigation ){
                 Text("\(Image(systemName: "chart.bar.doc.horizontal")) Bills")
@@ -175,7 +190,6 @@ struct ServicesList: View {
             }
             
             #endif
-            
             
             ToolbarItem(placement: .primaryAction ){
                 Button(action:{
@@ -229,6 +243,7 @@ struct ServicesList: View {
                             
                         }
                     }
+                    
                 } label: {
                     Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")   .font(Font.system(.headline, design: .rounded).weight(.black))
                         .foregroundColor(.gray)

@@ -52,7 +52,7 @@ struct ServicesForm: View {
                 Button(action: {
                     performSaveAcion()
                 }){
-                    Label("Add", systemImage: "plus.circle.fill")
+                    Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
                         .foregroundStyle(Color.accentColor)
                             .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
@@ -305,8 +305,9 @@ struct ServiceMultiPlataformForm : View {
             
             Section(footer: Text("Preview")){
                 ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
-                    .padding()
-                    .background(service.color)
+                    .listRowBackground(service.color)
+                
+                    
             }
             
             Section{
