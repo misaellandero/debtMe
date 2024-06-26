@@ -10,7 +10,7 @@ import SwiftUI
 struct ServicesModel {
     
     // Arrays for date selection
-    static var frequency = ["Daily", "Weekly", "Biweekly", "Monthly", "Quarterly", "Semester", "Yearly"]
+    static var frequency = ["Daily", "Weekly", "Biweekly", "Monthly", "Quarterly", "Semester", "Yearly","One time"]
     static let daysOfWeek : [LocalizedStringKey] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     static let daysOfMonth = Array(1...31)
     static let months = Array(1...12)

@@ -224,11 +224,13 @@ struct ServiceMultiPlataformForm : View {
                     Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
                     
                 case 3, 4, 5: //"Monthly", "Quarterly", "Semester":
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay ?? 0)")
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)")
                     
                 case 6: //"Yearly":
                     Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
                     
+                case 7: //One time payment
+                     Text(NSLocalizedString(ServicesModel.frequency[service.frecuencyIndex], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(service.frequencyDate.formatted(date: .abbreviated, time: .omitted)))
                 default:
                     Text("Select Frequency")
                 }

@@ -65,6 +65,8 @@ extension Services {
     }
     
     // MARK: - Computed properties
+    
+    
 
     //Days and months
     var frequencyDay: Int {
@@ -101,6 +103,10 @@ extension Services {
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  (dayName ?? "")
         case 3,4,5:   //"Monthly", "Quarterly", "Semester":
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  String(frequencyDay)
+        case 6: //"Yearly":
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") + NSLocalizedString("\(frequencyDay)", comment: "") + NSLocalizedString(" of ", comment: "") + NSLocalizedString("\(monthName ?? "")", comment: "")
+        case 7: //One time payment
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(frequencyDate.formatted(date: .abbreviated, time: .omitted))
         default:
             return "Daily Fee"
         }
@@ -114,6 +120,15 @@ extension Services {
         return false
     }
     
+    //Pay Before calculation
+    public var payBefore : Date {
+        Date()
+    }
+    
+    //Pay Before string
+    public var payBeforeString : String {
+        ""
+    }
     // MARK: - Array AmountUpdates
     public var amountUpdatesArray: [AmountUpdate] {
         let set = amountUpdates as? Set<AmountUpdate> ?? []

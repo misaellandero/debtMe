@@ -44,7 +44,7 @@ struct TabBarView: View {
                 ServicesList()
             }
             .tabItem {
-                Label("Services", systemImage: "chart.bar.doc.horizontal")
+                Label("Bills", systemImage: "chart.bar.doc.horizontal")
             }
             .tag(SectionSelected.loans)
             
