@@ -17,7 +17,7 @@ enum JPEGQuality: String, CaseIterable, Identifiable {
 
     var id: String { self.rawValue }
 
-    var description: String {
+    var description: LocalizedStringKey {
         switch self {
         case .lowest: return "Lowest"
         case .low: return "Low"

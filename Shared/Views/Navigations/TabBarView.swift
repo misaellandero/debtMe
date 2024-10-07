@@ -40,6 +40,7 @@ struct TabBarView: View {
             .tag(SectionSelected.loans)
              */
             // MARK: - Services
+            /*
             NavigationView{
                 ServicesList()
             }
@@ -47,7 +48,7 @@ struct TabBarView: View {
                 Label("Bills", systemImage: "chart.bar.doc.horizontal")
             }
             .tag(SectionSelected.loans)
-            
+            */
             // MARK: - Settings
             NavigationView{
                 SettingsList()

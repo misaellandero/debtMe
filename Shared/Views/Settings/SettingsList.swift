@@ -20,8 +20,7 @@ struct SettingsList: View {
     @State private var error: NSError?
     @AppStorage("lockOnClose") var  lockOnClose: Bool = false
     @AppStorage("ShowSummary") var ShowSummary = true
-    
-    
+    @AppStorage("icon") var selectedIcon: String = "AppIconImg"
     var body: some View {
         List{
           
@@ -45,6 +44,56 @@ struct SettingsList: View {
                 
             }
             
+            // MARK: - Personalization Tab
+            #if os(iOS)
+            Section(header:
+                        Text("Personalization")
+                .bold()
+                .foregroundColor(.secondary)
+            ){
+                
+                // MARK: - icons
+                HStack{
+                    Label("Choose an icon", systemImage: "app.badge.checkmark.fill")
+                        .fixedSize(horizontal: true, vertical: false)
+                    Picker("", selection: $selectedIcon.onChange(changeAppIcon)) {
+                        HStack{
+                            Image(.appIconImg)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(5)
+                            Text("Classic")
+                        }
+                        .tag("AppIcon 5")
+                     
+                        HStack{
+                            Image(.appIconImg2)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(5)
+                            Text("Flat")
+                          
+                        }
+                        .tag("AppIcon 2")
+                        HStack{
+                            Image(.appIconImg1)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(5)
+                            Text("Flat Dark")
+                        }
+                        .tag("AppIcon 1")
+                    }
+                    .pickerStyle(NavigationLinkPickerStyle())
+                   
+                }
+                
+               
+            }
+            #endif
             // MARK: - Security
                 Section(
                     header:
@@ -124,13 +173,20 @@ struct SettingsList: View {
                 #if os(iOS)
                 .listRowBackground(Color(colorScheme == .light ? UIColor.secondarySystemBackground : UIColor.systemBackground )
                 .opacity(0.95))
+                
                 #endif
             }
             
         }
         .navigationTitle("Settings")
     }
-    
+#if os(iOS)
+    // MARK: -  Cambair el icono
+    func changeAppIcon(tag icon: String){
+        UIApplication.shared.setAlternateIconName(icon)
+         
+    }
+#endif
     // MARK: -  Desbloquear el equipo
     func authenticate(){
         

@@ -120,14 +120,40 @@ extension Services {
         return false
     }
     
+    var today : Date {
+        Date()
+    }
+    
+    //TODO : Do the calculations
     //Pay Before calculation
     public var payBefore : Date {
-        Date()
+        let calendar = Calendar.current
+        
+        switch frequency {
+        case 0 ://"Daily"
+            return today//Today
+        case 1: //"Weekly"
+            return Date()
+        case 2: //"Biweekly"
+            return Date()
+        case 3: //"Monthly"
+            return Date()
+        case 4: //"Quarterly"
+            return Date()
+            case 5: //"Semester"
+            return Date()
+        case 6: //"Yearly"
+            return Date()
+        case 7: //One time payment
+            return frequencyDate
+        default: //"Daily"
+            return Date() //Today
+        }
     }
     
     //Pay Before string
     public var payBeforeString : String {
-        ""
+        payBefore.formatted(date: .abbreviated, time: .omitted)
     }
     // MARK: - Array AmountUpdates
     public var amountUpdatesArray: [AmountUpdate] {

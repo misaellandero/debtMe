@@ -40,12 +40,12 @@ struct SideBarView: View {
                     Label("Loans", systemImage: "dollarsign.square.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }*/
-                
+                /*
                 NavigationLink(destination: ServicesList(), tag: SectionSelected.bills, selection: $sectionSelected) {
                     Label("Bills", systemImage: "chart.bar.doc.horizontal")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                
+                */
                 NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
@@ -72,10 +72,10 @@ struct SideBarView: View {
           
           } content: {
               ContactsList()
-                  .navigationSplitViewColumnWidth(min: 500, ideal: 700, max: .infinity)
+                  .navigationSplitViewColumnWidth(min: 250, ideal: 500, max: .infinity)
           } detail: {
               EmptyPaymentView(empty: true)
-                  .navigationSplitViewColumnWidth(min: 500, ideal: 700, max: .infinity)
+                  .navigationSplitViewColumnWidth(min: 250, ideal: 500, max: .infinity)
           }
          
         

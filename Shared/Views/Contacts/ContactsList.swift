@@ -277,6 +277,7 @@ struct ContactsRows : View  {
                         .pickerStyle(MenuPickerStyle())
                         #else
                         .pickerStyle(SegmentedPickerStyle())
+                        .labelsHidden()
                         #endif
                     }
                 }
