@@ -35,7 +35,13 @@ struct whatsNewFeatures {
         
         Feature(image:"sum", title: "Summary", des: "Now you can view the summary and balance directly within the Contacts tab. Head to Settings if you wish to disable this feature",color: .indigo, newOnThisVersion: true),
         
-        Feature(image:"photo.on.rectangle.angled", title: "Images", des: "Now you add images to the transactions and payments",color: .blue, newOnThisVersion: true)
+        Feature(image:"photo.on.rectangle.angled", title: "Images", des: "Now you add images to the transactions and payments",color: .blue, newOnThisVersion: true),
+        
+        
+        Feature(image:"square.dashed", title: "icons", des: "New icon for iOS 18 support dark and tinted mode",color: .purple, newOnThisVersion: true),
+       
+        Feature(image:"macwindow.on.rectangle", title: "Tile", des: "Now the apps is compatible with tiles on macOS",color: .pink, newOnThisVersion: true),
+   
         
         
     ]

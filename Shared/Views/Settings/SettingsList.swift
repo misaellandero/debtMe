@@ -77,6 +77,7 @@ struct SettingsList: View {
                           
                         }
                         .tag("AppIcon 2")
+                        
                         HStack{
                             Image(.appIconImg1)
                                 .resizable()
@@ -86,6 +87,18 @@ struct SettingsList: View {
                             Text("Flat Dark")
                         }
                         .tag("AppIcon 1")
+                         
+                        HStack{
+                            Image(.appIconImg1)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(5)
+                            Text("iOS 18")
+                        }
+                        .tag("AppIcon 6")
+                        
+                        
                     }
                     .pickerStyle(NavigationLinkPickerStyle())
                    
