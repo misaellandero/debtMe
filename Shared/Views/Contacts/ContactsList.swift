@@ -241,7 +241,7 @@ struct ContactsRows : View  {
                                 }
                             case .all:
                                 VStack(alignment: .leading){
-                                    Text(LocalizedStringKey("They Owes me"))
+                                    Text(LocalizedStringKey("They Owe me"))
                                         .font(.caption)
                                         
                                     Text(loans.toCurrencyString())

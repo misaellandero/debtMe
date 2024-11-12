@@ -42,7 +42,7 @@
 "Tag" = "Etiqueta";
 "New Tag" = "Nueva Etiqueta";
 "Add" = "Agregar";
-"They Owes me" = "Me Debe";
+"They Owe me" = "Me Debe";
 "I Owe Them" = "Le Debo";
 "Date" = "Fecha";
 "Description" = "Descripción";
@@ -50,7 +50,7 @@
 "Payment" = "Pago";
 "Paid in" = "Pagado el";
 "Already paid" = "Pagado";
-"Not paid" = "No pagado";
+"Not paid" = "No pagad1o";
 "Contacts" = "Contactos";
 "Settings" = "Ajustes";
 
@@ -227,3 +227,7 @@ El desarrollador no se hará responsable de posibles daños a su dispositivo res
 "Choose an icon" = "Elige un icono";
 "Bills" = "Gastos";
 
+"Icons" = "Iconos";
+"New icon for iOS 18 support dark and tinted mode" = "Nuevo icono para iOS 18 con soporte para modo oscuro y tintado";
+"Tile" = "Ventanas";
+"Now the apps is compatible with tiles on macOS" = "Ahora la app es compatible con ventanas en mosaico en macOS";

@@ -42,7 +42,7 @@ struct ContactsRow: View {
                         
                         if showDetails {
                             HStack{
-                                Text(LocalizedStringKey("They Owes me"))
+                                Text(LocalizedStringKey("They Owe me"))
                                 Spacer()
                                 Text(contact.totalLoans.toCurrencyString())
                                     .foregroundColor(.blue)

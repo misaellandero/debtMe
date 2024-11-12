@@ -18,7 +18,7 @@ struct SideBarView: View {
             List() {
                 Label(
                     title: { Text("DebtMe")
-                        .font(Font.system(.largeTitle, design: .rounded).weight(.black)) },
+                        .font(Font.system(.title, design: .rounded).weight(.black)) },
                     icon: {  Image(.pig)
                             .resizable()
                             .scaledToFit()
@@ -30,44 +30,14 @@ struct SideBarView: View {
                     Label("Contacts", systemImage: "person.2.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
-                /*
-                NavigationLink(destination: TransactionsListFilter(isDebt:true) , tag: SectionSelected.debts, selection: $sectionSelected) {
-                    Label("Debts", systemImage: "dollarsign.square")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
                 
-                NavigationLink(destination: TransactionsListFilter(isDebt:false), tag: SectionSelected.loans, selection: $sectionSelected) {
-                    Label("Loans", systemImage: "dollarsign.square.fill")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }*/
-                /*
-                NavigationLink(destination: ServicesList(), tag: SectionSelected.bills, selection: $sectionSelected) {
-                    Label("Bills", systemImage: "chart.bar.doc.horizontal")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
-                */
                 NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
                 
             }
-            
-           /* .toolbar{
-                ToolbarItem(placement:.navigation){
-                    Label(
-                        title: { Text("DebtMe")
-                            .font(Font.system(.headline, design: .rounded).weight(.black)) },
-                        icon: {  Image(.pig)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20) }
-                    )
-                    .labelStyle(.titleAndIcon)
-                   
-                    
-                }
-             }*/
+            .navigationSplitViewColumnWidth(min: 150, ideal: 200, max: .infinity)
              
           
           } content: {

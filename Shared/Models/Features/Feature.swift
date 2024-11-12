@@ -38,7 +38,7 @@ struct whatsNewFeatures {
         Feature(image:"photo.on.rectangle.angled", title: "Images", des: "Now you add images to the transactions and payments",color: .blue, newOnThisVersion: true),
         
         
-        Feature(image:"square.dashed", title: "icons", des: "New icon for iOS 18 support dark and tinted mode",color: .purple, newOnThisVersion: true),
+        Feature(image:"square.dashed", title: "Icons", des: "New icon for iOS 18 support dark and tinted mode",color: .purple, newOnThisVersion: true),
        
         Feature(image:"macwindow.on.rectangle", title: "Tile", des: "Now the apps is compatible with tiles on macOS",color: .pink, newOnThisVersion: true),
    
