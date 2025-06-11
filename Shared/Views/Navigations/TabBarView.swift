@@ -59,7 +59,8 @@ struct TabBarView: View {
             .tag(SectionSelected.settings)
             
         }
-        .font(Font.system(.body, design: .rounded))
+        .font(Font.system(.body, design: .rounded)) 
+        .tabViewStyle(.sidebarAdaptable)
         
     }
 }

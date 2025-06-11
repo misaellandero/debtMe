@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1304296929EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
+		13061AEE2DFA2EE5006E546F /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A29C25FEDC8E00455AB0 /* TabBarView.swift */; };
 		131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		131A85D92B4FA39600927E54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */; };
@@ -94,6 +95,9 @@
 		1351B32A2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
 		1351B32B2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
 		1351B32C2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
+		135290E02DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
+		135290E12DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
+		135290E22DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
 		13545D762B5ACE9900BBD6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
 		1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
 		1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */; };
@@ -201,6 +205,9 @@
 		13E1F5952B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
 		13E1F5962B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
 		13E1F5972B86FD800032B7B2 /* Services+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */; };
+		13E3A7642CED68410069BE40 /* ButtonChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3A7632CED68410069BE40 /* ButtonChallenge.swift */; };
+		13E3A7652CED68410069BE40 /* ButtonChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3A7632CED68410069BE40 /* ButtonChallenge.swift */; };
+		13E3A7662CED68410069BE40 /* ButtonChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3A7632CED68410069BE40 /* ButtonChallenge.swift */; };
 		13E6DBB02B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
 		13E6DBB12B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
 		13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */; };
@@ -297,6 +304,7 @@
 		13465FB229F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13465FB529F642B7001C0577 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1351B3292C209CE6007334ED /* AmountUpdateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountUpdateList.swift; sourceTree = "<group>"; };
+		135290DF2DF957E20061A929 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
 		1355AB842B45EF840023A1E1 /* ButtonLabelShowSetled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelShowSetled.swift; sourceTree = "<group>"; };
 		135C71D92C0F95DC0048C3B7 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		135C71DD2C0F9AAE0048C3B7 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = Shared/Views/UIElements/Images/ImageView.swift; sourceTree = SOURCE_ROOT; };
@@ -339,6 +347,7 @@
 		13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		13E1F5902B86FD800032B7B2 /* Services+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services+CoreDataClass.swift"; sourceTree = "<group>"; };
 		13E1F5912B86FD800032B7B2 /* Services+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		13E3A7632CED68410069BE40 /* ButtonChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonChallenge.swift; sourceTree = "<group>"; };
 		13E6DBAF2B61CEBF00B3BE60 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		13E6DBB32B62DBB500B3BE60 /* ButtonLabelContinue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelContinue.swift; sourceTree = "<group>"; };
 		7F37A91E25FF081F0049D648 /* TransactionsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsRow.swift; sourceTree = "<group>"; };
@@ -644,6 +653,7 @@
 		7F70A21425FEB1ED00455AB0 = {
 			isa = PBXGroup;
 			children = (
+				13E3A7632CED68410069BE40 /* ButtonChallenge.swift */,
 				13D7D5592C2B7C9C007D1908 /* macOSpicker color test.swift */,
 				1331BDA92B4F729F00C0A15F /* debtMe (visionOS).entitlements */,
 				7F70A25E25FEBC6200455AB0 /* debtMe.entitlements */,
@@ -654,6 +664,7 @@
 				1331BD432B4F37BB00C0A15F /* Packages */,
 				7F70A22525FEB1F700455AB0 /* Products */,
 				7F70A25F25FEBC8800455AB0 /* Frameworks */,
+				135290DF2DF957E20061A929 /* icon.icon */,
 			);
 			sourceTree = "<group>";
 		};
@@ -981,6 +992,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1331BD742B4F399600C0A15F /* ConfettiPopSoundEffect.wav in Resources */,
+				135290E12DF957E20061A929 /* icon.icon in Resources */,
 				131A85D92B4FA39600927E54 /* Assets.xcassets in Resources */,
 				13545D762B5ACE9900BBD6F2 /* Assets.xcassets in Resources */,
 				1331BD732B4F399600C0A15F /* ConfettiPopSoundEffectLong.m4a in Resources */,
@@ -996,6 +1008,7 @@
 				13465FB629F642B7001C0577 /* Localizable.strings in Resources */,
 				13465FB329F642B7001C0577 /* InfoPlist.strings in Resources */,
 				13874D532ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */,
+				135290E02DF957E20061A929 /* icon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1017,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70A23925FEB1F700455AB0 /* Assets.xcassets in Resources */,
+				135290E22DF957E20061A929 /* icon.icon in Resources */,
 				13465FB729F64455001C0577 /* Localizable.strings in Resources */,
 				13874D542ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */,
 				13874D562ACBEB59007B8FE3 /* ConfettiPopSoundEffect.wav in Resources */,
@@ -1095,6 +1109,7 @@
 				1331BD9C2B4F39DD00C0A15F /* ContactLabel+CoreDataProperties.swift in Sources */,
 				1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */,
 				135C71E02C0F9AAE0048C3B7 /* ImageView.swift in Sources */,
+				13E3A7662CED68410069BE40 /* ButtonChallenge.swift in Sources */,
 				1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */,
 				1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */,
 				13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
@@ -1190,6 +1205,7 @@
 				13A2FDF82C209A7A00DD820F /* AmountUpdate+CoreDataProperties.swift in Sources */,
 				13A2FDF92C209A7A00DD820F /* AmountUpdate+CoreDataClass.swift in Sources */,
 				132B860F2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift in Sources */,
+				13E3A7652CED68410069BE40 /* ButtonChallenge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,6 +1230,7 @@
 				1369E1B82B64406B005388C2 /* SettingsList.swift in Sources */,
 				7F37A92625FF17F40049D648 /* ContactModel.swift in Sources */,
 				135C71E82C10D72A0048C3B7 /* DetailImageView.swift in Sources */,
+				13E3A7642CED68410069BE40 /* ButtonChallenge.swift in Sources */,
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
 				1327EE5D2B61C781002DFB66 /* Feature.swift in Sources */,
@@ -1266,6 +1283,7 @@
 				13E6DBB52B62DBB500B3BE60 /* ButtonLabelContinue.swift in Sources */,
 				133FC755270C09AC00CDB741 /* TransactionModel.swift in Sources */,
 				13C2F5B02B9003FB00150A01 /* ServiceRow.swift in Sources */,
+				13061AEE2DFA2EE5006E546F /* TabBarView.swift in Sources */,
 				13A2FDFA2C209A7A00DD820F /* AmountUpdate+CoreDataProperties.swift in Sources */,
 				13A2FDFB2C209A7A00DD820F /* AmountUpdate+CoreDataClass.swift in Sources */,
 				7F37A93525FF1A3E0049D648 /* EmojiPicker.swift in Sources */,
@@ -1496,7 +1514,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "\"AppIcon 1\" \"AppIcon 2\" \"AppIcon 3\" \"AppIcon 4\" \"AppIcon 5\"";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
@@ -1507,7 +1525,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1529,7 +1547,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "\"AppIcon 1\" \"AppIcon 2\" \"AppIcon 3\" \"AppIcon 4\" \"AppIcon 5\"";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
@@ -1540,7 +1558,7 @@
 				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = debtMe;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1562,7 +1580,7 @@
 		7F70A24025FEB1F700455AB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
@@ -1580,7 +1598,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
@@ -1592,7 +1610,7 @@
 		7F70A24125FEB1F700455AB0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
@@ -1610,7 +1628,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;

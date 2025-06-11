@@ -27,7 +27,6 @@ public class PersistentCloudKitContainer: ObservableObject {
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
          
         return container
-    }()
-    
+    }() 
 }
 

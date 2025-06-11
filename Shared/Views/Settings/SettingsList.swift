@@ -46,66 +46,13 @@ struct SettingsList: View {
             
             // MARK: - Personalization Tab
             #if os(iOS)
-            Section(header:
+            /*Section(header:
                         Text("Personalization")
                 .bold()
                 .foregroundColor(.secondary)
             ){
                 
-                // MARK: - icons
-                HStack{
-                    Label("Choose an icon", systemImage: "app.badge.checkmark.fill")
-                        .fixedSize(horizontal: true, vertical: false)
-                    Picker("", selection: $selectedIcon.onChange(changeAppIcon)) {
-                        HStack{
-                            Image(.appIconImg)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(5)
-                            Text("Classic")
-                        }
-                        .tag("AppIcon 5")
-                     
-                        HStack{
-                            Image(.appIconImg2)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(5)
-                            Text("Flat")
-                          
-                        }
-                        .tag("AppIcon 2")
-                        
-                        HStack{
-                            Image(.appIconImg1)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(5)
-                            Text("Flat Dark")
-                        }
-                        .tag("AppIcon 1")
-                         
-                        HStack{
-                            Image(.appIconImg1)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(5)
-                            Text("iOS 18")
-                        }
-                        .tag("AppIcon 6")
-                        
-                        
-                    }
-                    .pickerStyle(NavigationLinkPickerStyle())
-                   
-                }
-                
-               
-            }
+            }*/
             #endif
             // MARK: - Security
                 Section(

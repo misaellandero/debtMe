@@ -33,36 +33,20 @@ struct ContentView: View {
     
     
     var body: some View {
-            ZStack{
-                if lockOnClose && !unlocked {
-                    LockedView(unlock: authenticate)
-                } else {
-                    #if os(iOS)
-                    if horizontalSizeClass == .compact {
-                        TabBarView()
-                    } else {
-                        SideBarView(sectionSelected : $sectionSelected)
-                    }
-                    #elseif os(visionOS)
-                    TabBarView()
-                    #else
-                    SideBarView(sectionSelected : $sectionSelected)
-                    #endif
-                }
-                WellcomeView()
-                
-                /*VStack{
-                    Spacer()
-                    Text("lockOnClose \(lockOnClose.description)")
-                    Text("unlocked \(unlocked.description)")
-                }*/
+        ZStack{
+            if lockOnClose && !unlocked {
+                LockedView(unlock: authenticate)
+            } else {
+                TabBarView()
             }
-            .onChange(of: scenePhase) { newPhase in
-                if newPhase == .background {
-                    //print("Background")
-                    unlocked = false
-                }
+            WellcomeView()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .background {
+                //print("Background")
+                unlocked = false
             }
+        }
     }
     
     // MARK: - LocalAuthentication
