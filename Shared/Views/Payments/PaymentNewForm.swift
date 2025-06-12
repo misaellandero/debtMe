@@ -44,10 +44,7 @@ struct PaymentNewForm: View {
                         .tint(.red)
                     }
                     ToolbarItem(placement: .primaryAction ){
-                        Button(action: savePayment){
-                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
+                        ToolbarAddButton(edition: edition, action: savePayment)
                     }
                 }
             }

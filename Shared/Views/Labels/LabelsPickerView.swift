@@ -104,6 +104,7 @@ struct LabelsPickerView: View {
                 ToolbarItem(placement:.principal){
                     Text("\(Image(systemName: "tag.fill")) Tags")
                 }
+                /*
                 ToolbarItem(placement: .confirmationAction){
                     Button(action: {
                         showFormLabel.toggle()
@@ -115,7 +116,14 @@ struct LabelsPickerView: View {
                         #endif
                     }
                     
+                }*/
+                
+                ToolbarItem(placement: .primaryAction ){
+                    ToolbarAddButton(edition: true){
+                        showFormLabel.toggle()
+                    }
                 }
+                
                 ToolbarItem(placement: .destructiveAction){
                     Button(action: {
                         dismiss()

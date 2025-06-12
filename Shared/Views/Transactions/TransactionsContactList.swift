@@ -140,10 +140,6 @@ struct TransactionsContactList: View {
         }
             
             .toolbar {
-                ToolbarItem(placement:.automatic){
-                    Text("\(Image(systemName: "folder")) Summary")
-                }
-                
                 
                 ToolbarItem(placement: .automatic ){
                     
@@ -162,17 +158,18 @@ struct TransactionsContactList: View {
                 }
                 #endif
                 
-                ToolbarItem(placement: .automatic ){
+                ToolbarItem(placement: .primaryAction ){
                     
                     Button(action:{
                         showAddTransaction.toggle()
                     }){
                         Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.accentColor)
                     }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .tint(.accentColor)
                 }
                 
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .automatic) {
                     Menu {
                         
                         //Order by Amount

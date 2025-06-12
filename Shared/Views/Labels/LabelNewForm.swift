@@ -54,18 +54,6 @@ struct LabelNewForm: View {
                     
                     
                 }
-               /* .navigationBarItems(
-                    leading:
-                        Button(action:{
-                            showForm.toggle()
-                        }){
-                            LabelSFRounder(label: "Return", systemImage: "xmark", foreground: .gray)
-                        },
-                    trailing:
-                        Button(action:{}){
-                            LabelSFRounder(label: "Add", systemImage: "plus.circle.fill", foreground: .accentColor)
-                        }
-                )*/
                 .toolbar{
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
@@ -75,12 +63,11 @@ struct LabelNewForm: View {
                         }
                         .tint(.red)
                     }
-                    ToolbarItem(placement: .confirmationAction){
-                        Button(action: saveTag){
-                           Label("Add", image: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
+                    
+                    ToolbarItem(placement: .primaryAction ){
+                        ToolbarAddButton(edition: false, action: saveTag)
                     }
+                    
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "tag.fill")) New")
                     }

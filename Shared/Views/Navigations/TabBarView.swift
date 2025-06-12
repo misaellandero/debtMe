@@ -40,7 +40,7 @@ struct TabBarView: View {
             .tag(SectionSelected.loans)
              */
             // MARK: - Services
-            /*
+            
             NavigationView{
                 ServicesList()
             }
@@ -48,7 +48,7 @@ struct TabBarView: View {
                 Label("Bills", systemImage: "chart.bar.doc.horizontal")
             }
             .tag(SectionSelected.loans)
-            */
+            
             // MARK: - Settings
             NavigationView{
                 SettingsList()
@@ -59,8 +59,19 @@ struct TabBarView: View {
             .tag(SectionSelected.settings)
             
         }
-        .font(Font.system(.body, design: .rounded)) 
+        .font(Font.system(.body, design: .rounded))
         .tabViewStyle(.sidebarAdaptable)
+        .tabViewSidebarHeader {
+            Label(
+                title: { Text("DebtMe")
+                    .font(Font.system(.title, design: .rounded).weight(.black)) },
+                icon: {  Image(.pig)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30) }
+            )
+            .labelStyle(.titleAndIcon)
+        }
         
     }
 }

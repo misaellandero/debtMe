@@ -10,6 +10,9 @@
 		1304296929EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		1304296A29EF36BA001203D3 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1304296829EF36BA001203D3 /* TotalsView.swift */; };
 		13061AEE2DFA2EE5006E546F /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70A29C25FEDC8E00455AB0 /* TabBarView.swift */; };
+		13061AF02DFB73E8006E546F /* ToolbarAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13061AEF2DFB73E8006E546F /* ToolbarAddButton.swift */; };
+		13061AF12DFB73E8006E546F /* ToolbarAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13061AEF2DFB73E8006E546F /* ToolbarAddButton.swift */; };
+		13061AF22DFB73E8006E546F /* ToolbarAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13061AEF2DFB73E8006E546F /* ToolbarAddButton.swift */; };
 		131023672ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		131023682ACF289E00A910B2 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131023662ACF289E00A910B2 /* ViewExtension.swift */; };
 		131A85D92B4FA39600927E54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1331BD4F2B4F37BE00C0A15F /* Assets.xcassets */; };
@@ -285,6 +288,7 @@
 
 /* Begin PBXFileReference section */
 		1304296829EF36BA001203D3 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TotalsView.swift; path = Shared/App/Extensions/TotalsView.swift; sourceTree = SOURCE_ROOT; };
+		13061AEF2DFB73E8006E546F /* ToolbarAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarAddButton.swift; sourceTree = "<group>"; };
 		131023662ACF289E00A910B2 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		1327EE4F2B6050A4002DFB66 /* AppReviewRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReviewRequest.swift; sourceTree = "<group>"; };
 		1327EE542B61C072002DFB66 /* WellcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellcomeView.swift; sourceTree = "<group>"; };
@@ -578,6 +582,7 @@
 				1369E1C22B644431005388C2 /* DebtMeAppHeaderView.swift */,
 				13C9DF9D29F3B63D005D1768 /* LabelSFRounder.swift */,
 				13C9DFA029F3BEE6005D1768 /* ButtonLabelAdd.swift */,
+				13061AEF2DFB73E8006E546F /* ToolbarAddButton.swift */,
 				13E6DBB32B62DBB500B3BE60 /* ButtonLabelContinue.swift */,
 				132B860B2ACBCAFD00ADFED4 /* ButtonLabelReset.swift */,
 				132B860E2ACBCD5700ADFED4 /* ButtonLabelPayAll.swift */,
@@ -732,11 +737,11 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				13C2F5A92B9002EE00150A01 /* Services */,
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
 				1399AD5B29995A9D00C87C3D /* Payments */,
+				13C2F5A92B9002EE00150A01 /* Services */,
 				7F60634B261040D3004834F1 /* Labels */,
 				7F70A2B025FEF17700455AB0 /* Settings */,
 				7F70A2AF25FEF15C00455AB0 /* Transactions */,
@@ -1052,6 +1057,7 @@
 				1331BD7A2B4F39A400C0A15F /* SearchTextField.swift in Sources */,
 				1369E1BD2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				1331BD8A2B4F39BD00C0A15F /* EmojiButton.swift in Sources */,
+				13061AF22DFB73E8006E546F /* ToolbarAddButton.swift in Sources */,
 				136D56742B7E75E800E82EA5 /* LegalAppView.swift in Sources */,
 				1331BD982B4F39D500C0A15F /* Transaction+CoreDataClass.swift in Sources */,
 				13877CD92BD9823F00E5B20A /* LabelsPickerView.swift in Sources */,
@@ -1162,6 +1168,7 @@
 				7F37A93C25FF1A750049D648 /* EmojiButton.swift in Sources */,
 				7F70A24F25FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1355AB852B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
+				13061AF02DFB73E8006E546F /* ToolbarAddButton.swift in Sources */,
 				135C71E32C10C8350048C3B7 /* ImageExtension.swift in Sources */,
 				1327EE592B61C73F002DFB66 /* FeatureView.swift in Sources */,
 				7F70A26C25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
@@ -1234,6 +1241,7 @@
 				7F70A25025FEBBCF00455AB0 /* Transaction+CoreDataProperties.swift in Sources */,
 				1399AD5E29995AD400C87C3D /* PaymentsTransactionsList.swift in Sources */,
 				1327EE5D2B61C781002DFB66 /* Feature.swift in Sources */,
+				13061AF12DFB73E8006E546F /* ToolbarAddButton.swift in Sources */,
 				13C73BFF2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */,
 				1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */,
 				1399AD672999B37300C87C3D /* PaymentRow.swift in Sources */,

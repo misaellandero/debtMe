@@ -98,14 +98,8 @@ struct PaymentsTransactionsList: View {
         }
         #if os(iOS)
         .background(.ultraThinMaterial)
-        .toolbar {
-            ToolbarItem(placement:.principal){
-                Text(transaction.wrappedDes)
-            }
-            ToolbarItem(placement:.principal){
-                Text("\(Image(systemName: "folder")) Summary")
-            }
-        }
+        .navigationTitle("Payments")
+        .navigationSubtitle(transaction.wrappedDes)
         #elseif os(macOS)
         .padding()
         .toolbar {
@@ -124,14 +118,15 @@ struct PaymentsTransactionsList: View {
                         .foregroundColor(.accentColor)
                 }
             }
-            ToolbarItem(placement: .automatic ){
+            ToolbarItem(placement: .primaryAction ){
                 Button(action:{
                     showAddPayment.toggle()
                 }){
                     Label("Add", systemImage: "plus.circle.fill")
-                        .foregroundColor(.accentColor)
                 }
                 .disabled(transaction.settled)
+                .buttonStyle(BorderedProminentButtonStyle())
+                .tint(.accentColor)
             }
            
         }

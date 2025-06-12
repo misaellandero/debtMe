@@ -67,12 +67,11 @@ struct TransactionsForm: View {
                         }
                         .tint(.red)
                     }
-                    ToolbarItem(placement: .confirmationAction){
-                        Button(action: performSaveAcion){
-                           Label(edition ? "Save": "Add", image: "plus.circle.fill")
-                                .foregroundColor(.accentColor)
-                        }
+                   
+                    ToolbarItem(placement: .primaryAction ){
+                        ToolbarAddButton(edition: edition, action: performSaveAcion)
                     }
+                    
                     ToolbarItem(placement:.principal){
                         Text("\(Image(systemName: "dollarsign.square.fill")) New")
                     }

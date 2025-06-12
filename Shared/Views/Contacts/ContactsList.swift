@@ -59,11 +59,12 @@ struct ContactsList: View {
                     showingNewContactForm.toggle()
                 }){
                     Label("Add", systemImage: "plus.circle.fill") .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .foregroundColor(.accentColor)
                 }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .tint(.accentColor)
             }
             
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .automatic) {
                 Menu {
                     Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
                     .font(Font.system(.headline, design: .rounded).weight(.black))
