@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ServicesList: View {
   
     @State var showNewBill = false
+
+    enum ServicesPeriodView: String, CaseIterable {
+        case list = "List"
+        case week = "Week"
+        case month = "Month"
+        case year = "Year"
+    }
     
     @FetchRequest(entity: ContactLabel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ContactLabel.name, ascending: true)]) var labels: FetchedResults<ContactLabel>
     
@@ -17,10 +25,10 @@ struct ServicesList: View {
     
     // Computed property to calculate the total amount
     var totalExpenses: Double {
-        filteredServices.filter { $0.expense }.reduce(0) { $0 + $1.amount }
+        filteredOccurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
     }
     var totalIncome: Double {
-        filteredServices.filter { !$0.expense }.reduce(0) { $0 + $1.amount }
+        filteredOccurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
     }
     
     var balance: Double{
@@ -34,7 +42,10 @@ struct ServicesList: View {
     @State var startDate = Date()
     
     @State var endDate =  Date()
+
+    @State var periodView: ServicesPeriodView = .list
     
+    @State var referenceDate = Date()
     
     @State var sortedMode : sortModeServices = .amountDes
     
@@ -82,6 +93,66 @@ struct ServicesList: View {
         }
         
     }
+
+    var selectedDateRange: DateInterval {
+        let calendar = Calendar.current
+        switch periodView {
+        case .list:
+            let start = min(startDate, endDate)
+            let end = max(startDate, endDate)
+            return DateInterval(start: start, end: end)
+        case .week:
+            return calendar.dateInterval(of: .weekOfYear, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
+        case .month:
+            return calendar.dateInterval(of: .month, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
+        case .year:
+            return calendar.dateInterval(of: .year, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
+        }
+    }
+
+    var dateRangeLabel: String {
+        let formatter = DateIntervalFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: selectedDateRange.start, to: selectedDateRange.end)
+    }
+
+    var filteredOccurrences: [ServiceOccurrence] {
+        let range = selectedDateRange
+        var occurrences = filteredServices.flatMap { $0.occurrences(in: range, calendar: .current) }
+        if periodView != .list {
+            occurrences.sort { $0.date < $1.date }
+        }
+        return occurrences
+    }
+
+    var groupedOccurrences: [(title: String, items: [ServiceOccurrence])] {
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+
+        switch periodView {
+        case .week:
+            formatter.dateFormat = "EEEE, MMM d"
+            let grouped = Dictionary(grouping: filteredOccurrences, by: { calendar.startOfDay(for: $0.date) })
+            return grouped.keys.sorted().map { key in
+                (formatter.string(from: key), grouped[key] ?? [])
+            }
+        case .month:
+            let grouped = Dictionary(grouping: filteredOccurrences, by: { calendar.component(.weekOfMonth, from: $0.date) })
+            return grouped.keys.sorted().map { key in
+                ("Week \(key)", grouped[key] ?? [])
+            }
+        case .year:
+            formatter.dateFormat = "MMMM"
+            let grouped = Dictionary(grouping: filteredOccurrences, by: { calendar.component(.month, from: $0.date) })
+            return grouped.keys.sorted().map { key in
+                let monthDate = calendar.date(from: DateComponents(year: calendar.component(.year, from: referenceDate), month: key, day: 1)) ?? referenceDate
+                return (formatter.string(from: monthDate), grouped[key] ?? [])
+            }
+        case .list:
+            return []
+        }
+    }
     
     @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("summaryServicesSelectd") var summarySelectd: summaryServicesMenu = .balance
@@ -90,9 +161,28 @@ struct ServicesList: View {
     var body: some View {
         List{
             Section(content: {
-                DatePicker("Start Date", selection: $startDate)
-                     
-                DatePicker("End Date", selection: $endDate)
+                Picker("View", selection: $periodView) {
+                    ForEach(ServicesPeriodView.allCases, id: \.self) { option in
+                        Text(LocalizedStringKey(option.rawValue))
+                            .tag(option)
+                    }
+                }
+                #if os(visionOS)
+                .pickerStyle(MenuPickerStyle())
+                #else
+                .pickerStyle(SegmentedPickerStyle())
+                #endif
+
+                if periodView == .list {
+                    DatePicker("Start Date", selection: $startDate)
+                         
+                    DatePicker("End Date", selection: $endDate)
+                } else {
+                    DatePicker("Reference Date", selection: $referenceDate, displayedComponents: .date)
+                    Text(dateRangeLabel)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                     
             }, header: {
                 Label("Date frame", systemImage: "calendar")
@@ -169,13 +259,31 @@ struct ServicesList: View {
                 }
             }
             
-            ForEach(filteredServices) { service in
-                NavigationLink(destination: ServiceDetailView(service: service) ) {
-                    ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
+            if periodView == .list {
+                ForEach(filteredOccurrences) { occurrence in
+                    NavigationLink(destination: ServiceDetailView(service: occurrence.service) ) {
+                        ServiceRow(BgColor: occurrence.service.wrappedColor, ServiceName: occurrence.service.wrappedName, Amount: occurrence.service.amount.toCurrencyString(), frequency: occurrence.service.frecuencyString, limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted), image: occurrence.service.image, expense: occurrence.service.expense)
+                    }
+                    .listRowBackground(occurrence.service.wrappedColor)
                 }
-                .listRowBackground(service.wrappedColor)
+                .onDelete { offsets in
+                    deleteOccurrences(at: offsets, in: filteredOccurrences)
+                }
+            } else {
+                ForEach(groupedOccurrences, id: \.title) { group in
+                    Section(header: Text(group.title)) {
+                        ForEach(group.items) { occurrence in
+                            NavigationLink(destination: ServiceDetailView(service: occurrence.service) ) {
+                                ServiceRow(BgColor: occurrence.service.wrappedColor, ServiceName: occurrence.service.wrappedName, Amount: occurrence.service.amount.toCurrencyString(), frequency: occurrence.service.frecuencyString, limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted), image: occurrence.service.image, expense: occurrence.service.expense)
+                            }
+                            .listRowBackground(occurrence.service.wrappedColor)
+                        }
+                        .onDelete { offsets in
+                            deleteOccurrences(at: offsets, in: group.items)
+                        }
+                    }
+                }
             }
-            .onDelete(perform: deleteService)
         }
         .toolbar{
             
@@ -259,18 +367,21 @@ struct ServicesList: View {
         .searchable(text: $searchQuery)
         #endif
     }
-    private func deleteService(at offsets: IndexSet) {
-           for index in offsets {
-               let service = services[index]
-               viewContext.delete(service)
-           }
-           do {
-               try viewContext.save()
-           } catch {
-               // Handle the error appropriately in a real app
-               print("Error saving context after delete: \(error.localizedDescription)")
-           }
-       }
+    private func deleteOccurrences(at offsets: IndexSet, in occurrences: [ServiceOccurrence]) {
+        var deletedIds = Set<NSManagedObjectID>()
+        for index in offsets {
+            let service = occurrences[index].service
+            if deletedIds.insert(service.objectID).inserted {
+                viewContext.delete(service)
+            }
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            // Handle the error appropriately in a real app
+            print("Error saving context after delete: \(error.localizedDescription)")
+        }
+    }
 }
 
 #Preview {

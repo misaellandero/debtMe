@@ -2,9 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "localizations" : {
 
-      }
     },
     " Fee " : {
       "localizations" : {
@@ -505,10 +503,6 @@
     "Click me!" : {
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Click me!"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -527,10 +521,6 @@
           }
         },
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¡Haz clic en mí!"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -549,10 +539,6 @@
           }
         },
         "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "私をクリックしてください！"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -2095,6 +2081,9 @@
         }
       }
     },
+    "Reference Date" : {
+
+    },
     "Return" : {
       "localizations" : {
         "es" : {
@@ -2830,6 +2819,9 @@
           }
         }
       }
+    },
+    "View" : {
+
     },
     "Wednesday" : {
       "localizations" : {
