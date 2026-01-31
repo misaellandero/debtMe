@@ -140,10 +140,29 @@ struct ServicesList: View {
         }
     }
 
+    var incomeTotalsByDay: [Date: Double] {
+        let calendar = Calendar.current
+        return filteredOccurrences.reduce(into: [:]) { partial, occurrence in
+            guard !occurrence.service.expense else { return }
+            let day = calendar.startOfDay(for: occurrence.date)
+            partial[day, default: 0] += occurrence.service.amount
+        }
+    }
+
     var expenseTotalsByMonth: [Date: Double] {
         let calendar = Calendar.current
         return filteredOccurrences.reduce(into: [:]) { partial, occurrence in
             guard occurrence.service.expense else { return }
+            let components = calendar.dateComponents([.year, .month], from: occurrence.date)
+            let month = calendar.date(from: components) ?? occurrence.date
+            partial[month, default: 0] += occurrence.service.amount
+        }
+    }
+
+    var incomeTotalsByMonth: [Date: Double] {
+        let calendar = Calendar.current
+        return filteredOccurrences.reduce(into: [:]) { partial, occurrence in
+            guard !occurrence.service.expense else { return }
             let components = calendar.dateComponents([.year, .month], from: occurrence.date)
             let month = calendar.date(from: components) ?? occurrence.date
             partial[month, default: 0] += occurrence.service.amount
@@ -458,22 +477,17 @@ struct ServicesList: View {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
         let isToday = calendar.isDateInToday(date)
-        let total = expenseTotalsByDay[calendar.startOfDay(for: date)] ?? 0
+        let dayKey = calendar.startOfDay(for: date)
+        let expenseTotal = expenseTotalsByDay[dayKey] ?? 0
+        let incomeTotal = incomeTotalsByDay[dayKey] ?? 0
+        let balanceTotal = incomeTotal - expenseTotal
 
         return VStack(alignment: .leading, spacing: 4) {
             Text("\(day)")
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(isToday ? Color.accentColor : Color.primary)
-            if total > 0 {
-                Text("-" + total.toCurrencyString())
-                    .font(.caption2)
-                    .foregroundColor(.red)
-            } else {
-                Text(" ")
-                    .font(.caption2)
-                    .foregroundStyle(.clear)
-            }
+            calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal)
         }
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
         .padding(6)
@@ -485,7 +499,9 @@ struct ServicesList: View {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: date)
         let monthStart = calendar.date(from: components) ?? date
-        let total = expenseTotalsByMonth[monthStart] ?? 0
+        let expenseTotal = expenseTotalsByMonth[monthStart] ?? 0
+        let incomeTotal = incomeTotalsByMonth[monthStart] ?? 0
+        let balanceTotal = incomeTotal - expenseTotal
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM"
 
@@ -493,8 +509,59 @@ struct ServicesList: View {
             Text(formatter.string(from: monthStart))
                 .font(.caption)
                 .fontWeight(.semibold)
-            if total > 0 {
-                Text("-" + total.toCurrencyString())
+            calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal)
+        }
+        .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+        .padding(8)
+        .background(Color.secondary.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+    }
+
+    @ViewBuilder
+    private func calendarSummaryLines(expenseTotal: Double, incomeTotal: Double, balanceTotal: Double) -> some View {
+        switch summarySelectd {
+        case .expense:
+            if expenseTotal > 0 {
+                Text("-" + expenseTotal.toCompactCurrencyString())
+                    .font(.caption2)
+                    .foregroundColor(.red)
+            } else {
+                Text(" ")
+                    .font(.caption2)
+                    .foregroundStyle(.clear)
+            }
+        case .income:
+            if incomeTotal > 0 {
+                Text(incomeTotal.toCompactCurrencyString())
+                    .font(.caption2)
+                    .foregroundColor(.blue)
+            } else {
+                Text(" ")
+                    .font(.caption2)
+                    .foregroundStyle(.clear)
+            }
+        case .balance:
+            if balanceTotal != 0 {
+                Text(balanceTotal.toCompactCurrencyString())
+                    .font(.caption2)
+                    .foregroundStyle(balanceTotal >= 0 ? Color.primary : Color.red)
+            } else {
+                Text(" ")
+                    .font(.caption2)
+                    .foregroundStyle(.clear)
+            }
+        case .all:
+            if incomeTotal > 0 {
+                Text(incomeTotal.toCompactCurrencyString())
+                    .font(.caption2)
+                    .foregroundColor(.blue)
+            } else {
+                Text(" ")
+                    .font(.caption2)
+                    .foregroundStyle(.clear)
+            }
+            if expenseTotal > 0 {
+                Text("-" + expenseTotal.toCompactCurrencyString())
                     .font(.caption2)
                     .foregroundColor(.red)
             } else {
@@ -503,10 +570,6 @@ struct ServicesList: View {
                     .foregroundStyle(.clear)
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
-        .padding(8)
-        .background(Color.secondary.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 
     private func deleteOccurrences(at offsets: IndexSet, in occurrences: [ServiceOccurrence]) {

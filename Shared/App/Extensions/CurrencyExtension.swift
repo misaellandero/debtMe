@@ -19,6 +19,13 @@ extension Double {
             return numberFormatter.string(from: NSNumber(value: 0.0)) ?? ""
         }
     }
-}
 
+    func toCompactCurrencyString(locale: Locale = .current) -> String {
+        if #available(iOS 15.0, macOS 12.0, visionOS 1.0, *) {
+            let code = locale.currency?.identifier ?? "USD"
+            return formatted(.currency(code: code).notation(.compactName).locale(locale))
+        }
+        return toCurrencyString(locale: locale)
+    }
+}
 
