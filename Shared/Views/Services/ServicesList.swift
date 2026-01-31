@@ -52,6 +52,11 @@ struct ServicesList: View {
     @State var calendarPeriod: CalendarPeriod = .month
 
     @State var referenceDate = Date()
+
+    @State private var showDetailSheet = false
+    @State private var detailRange: DateInterval?
+    @State private var detailTitle = ""
+    private let largeValueThreshold = 100_000.0
     
     @State var sortedMode : sortModeServices = .amountDes
     
@@ -200,6 +205,13 @@ struct ServicesList: View {
             calendar.date(byAdding: .month, value: monthOffset, to: interval.start)
         }
     }
+
+    var detailOccurrences: [ServiceOccurrence] {
+        guard let range = detailRange else { return [] }
+        return filteredServices
+            .flatMap { $0.occurrences(in: range, calendar: .current) }
+            .sorted { $0.date < $1.date }
+    }
     
     @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("summaryServicesSelectd") var summarySelectd: summaryServicesMenu = .balance
@@ -219,18 +231,8 @@ struct ServicesList: View {
         return VStack(alignment: .leading, spacing: 12) {
             switch calendarPeriod {
             case .week:
-                HStack {
-                    ForEach(weekdaySymbols, id: \.self) { symbol in
-                        Text(symbol)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-                LazyVGrid(columns: dayColumns, spacing: 8) {
-                    ForEach(weekDates, id: \.self) { date in
-                        dayCell(for: date)
-                    }
+                ForEach(weekDates, id: \.self) { date in
+                    weekRow(for: date)
                 }
             case .month:
                 HStack {
@@ -244,7 +246,7 @@ struct ServicesList: View {
                 LazyVGrid(columns: dayColumns, spacing: 8) {
                     ForEach(Array(monthGridDates.enumerated()), id: \.offset) { _, date in
                         if let date {
-                            dayCell(for: date)
+                            dayCell(for: date, compact: true)
                         } else {
                             Color.clear
                                 .frame(height: 44)
@@ -467,13 +469,39 @@ struct ServicesList: View {
         .sheet(isPresented: $showNewBill, content: {
             ServicesForm()
         })
+        .sheet(isPresented: $showDetailSheet) {
+            NavigationStack {
+                List {
+                    ForEach(detailOccurrences) { occurrence in
+                        NavigationLink(destination: ServiceDetailView(service: occurrence.service)) {
+                            ServiceRow(
+                                BgColor: occurrence.service.wrappedColor,
+                                ServiceName: occurrence.service.wrappedName,
+                                Amount: occurrence.service.amount.toCurrencyString(),
+                                frequency: occurrence.service.frecuencyString,
+                                limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
+                                image: occurrence.service.image,
+                                expense: occurrence.service.expense
+                            )
+                        }
+                        .listRowBackground(occurrence.service.wrappedColor)
+                    }
+                }
+                .navigationTitle(detailTitle)
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
+            }
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
         #if os(iOS)
         .navigationTitle("Bills")
         .searchable(text: $searchQuery)
-    #endif
+        #endif
     }
 
-    private func dayCell(for date: Date) -> some View {
+    private func dayCell(for date: Date, compact: Bool = false) -> some View {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
         let isToday = calendar.isDateInToday(date)
@@ -481,13 +509,24 @@ struct ServicesList: View {
         let expenseTotal = expenseTotalsByDay[dayKey] ?? 0
         let incomeTotal = incomeTotalsByDay[dayKey] ?? 0
         let balanceTotal = incomeTotal - expenseTotal
+        let isLarge = max(abs(expenseTotal), abs(incomeTotal), abs(balanceTotal)) >= largeValueThreshold
+        let titleFont: Font = compact ? .caption2 : .caption
+        let summaryFont: Font = compact ? .caption2 : .caption
 
         return VStack(alignment: .leading, spacing: 4) {
-            Text("\(day)")
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(isToday ? Color.accentColor : Color.primary)
-            calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal)
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(day)")
+                    .font(titleFont)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(isToday ? Color.accentColor : Color.primary)
+                Spacer()
+                detailButton(for: calendar.dateInterval(of: .day, for: date), title: date.formatted(date: .abbreviated, time: .omitted))
+            }
+            if isLarge {
+                pieSummary(expenseTotal: expenseTotal, incomeTotal: incomeTotal)
+            } else {
+                calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal, font: summaryFont)
+            }
         }
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
         .padding(6)
@@ -502,14 +541,23 @@ struct ServicesList: View {
         let expenseTotal = expenseTotalsByMonth[monthStart] ?? 0
         let incomeTotal = incomeTotalsByMonth[monthStart] ?? 0
         let balanceTotal = incomeTotal - expenseTotal
+        let isLarge = max(abs(expenseTotal), abs(incomeTotal), abs(balanceTotal)) >= largeValueThreshold
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM"
 
         return VStack(alignment: .leading, spacing: 6) {
-            Text(formatter.string(from: monthStart))
-                .font(.caption)
-                .fontWeight(.semibold)
-            calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal)
+            HStack(alignment: .firstTextBaseline) {
+                Text(formatter.string(from: monthStart))
+                    .font(.caption2)
+                    .fontWeight(.semibold)
+                Spacer()
+                detailButton(for: calendar.dateInterval(of: .month, for: monthStart), title: formatter.string(from: monthStart))
+            }
+            if isLarge {
+                pieSummary(expenseTotal: expenseTotal, incomeTotal: incomeTotal)
+            } else {
+                calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal, font: .caption2)
+            }
         }
         .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
         .padding(8)
@@ -518,58 +566,115 @@ struct ServicesList: View {
     }
 
     @ViewBuilder
-    private func calendarSummaryLines(expenseTotal: Double, incomeTotal: Double, balanceTotal: Double) -> some View {
+    private func calendarSummaryLines(expenseTotal: Double, incomeTotal: Double, balanceTotal: Double, font: Font) -> some View {
         switch summarySelectd {
         case .expense:
             if expenseTotal > 0 {
                 Text("-" + expenseTotal.toCompactCurrencyString())
-                    .font(.caption2)
+                    .font(font)
                     .foregroundColor(.red)
             } else {
                 Text(" ")
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(.clear)
             }
         case .income:
             if incomeTotal > 0 {
                 Text(incomeTotal.toCompactCurrencyString())
-                    .font(.caption2)
+                    .font(font)
                     .foregroundColor(.blue)
             } else {
                 Text(" ")
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(.clear)
             }
         case .balance:
             if balanceTotal != 0 {
                 Text(balanceTotal.toCompactCurrencyString())
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(balanceTotal >= 0 ? Color.primary : Color.red)
             } else {
                 Text(" ")
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(.clear)
             }
         case .all:
             if incomeTotal > 0 {
                 Text(incomeTotal.toCompactCurrencyString())
-                    .font(.caption2)
+                    .font(font)
                     .foregroundColor(.blue)
             } else {
                 Text(" ")
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(.clear)
             }
             if expenseTotal > 0 {
                 Text("-" + expenseTotal.toCompactCurrencyString())
-                    .font(.caption2)
+                    .font(font)
                     .foregroundColor(.red)
             } else {
                 Text(" ")
-                    .font(.caption2)
+                    .font(font)
                     .foregroundStyle(.clear)
             }
         }
+    }
+
+    private func weekRow(for date: Date) -> some View {
+        let calendar = Calendar.current
+        let dayKey = calendar.startOfDay(for: date)
+        let expenseTotal = expenseTotalsByDay[dayKey] ?? 0
+        let incomeTotal = incomeTotalsByDay[dayKey] ?? 0
+        let balanceTotal = incomeTotal - expenseTotal
+        let isLarge = max(abs(expenseTotal), abs(incomeTotal), abs(balanceTotal)) >= largeValueThreshold
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, MMM d"
+
+        return HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(formatter.string(from: date))
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                if isLarge {
+                    pieSummary(expenseTotal: expenseTotal, incomeTotal: incomeTotal)
+                } else {
+                    calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal, font: .footnote)
+                }
+            }
+            Spacer()
+            detailButton(for: calendar.dateInterval(of: .day, for: date), title: formatter.string(from: date))
+        }
+        .padding(8)
+        .background(Color.secondary.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+    }
+
+    private func detailButton(for range: DateInterval?, title: String) -> some View {
+        Button {
+            if let range {
+                detailRange = range
+                detailTitle = title
+                showDetailSheet = true
+            }
+        } label: {
+            Image(systemName: "plus.circle.fill")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func pieSummary(expenseTotal: Double, incomeTotal: Double) -> some View {
+        let total = max(expenseTotal + incomeTotal, 0.01)
+        let expenseValue = max(expenseTotal, 0)
+        let incomeValue = max(incomeTotal, 0)
+        return PieChartView(values: [expenseValue, incomeValue], colors: [.red, .blue])
+            .frame(width: 22, height: 22)
+            .overlay(
+                Circle()
+                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+            )
+            .accessibilityLabel(Text("Pie chart"))
     }
 
     private func deleteOccurrences(at offsets: IndexSet, in occurrences: [ServiceOccurrence]) {
@@ -586,6 +691,47 @@ struct ServicesList: View {
             // Handle the error appropriately in a real app
             print("Error saving context after delete: \(error.localizedDescription)")
         }
+    }
+}
+
+private struct PieChartView: View {
+    let values: [Double]
+    let colors: [Color]
+
+    var body: some View {
+        GeometryReader { geometry in
+            let total = values.reduce(0, +)
+            ZStack {
+                ForEach(values.indices, id: \.self) { index in
+                    let startAngle = angle(at: index, total: total)
+                    let endAngle = angle(at: index + 1, total: total)
+                    PieSlice(startAngle: startAngle, endAngle: endAngle)
+                        .fill(colors[index % colors.count])
+                }
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+    }
+
+    private func angle(at index: Int, total: Double) -> Angle {
+        let slice = values.prefix(index).reduce(0, +)
+        let ratio = total == 0 ? 0 : slice / total
+        return .degrees(ratio * 360.0 - 90.0)
+    }
+}
+
+private struct PieSlice: Shape {
+    let startAngle: Angle
+    let endAngle: Angle
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
+        path.move(to: center)
+        path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        path.closeSubpath()
+        return path
     }
 }
 
