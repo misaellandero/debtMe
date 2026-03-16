@@ -19,6 +19,8 @@ extension Payment {
     @NSManaged public var notes: String?
     @NSManaged public var amount: Double
     @NSManaged public var date: Date?
+    @NSManaged public var planned: Bool
+    @NSManaged public var reminderEnabled: Bool
     @NSManaged public var transaction: Transaction?
     @NSManaged public var image: Data?
     
@@ -49,6 +51,13 @@ extension Payment {
     }
     
     // MARK: - Computed properties 
+    public var notificationId: String {
+        "payment-\(wrappedId.uuidString)"
+    }
+    
+    public var isPlanned: Bool {
+        planned
+    }
      
 }
 

@@ -72,10 +72,24 @@ struct PaymentsTransactionsList: View {
                     Spacer()
                 } else {
                     LazyVStack(content: {
-                        
-                        ForEach(transaction.paymentsArray, id : \.id){ payment in
-                            PaymentRow(payment: payment, updateTotal: getTotals)
-                           
+                        if transaction.plannedPaymentsArray.count > 0 {
+                            Text("Scheduled Payments")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal)
+                            ForEach(transaction.plannedPaymentsArray, id : \.id){ payment in
+                                PaymentRow(payment: payment, updateTotal: getTotals)
+                            }
+                        }
+
+                        if transaction.actualPaymentsArray.count > 0 {
+                            Text("Payments")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal)
+                            ForEach(transaction.actualPaymentsArray, id : \.id){ payment in
+                                PaymentRow(payment: payment, updateTotal: getTotals)
+                            }
                         }
                         
                         EmptyPaymentView()
@@ -102,11 +116,8 @@ struct PaymentsTransactionsList: View {
         .navigationSubtitle(transaction.wrappedDes)
         #elseif os(macOS)
         .padding()
-        .toolbar {
-            ToolbarItem(placement:.automatic){
-                Text(transaction.wrappedDes) 
-            }
-        }
+        .navigationTitle("Payments")
+        .navigationSubtitle(transaction.wrappedDes)
         #endif
         .toolbar {
             ToolbarItem(placement: .automatic ){
@@ -151,7 +162,7 @@ struct PaymentsTransactionsList: View {
     
     func getTotals(){
         var total = 0.0
-        for payment in transaction.paymentsArray {
+        for payment in transaction.actualPaymentsArray {
             total += payment.amount
         }
         paymentTotal = total

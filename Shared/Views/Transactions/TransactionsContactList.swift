@@ -265,7 +265,7 @@ struct TransactionsContactList: View {
             
             let transaction = self.filteredAndOrderedTransactions[offset]
             
-            if !transaction.settled && transaction.paymentsArray.count != 0 {
+            if !transaction.settled && transaction.actualPaymentsArray.count != 0 {
                 transactionToDelete = transaction
                 showAlertDeletTransaction = true
             } else {

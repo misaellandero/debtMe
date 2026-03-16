@@ -95,6 +95,12 @@ struct TransactionsForm: View {
                 transactionModel.date = transaction.wrappedDateCreation
                 transactionModel.debt = transaction.debt
                 transactionModel.photo = transaction.image
+                if let estimatedDate = transaction.estimatedPaymentDate {
+                    transactionModel.hasEstimatedPaymentDate = true
+                    transactionModel.estimatedPaymentDate = estimatedDate
+                } else {
+                    transactionModel.hasEstimatedPaymentDate = false
+                }
             }
         }
     }
@@ -115,6 +121,7 @@ struct TransactionsForm: View {
             transaction.settled = transactionModel.settled
             transaction.debt = transactionModel.debt
             transaction.image =  transactionModel.photo
+            transaction.estimatedPaymentDate = transactionModel.hasEstimatedPaymentDate ? transactionModel.estimatedPaymentDate : nil
             try? self.moc.save()
             closeView()
         }
@@ -131,6 +138,7 @@ struct TransactionsForm: View {
         newTransaction.amount = transactionModel.amountNumber
         newTransaction.contact = contact
         newTransaction.image = transactionModel.photo
+        newTransaction.estimatedPaymentDate = transactionModel.hasEstimatedPaymentDate ? transactionModel.estimatedPaymentDate : nil
         newTransaction.contact?.sync.toggle()
         try? self.moc.save()
         
@@ -166,6 +174,17 @@ struct TransactionMultiPlataformForm: View {
             #else
                 .datePickerStyle(CompactDatePickerStyle())
             #endif
+        }
+        Section{
+            Toggle("Estimated payment date", isOn: $transactionModel.hasEstimatedPaymentDate)
+            if transactionModel.hasEstimatedPaymentDate {
+                DatePicker("Estimated payment date", selection: $transactionModel.estimatedPaymentDate)
+                    #if os(macOS)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    #else
+                    .datePickerStyle(CompactDatePickerStyle())
+                    #endif
+            }
         }
         Section{
             TextField("Description", text: $transactionModel.des)

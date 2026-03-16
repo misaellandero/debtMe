@@ -14,6 +14,8 @@ struct PaymentModel {
     var note : String
     var date : Date
     var payAll = false
+    var isPlanned = false
+    var reminderEnabled = false
     var photo : Data?
      
     var amountNumber : Double {
@@ -21,4 +23,3 @@ struct PaymentModel {
         return namount
     }
 }
-

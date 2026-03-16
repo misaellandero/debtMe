@@ -29,6 +29,8 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="planned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="reminderEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="payments" inverseEntity="Transaction"/>
     </entity>
     <entity name="Services" representedClassName="Services" syncable="YES">
@@ -36,11 +38,13 @@
         <attribute name="color" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="des" optional="YES" attributeType="String"/>
         <attribute name="expense" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="business_day_adjustment" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="frequency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="frequency_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="recurrence_end_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="amountUpdates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AmountUpdate" inverseName="service" inverseEntity="AmountUpdate"/>
         <relationship name="label" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactLabel" inverseName="services" inverseEntity="ContactLabel"/>
     </entity>
@@ -50,6 +54,7 @@
         <attribute name="dateSettled" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="debt" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="des" optional="YES" attributeType="String"/>
+        <attribute name="estimatedPaymentDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>

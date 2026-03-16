@@ -116,8 +116,15 @@ struct ServicesForm: View {
                 serviceModel.expense = service.expense
                 serviceModel.frecuencyIndex = Int(service.frequency)
                 serviceModel.frequencyDate = service.frequencyDate
+                serviceModel.businessDayAdjustmentIndex = Int(service.business_day_adjustment)
                 serviceLabel = service.label
                 serviceModel.image = service.image
+                if let endDate = service.recurrenceEndDate {
+                    serviceModel.hasEndDate = true
+                    serviceModel.endDate = endDate
+                } else {
+                    serviceModel.hasEndDate = false
+                }
             }
         }
     }
@@ -131,6 +138,8 @@ struct ServicesForm: View {
             service.expense =  serviceModel.expense
             service.frequency = Int16(serviceModel.frecuencyIndex)
             service.frequency_date = serviceModel.frequencyDate
+            service.business_day_adjustment = Int16(serviceModel.businessDayAdjustmentIndex)
+            service.recurrence_end_date = serviceModel.hasEndDate ? serviceModel.endDate : nil
             service.label = serviceLabel
             service.image = serviceModel.image
             
@@ -155,6 +164,8 @@ struct ServicesForm: View {
         service.expense =  serviceModel.expense
         service.frequency = Int16(serviceModel.frecuencyIndex)
         service.frequency_date = serviceModel.frequencyDate
+        service.business_day_adjustment = Int16(serviceModel.businessDayAdjustmentIndex)
+        service.recurrence_end_date = serviceModel.hasEndDate ? serviceModel.endDate : nil
         service.label = serviceLabel
         service.image = serviceModel.image
         
@@ -219,8 +230,10 @@ struct ServiceMultiPlataformForm : View {
                 switch service.frecuencyIndex {
                 case 0: //"Daily":
                     Text("Daily Fee")
-                case 1, 2: //"Weekly","Biweekly":
+                case 1: //"Weekly":
                     Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
+                case 2: //"Biweekly":
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee on 15 and last day")
                     
                 case 3, 4, 5: //"Monthly", "Quarterly", "Semester":
                     Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)")
@@ -230,10 +243,25 @@ struct ServiceMultiPlataformForm : View {
                     
                 case 7: //One time payment
                      Text(NSLocalizedString(ServicesModel.frequency[service.frecuencyIndex], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(service.frequencyDate.formatted(date: .abbreviated, time: .omitted)))
+                case 8: //Last day of month
+                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee")
                 default:
                     Text("Select Frequency")
                 }
+
+                Picker("Business day", selection: $service.businessDayAdjustmentIndex) {
+                    ForEach(0..<ServicesModel.businessDayAdjustments.count, id: \.self) { index in
+                        Text(LocalizedStringKey(ServicesModel.businessDayAdjustments[index])).tag(index)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
                 
+            }
+            Section {
+                Toggle("End date", isOn: $service.hasEndDate)
+                if service.hasEndDate {
+                    DatePicker("End date", selection: $service.endDate, displayedComponents: .date)
+                }
             }
             Section{
             #if os(macOS)

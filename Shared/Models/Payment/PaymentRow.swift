@@ -50,6 +50,15 @@ struct PaymentRow: View {
                         .font(.body)
                         HStack{
                             Text(payment.creationDateFormated)
+                            if payment.isPlanned {
+                                Text("Scheduled")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.secondary.opacity(0.15))
+                                    .clipShape(Capsule())
+                            }
                         }
                         .font(.caption)
                         
@@ -108,6 +117,11 @@ struct PaymentRow: View {
     }
     
     func delete(){
+        #if os(iOS)
+        if payment.isPlanned && payment.reminderEnabled {
+            LocalNotification.cancel(id: payment.notificationId)
+        }
+        #endif
         self.moc.delete(payment) 
         try? self.moc.save()
         updateTotal()

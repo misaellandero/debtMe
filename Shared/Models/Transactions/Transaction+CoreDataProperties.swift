@@ -21,6 +21,7 @@ extension Transaction {
     @NSManaged public var dateSettled: Date?
     @NSManaged public var debt: Bool
     @NSManaged public var des: String?
+    @NSManaged public var estimatedPaymentDate: Date?
     @NSManaged public var notes: String?
     @NSManaged public var id: UUID?
     @NSManaged public var settled: Bool
@@ -52,10 +53,14 @@ extension Transaction {
     public var wrappedDateCreation : Date {
         dateCreation ?? Date()
     }
+
+    public var wrappedEstimatedPaymentDate: Date {
+        estimatedPaymentDate ?? Date()
+    }
     
     //Transaction Settled Date
     public var wrappedDateSettled: Date {
-        if let lastPaymentDate = paymentsArray.first?.wrappedDateCreation {
+        if let lastPaymentDate = actualPaymentsArray.first?.wrappedDateCreation {
             return lastPaymentDate
         } else {
             return dateSettled ?? Date()
@@ -67,6 +72,10 @@ extension Transaction {
     public var transactionCreationDateFormated : String {
         //DateFormatter extension
         return DateFormatter.mediumDateTimeFormatter.string(from: wrappedDateCreation)
+    }
+
+    public var estimatedPaymentDateFormated: String {
+        DateFormatter.mediumDateTimeFormatter.string(from: wrappedEstimatedPaymentDate)
     }
     
     //Transaction Settled Date formated
@@ -85,7 +94,7 @@ extension Transaction {
     
     //Paymenys
     public var totalPayments : Double {
-        let sum = paymentsArray
+        let sum = actualPaymentsArray
             .map { $0.amount }
             .reduce(0, +)
         return sum
@@ -93,7 +102,7 @@ extension Transaction {
     
     //Balance
     public var totalBalance : Double {
-        let sum = paymentsArray
+        let sum = actualPaymentsArray
             .map { $0.amount }
             .reduce(0, +)
         let balance = amount - sum
@@ -113,6 +122,14 @@ extension Transaction {
         return set.sorted {
             $0.wrappedDateCreation > $1.wrappedDateCreation
         }
+    }
+
+    public var actualPaymentsArray: [Payment] {
+        paymentsArray.filter { !$0.isPlanned }
+    }
+
+    public var plannedPaymentsArray: [Payment] {
+        paymentsArray.filter { $0.isPlanned }
     }
 }
  

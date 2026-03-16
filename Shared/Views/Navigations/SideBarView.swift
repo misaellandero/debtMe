@@ -30,6 +30,11 @@ struct SideBarView: View {
                     Label("Contacts", systemImage: "person.2.fill")
                         .font(Font.system(.headline, design: .rounded).weight(.black))
                 }
+
+                NavigationLink(destination: ServicesList(), tag: SectionSelected.loans, selection: $sectionSelected) {
+                    Label("Bills", systemImage: "chart.bar.doc.horizontal")
+                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                }
                 
                 NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
                     Label("Settings", systemImage: "gear")

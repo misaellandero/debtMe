@@ -13,6 +13,8 @@ struct TransactionModel {
     var notes : String
     var date : Date
     var debt : Bool
+    var hasEstimatedPaymentDate = false
+    var estimatedPaymentDate : Date = Date()
     var settled = false
     var photo : Data?
      

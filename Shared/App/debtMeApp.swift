@@ -12,8 +12,7 @@ struct debtMeApp: App {
     //Coreda Data
     @StateObject var coreData = PersistentCloudKitContainer()
     // User preference settings
-    let userPreferences = UserPreferences()
-    
+    let userPreferences = UserPreferences() 
     var body: some Scene {
         WindowGroup {
             ContentView()

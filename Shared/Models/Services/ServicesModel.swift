@@ -10,7 +10,8 @@ import SwiftUI
 struct ServicesModel {
     
     // Arrays for date selection
-    static var frequency = ["Daily", "Weekly", "Biweekly", "Monthly", "Quarterly", "Semester", "Yearly","One time"]
+    static var frequency = ["Daily", "Weekly", "Biweekly", "Monthly", "Quarterly", "Semester", "Yearly", "One time", "Last day of month"]
+    static var businessDayAdjustments = ["Exact date", "Previous business day", "Next business day"]
     static let daysOfWeek : [LocalizedStringKey] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     static let daysOfMonth = Array(1...31)
     static let months = Array(1...12)
@@ -25,6 +26,9 @@ struct ServicesModel {
     var frecuencyIndex : Int = 0
      
     var frequencyDate : Date = Date()
+    var hasEndDate: Bool = false
+    var endDate: Date = Date()
+    var businessDayAdjustmentIndex: Int = 0
     var image: Data?
     var name : String = ""
     var colorIndex: Int = 0
@@ -64,7 +68,5 @@ struct ServicesModel {
             return dateFormatter.string(from: frequencyDate)
         }
 }
-
-
 
 

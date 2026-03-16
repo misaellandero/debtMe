@@ -7,6 +7,9 @@
     " " : {
 
     },
+    " Fee" : {
+
+    },
     " Fee " : {
       "localizations" : {
         "es" : {
@@ -38,6 +41,9 @@
           }
         }
       }
+    },
+    " Fee on 15 and last day" : {
+
     },
     " for their comments and ideas. If you have a suggestion or found an error, please send an email to hola@misaellandero.com." : {
       "extractionState" : "manual",
@@ -131,6 +137,7 @@
       }
     },
     "%@ Bills" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -147,6 +154,7 @@
       }
     },
     "%@ Contacts" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -436,6 +444,9 @@
         }
       }
     },
+    "Business day" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "es" : {
@@ -451,6 +462,9 @@
           }
         }
       }
+    },
+    "Categoria" : {
+
     },
     "CFBundleName" : {
       "comment" : "Bundle name",
@@ -593,6 +607,9 @@
         }
       }
     },
+    "Config" : {
+
+    },
     "Contact Me" : {
       "localizations" : {
         "es" : {
@@ -724,6 +741,7 @@
       }
     },
     "Date frame" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -932,7 +950,11 @@
         }
       }
     },
+    "End date" : {
+
+    },
     "End Date" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -947,6 +969,12 @@
           }
         }
       }
+    },
+    "Estimated" : {
+
+    },
+    "Estimated payment date" : {
+
     },
     "Expense" : {
       "localizations" : {
@@ -1043,6 +1071,9 @@
           }
         }
       }
+    },
+    "Gastos" : {
+
     },
     "Get the app on your iPhone, iPad, Mac and VisionPro" : {
       "localizations" : {
@@ -1884,6 +1915,9 @@
         }
       }
     },
+    "Orden/Filtro" : {
+
+    },
     "Original" : {
       "localizations" : {
         "es" : {
@@ -1980,6 +2014,9 @@
         }
       }
     },
+    "Payment reminder" : {
+
+    },
     "Payments" : {
       "localizations" : {
         "es" : {
@@ -1996,7 +2033,7 @@
         }
       }
     },
-    "Period" : {
+    "Periodo" : {
 
     },
     "Pie chart" : {
@@ -2057,6 +2094,9 @@
         }
       }
     },
+    "Profit" : {
+
+    },
     "Quality" : {
       "localizations" : {
         "es" : {
@@ -2090,7 +2130,10 @@
         }
       }
     },
-    "Reference Date" : {
+    "Reminder" : {
+
+    },
+    "Resumen" : {
 
     },
     "Return" : {
@@ -2157,6 +2200,18 @@
           }
         }
       }
+    },
+    "Scheduled" : {
+
+    },
+    "Scheduled payment" : {
+
+    },
+    "Scheduled Payment" : {
+
+    },
+    "Scheduled Payments" : {
+
     },
     "Search" : {
       "extractionState" : "manual",
@@ -2389,6 +2444,9 @@
         }
       }
     },
+    "Sin gastos en este periodo" : {
+
+    },
     "Sort alphabetically" : {
       "localizations" : {
         "es" : {
@@ -2438,6 +2496,7 @@
       }
     },
     "Start Date" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -2652,6 +2711,9 @@
         }
       }
     },
+    "Todos" : {
+
+    },
     "Toggle Status to Unpaid" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2813,6 +2875,9 @@
         }
       }
     },
+    "Ver todo" : {
+
+    },
     "Version %@" : {
       "localizations" : {
         "es" : {
@@ -2829,7 +2894,7 @@
         }
       }
     },
-    "View" : {
+    "Vista" : {
 
     },
     "Wednesday" : {

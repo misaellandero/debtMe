@@ -42,6 +42,10 @@ struct TransactionsRow: View {
                 }
                 VStack(alignment:.leading){
                     Label(transaction.transactionCreationDateFormated, systemImage: "calendar.badge.clock")
+                    if transaction.estimatedPaymentDate != nil {
+                        Label("Estimated", systemImage: "calendar")
+                        Text(transaction.estimatedPaymentDateFormated)
+                    }
                     
                     HStack{
                         if transaction.settled {

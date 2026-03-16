@@ -37,7 +37,11 @@ struct ContentView: View {
             if lockOnClose && !unlocked {
                 LockedView(unlock: authenticate)
             } else {
+                #if os(macOS)
+                SideBarView(sectionSelected: $sectionSelected)
+                #else
                 TabBarView()
+                #endif
             }
             WellcomeView()
         }

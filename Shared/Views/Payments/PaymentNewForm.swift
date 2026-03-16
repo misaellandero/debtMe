@@ -74,6 +74,8 @@ struct PaymentNewForm: View {
                 paymentModel.date = payment.wrappedDateCreation
                 paymentModel.note = payment.wrappedNotes
                 paymentModel.photo = payment.image
+                paymentModel.isPlanned = payment.isPlanned
+                paymentModel.reminderEnabled = payment.reminderEnabled
             }
         }
     }
@@ -83,6 +85,8 @@ struct PaymentNewForm: View {
         payment.date = paymentModel.date
         payment.notes = paymentModel.note
         payment.image = paymentModel.photo
+        payment.planned = paymentModel.isPlanned
+        payment.reminderEnabled = paymentModel.reminderEnabled
         if paymentModel.payAll {
             if payment.transaction!.totalBalance > 0 {
                 payment.amount = payment.transaction!.totalBalance
@@ -92,8 +96,8 @@ struct PaymentNewForm: View {
         {
             payment.amount = paymentModel.amountNumber
         }
-            
         
+        updateNotification(for: payment)
         try? self.moc.save()
         closeView()
         }
@@ -106,6 +110,8 @@ struct PaymentNewForm: View {
             payment.date = paymentModel.date
             payment.notes = paymentModel.note
             payment.image = paymentModel.photo
+            payment.planned = paymentModel.isPlanned
+            payment.reminderEnabled = paymentModel.reminderEnabled
             if paymentModel.payAll {
                 if transaction.totalBalance > 0 {
                     payment.amount = transaction.totalBalance
@@ -117,12 +123,24 @@ struct PaymentNewForm: View {
             }
             
             payment.transaction = transaction 
+            updateNotification(for: payment)
             //update balance
             try? self.moc.save()
             
             closeView()
             
         }
+    }
+
+    func updateNotification(for payment: Payment) {
+        #if os(iOS)
+        LocalNotification.cancel(id: payment.notificationId)
+        if payment.isPlanned && payment.reminderEnabled {
+            let title = NSLocalizedString("Scheduled Payment", comment: "")
+            let body = payment.transaction?.wrappedDes ?? NSLocalizedString("Payment reminder", comment: "")
+            LocalNotification.schedule(id: payment.notificationId, title: title, body: body, date: payment.wrappedDateCreation, isTimeSensitive: false)
+        }
+        #endif
     }
     
 }
@@ -147,9 +165,12 @@ struct PaymentMultiplatformForm: View {
                 .disabled(paymentModel.payAll)
                 .keyboardType(.decimalPad)
                 #endif
+            Toggle("Scheduled payment", isOn: $paymentModel.isPlanned.onChange(changePlanned))
+            Toggle("Reminder", isOn: $paymentModel.reminderEnabled)
+                .disabled(!paymentModel.isPlanned)
             if !edition {
                 Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
-               
+                    .disabled(paymentModel.isPlanned)
             }
         }
         
@@ -205,6 +226,14 @@ struct PaymentMultiplatformForm: View {
         }
             
         
+    }
+
+    func changePlanned(_ tag: Bool) {
+        if tag {
+            paymentModel.payAll = false
+        } else {
+            paymentModel.reminderEnabled = false
+        }
     }
     
     

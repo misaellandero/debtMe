@@ -29,16 +29,10 @@ struct ContactsList: View {
         Group{
             #if os(macOS)
             ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag, showingNewContactForm: $showingNewContactForm)
+            .navigationTitle("Contacts")
             .toolbar {
-                
-                ToolbarItem(placement: .navigation ){
-                    Text("\(Image(systemName: "person.2.fill")) Contacts")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
-                
-                ToolbarItem(placement: .navigation ){
+                ToolbarItem(placement: .automatic) {
                     SearchTextField(searchQuery: $searchQuery)
-                    
                 }
             }
             #else

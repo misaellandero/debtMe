@@ -17,10 +17,12 @@ extension Services {
     }
 
     @NSManaged public var amount: Double
+    @NSManaged public var business_day_adjustment: Int16
     @NSManaged public var des: String?
     @NSManaged public var expense: Bool
     @NSManaged public var frequency: Int16
     @NSManaged public var frequency_date: Date?
+    @NSManaged public var recurrence_end_date: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var image: Data?
     @NSManaged public var name: String?
@@ -54,6 +56,10 @@ extension Services {
     public var frequencyDate : Date {
         frequency_date ??  Date()
     }
+
+    public var recurrenceEndDate: Date? {
+        recurrence_end_date
+    }
     
     //Wrapped Amount
     public var wrappedAmount : Double {
@@ -62,6 +68,17 @@ extension Services {
         } else {
             return amount
         }
+    }
+
+    public enum BusinessDayAdjustment: Int16, CaseIterable {
+        case exact = 0
+        case previousBusinessDay = 1
+        case nextBusinessDay = 2
+    }
+
+    public var businessDayAdjustment: BusinessDayAdjustment {
+        get { BusinessDayAdjustment(rawValue: business_day_adjustment) ?? .exact }
+        set { business_day_adjustment = newValue.rawValue }
     }
     
     // MARK: - Computed properties
@@ -99,14 +116,18 @@ extension Services {
         switch frequency {
         case 0 ://"Daily":
             return NSLocalizedString("Daily Fee", comment: "")
-        case 1,2 : //"Weekly","Biweekly":
+        case 1 : //"Weekly":
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  (dayName ?? "")
+        case 2 : //"Biweekly":
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee on 15 and last day", comment: "")
         case 3,4,5:   //"Monthly", "Quarterly", "Semester":
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  String(frequencyDay)
         case 6: //"Yearly":
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") + NSLocalizedString("\(frequencyDay)", comment: "") + NSLocalizedString(" of ", comment: "") + NSLocalizedString("\(monthName ?? "")", comment: "")
         case 7: //One time payment
             return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(frequencyDate.formatted(date: .abbreviated, time: .omitted))
+        case 8: //Last day of month
+            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee", comment: "")
         default:
             return "Daily Fee"
         }
@@ -197,7 +218,18 @@ extension Services {
     func occurrences(in range: DateInterval, calendar: Calendar = .current) -> [ServiceOccurrence] {
         let start = calendar.startOfDay(for: range.start)
         let end = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: range.end) ?? range.end
-        let normalizedRange = DateInterval(start: start, end: end)
+        var effectiveEnd = end
+        if let recurrenceEndDate {
+            let endLimit = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: recurrenceEndDate) ?? recurrenceEndDate
+            if endLimit < start {
+                return []
+            }
+            effectiveEnd = min(end, endLimit)
+        }
+        if effectiveEnd < start {
+            return []
+        }
+        let normalizedRange = DateInterval(start: start, end: effectiveEnd)
         let anchor = calendar.startOfDay(for: frequencyDate)
         let anchorDay = calendar.component(.day, from: anchor)
         let anchorMonth = calendar.component(.month, from: anchor)
@@ -213,7 +245,7 @@ extension Services {
         case 1:
             return weeklyOccurrences(in: normalizedRange, anchor: anchor, weekInterval: 1, calendar: calendar)
         case 2:
-            return weeklyOccurrences(in: normalizedRange, anchor: anchor, weekInterval: 2, calendar: calendar)
+            return semiMonthlyOccurrences(in: normalizedRange, anchor: anchor, calendar: calendar)
         case 3:
             return monthlyOccurrences(in: normalizedRange, anchor: anchor, anchorDay: anchorDay, anchorMonth: anchorMonth, anchorYear: anchorYear, monthInterval: 1, calendar: calendar)
         case 4:
@@ -223,10 +255,13 @@ extension Services {
         case 6:
             return monthlyOccurrences(in: normalizedRange, anchor: anchor, anchorDay: anchorDay, anchorMonth: anchorMonth, anchorYear: anchorYear, monthInterval: 12, calendar: calendar)
         case 7:
-            if normalizedRange.contains(anchor) {
-                return [ServiceOccurrence(id: occurrenceId(for: anchor), service: self, date: anchor)]
+            let adjusted = adjustedForBusinessDay(anchor, calendar: calendar)
+            if normalizedRange.contains(adjusted) {
+                return [ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted)]
             }
             return []
+        case 8:
+            return lastDayOfMonthOccurrences(in: normalizedRange, anchor: anchor, calendar: calendar)
         default:
             return dailyOccurrences(in: normalizedRange, anchor: anchor, calendar: calendar)
         }
@@ -253,7 +288,10 @@ extension Services {
         while current <= range.end {
             let diffDays = calendar.dateComponents([.day], from: anchor, to: current).day ?? 0
             if diffDays >= 0 && diffDays % intervalDays == 0 {
-                dates.append(ServiceOccurrence(id: occurrenceId(for: current), service: self, date: current))
+                let adjusted = adjustedForBusinessDay(current, calendar: calendar)
+                if range.contains(adjusted) {
+                    dates.append(ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted))
+                }
                 guard let next = calendar.date(byAdding: .day, value: intervalDays, to: current) else { break }
                 current = next
             } else {
@@ -263,6 +301,48 @@ extension Services {
         }
 
         return dates
+    }
+
+    private func semiMonthlyOccurrences(in range: DateInterval, anchor: Date, calendar: Calendar) -> [ServiceOccurrence] {
+        let startMonth = calendar.date(from: DateComponents(year: calendar.component(.year, from: range.start), month: calendar.component(.month, from: range.start), day: 1)) ?? range.start
+        let endMonth = calendar.date(from: DateComponents(year: calendar.component(.year, from: range.end), month: calendar.component(.month, from: range.end), day: 1)) ?? range.end
+        let anchorMonthStart = calendar.date(from: DateComponents(year: calendar.component(.year, from: anchor), month: calendar.component(.month, from: anchor), day: 1)) ?? anchor
+
+        var dates: [ServiceOccurrence] = []
+        var monthCursor = startMonth
+
+        while monthCursor <= endMonth {
+            let monthDiff = calendar.dateComponents([.month], from: anchorMonthStart, to: monthCursor).month ?? 0
+            if monthDiff >= 0 {
+                let year = calendar.component(.year, from: monthCursor)
+                let month = calendar.component(.month, from: monthCursor)
+                if let midMonth = calendar.date(from: DateComponents(year: year, month: month, day: 15)),
+                   midMonth >= anchor,
+                   range.contains(midMonth) {
+                    let adjusted = adjustedForBusinessDay(midMonth, calendar: calendar)
+                    if range.contains(adjusted) {
+                        dates.append(ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted))
+                    }
+                }
+                if let monthStart = calendar.date(from: DateComponents(year: year, month: month, day: 1)),
+                   let daysRange = calendar.range(of: .day, in: .month, for: monthStart) {
+                    let lastDay = daysRange.count
+                    if let endMonthDate = calendar.date(from: DateComponents(year: year, month: month, day: lastDay)),
+                       endMonthDate >= anchor,
+                       range.contains(endMonthDate) {
+                        let adjusted = adjustedForBusinessDay(endMonthDate, calendar: calendar)
+                        if range.contains(adjusted) {
+                            dates.append(ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted))
+                        }
+                    }
+                }
+            }
+
+            guard let next = calendar.date(byAdding: .month, value: 1, to: monthCursor) else { break }
+            monthCursor = next
+        }
+
+        return dates.sorted { $0.date < $1.date }
     }
 
     private func monthlyOccurrences(in range: DateInterval, anchor: Date, anchorDay: Int, anchorMonth: Int, anchorYear: Int, monthInterval: Int, calendar: Calendar) -> [ServiceOccurrence] {
@@ -281,7 +361,44 @@ extension Services {
                 if let occurrenceDate = dateFor(year: year, month: month, day: anchorDay, calendar: calendar),
                    occurrenceDate >= anchor,
                    range.contains(occurrenceDate) {
-                    dates.append(ServiceOccurrence(id: occurrenceId(for: occurrenceDate), service: self, date: occurrenceDate))
+                    let adjusted = adjustedForBusinessDay(occurrenceDate, calendar: calendar)
+                    if range.contains(adjusted) {
+                        dates.append(ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted))
+                    }
+                }
+            }
+
+            guard let next = calendar.date(byAdding: .month, value: 1, to: monthCursor) else { break }
+            monthCursor = next
+        }
+
+        return dates
+    }
+
+    private func lastDayOfMonthOccurrences(in range: DateInterval, anchor: Date, calendar: Calendar) -> [ServiceOccurrence] {
+        let startMonth = calendar.date(from: DateComponents(year: calendar.component(.year, from: range.start), month: calendar.component(.month, from: range.start), day: 1)) ?? range.start
+        let endMonth = calendar.date(from: DateComponents(year: calendar.component(.year, from: range.end), month: calendar.component(.month, from: range.end), day: 1)) ?? range.end
+        let anchorMonthStart = calendar.date(from: DateComponents(year: calendar.component(.year, from: anchor), month: calendar.component(.month, from: anchor), day: 1)) ?? anchor
+
+        var dates: [ServiceOccurrence] = []
+        var monthCursor = startMonth
+
+        while monthCursor <= endMonth {
+            let monthDiff = calendar.dateComponents([.month], from: anchorMonthStart, to: monthCursor).month ?? 0
+            if monthDiff >= 0 {
+                let year = calendar.component(.year, from: monthCursor)
+                let month = calendar.component(.month, from: monthCursor)
+                if let monthStart = calendar.date(from: DateComponents(year: year, month: month, day: 1)),
+                   let daysRange = calendar.range(of: .day, in: .month, for: monthStart) {
+                    let lastDay = daysRange.count
+                    if let occurrenceDate = calendar.date(from: DateComponents(year: year, month: month, day: lastDay)),
+                       occurrenceDate >= anchor,
+                       range.contains(occurrenceDate) {
+                        let adjusted = adjustedForBusinessDay(occurrenceDate, calendar: calendar)
+                        if range.contains(adjusted) {
+                            dates.append(ServiceOccurrence(id: occurrenceId(for: adjusted), service: self, date: adjusted))
+                        }
+                    }
                 }
             }
 
@@ -308,6 +425,35 @@ extension Services {
         }
         let components = DateComponents(weekday: weekday)
         return calendar.nextDate(after: date, matching: components, matchingPolicy: .nextTimePreservingSmallerComponents) ?? date
+    }
+
+    private func adjustedForBusinessDay(_ date: Date, calendar: Calendar) -> Date {
+        switch businessDayAdjustment {
+        case .exact:
+            return date
+        case .previousBusinessDay:
+            return previousBusinessDay(from: date, calendar: calendar)
+        case .nextBusinessDay:
+            return nextBusinessDay(from: date, calendar: calendar)
+        }
+    }
+
+    private func previousBusinessDay(from date: Date, calendar: Calendar) -> Date {
+        var current = date
+        while calendar.isDateInWeekend(current) {
+            guard let next = calendar.date(byAdding: .day, value: -1, to: current) else { break }
+            current = next
+        }
+        return current
+    }
+
+    private func nextBusinessDay(from date: Date, calendar: Calendar) -> Date {
+        var current = date
+        while calendar.isDateInWeekend(current) {
+            guard let next = calendar.date(byAdding: .day, value: 1, to: current) else { break }
+            current = next
+        }
+        return current
     }
 
     private func occurrenceId(for date: Date) -> String {
