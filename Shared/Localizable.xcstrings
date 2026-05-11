@@ -395,6 +395,9 @@
         }
       }
     },
+    "Back" : {
+
+    },
     "Balance" : {
       "localizations" : {
         "es" : {
@@ -412,6 +415,7 @@
       }
     },
     "Bills" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -518,6 +522,7 @@
       }
     },
     "Click me!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "variations" : {
@@ -627,6 +632,7 @@
       }
     },
     "Contacts" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -1705,6 +1711,9 @@
         }
       }
     },
+    "Next income %@" : {
+
+    },
     "No records found!" : {
       "localizations" : {
         "es" : {
@@ -1720,6 +1729,9 @@
           }
         }
       }
+    },
+    "No services due" : {
+
     },
     "Not paid" : {
       "localizations" : {
@@ -2033,6 +2045,9 @@
         }
       }
     },
+    "People" : {
+
+    },
     "Periodo" : {
 
     },
@@ -2328,6 +2343,9 @@
           }
         }
       }
+    },
+    "Services" : {
+
     },
     "Settings" : {
       "localizations" : {

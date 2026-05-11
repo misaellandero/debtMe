@@ -29,7 +29,7 @@ struct ContactsList: View {
         Group{
             #if os(macOS)
             ContactsRows(searchQuery: $searchQuery, shortMode: $shortMode, selectedTag: $selectedTag, showingNewContactForm: $showingNewContactForm)
-            .navigationTitle("Contacts")
+            .navigationTitle("People")
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     SearchTextField(searchQuery: $searchQuery)
@@ -41,7 +41,7 @@ struct ContactsList: View {
             .searchable(text: $searchQuery)
             .listStyle(InsetGroupedListStyle())
             .navigationBarBackButtonHidden(true)
-            .navigationBarTitle(Text("Contacts"))
+            .navigationBarTitle(Text("People"))
             
             #endif
         }

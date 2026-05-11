@@ -22,7 +22,7 @@ struct ContentView: View {
     #endif
     
     // MARK: - current section selected 
-    @State var sectionSelected : SectionSelected? = .contacts
+    @State private var sectionSelected: SectionSelected = .contacts
   
     // MARK: - LocalAuthentication Security Context
     let context = LAContext()

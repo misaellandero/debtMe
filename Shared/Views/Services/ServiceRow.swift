@@ -15,6 +15,7 @@ struct ServiceRow: View {
     var limitDate: String
     var image : Data?
     var expense : Bool = true
+    var useAdaptiveText: Bool = false
     var body: some View {
         VStack{
             HStack{
@@ -40,7 +41,7 @@ struct ServiceRow: View {
                 
             }
             .bold()
-            .foregroundColor(.white)
+            .foregroundStyle(useAdaptiveText ? Color.primary : Color.white)
             .listRowBackground(BgColor)
             HStack{
                 Spacer()

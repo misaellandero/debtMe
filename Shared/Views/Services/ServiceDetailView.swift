@@ -10,6 +10,7 @@ import SwiftUI
 struct ServiceDetailView: View {
     @ObservedObject var service : Services
     @State var showEdit = false
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         List{
             
@@ -17,7 +18,6 @@ struct ServiceDetailView: View {
                 ServiceRow(BgColor: service.wrappedColor, ServiceName: service.wrappedName, Amount: service.amount.toCurrencyString(), frequency: service.frecuencyString, limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
                 Text(service.wrappedDes)
                     .multilineTextAlignment(.leading)
-                    .foregroundStyle(.white)
             } 
             .listRowBackground(service.wrappedColor)
             Section("History"){
@@ -27,8 +27,8 @@ struct ServiceDetailView: View {
         .navigationTitle(service.wrappedName)
         .toolbar{
             #if os(macOS)
-            ToolbarItem(placement:.automatic){
-                Text(service.wrappedName)
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close") { dismiss() }
             }
             #endif
             ToolbarItem(placement:.primaryAction){

@@ -19,8 +19,10 @@ enum ServicesViewMode: String, CaseIterable {
 enum CalendarPeriod: String, CaseIterable {
     case day = "Day"
     case week = "Week"
+    case fortnight = "Fortnight"
     case month = "Month"
     case year = "Year"
+    case untilNextIncome = "Until Next Income"
 }
 
 struct ServicesList: View {
@@ -87,10 +89,20 @@ struct ServicesList: View {
 
     @AppStorage("servicesReferenceDate") private var referenceDateTimestamp: Double = Date().timeIntervalSince1970
 
+    @AppStorage("servicesNextIncomeDayOfMonth") private var nextIncomeDayOfMonth: Int = 15
+
+    @State private var previousCalendarPeriod: CalendarPeriod = .month
+    @State private var previousViewMode: ServicesViewMode = .list
+
     @State private var showDetailSheet = false
     @State private var detailRange: DateInterval?
     @State private var detailTitle = ""
     @State private var showAllEntriesSheet = false
+    #if os(macOS)
+    @State private var inspectorDate: Date?
+    @State private var showInspector = false
+    @State private var macOSSelectedService: Services?
+    #endif
     private let largeValueThreshold = 100_000.0
     
     @State var sortedMode : sortModeServices = .amountDes
@@ -149,10 +161,80 @@ struct ServicesList: View {
             return DateInterval(start: start, end: end)
         case .week:
             return calendar.dateInterval(of: .weekOfYear, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
+        case .fortnight:
+            return fortnightRange(for: referenceDate, calendar: calendar)
         case .month:
             return calendar.dateInterval(of: .month, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
         case .year:
             return calendar.dateInterval(of: .year, for: referenceDate) ?? DateInterval(start: referenceDate, end: referenceDate)
+        case .untilNextIncome:
+            return untilNextIncomeRange(from: Date(), incomeDayOfMonth: nextIncomeDayOfMonth, calendar: calendar)
+        }
+    }
+
+    private var nextIncomeDate: Date {
+        nextIncomeDate(from: Date(), incomeDayOfMonth: nextIncomeDayOfMonth, calendar: .current)
+    }
+
+    private var nextIncomeLabel: String {
+        nextIncomeDate.formatted(.dateTime.day().month(.abbreviated).year())
+    }
+
+    private func nextIncomeDate(from now: Date, incomeDayOfMonth: Int, calendar: Calendar) -> Date {
+        let start = calendar.startOfDay(for: now)
+        let clampedIncomeDay = max(1, min(31, incomeDayOfMonth))
+
+        func dateForIncomeDay(in monthStart: Date) -> Date {
+            let year = calendar.component(.year, from: monthStart)
+            let month = calendar.component(.month, from: monthStart)
+            let safeDay: Int
+            if let daysRange = calendar.range(of: .day, in: .month, for: monthStart) {
+                safeDay = min(clampedIncomeDay, daysRange.count)
+            } else {
+                safeDay = clampedIncomeDay
+            }
+            return calendar.date(from: DateComponents(year: year, month: month, day: safeDay)) ?? monthStart
+        }
+
+        let currentMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: start)) ?? start
+        let candidate = dateForIncomeDay(in: currentMonthStart)
+
+        if candidate > start {
+            return candidate
+        }
+
+        let nextMonthStart = calendar.date(byAdding: .month, value: 1, to: currentMonthStart) ?? currentMonthStart
+        return dateForIncomeDay(in: nextMonthStart)
+    }
+
+    private func untilNextIncomeRange(from now: Date, incomeDayOfMonth: Int, calendar: Calendar) -> DateInterval {
+        let start = calendar.startOfDay(for: now)
+        let nextIncomeDate = nextIncomeDate(from: start, incomeDayOfMonth: incomeDayOfMonth, calendar: calendar)
+
+        let end = calendar.date(byAdding: .day, value: -1, to: nextIncomeDate) ?? start
+        return DateInterval(start: start, end: max(start, end))
+    }
+
+    private func fortnightRange(for date: Date, calendar: Calendar) -> DateInterval {
+        let comps = calendar.dateComponents([.year, .month, .day], from: date)
+        let year = comps.year ?? calendar.component(.year, from: date)
+        let month = comps.month ?? calendar.component(.month, from: date)
+        let day = comps.day ?? calendar.component(.day, from: date)
+
+        let monthStart = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? date
+        let daysInMonth = calendar.range(of: .day, in: .month, for: monthStart)?.count ?? 30
+
+        if day <= 15 {
+            let start = monthStart
+            let endDay = min(15, daysInMonth)
+            let end = calendar.date(from: DateComponents(year: year, month: month, day: endDay)) ?? monthStart
+            let endOfDay = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: end))?.addingTimeInterval(-1) ?? end
+            return DateInterval(start: calendar.startOfDay(for: start), end: endOfDay)
+        } else {
+            let start = calendar.date(from: DateComponents(year: year, month: month, day: 16)) ?? monthStart
+            let end = calendar.date(from: DateComponents(year: year, month: month, day: daysInMonth)) ?? monthStart
+            let endOfDay = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: end))?.addingTimeInterval(-1) ?? end
+            return DateInterval(start: calendar.startOfDay(for: start), end: endOfDay)
         }
     }
 
@@ -251,12 +333,23 @@ struct ServicesList: View {
 
     private var calendarDayCellHeightCompact: CGFloat { 96 }
     private var calendarHeaderHeight: CGFloat { 24 }
+    private var calendarCellCornerRadius: CGFloat { 12 }
+    private var calendarCardCornerRadius: CGFloat { 18 }
 
     var monthGridHeight: CGFloat {
         let rowHeight = calendarHeaderHeight + 4 + calendarDayCellHeightCompact
         let spacing: CGFloat = 8
         let rows = CGFloat(weekdaySymbols.count)
         return rows * rowHeight + max(0, rows - 1) * spacing
+    }
+
+    private var macOSMonthCalendarHeight: CGFloat {
+        let titleHeight: CGFloat = 72
+        let weekdayHeaderHeight: CGFloat = 18
+        let spacing: CGFloat = 8
+        let rows = CGFloat(monthGridWeeksCount)
+        let gridHeight = rows * calendarDayCellHeightCompact + max(0, rows - 1) * spacing
+        return titleHeight + spacing + weekdayHeaderHeight + spacing + gridHeight
     }
 
     var yearGridHeight: CGFloat {
@@ -286,6 +379,7 @@ struct ServicesList: View {
 
     var calendarView: some View {
         let monthColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+        let weekColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
 
         return VStack(alignment: .leading, spacing: 12) {
             switch calendarPeriod {
@@ -295,12 +389,20 @@ struct ServicesList: View {
                 ForEach(weekDates, id: \.self) { date in
                     weekRow(for: date)
                 }
+            case .fortnight:
+                LazyVGrid(columns: weekColumns, spacing: 8) {
+                    ForEach(fortnightDates, id: \.self) { date in
+                        dayCell(for: date, compact: true)
+                    }
+                }
             case .month:
+                #if os(macOS)
+                macOSMonthCalendar
+                #else
                 let monthTitle = referenceDate.formatted(.dateTime.month(.wide).year())
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(monthTitle)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.secondary)
+            Text(monthTitle)
+                .font(.subheadline.weight(.semibold))
                     ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { row, symbol in
                         VStack(alignment: .leading, spacing: 4) {
                             weekdayHeaderCell(symbol: symbol)
@@ -319,6 +421,7 @@ struct ServicesList: View {
                     }
                 }
                 .frame(minHeight: monthGridHeight)
+                #endif
             case .year:
                 LazyVGrid(columns: monthColumns, spacing: 12) {
                     ForEach(yearMonthStarts, id: \.self) { date in
@@ -327,25 +430,29 @@ struct ServicesList: View {
                 }
                 .frame(minHeight: yearGridHeight)
                 .fixedSize(horizontal: false, vertical: true)
+            case .untilNextIncome:
+                EmptyView()
             }
         }
     }
         
     var body: some View {
-        ZStack(alignment: .bottom) {
-            List{
-            if ShowSummary {
+        let listContent = List {
+            #if os(macOS)
+            let shouldShowSummary = ShowSummary && viewMode != .calendar
+            #else
+            let shouldShowSummary = ShowSummary
+            #endif
+            if shouldShowSummary {
                 Section {
                     summaryHeader
                 }
             }
-            
+
             if viewMode == .list {
                 ForEach(cachedOccurrences) { occurrence in
-                    NavigationLink(destination: ServiceDetailView(service: occurrence.service) ) {
-                        ServiceRow(BgColor: occurrence.service.wrappedColor, ServiceName: occurrence.service.wrappedName, Amount: occurrence.service.amount.toCurrencyString(), frequency: occurrence.service.frecuencyString, limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted), image: occurrence.service.image, expense: occurrence.service.expense)
-                    }
-                    .listRowBackground(occurrence.service.wrappedColor)
+                    serviceRow(for: occurrence)
+                        .listRowBackground(occurrence.service.wrappedColor)
                 }
                 .onDelete { offsets in
                     deleteOccurrences(at: offsets, in: cachedOccurrences)
@@ -353,20 +460,23 @@ struct ServicesList: View {
             } else {
                 Section {
                     calendarView
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
-            .layoutPriority(1)
+
+        return listContent
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            #if os(iOS) || os(visionOS)
+            floatingDateNavigatorIOS
+                .padding(.horizontal, 20)
+                .padding(.bottom, 12)
+            #elseif os(macOS)
+            floatingDateNavigator
+            #else
+            EmptyView()
+            #endif
         }
-        #if os(iOS)
-        .safeAreaInset(edge: .bottom) {
-            if viewMode == .calendar {
-                floatingDateNavigatorIOS
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 12)
-            }
-        }
-        #endif
         .toolbar{
             #if os(macOS)
             ToolbarItem(placement: .automatic) {
@@ -545,20 +655,34 @@ struct ServicesList: View {
             .presentationDragIndicator(.visible)
         }
         #if os(iOS)
-        .navigationTitle("Bills")
+        .navigationTitle("Services")
         .searchable(text: $searchQuery)
         #endif
         #if os(macOS)
-        .navigationTitle("Bills")
+        .navigationTitle("Services")
         #endif
         .onAppear(perform: updateCachedOccurrences)
         .onChange(of: referenceDateTimestamp) { updateCachedOccurrences() }
-        .onChange(of: calendarPeriod) { updateCachedOccurrences() }
+        .onChange(of: calendarPeriod) { oldValue, newValue in
+            if newValue == .untilNextIncome, oldValue != .untilNextIncome {
+                previousCalendarPeriod = oldValue
+                previousViewMode = viewMode
+                viewMode = .list
+            } else if oldValue == .untilNextIncome, newValue != .untilNextIncome {
+                viewMode = previousViewMode
+            }
+            updateCachedOccurrences()
+        }
         .onChange(of: viewMode) { updateCachedOccurrences() }
         .onChange(of: selectedTag) { updateCachedOccurrences() }
         .onChange(of: searchQuery) { updateCachedOccurrences() }
         .onChange(of: sortedMode) { updateCachedOccurrences() }
         .onChange(of: services.count) { updateCachedOccurrences() }
+        #if os(macOS)
+        .inspector(isPresented: $showInspector) {
+            macOSInspectorContent
+        }
+        #endif
     }
 
     private func dayCell(for date: Date, compact: Bool = false) -> some View {
@@ -591,10 +715,15 @@ struct ServicesList: View {
         }
         .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: cellHeight, alignment: .leading)
         .padding(10)
-        .background(Color.secondary.opacity(0.12), in: Capsule())
-        .contentShape(Capsule())
+        .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .onTapGesture {
+            #if os(macOS)
+            inspectorDate = date
+            showInspector = true
+            #else
             openDetail(range: calendar.dateInterval(of: .day, for: date), title: date.formatted(date: .abbreviated, time: .omitted))
+            #endif
         }
     }
 
@@ -617,7 +746,7 @@ struct ServicesList: View {
         .frame(maxWidth: .infinity, minHeight: 76, maxHeight: 76, alignment: .leading)
         .padding(8)
         .background(Color.secondary.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .contentShape(Rectangle())
         .onTapGesture {
             openDetail(range: calendar.dateInterval(of: .month, for: monthStart), title: formatter.string(from: monthStart))
@@ -725,7 +854,7 @@ struct ServicesList: View {
         .frame(maxWidth: .infinity, minHeight: 72, maxHeight: 72, alignment: .leading)
         .padding(8)
         .background(Color.secondary.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .contentShape(Rectangle())
         .onTapGesture {
             openDetail(range: calendar.dateInterval(of: .day, for: date), title: formatter.string(from: date))
@@ -803,14 +932,18 @@ struct ServicesList: View {
     }
 
     var summaryHeader: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Balance")
+        let isNextIncomeRange = calendarPeriod == .untilNextIncome
+        let summaryTitle = isNextIncomeRange ? "Due Before Next Income" : "Balance"
+        let summaryAmount = isNextIncomeRange ? (periodExpenses - periodIncome) : balance
+
+        return VStack(alignment: .leading, spacing: 12) {
+            Text(summaryTitle)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(balance.toCurrencyString())
+            Text(summaryAmount.toCurrencyString())
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundStyle(balance >= 0 ? Color.primary : Color.red)
+                .foregroundStyle(summaryAmount >= 0 ? Color.primary : Color.red)
             expenseChart
             HStack(alignment: .center, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -839,6 +972,9 @@ struct ServicesList: View {
 
     @ViewBuilder
     var expenseChart: some View {
+        #if os(macOS)
+        EmptyView()
+        #else
         #if canImport(Charts)
         if #available(iOS 16.0, macOS 13.0, visionOS 1.0, *) {
             Chart(expenseChartData) { point in
@@ -870,6 +1006,7 @@ struct ServicesList: View {
         #else
         EmptyView()
         #endif
+        #endif
     }
 
     var expenseChartData: [ExpenseChartPoint] {
@@ -892,6 +1029,21 @@ struct ServicesList: View {
             let formatter = DateFormatter()
             formatter.dateFormat = "EEE"
             return weekDates.map { date in
+                let key = calendar.startOfDay(for: date)
+                let expenseTotal = expenseTotalsByDay[key] ?? 0
+                let incomeTotal = incomeTotalsByDay[key] ?? 0
+                let profitTotal = incomeTotal - expenseTotal
+                return [
+                    ExpenseChartPoint(label: formatter.string(from: date), value: expenseTotal, category: "Expenses"),
+                    ExpenseChartPoint(label: formatter.string(from: date), value: incomeTotal, category: "Income"),
+                    ExpenseChartPoint(label: formatter.string(from: date), value: profitTotal, category: "Profit")
+                ]
+            }
+            .flatMap { $0 }
+        case .fortnight:
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d MMM"
+            return fortnightDates.map { date in
                 let key = calendar.startOfDay(for: date)
                 let expenseTotal = expenseTotalsByDay[key] ?? 0
                 let incomeTotal = incomeTotalsByDay[key] ?? 0
@@ -951,7 +1103,29 @@ struct ServicesList: View {
                     ExpenseChartPoint(label: label, value: profitTotal, category: "Profit")
                 ]
             }
+        case .untilNextIncome:
+            let expenseTotal = expenses.reduce(0) { $0 + $1.service.amount }
+            let incomeTotal = incomes.reduce(0) { $0 + $1.service.amount }
+            let profitTotal = incomeTotal - expenseTotal
+            return [
+                ExpenseChartPoint(label: "Period", value: expenseTotal, category: "Expenses"),
+                ExpenseChartPoint(label: "Period", value: incomeTotal, category: "Income"),
+                ExpenseChartPoint(label: "Period", value: profitTotal, category: "Profit")
+            ]
         }
+    }
+
+    private var fortnightDates: [Date] {
+        let calendar = Calendar.current
+        let range = selectedDateRange
+        var current = calendar.startOfDay(for: range.start)
+        let end = calendar.startOfDay(for: range.end)
+        var out: [Date] = []
+        while current <= end {
+            out.append(current)
+            current = calendar.date(byAdding: .day, value: 1, to: current) ?? current.addingTimeInterval(86_400)
+        }
+        return out
     }
 
     var expenseChartMax: Double {
@@ -967,14 +1141,52 @@ struct ServicesList: View {
             component = .day
         case .week:
             component = .weekOfYear
+        case .fortnight:
+            shiftReferenceDateByFortnight(direction: direction, calendar: calendar)
+            return
         case .month:
             component = .month
         case .year:
             component = .year
+        case .untilNextIncome:
+            component = .month
         }
         if let next = calendar.date(byAdding: component, value: direction, to: referenceDate) {
             referenceDateTimestamp = next.timeIntervalSince1970
         }
+    }
+
+    private func shiftReferenceDateByFortnight(direction: Int, calendar: Calendar) {
+        let comps = calendar.dateComponents([.year, .month, .day], from: referenceDate)
+        let year = comps.year ?? calendar.component(.year, from: referenceDate)
+        let month = comps.month ?? calendar.component(.month, from: referenceDate)
+        let day = comps.day ?? calendar.component(.day, from: referenceDate)
+
+        let monthStart = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? referenceDate
+        let isFirstHalf = day <= 15
+
+        let newDate: Date
+        if direction > 0 {
+            if isFirstHalf {
+                newDate = calendar.date(from: DateComponents(year: year, month: month, day: 16)) ?? referenceDate
+            } else {
+                let nextMonthStart = calendar.date(byAdding: .month, value: 1, to: monthStart) ?? referenceDate
+                let nextComps = calendar.dateComponents([.year, .month], from: nextMonthStart)
+                newDate = calendar.date(from: DateComponents(year: nextComps.year, month: nextComps.month, day: 1)) ?? referenceDate
+            }
+        } else {
+            if isFirstHalf {
+                let prevMonthStart = calendar.date(byAdding: .month, value: -1, to: monthStart) ?? referenceDate
+                let prevComps = calendar.dateComponents([.year, .month], from: prevMonthStart)
+                let daysInPrevMonth = calendar.range(of: .day, in: .month, for: prevMonthStart)?.count ?? 30
+                let startDay = min(16, daysInPrevMonth)
+                newDate = calendar.date(from: DateComponents(year: prevComps.year, month: prevComps.month, day: startDay)) ?? referenceDate
+            } else {
+                newDate = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? referenceDate
+            }
+        }
+
+        referenceDateTimestamp = newDate.timeIntervalSince1970
     }
 
     #if os(macOS)
@@ -989,27 +1201,42 @@ struct ServicesList: View {
             .labelsHidden()
             .pickerStyle(.menu)
 
-            Button {
-                shiftReferenceDate(by: -1)
-            } label: {
-                Image(systemName: "chevron.left")
-            }
-            .buttonStyle(.plain)
+            if calendarPeriod == .untilNextIncome {
+                Button {
+                    calendarPeriod = previousCalendarPeriod
+                    viewMode = previousViewMode
+                } label: {
+                    Image(systemName: "arrow.uturn.left")
+                }
+                .buttonStyle(.plain)
 
-            DatePicker(
-                "",
-                selection: referenceDateBinding,
-                displayedComponents: .date
-            )
-            .labelsHidden()
-            .datePickerStyle(.compact)
+                Text("Next income \(nextIncomeLabel)")
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(.thinMaterial, in: Capsule())
+            } else {
+                Button {
+                    shiftReferenceDate(by: -1)
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                .buttonStyle(.plain)
 
-            Button {
-                shiftReferenceDate(by: 1)
-            } label: {
-                Image(systemName: "chevron.right")
+                Text(dateRangeLabel)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+
+                Button {
+                    shiftReferenceDate(by: 1)
+                } label: {
+                    Image(systemName: "chevron.right")
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -1019,7 +1246,7 @@ struct ServicesList: View {
     }
     #endif
 
-    #if os(iOS)
+    #if os(iOS) || os(visionOS)
     var floatingDateNavigatorIOS: some View {
         return GlassEffectContainer {
             HStack {
@@ -1034,33 +1261,51 @@ struct ServicesList: View {
                 .layoutPriority(1)
                 .glassEffect(.regular.interactive(), in: .capsule)
 
-                Button {
-                    shiftReferenceDate(by: -1)
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.subheadline.weight(.semibold))
-                }
-                .buttonStyle(.bordered)
-                .glassEffect(.regular.interactive(), in: .capsule)
+                if calendarPeriod == .untilNextIncome {
+                    Button {
+                        calendarPeriod = previousCalendarPeriod
+                        viewMode = previousViewMode
+                    } label: {
+                        Image(systemName: "arrow.uturn.left")
+                            .font(.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .glassEffect(.regular.interactive(), in: .capsule)
 
-                DatePicker(
-                    "",
-                    selection: referenceDateBinding,
-                    displayedComponents: .date
-                )
-                .labelsHidden()
-                .datePickerStyle(.compact)
-                .font(.subheadline)
-                .glassEffect(.regular.interactive(), in: .capsule)
-
-                Button {
-                    shiftReferenceDate(by: 1)
-                } label: {
-                    Image(systemName: "chevron.right")
+                    Text("Next income \(nextIncomeLabel)")
                         .font(.subheadline.weight(.semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .glassEffect(.regular.interactive(), in: .capsule)
+                } else {
+                    Button {
+                        shiftReferenceDate(by: -1)
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+
+                    Text(dateRangeLabel)
+                        .font(.subheadline.weight(.semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .glassEffect(.regular.interactive(), in: .capsule)
+
+                    Button {
+                        shiftReferenceDate(by: 1)
+                    } label: {
+                        Image(systemName: "chevron.right")
+                            .font(.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .glassEffect(.regular.interactive(), in: .capsule)
                 }
-                .buttonStyle(.bordered)
-                .glassEffect(.regular.interactive(), in: .capsule)
             }
         }
     }
@@ -1092,12 +1337,136 @@ struct ServicesList: View {
     private func weekdayHeaderCell(symbol: String) -> some View {
         Text(symbol)
             .font(.caption2)
-            .foregroundStyle(.white)
+            .foregroundStyle(.primary)
             .lineLimit(1)
             .minimumScaleFactor(0.7)
             .padding(.horizontal, 8)
             .frame(minHeight: calendarHeaderHeight, alignment: .leading)
-            .background(Color.accentColor, in: Capsule())
+            .background(Color.accentColor, in: RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
+    }
+
+    #if os(macOS)
+    var macOSMonthCalendar: some View {
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
+        let monthTitle = referenceDate.formatted(.dateTime.month(.wide).year())
+        let calendar = Calendar.current
+        let monthRange = calendar.dateInterval(of: .month, for: referenceDate)
+        let monthOccurrences = monthRange.map { range in
+            cachedOccurrences.filter { range.contains($0.date) }
+        } ?? []
+        let monthIncome = monthOccurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        let monthExpense = monthOccurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        let monthBalance = monthIncome - monthExpense
+
+        return VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .center, spacing: 6) {
+                Text(monthTitle)
+                    .font(.headline.weight(.semibold))
+                Text(monthBalance.toCurrencyString())
+                    .font(.largeTitle.weight(.bold))
+            }
+            .frame(maxWidth: .infinity)
+
+            HStack(spacing: 8) {
+                ForEach(weekdaySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .font(.caption2)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(Array(monthGridDates.enumerated()), id: \.offset) { _, date in
+                    if let date {
+                        macOSDayCell(for: date)
+                    } else {
+                        Color.clear
+                            .frame(height: calendarDayCellHeightCompact)
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
+        .frame(minHeight: macOSMonthCalendarHeight)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func macOSDayCell(for date: Date) -> some View {
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: date)
+        let markers = dayMarkerServices(for: date)
+        let glowColor = markers.first?.wrappedColor ?? .clear
+        let hasMarkers = !markers.isEmpty
+
+        return VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Spacer()
+                Text("\(day)")
+                    .font(.caption2.weight(.semibold))
+            }
+            if hasMarkers {
+                macOSDayMarkersGrid(services: markers)
+            }
+        }
+        .padding(8)
+        .frame(maxWidth: .infinity, minHeight: calendarDayCellHeightCompact, alignment: .topLeading)
+        .background {
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .fill(Color.secondary.opacity(0.08))
+
+            if hasMarkers {
+                RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                    .fill(glowColor.opacity(0.18))
+                    .blur(radius: 14)
+            }
+        }
+        .overlay(
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .stroke(hasMarkers ? glowColor.opacity(0.75) : .clear, lineWidth: 1.5)
+        )
+        .shadow(color: hasMarkers ? glowColor.opacity(0.45) : .clear, radius: 10, x: 0, y: 3)
+        .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
+        .onTapGesture {
+            inspectorDate = date
+            macOSSelectedService = nil
+            showInspector = true
+        }
+    }
+    #endif
+
+    @ViewBuilder
+    private func serviceRow(for occurrence: ServiceOccurrence) -> some View {
+        #if os(macOS)
+        Button {
+            macOSSelectedService = occurrence.service
+            showInspector = true
+        } label: {
+            ServiceRow(
+                BgColor: occurrence.service.wrappedColor,
+                ServiceName: occurrence.service.wrappedName,
+                Amount: occurrence.service.amount.toCurrencyString(),
+                frequency: occurrence.service.frecuencyString,
+                limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
+                image: occurrence.service.image,
+                expense: occurrence.service.expense,
+                useAdaptiveText: true
+            )
+        }
+        .buttonStyle(.plain)
+        #else
+        NavigationLink(destination: ServiceDetailView(service: occurrence.service) ) {
+            ServiceRow(
+                BgColor: occurrence.service.wrappedColor,
+                ServiceName: occurrence.service.wrappedName,
+                Amount: occurrence.service.amount.toCurrencyString(),
+                frequency: occurrence.service.frecuencyString,
+                limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
+                image: occurrence.service.image,
+                expense: occurrence.service.expense
+            )
+        }
+        #endif
     }
 
     private struct RowScrollMetrics: Equatable {
@@ -1192,14 +1561,31 @@ struct ServicesList: View {
 
     private func dayMarkerServices(for date: Date) -> [Services] {
         let calendar = Calendar.current
-        let servicesForDay = cachedOccurrences
+        let occurrencesForDay = cachedOccurrences
             .filter { calendar.isDate($0.date, inSameDayAs: date) }
-            .map { $0.service }
-        var unique: [NSManagedObjectID: Services] = [:]
-        for service in servicesForDay {
-            unique[service.objectID] = service
+            .sorted {
+                let leftAmount = abs($0.service.amount)
+                let rightAmount = abs($1.service.amount)
+                if leftAmount != rightAmount { return leftAmount > rightAmount }
+
+                let leftName = $0.service.wrappedName.localizedCaseInsensitiveCompare($1.service.wrappedName)
+                if leftName != .orderedSame { return leftName == .orderedAscending }
+
+                return $0.service.objectID.uriRepresentation().absoluteString < $1.service.objectID.uriRepresentation().absoluteString
+            }
+
+        var seen = Set<NSManagedObjectID>()
+        var result: [Services] = []
+        result.reserveCapacity(6)
+
+        for occurrence in occurrencesForDay {
+            let service = occurrence.service
+            guard seen.insert(service.objectID).inserted else { continue }
+            result.append(service)
+            if result.count == 6 { break }
         }
-        return Array(unique.values).prefix(6).map { $0 }
+
+        return result
     }
 
     @ViewBuilder
@@ -1207,43 +1593,116 @@ struct ServicesList: View {
         let columns = Array(repeating: GridItem(.fixed(14), spacing: 4), count: 3)
         LazyVGrid(columns: columns, alignment: .leading, spacing: 4) {
             ForEach(services, id: \.objectID) { service in
-                dayMarker(for: service)
+                dayMarker(for: service, size: 14)
             }
         }
     }
 
     @ViewBuilder
-    private func dayMarker(for service: Services) -> some View {
+    private func macOSDayMarkersGrid(services: [Services]) -> some View {
+        let columns = Array(repeating: GridItem(.fixed(22), spacing: 6), count: 3)
+        LazyVGrid(columns: columns, alignment: .center, spacing: 6) {
+            ForEach(services, id: \.objectID) { service in
+                dayMarker(for: service, size: 22)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    #if os(macOS)
+    @ViewBuilder
+    var macOSInspectorContent: some View {
+        if let selectedService = macOSSelectedService {
+            NavigationStack {
+                ServiceDetailView(service: selectedService)
+                    .toolbar {
+                        ToolbarItem(placement: .navigation) {
+                            Button {
+                                macOSSelectedService = nil
+                            } label: {
+                                Label("Back", systemImage: "chevron.left")
+                            }
+                        }
+                    }
+            }
+        } else {
+            let calendar = Calendar.current
+            let date = inspectorDate ?? referenceDate
+            let occurrences = cachedOccurrences
+                .filter { calendar.isDate($0.date, inSameDayAs: date) }
+                .sorted { $0.date < $1.date }
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text(date.formatted(.dateTime.weekday(.wide).day().month(.wide).year()))
+                    .font(.headline)
+                if occurrences.isEmpty {
+                    Text("No services due")
+                } else {
+                    ForEach(occurrences) { occurrence in
+                        Button {
+                            macOSSelectedService = occurrence.service
+                            showInspector = true
+                        } label: {
+                            ServiceRow(
+                                BgColor: occurrence.service.wrappedColor,
+                                ServiceName: occurrence.service.wrappedName,
+                                Amount: occurrence.service.amount.toCurrencyString(),
+                                frequency: occurrence.service.frecuencyString,
+                                limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
+                                image: occurrence.service.image,
+                                expense: occurrence.service.expense,
+                                useAdaptiveText: true
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                Spacer()
+            }
+            .padding()
+        }
+    }
+    #endif
+
+    @ViewBuilder
+    private func dayMarker(for service: Services, size: CGFloat) -> some View {
         if let imageData = service.image {
             #if os(iOS)
             if let image = UIImage(data: imageData) {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 14, height: 14)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
+                    .overlay(Circle().stroke(service.wrappedColor.opacity(0.35), lineWidth: 1))
+                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
             } else {
                 Circle()
                     .fill(service.wrappedColor)
-                    .frame(width: 14, height: 14)
+                    .frame(width: size, height: size)
+                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
             }
             #else
             if let image = NSImage(data: imageData) {
                 Image(nsImage: image)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 14, height: 14)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
+                    .overlay(Circle().stroke(service.wrappedColor.opacity(0.35), lineWidth: 1))
+                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
             } else {
                 Circle()
                     .fill(service.wrappedColor)
-                    .frame(width: 14, height: 14)
+                    .frame(width: size, height: size)
+                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
             }
             #endif
         } else {
             Circle()
                 .fill(service.wrappedColor)
-                .frame(width: 14, height: 14)
+                .frame(width: size, height: size)
+                .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
         }
     }
 }

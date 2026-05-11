@@ -7,15 +7,16 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct SideBarView: View {
     // MARK: - current section selected 
-    @Binding var sectionSelected : SectionSelected? 
-    @State private var isDefaultItemActive = true
+    @Binding var sectionSelected: SectionSelected
+    @State private var columnVisibility: NavigationSplitViewVisibility = .doubleColumn
     
     var body: some View {
        
-        NavigationSplitView {
-            List() {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+            List(selection: $sectionSelected) {
                 Label(
                     title: { Text("DebtMe")
                         .font(Font.system(.title, design: .rounded).weight(.black)) },
@@ -26,33 +27,39 @@ struct SideBarView: View {
                 )
                 .labelStyle(.titleAndIcon)
                
-                NavigationLink(destination: ContactsList(), tag: SectionSelected.contacts, selection: $sectionSelected) {
-                    Label("Contacts", systemImage: "person.2.fill")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
+                Label("People", systemImage: "person.2.fill")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .tag(SectionSelected.contacts)
 
-                NavigationLink(destination: ServicesList(), tag: SectionSelected.loans, selection: $sectionSelected) {
-                    Label("Bills", systemImage: "chart.bar.doc.horizontal")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
+                Label("Services", systemImage: "chart.bar.doc.horizontal")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .tag(SectionSelected.loans)
                 
-                NavigationLink(destination: SettingsList(), tag: SectionSelected.settings, selection: $sectionSelected) {
-                    Label("Settings", systemImage: "gear")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
+                Label("Settings", systemImage: "gear")
+                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .tag(SectionSelected.settings)
                 
             }
             .navigationSplitViewColumnWidth(min: 150, ideal: 200, max: .infinity)
              
-          
-          } content: {
-              ContactsList()
-                  .navigationSplitViewColumnWidth(min: 250, ideal: 500, max: .infinity)
           } detail: {
-              EmptyPaymentView(empty: true)
-                  .navigationSplitViewColumnWidth(min: 250, ideal: 500, max: .infinity)
+              NavigationStack {
+                  Group {
+                      switch sectionSelected {
+                      case .contacts:
+                          ContactsList()
+                      case .loans:
+                          ServicesList()
+                      case .settings:
+                          SettingsList()
+                      case .debts, .budget, .bills:
+                          EmptyView()
+                      }
+                  }
+              }
+              .navigationSplitViewColumnWidth(min: 250, ideal: 500, max: .infinity)
           }
-         
+          .navigationSplitViewStyle(.balanced)
         
     }
     
@@ -80,3 +87,13 @@ struct SideBarView_Previews: PreviewProvider {
         SideBarView(sectionSelected: .constant(.contacts))
     }
 }
+
+#else
+struct SideBarView: View {
+    @Binding var sectionSelected: SectionSelected
+
+    var body: some View {
+        EmptyView()
+    }
+}
+#endif
