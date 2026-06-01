@@ -11,6 +11,7 @@ import CoreData
 import Charts
 #endif
 
+
 enum ServicesViewMode: String, CaseIterable {
     case list = "List"
     case calendar = "Calendar"
@@ -106,6 +107,8 @@ struct ServicesList: View {
     private let largeValueThreshold = 100_000.0
     
     @State var sortedMode : sortModeServices = .amountDes
+    
+    @Namespace private var namespace
     
     var filteredServices : [Services] {
         let sortedServices: [Services]
@@ -530,20 +533,6 @@ struct ServicesList: View {
             
             #endif
 
-            ToolbarItem(placement: .automatic) {
-                Button {
-                    withAnimation(.snappy) {
-                        viewMode = (viewMode == .calendar) ? .list : .calendar
-                    }
-                } label: {
-                    Label(
-                        viewMode == .calendar ? "List" : "Calendar",
-                        systemImage: viewMode == .calendar ? "list.bullet" : "calendar"
-                    )
-                    .appToolbarLabel()
-                }
-            }
-            
             ToolbarItem(placement: .primaryAction ){
                 Button(action:{
                     showNewBill.toggle()
@@ -722,7 +711,15 @@ struct ServicesList: View {
         .navigationTitle("Services")
         #endif
         .onAppear(perform: updateCachedOccurrences)
-        .onChange(of: referenceDateTimestamp) { updateCachedOccurrences() }
+        .onChange(of: referenceDateTimestamp) {
+            #if os(macOS)
+            if showInspector {
+                inspectorDate = referenceDate
+                macOSSelectedService = nil
+            }
+            #endif
+            updateCachedOccurrences()
+        }
         .onChange(of: calendarPeriod) { oldValue, newValue in
             if newValue == .untilNextIncome, oldValue != .untilNextIncome {
                 previousCalendarPeriod = oldValue
@@ -809,8 +806,7 @@ struct ServicesList: View {
         .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .onTapGesture {
             #if os(macOS)
-            inspectorDate = date
-            showInspector = true
+            showDayInspector(for: date)
             #else
             openDetail(range: calendar.dateInterval(of: .day, for: date), title: date.formatted(date: .abbreviated, time: .omitted))
             #endif
@@ -885,9 +881,7 @@ struct ServicesList: View {
         .contentShape(RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
         .onTapGesture {
             #if os(macOS)
-            inspectorDate = date
-            macOSSelectedService = nil
-            showInspector = true
+            showDayInspector(for: date)
             #else
             openDetail(range: range, title: date.formatted(date: .abbreviated, time: .omitted))
             #endif
@@ -1386,73 +1380,84 @@ struct ServicesList: View {
 
     #if os(macOS)
     var floatingDateNavigator: some View {
-        HStack(spacing: 8) {
-            Picker("Period", selection: $calendarPeriod) {
-                ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                    Text(LocalizedStringKey(option.rawValue))
-                        .tag(option)
+        GlassEffectContainer{
+            HStack(spacing: 8) {
+                calendarViewModeButton
+                    .glassEffect(.regular.tint(.accentColor).interactive())
+
+                Picker("Period", selection: $calendarPeriod) {
+                    ForEach(CalendarPeriod.allCases, id: \.self) { option in
+                        Text(LocalizedStringKey(option.rawValue))
+                            .tag(option)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .glassEffect()
+
+                if calendarPeriod == .untilNextIncome {
+                    Button {
+                        calendarPeriod = previousCalendarPeriod
+                        viewMode = previousViewMode
+                    } label: {
+                        Image(systemName: "arrow.uturn.left")
+                    }
+                    .buttonStyle(.plain)
+
+                    Text("Next income \(nextIncomeLabel)")
+                        .font(.subheadline.weight(.semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(.thinMaterial, in: Capsule())
+                } else {
+                    Button {
+                        shiftReferenceDate(by: -1)
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    
+                    .glassEffect()
+
+                    Button {
+                        jumpToToday()
+                    } label: {
+                        Text("Today")
+                    }
+                    
+                    .glassEffect()
+                    .disabled(isShowingToday)
+
+                    Text(dateRangeLabel)
+                        .font(.subheadline.weight(.semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+
+                    Button {
+                        shiftReferenceDate(by: 1)
+                    } label: {
+                        Image(systemName: "chevron.right")
+                    }
+                    .glassEffect()
                 }
             }
-            .labelsHidden()
-            .pickerStyle(.menu)
-
-            if calendarPeriod == .untilNextIncome {
-                Button {
-                    calendarPeriod = previousCalendarPeriod
-                    viewMode = previousViewMode
-                } label: {
-                    Image(systemName: "arrow.uturn.left")
-                }
-                .buttonStyle(.plain)
-
-                Text("Next income \(nextIncomeLabel)")
-                    .font(.subheadline.weight(.semibold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(.thinMaterial, in: Capsule())
-            } else {
-                Button {
-                    shiftReferenceDate(by: -1)
-                } label: {
-                    Image(systemName: "chevron.left")
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    jumpToToday()
-                } label: {
-                    Text("Today")
-                }
-                .buttonStyle(.plain)
-                .disabled(isShowingToday)
-
-                Text(dateRangeLabel)
-                    .font(.subheadline.weight(.semibold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-
-                Button {
-                    shiftReferenceDate(by: 1)
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
-                .buttonStyle(.plain)
-            }
+            .padding()
+            .glassEffect()
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .padding(.bottom, 12)
-        .shadow(radius: 6, y: 2)
+        .padding(.bottom)
     }
     #endif
 
     #if os(iOS) || os(visionOS)
     var floatingDateNavigatorIOS: some View {
-        return GlassEffectContainer {
+        return
             HStack {
+                calendarViewModeButton
+                    .buttonStyle(.bordered)
+                    .tint(.accentColor)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+
                 Picker("Period", selection: $calendarPeriod) {
                     ForEach(CalendarPeriod.allCases, id: \.self) { option in
                         Text(LocalizedStringKey(option.rawValue))
@@ -1520,9 +1525,34 @@ struct ServicesList: View {
                     .glassEffect(.regular.interactive(), in: .capsule)
                 }
             }
-        }
+            .glassEffect()
+        
     }
     #endif
+
+    var calendarViewModeButton: some View {
+        Button {
+            withAnimation(.snappy) {
+                viewMode = (viewMode == .calendar) ? .list : .calendar
+            }
+        } label: {
+            ZStack {
+                Label("Calendar", systemImage: "calendar")
+                    .appToolbarLabel()
+                    .hidden()
+                Label("List", systemImage: "list.bullet")
+                    .appToolbarLabel()
+                    .hidden()
+                Label(
+                    viewMode == .calendar ? "List" : "Calendar",
+                    systemImage: viewMode == .calendar ? "list.bullet" : "calendar"
+                )
+                .appToolbarLabel()
+                .foregroundStyle(.tint)
+            }
+        }
+        .glassEffectID("calendar", in: namespace)
+    }
 
     private func updateCachedOccurrences() {
         let range = selectedDateRange
@@ -1654,9 +1684,7 @@ struct ServicesList: View {
         .shadow(color: hasMarkers ? glowColor.opacity(0.45) : .clear, radius: 10, x: 0, y: 3)
         .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .onTapGesture {
-            inspectorDate = date
-            macOSSelectedService = nil
-            showInspector = true
+            showDayInspector(for: date)
         }
     }
     #endif
@@ -1665,6 +1693,7 @@ struct ServicesList: View {
     private func serviceRow(for occurrence: ServiceOccurrence) -> some View {
         #if os(macOS)
         Button {
+            inspectorDate = occurrence.date
             macOSSelectedService = occurrence.service
             showInspector = true
         } label: {
@@ -1902,6 +1931,7 @@ struct ServicesList: View {
                 } else {
                     ForEach(occurrences) { occurrence in
                         Button {
+                            inspectorDate = occurrence.date
                             macOSSelectedService = occurrence.service
                             showInspector = true
                         } label: {
@@ -1923,6 +1953,14 @@ struct ServicesList: View {
             }
             .padding()
         }
+    }
+    #endif
+
+    #if os(macOS)
+    private func showDayInspector(for date: Date) {
+        inspectorDate = date
+        macOSSelectedService = nil
+        showInspector = true
     }
     #endif
 

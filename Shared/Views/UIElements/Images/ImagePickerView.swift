@@ -14,71 +14,6 @@ import WebKit
 import ImagePlayground
 #endif
 
-// MARK: - Universal adaptive grid components (inlined)
-
-struct AdaptiveGridDensitySlider: View {
-    @Binding var density: Double
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "rectangle.grid.2x2").foregroundStyle(.secondary)
-            Slider(value: $density, in: 0...1, step: 0.05) { Text("Grid density") }
-            Image(systemName: "rectangle.grid.1x2").font(.title3).foregroundStyle(.secondary)
-        }
-    }
-}
-
-struct AdaptiveGrid<Content: View>: View {
-    let density: Double
-    let minCell: CGFloat
-    let maxCell: CGFloat
-    let spacing: CGFloat
-    @ViewBuilder let content: (_ cellWidth: CGFloat, _ columns: [GridItem]) -> Content
-
-    init(density: Double, minCell: CGFloat = 110, maxCell: CGFloat = 220, spacing: CGFloat = 18, @ViewBuilder content: @escaping (_ cellWidth: CGFloat, _ columns: [GridItem]) -> Content) {
-        self.density = density
-        self.minCell = minCell
-        self.maxCell = maxCell
-        self.spacing = spacing
-        self.content = content
-    }
-
-    var body: some View {
-        GeometryReader { proxy in
-            let metrics = Self.metrics(
-                for: density,
-                availableWidth: proxy.size.width,
-                minCell: minCell,
-                maxCell: maxCell,
-                spacing: spacing
-            )
-            let columns = Array(
-                repeating: GridItem(.fixed(metrics.cellWidth), spacing: spacing),
-                count: metrics.columnCount
-            )
-            content(metrics.cellWidth, columns)
-        }
-    }
-
-    static func metrics(
-        for density: Double,
-        availableWidth: CGFloat,
-        minCell: CGFloat,
-        maxCell: CGFloat,
-        spacing: CGFloat
-    ) -> (cellWidth: CGFloat, columnCount: Int) {
-        let desiredCellWidth = cellWidth(for: density, minCell: minCell, maxCell: maxCell)
-        let usableWidth = max(minCell, availableWidth)
-        let columnCount = max(1, Int((usableWidth + spacing) / (desiredCellWidth + spacing)))
-        let exactCellWidth = (usableWidth - spacing * CGFloat(columnCount - 1)) / CGFloat(columnCount)
-        return (max(1, exactCellWidth), columnCount)
-    }
-
-    static func cellWidth(for density: Double, minCell: CGFloat, maxCell: CGFloat) -> CGFloat {
-        let clamped = max(0, min(1, density))
-        return max(minCell, min(maxCell, maxCell - (maxCell - minCell) * clamped))
-    }
-}
-
 struct ImagePickerView: View {
     @Binding var photoData: Data?
     @AppStorage("selectedQuality") private var selectedQuality: JPEGQuality = .lowest
@@ -1505,3 +1440,4 @@ private extension UIImage {
     }
 }
 #endif
+

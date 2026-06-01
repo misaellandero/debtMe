@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -176,6 +176,9 @@
 		13A2FDFB2C209A7A00DD820F /* AmountUpdate+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDF42C2099DE00DD820F /* AmountUpdate+CoreDataClass.swift */; };
 		13A2FDFC2C209A7B00DD820F /* AmountUpdate+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDF52C2099DE00DD820F /* AmountUpdate+CoreDataProperties.swift */; };
 		13A2FDFD2C209A7B00DD820F /* AmountUpdate+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDF42C2099DE00DD820F /* AmountUpdate+CoreDataClass.swift */; };
+		13BBF6712FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
+		13BBF6722FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
+		13BBF6732FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
 		13C2F5AB2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AC2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AD2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
@@ -331,6 +334,7 @@
 		13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
 		13A2FDF42C2099DE00DD820F /* AmountUpdate+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AmountUpdate+CoreDataClass.swift"; sourceTree = "<group>"; };
 		13A2FDF52C2099DE00DD820F /* AmountUpdate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AmountUpdate+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGrid.swift; sourceTree = "<group>"; };
 		13C2F5AA2B90030400150A01 /* ServicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesList.swift; sourceTree = "<group>"; };
 		13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
 		13C2F5B22B9008A000150A01 /* ServicesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesForm.swift; sourceTree = "<group>"; };
@@ -580,6 +584,7 @@
 				132B86082ACBC37F00ADFED4 /* EmptyPaymentView.swift */,
 				13874D462ACBE0CF007B8FE3 /* ConfettiView.swift */,
 				13DC6CDB2B2E8060007361A8 /* SearchTextField.swift */,
+				13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -968,6 +973,7 @@
 			mainGroup = 7F70A21425FEB1ED00455AB0;
 			packageReferences = (
 				13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				13BBF6742FCE09020059E193 /* XCLocalSwiftPackageReference "../ImageEditorKit" */,
 			);
 			productRefGroup = 7F70A22525FEB1F700455AB0 /* Products */;
 			projectDirPath = "";
@@ -1104,6 +1110,7 @@
 				1331BD9B2B4F39DD00C0A15F /* ContactLabel+CoreDataClass.swift in Sources */,
 				135C71E02C0F9AAE0048C3B7 /* ImageView.swift in Sources */,
 				1331BD832B4F39AB00C0A15F /* PaymentNewForm.swift in Sources */,
+				13BBF6712FCE08E80059E193 /* AdaptiveGrid.swift in Sources */,
 				1369E1B92B64406B005388C2 /* SettingsList.swift in Sources */,
 				13E6DBB22B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
 				13D7D5582C2B5BCE007D1908 /* Constants.swift in Sources */,
@@ -1158,6 +1165,7 @@
 				13061AF02DFB73E8006E546F /* ToolbarAddButton.swift in Sources */,
 				135C71E32C10C8350048C3B7 /* ImageExtension.swift in Sources */,
 				1327EE592B61C73F002DFB66 /* FeatureView.swift in Sources */,
+				13BBF6722FCE08E80059E193 /* AdaptiveGrid.swift in Sources */,
 				7F70A26C25FEBFDB00455AB0 /* BindingExtension.swift in Sources */,
 				13C9DF9E29F3B63D005D1768 /* LabelSFRounder.swift in Sources */,
 				7F70A2BE25FEF76300455AB0 /* ContactsDetail.swift in Sources */,
@@ -1284,6 +1292,7 @@
 				133FC754270C099F00CDB741 /* TransactionsForm.swift in Sources */,
 				1399AD6129999A7600C87C3D /* PaymentNewForm.swift in Sources */,
 				13877CD82BD9823F00E5B20A /* LabelsPickerView.swift in Sources */,
+				13BBF6732FCE08E80059E193 /* AdaptiveGrid.swift in Sources */,
 				13A2FDEE2C1FD63600DD820F /* ServiceDetailView.swift in Sources */,
 				1369E1BC2B64420F005388C2 /* FeaturesList.swift in Sources */,
 				13E6DBB12B61CEBF00B3BE60 /* AppIconView.swift in Sources */,
@@ -1651,6 +1660,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		13BBF6742FCE09020059E193 /* XCLocalSwiftPackageReference "../ImageEditorKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../ImageEditorKit;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		13874D452ACBE0AD007B8FE3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
