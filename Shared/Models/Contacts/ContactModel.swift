@@ -10,6 +10,7 @@ import SwiftUI
 struct ContactModel {
     var name : String
     var emoji : String
+    var avatarImage: Data? = nil
     var label : String
     var labelColor : Int
 }

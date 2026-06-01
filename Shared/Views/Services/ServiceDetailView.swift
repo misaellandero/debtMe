@@ -20,22 +20,16 @@ struct ServiceDetailView: View {
                     .multilineTextAlignment(.leading)
             } 
             .listRowBackground(service.wrappedColor)
-            Section("History"){
-                AmountUpdateList(service: service)
-            }
+            AmountUpdateList(service: service)
         }
         .navigationTitle(service.wrappedName)
         .toolbar{
-            #if os(macOS)
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Close") { dismiss() }
-            }
-            #endif
             ToolbarItem(placement:.primaryAction){
                 Button(action:{
                     showEdit.toggle()
                 }){
-                    Label("Edit", systemImage: "square.and.pencil") .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Label("Edit", systemImage: AppIcons.edit)
+                        .appToolbarLabel()
                         .foregroundColor(.accentColor)
                 }
             }

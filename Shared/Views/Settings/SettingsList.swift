@@ -101,6 +101,18 @@ struct SettingsList: View {
                 
                 
             }
+
+            #if DEBUG
+            Section(header:
+                        Text("Developer")
+                .bold()
+                .foregroundColor(.secondary)
+            ) {
+                NavigationLink(destination: StyleGuidePreviewView()) {
+                    Label("Style Guide", systemImage: "paintbrush.pointed")
+                }
+            }
+            #endif
             // MARK: - Footer
             Section{
                 VStack{
@@ -178,3 +190,238 @@ struct SettingsList: View {
 #Preview {
     SettingsList()
 }
+
+#if DEBUG
+// MARK: - In-app Style Guide Preview
+
+struct StyleGuidePreviewView: View {
+    @State private var showSheetPreview = false
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                header
+                typographySection
+                toolbarSection
+                accentButtonsSection
+                shapesSection
+            }
+            .padding(20)
+        }
+        .navigationTitle("Style Guide")
+        .sheet(isPresented: $showSheetPreview) {
+            StyleGuideSheetPreview()
+        }
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("DebtMe")
+                .appBrandTitle()
+            Text("Visual source of truth preview")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var typographySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Typography")
+                .appHeadline()
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Brand Title — Title2 / Rounded / Bold")
+                    .appBrandTitle()
+                Text("Brand Headline — Headline / Rounded / Semibold")
+                    .appBrandHeadline()
+                Text("Title — Title2 / Bold")
+                    .appTitle()
+                Text("Headline — Headline / Semibold")
+                    .appHeadline()
+                Text("Body — default body text for content and paragraphs.")
+                    .font(AppTypography.body)
+                Text("Caption — metadata, helper labels, secondary info.")
+                    .font(AppTypography.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(14)
+            .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+    }
+
+    private var toolbarSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Toolbar Labels")
+                .appHeadline()
+
+            HStack(spacing: 10) {
+                Label("Calendar", systemImage: "calendar")
+                    .appToolbarLabel()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.thinMaterial, in: Capsule())
+
+                Label("List", systemImage: "list.bullet")
+                    .appToolbarLabel()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.thinMaterial, in: Capsule())
+
+                Label("Add", systemImage: "plus.circle.fill")
+                    .appToolbarLabel()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.thinMaterial, in: Capsule())
+
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var accentButtonsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Accent Buttons")
+                .appHeadline()
+
+            HStack(spacing: 12) {
+                Button {
+                } label: {
+                    Label("Add", systemImage: "plus.circle.fill")
+                        .appToolbarLabel()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.accentColor)
+
+                Button {
+                } label: {
+                    Label("Edit", systemImage: AppIcons.edit)
+                        .appToolbarLabel()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.accentColor.opacity(0.85))
+
+                Spacer(minLength: 0)
+            }
+
+            Button {
+                showSheetPreview = true
+            } label: {
+                Label("Open Sheet Preview", systemImage: "rectangle.portrait.and.arrow.right")
+                    .appToolbarLabel()
+                    .frame(maxWidth: .infinity)
+            }
+            .appSheetPrimaryButtonStyle()
+
+            HStack(spacing: 12) {
+                Label("Filter", systemImage: "slider.horizontal.3")
+                    .appToolbarLabel()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.thinMaterial, in: Capsule())
+
+                Label("Today", systemImage: "calendar")
+                    .appToolbarLabel()
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(.thinMaterial, in: Capsule())
+
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private var shapesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Shapes")
+                .appHeadline()
+
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Calendar cell")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color.secondary.opacity(0.12))
+                        .frame(width: 120, height: 72)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .stroke(Color.accentColor.opacity(0.8), lineWidth: 2)
+                        )
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Card container")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .fill(Color.secondary.opacity(0.08))
+                        .frame(width: 160, height: 72)
+                }
+            }
+        }
+    }
+}
+
+struct StyleGuideSheetPreview: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    Text("Sheet Buttons")
+                        .appTitle()
+
+                    Text("Preview the standard sheet size, navigation actions, and primary/cancel button treatment.")
+                        .font(AppTypography.body)
+                        .foregroundStyle(.secondary)
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Button {
+                        } label: {
+                            Label("Primary Action", systemImage: "checkmark.circle.fill")
+                                .appToolbarLabel()
+                                .frame(maxWidth: .infinity)
+                        }
+                        .appSheetPrimaryButtonStyle()
+
+                        Button(role: .destructive) {
+                        } label: {
+                            Label("Destructive Action", systemImage: "trash")
+                                .appToolbarLabel()
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.red)
+                    }
+                }
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            .navigationTitle("Sheet Preview")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Label("Cancel", systemImage: "xmark")
+                    }
+                    .appSheetCancelButtonStyle()
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Label("Done", systemImage: "checkmark.circle.fill")
+                            .appToolbarLabel()
+                    }
+                    .appSheetPrimaryButtonStyle()
+                }
+            }
+        }
+        .macOSFixedSheet(width: 520, height: 360)
+    }
+}
+#endif

@@ -19,13 +19,35 @@ struct LabelNewForm: View {
     var body: some View {
       
             #if os(macOS)
-        VStack{
-                Text("\(Image(systemName: "tag.fill")) New")
-                LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
-                   
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
+                }
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
-            .frame(maxHeight: 150)
-            .padding()
+            .navigationTitle("New")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        showForm.toggle()
+                    } label: {
+                        Label("Cancel", systemImage: "xmark")
+                    }
+                    .appSheetCancelButtonStyle()
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: saveTag) {
+                        Label("Add", systemImage: "plus.circle.fill")
+                            .appToolbarLabel()
+                    }
+                    .appSheetPrimaryButtonStyle()
+                }
+            }
+        }
+        .macOSFixedSheet(width: 480, height: 320)
             #else
             NavigationView{
                 ZStack{
@@ -35,20 +57,15 @@ struct LabelNewForm: View {
                     .listStyle(InsetGroupedListStyle())
                     VStack{
                         Spacer()
-                        Button(action: saveTag){
-                            HStack{
-                                Spacer()
-                                Label( "Add" , systemImage: "plus.circle.fill")
-                                    .foregroundColor(.white)
-                                    .font(Font.system(.headline, design: .rounded).weight(.black))
-                                    .padding()
-                                Spacer()
-                            }
-                            
-                            .padding(.vertical, 15)
+                        Button(action: saveTag) {
+                            Label("Add", systemImage: "plus.circle.fill")
+                                .appToolbarLabel()
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 10)
                         }
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
+                        .buttonStyle(.borderedProminent)
+                        .tint(.accentColor)
+                        .controlSize(.large)
                         .padding()
                    }
                     
@@ -142,28 +159,5 @@ struct LabelMultiplatformForm: View {
       
          
         
-        #if os(macOS)
-        Spacer()
-        HStack{
-            Button(action: {
-                showForm.toggle()
-                
-            }){
-                Label("Cancel", systemImage: "xmark")
-                
-                .foregroundStyle(.red)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                    
-            }
-            Spacer()
-            Button(action: save){
-                Label("Add", systemImage: "plus.circle.fill")
-                    .foregroundStyle(Color.accentColor)
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-            }
-            
-        }
-      
-        #endif
     }
 }

@@ -20,12 +20,12 @@ struct ContactsRow: View {
             VStack{
                 HStack{
                     VStack{
-                        Text(contact.wrappedEmoji)
-                            .padding()
-                            .font(.largeTitle)
-                            .background(Color.secondary.opacity(0.2))
-                            .cornerRadius(20)
-                        
+                        ContactAvatarView(
+                            imageData: contact.avatarImage,
+                            emoji: contact.wrappedEmoji,
+                            size: 62,
+                            cornerRadius: 20
+                        )
                     }
                     
                     VStack(alignment: .leading){
@@ -114,3 +114,58 @@ struct ContactsRow: View {
         
     }
 }
+
+struct ContactAvatarView: View {
+    let imageData: Data?
+    let emoji: String
+    var size: CGFloat = 56
+    var cornerRadius: CGFloat = 16
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(Color.secondary.opacity(0.2))
+
+            if let imageData, let image = contactAvatarPlatformImage(from: imageData) {
+                contactAvatarImage(image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipped()
+            } else {
+                Text(emoji)
+                    .font(.system(size: size * 0.52))
+                    .minimumScaleFactor(0.65)
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+        )
+    }
+
+    @ViewBuilder
+    private func contactAvatarImage(_ image: ContactAvatarPlatformImage) -> Image {
+        #if os(macOS)
+        Image(nsImage: image)
+        #else
+        Image(uiImage: image)
+        #endif
+    }
+}
+
+private func contactAvatarPlatformImage(from data: Data) -> ContactAvatarPlatformImage? {
+    #if os(macOS)
+    NSImage(data: data)
+    #else
+    UIImage(data: data)
+    #endif
+}
+
+#if os(macOS)
+private typealias ContactAvatarPlatformImage = NSImage
+#else
+private typealias ContactAvatarPlatformImage = UIImage
+#endif

@@ -61,3 +61,28 @@ extension NSImage {
 
 
 #endif
+
+// MARK: - Typography
+
+enum AppTypography {
+    // Brand-ish rounded titles, but keep weights readable.
+    static let brandTitle: Font = .system(.title2, design: .rounded).weight(.bold)
+    static let brandHeadline: Font = .system(.headline, design: .rounded).weight(.semibold)
+
+    // General purpose
+    static let title: Font = .title2.weight(.bold)
+    static let headline: Font = .headline.weight(.semibold)
+    static let body: Font = .body
+    static let caption: Font = .caption
+}
+
+extension View {
+    func appBrandTitle() -> some View { font(AppTypography.brandTitle) }
+    func appBrandHeadline() -> some View { font(AppTypography.brandHeadline) }
+
+    func appTitle() -> some View { font(AppTypography.title) }
+    func appHeadline() -> some View { font(AppTypography.headline) }
+
+    /// Use for toolbar/menu label buttons (keeps UI legible and consistent).
+    func appToolbarLabel() -> some View { font(AppTypography.brandHeadline) }
+}

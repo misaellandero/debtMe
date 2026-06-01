@@ -29,7 +29,7 @@ struct LabelsPickerView: View {
                 #if os(macOS)
 
                 Text("\(Image(systemName: "tag.fill")) Tags")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appHeadline()
 
                 #endif
                 List{
@@ -76,7 +76,7 @@ struct LabelsPickerView: View {
                         Label("Cancel", systemImage: "xmark")
                         
                         .foregroundStyle(.red)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                                .appToolbarLabel()
                             
                     }
                     Spacer()
@@ -85,7 +85,7 @@ struct LabelsPickerView: View {
                     }){
                         Label("Add", systemImage: "plus.circle.fill")
                             .foregroundStyle(Color.accentColor)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
+                                .appToolbarLabel()
                     }
                     
                 }

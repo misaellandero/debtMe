@@ -13,8 +13,9 @@ struct ToolbarAddButton: View {
     var body: some View {
         Button(action: action) {
             Label(edition ? "Save" : "Add", systemImage: "plus")
+                .appToolbarLabel()
         }
-        .buttonStyle(BorderedProminentButtonStyle())
+        .buttonStyle(.borderedProminent)
         .tint(.accentColor)
     }
 }

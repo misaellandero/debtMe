@@ -19,7 +19,7 @@ struct SideBarView: View {
             List(selection: $sectionSelected) {
                 Label(
                     title: { Text("DebtMe")
-                        .font(Font.system(.title, design: .rounded).weight(.black)) },
+                        .appBrandTitle() },
                     icon: {  Image(.pig)
                             .resizable()
                             .scaledToFit()
@@ -28,15 +28,15 @@ struct SideBarView: View {
                 .labelStyle(.titleAndIcon)
                
                 Label("People", systemImage: "person.2.fill")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     .tag(SectionSelected.contacts)
 
                 Label("Services", systemImage: "chart.bar.doc.horizontal")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     .tag(SectionSelected.loans)
                 
                 Label("Settings", systemImage: "gear")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     .tag(SectionSelected.settings)
                 
             }
@@ -70,7 +70,7 @@ struct toogleSideBarButton: View {
     var body: some View {
             Button(action: toggleSidebar, label: {
                 Image(systemName: "sidebar.left")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
             })
     }
 }

@@ -16,48 +16,67 @@ struct AmountUpdateList: View {
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
-        
-       
-        Section{
-            VStack{
-                #if os(macOS)
+        #if os(macOS)
+        Section("History") {
+            ForEach(service.amountUpdatesArray) { amountUpdate in
+                VStack(alignment: .leading) {
+                    Text(service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption)
+                        .bold()
+                        .foregroundStyle(.secondary)
+                    Text(amountUpdate.amount.toCurrencyString())
+                }
+            }
+
+            Divider()
+
+            VStack(spacing: 12) {
                 TextField("Amount", text: $newAmount)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                #else
+
+                Button {
+                    addPaymnetUpdate()
+                } label: {
+                    ButtonLabelAdd()
+                }
+            }
+            .padding(.vertical, 6)
+        }
+        #else
+        Section("History") {
+            VStack {
                 TextField("Amount", text: $newAmount)
                     .keyboardType(.decimalPad)
                     .focused($amountIsFocuse)
-                    .toolbar{
-                        ToolbarItemGroup(placement: .keyboard){
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
                             Spacer()
                             if amountIsFocuse {
-                                Button("Done"){
+                                Button("Done") {
                                     amountIsFocuse = false
                                 }
                             }
                         }
                     }
-            #endif
-                
-                Button(action:{
+
+                Button {
                     addPaymnetUpdate()
-                }){
+                } label: {
                     ButtonLabelAdd()
                 }
-                
             }
         }
-      
-        
-        ForEach(service.amountUpdatesArray){ amountUpdate in
-            VStack(alignment: .leading, content: {
+
+        ForEach(service.amountUpdatesArray) { amountUpdate in
+            VStack(alignment: .leading) {
                 Text(service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
                     .font(.caption)
                     .bold()
                     .foregroundStyle(.secondary)
                 Text(amountUpdate.amount.toCurrencyString())
-            })
+            }
         }
+        #endif
     }
     
     func addPaymnetUpdate(){
@@ -75,4 +94,3 @@ struct AmountUpdateList: View {
         
     }
 }
-

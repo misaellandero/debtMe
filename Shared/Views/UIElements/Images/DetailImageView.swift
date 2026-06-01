@@ -79,34 +79,20 @@ struct DetailImageView: View {
                      image: createImage()!
                  )) {
                         Label("Share", systemImage: "square.and.arrow.up")
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                     #if os(macOS)
-                            .buttonStyle(DefaultButtonStyle())
-                     #else
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.accentColor)
-                            .cornerRadius(20)
-                     #endif
-                     
+                            .appToolbarLabel()
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.accentColor)
                     
                     Spacer()
                     Button {
                         dismiss()
                     } label: {
                         Label("Close", systemImage: "xmark")
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-#if os(macOS)
-                    .accentColor(.red)
-#else
-                    
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.red)
-                    .cornerRadius(20)
-                    #endif
+                            .appToolbarLabel()
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
 
                 }
             }
@@ -130,5 +116,3 @@ struct DetailImageView: View {
         return nil
     }
 }
-
-

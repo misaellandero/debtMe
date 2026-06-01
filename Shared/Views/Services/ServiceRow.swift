@@ -19,11 +19,8 @@ struct ServiceRow: View {
     var body: some View {
         VStack{
             HStack{
-                ImageView(photoData: image, showModalDetail: false, shadowRadius: 0)
-                    .scaledToFill()
+                ServiceIconView(photoData: image, backgroundColor: BgColor, cornerRadius: 14)
                     .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-                    .disabled(true)
                 VStack(alignment:.leading){
                     Text(ServiceName)
                     Text("Pay Before ")

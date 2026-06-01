@@ -52,16 +52,17 @@ struct ContactsList: View {
                 Button(action:{
                     showingNewContactForm.toggle()
                 }){
-                    Label("Add", systemImage: "plus.circle.fill") .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Label("Add", systemImage: "plus.circle.fill")
+                        .appToolbarLabel()
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
+                .buttonStyle(.borderedProminent)
                 .tint(.accentColor)
             }
             
             ToolbarItem(placement: .automatic) {
                 Menu {
                     Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Button(action: {
                         shortMode = .alfabethAsc
                     }) {
@@ -76,7 +77,7 @@ struct ContactsList: View {
                     
                     Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
                     
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Button(action: {
                         shortMode = .amountAsc
                     }) {
@@ -91,7 +92,7 @@ struct ContactsList: View {
                     
                     Label("Tags", systemImage: "tag")
                     
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Picker(selection: $selectedTag, label: Text("Filter by tag")) {
                         Text("All").tag("All")
                         ForEach(labels){ label in
@@ -102,8 +103,9 @@ struct ContactsList: View {
                         }
                     }
                 } label: {
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")   .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .foregroundColor(.gray)
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .appToolbarLabel()
+                        .foregroundStyle(.secondary)
                 }
             }
         }
@@ -297,9 +299,10 @@ struct ContactsRows : View  {
                             } label: {
                                 
                                 Label("New Contact", systemImage: "plus.circle.fill")
-                                    .foregroundColor(.white)
+                                    .appToolbarLabel()
                             }
-                            .buttonStyle(BorderedProminentButtonStyle())
+                            .buttonStyle(.borderedProminent)
+                            .tint(.accentColor)
                         }
                         Spacer()
                     }
@@ -319,9 +322,10 @@ struct ContactsRows : View  {
                             } label: {
                                 
                                 Label("New Contact", systemImage: "plus.circle.fill")
-                                    .foregroundColor(.white)
+                                    .appToolbarLabel()
                             }
-                            .buttonStyle(BorderedProminentButtonStyle())
+                            .buttonStyle(.borderedProminent)
+                            .tint(.accentColor)
                             
                             
                             Button {
@@ -330,10 +334,10 @@ struct ContactsRows : View  {
                             } label: {
                                 
                                 Label("Show All", systemImage: "eyes")
-                                    .foregroundColor(.white)
+                                    .appToolbarLabel()
                             }
                             .tint(.blue)
-                            .buttonStyle(BorderedProminentButtonStyle())
+                            .buttonStyle(.borderedProminent)
                             
                         }
                         Spacer()

@@ -28,31 +28,47 @@ struct TransactionsForm: View {
         Group{
           
             #if os(macOS)
-            List{
-                Text("\(Image(systemName: "dollarsign.square.fill")) ") +
-                Text(edition ? "Edit" : "New")
-                TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction:performSaveAcion, closeView: closeView, edition: edition)
-                .padding()
+            NavigationStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 18) {
+                        TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction:performSaveAcion, closeView: closeView, edition: edition)
+                    }
+                    .padding(24)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                }
+                .navigationTitle(edition ? "Edit" : "New")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(action: closeView) {
+                            Label("Cancel", systemImage: "xmark")
+                        }
+                        .appSheetCancelButtonStyle()
+                    }
+
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(action: performSaveAcion) {
+                            Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
+                                .appToolbarLabel()
+                        }
+                        .appSheetPrimaryButtonStyle()
+                    }
+                }
             }
-            .frame(width: 400, height: 500)
+            .macOSFixedSheet(width: 560, height: 640)
             #else
             NavigationView{
                 VStack{
                     List{
                         TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
                         Section{
-                            Button(action: performSaveAcion){
-                                HStack{
-                                    Spacer()
-                                    Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
-                                        .foregroundColor(.white)
-                                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                                        .padding()
-                                    Spacer()
-                                }
+                            Button(action: performSaveAcion) {
+                                Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                                    .appToolbarLabel()
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 8)
                             }
-                            .listRowBackground(Color.accentColor)
-                            .cornerRadius(10)
+                            .buttonStyle(.borderedProminent)
+                            .tint(.accentColor)
                         }
                     }
                     .listStyle(InsetGroupedListStyle())
@@ -203,21 +219,6 @@ struct TransactionMultiPlataformForm: View {
         ImagePickerView(photoData: $transactionModel.photo, imagename: transactionModel.des)
         
         
-        Section{
-            #if os(macOS)
-            HStack{
-                Button(action: closeView){
-                    Label("Return", systemImage: "xmark")
-                }
-                .tint(.red)
-                Spacer()
-                Button(action: saveTransaction){
-                    Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                }
-                .accentColor(.accentColor)
-            }
-            #endif
-        }
     }
 }
 

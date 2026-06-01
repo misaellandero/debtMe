@@ -125,8 +125,9 @@ struct PaymentsTransactionsList: View {
                 Button(action:{
                     showEditTransaction.toggle()
                 }){
-                    Label("Edit", systemImage: "square.and.pencil")
-                        .foregroundColor(.accentColor)
+                    Label("Edit", systemImage: AppIcons.edit)
+                        .appToolbarLabel()
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             ToolbarItem(placement: .primaryAction ){
@@ -134,9 +135,10 @@ struct PaymentsTransactionsList: View {
                     showAddPayment.toggle()
                 }){
                     Label("Add", systemImage: "plus.circle.fill")
+                        .appToolbarLabel()
                 }
                 .disabled(transaction.settled)
-                .buttonStyle(BorderedProminentButtonStyle())
+                .buttonStyle(.borderedProminent)
                 .tint(.accentColor)
             }
            

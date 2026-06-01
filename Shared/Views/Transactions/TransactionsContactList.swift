@@ -98,9 +98,10 @@ struct TransactionsContactList: View {
                                     showAddTransaction.toggle()
                                 } label: {
                                     Label("New Transaction", systemImage: "plus.circle.fill")
-                                        .foregroundColor(.white)
+                                        .appToolbarLabel()
                                 }
-                                .buttonStyle(BorderedProminentButtonStyle())
+                                .buttonStyle(.borderedProminent)
+                                .tint(.accentColor)
                             }
                             Spacer()
                         }
@@ -146,8 +147,9 @@ struct TransactionsContactList: View {
                     Button(action:{
                         showEditContact.toggle()
                     }){
-                        Label("Edit", systemImage: "square.and.pencil")
-                            .foregroundColor(.accentColor)
+                        Label("Edit", systemImage: AppIcons.edit)
+                            .appToolbarLabel()
+                            .foregroundStyle(Color.accentColor)
                     }
                 }
                 
@@ -164,8 +166,9 @@ struct TransactionsContactList: View {
                         showAddTransaction.toggle()
                     }){
                         Label("Add", systemImage: "plus.circle.fill")
+                            .appToolbarLabel()
                     }
-                    .buttonStyle(BorderedProminentButtonStyle())
+                    .buttonStyle(.borderedProminent)
                     .tint(.accentColor)
                 }
                 

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if canImport(ImagePlayground)
+import ImagePlayground
+#endif
+
 struct ContactsNewForm: View {
     
     @State var contact = ContactModel(name: "", emoji: "🙂", label: "", labelColor: 1)
@@ -25,10 +29,35 @@ struct ContactsNewForm: View {
     var body: some View {
             Group{
                 #if os(macOS)
-                List{
-                    Text(edition ? "Edit Contact" : "New Contact")
-                    NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
+                NavigationStack {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 18) {
+                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion)
+                        }
+                        .padding(24)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                    }
+                    .navigationTitle(edition ? "Edit Contact" : "New Contact")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button {
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Label("Cancel", systemImage: "xmark")
+                            }
+                            .appSheetCancelButtonStyle()
+                        }
+
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(action: performSaveAcion) {
+                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
+                                    .appToolbarLabel()
+                            }
+                            .appSheetPrimaryButtonStyle()
+                        }
+                    }
                 }
+                .macOSFixedSheet(width: 520, height: 360)
                 #else
                 NavigationView{
                     ZStack{
@@ -38,19 +67,15 @@ struct ContactsNewForm: View {
                         .listStyle(InsetGroupedListStyle())
                          VStack{
                              Spacer()
-                             Button(action: performSaveAcion){
-                                 HStack{
-                                     Spacer()
-                                     Label(edition ? "Save": "Add" , systemImage: "plus.circle.fill")
-                                         .foregroundColor(.white)
-                                         .font(Font.system(.headline, design: .rounded).weight(.black))
-                                         .padding()
-                                     Spacer()
-                                 }
-                                 .padding(.vertical, 15)
+                             Button(action: performSaveAcion) {
+                                 Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                                     .appToolbarLabel()
+                                     .frame(maxWidth: .infinity)
+                                     .padding(.vertical, 10)
                              }
-                             .background(Color.accentColor)
-                             .cornerRadius(10)
+                             .buttonStyle(.borderedProminent)
+                             .tint(.accentColor)
+                             .controlSize(.large)
                              .padding()
                         }
                     }
@@ -85,6 +110,7 @@ struct ContactsNewForm: View {
         if edition {
             if let contactToEdit {
                 contact.emoji = contactToEdit.wrappedEmoji
+                contact.avatarImage = contactToEdit.avatarImage
                 contact.name = contactToEdit.wrappedName
                 labelContact = contactToEdit.label
             }
@@ -95,6 +121,7 @@ struct ContactsNewForm: View {
         if let contactToEdit {
             contactToEdit.name =  contact.name
             contactToEdit.emoji = contact.emoji
+            contactToEdit.avatarImage = contact.avatarImage
             contactToEdit.label = self.labelContact
             try? self.moc.save()
             self.presentationMode.wrappedValue.dismiss()
@@ -115,6 +142,7 @@ struct ContactsNewForm: View {
         newContact.id = UUID()
         newContact.name =  contact.name
         newContact.emoji = contact.emoji
+        newContact.avatarImage = contact.avatarImage
         newContact.label = self.labelContact
         
         try? self.moc.save()
@@ -134,6 +162,7 @@ struct NewContactMultiplatformForm : View {
     
     @State private var showPopover: Bool = false
     @State var animate : Bool = false
+    @State private var showImagePlayground = false
     
     @Binding var labelContact: ContactLabel?
     var saveContact : () -> Void
@@ -153,14 +182,39 @@ struct NewContactMultiplatformForm : View {
     var body: some View {
         Group{
             HStack{
-                Button(action:showEmojiPicker){
-                    Text(contact.emoji)
-                        .padding(5)
-                        .scaleEffect(animate ? 1.2 : 1)
-                        .animation(.easeInOut)
-                        .background(Color.secondary.opacity(0.2))
-                        .cornerRadius(10)
+                Menu {
+                    Button {
+                        showEmojiPicker()
+                    } label: {
+                        Label("Emoji Picker", systemImage: "face.smiling")
+                    }
+
+                    #if canImport(ImagePlayground)
+                    Button {
+                        showImagePlayground = true
+                    } label: {
+                        Label("Create with Apple Intelligence", systemImage: "sparkles")
+                    }
+                    #endif
+
+                    if contact.avatarImage != nil {
+                        Button(role: .destructive) {
+                            contact.avatarImage = nil
+                        } label: {
+                            Label("Remove Generated Image", systemImage: "trash")
+                        }
+                    }
+                } label: {
+                    ContactAvatarView(
+                        imageData: contact.avatarImage,
+                        emoji: contact.emoji,
+                        size: 46,
+                        cornerRadius: 12
+                    )
+                    .scaleEffect(animate ? 1.12 : 1)
+                    .animation(.easeInOut, value: animate)
                 }
+                .menuStyle(.button)
                 .popover(
                     isPresented: self.$showPopover,
                     arrowEdge: .top
@@ -178,6 +232,17 @@ struct NewContactMultiplatformForm : View {
                     }
                     #endif
                 }
+                #if canImport(ImagePlayground)
+                .imagePlaygroundSheet(
+                    isPresented: $showImagePlayground,
+                    concept: imagePlaygroundConcept,
+                    sourceImage: nil,
+                    onCompletion: { url in
+                        loadGeneratedContactImage(from: url)
+                    },
+                    onCancellation: nil
+                )
+                #endif
                 
                 TextField("Name", text: $contact.name)
             }
@@ -206,7 +271,7 @@ struct NewContactMultiplatformForm : View {
                 .buttonStyle(BorderedButtonStyle())
                 .sheet(isPresented: $showFormLabel, content: {
                     LabelNewForm(showForm: $showFormLabel)
-                    .environment(\.horizontalSizeClass, .compact)
+                        .environment(\.horizontalSizeClass, .compact)
                 }) 
                 #else
                 Button(action:{
@@ -216,7 +281,7 @@ struct NewContactMultiplatformForm : View {
                        Text(LocalizedStringKey(labelContact?.wrappedName ?? "Nothing selected"))
                     }
                     .font(Font.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding(4)
                     .padding(.horizontal,4)
                     .background(labelContact?.labelColor ?? Color.gray)
@@ -232,32 +297,13 @@ struct NewContactMultiplatformForm : View {
                 }
                 #endif
             }
-            Section{
-                #if os(iOS) 
-                #elseif os(macOS)
-                HStack{
-                    Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
-                        
-                    }){
-                        Label("Return", systemImage: "xmark")
-                    }
-                    .tint(.red)
-                    Spacer()
-                    Button(action: saveContact){
-                        Label("Add", systemImage: "plus.circle.fill")
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                    }
-                    .accentColor(.accentColor)
-                }
-                #endif
-            }
         }
     }
     
     
     func showChange(_ tag: String){
         self.animate = true
+        contact.avatarImage = nil
         #if os(iOS)
         showEmojiPicker()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -274,6 +320,23 @@ struct NewContactMultiplatformForm : View {
     func showEmojiPicker(){
         withAnimation{
             self.showPopover.toggle()
+        }
+    }
+
+    private var imagePlaygroundConcept: String {
+        let trimmedName = contact.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedName.isEmpty {
+            return "friendly contact emoji avatar"
+        }
+        return "\(trimmedName) friendly contact emoji avatar"
+    }
+
+    private func loadGeneratedContactImage(from url: URL) {
+        guard let data = try? Data(contentsOf: url) else { return }
+        contact.avatarImage = data
+        animate = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            animate = false
         }
     }
     

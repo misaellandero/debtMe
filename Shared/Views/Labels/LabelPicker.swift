@@ -42,18 +42,13 @@ struct labelPicker: View {
                     Button(action: {
                         showFormLabel.toggle()
                     }){
-                        HStack{
-                            Spacer()
-                            Label("New" , systemImage: "plus.circle.fill")
-                                .foregroundColor(.white)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                                .padding()
-                            Spacer()
-                        }
-                        
-                       // .padding(.vertical, 15)
+                        Label("New", systemImage: "plus.circle.fill")
+                            .appToolbarLabel()
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
                     }
-                    .listRowBackground(Color.accentColor)
+                    .buttonStyle(.borderedProminent)
+                    .tint(.accentColor)
                      
                 }
                 .listStyle(InsetGroupedListStyle())
@@ -114,12 +109,12 @@ struct LabelPickerListElements: View {
                 HStack{
                     Spacer()
                     Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .foregroundColor(.white)
+                        .appToolbarLabel()
+                        .foregroundStyle(.primary)
                     Spacer()
                 }
                 .background(label.labelColor.opacity(0.3))
-                .cornerRadius(5)
+                .clipShape(.rect(cornerRadius: 5))
                 .onTapGesture {
                     setLabel(label: label)
                 }
@@ -131,11 +126,11 @@ struct LabelPickerListElements: View {
                 HStack{
                     Spacer()
                     Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                        .appToolbarLabel()
                     Spacer()
                 }
                 .padding()
-                .foregroundColor(Color.white)
+                .foregroundStyle(.white)
             }
             .listRowBackground(label.labelColor)
 

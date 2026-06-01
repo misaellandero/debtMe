@@ -30,7 +30,7 @@ struct PaymentRow: View {
                             Button(action: {
                                 showEditPayment.toggle()
                             }){
-                                Image(systemName:"square.and.pencil" )
+                                Image(systemName: AppIcons.edit)
                             }
                             .buttonStyle(PlainButtonStyle())
                             Spacer()

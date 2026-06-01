@@ -363,6 +363,9 @@
         }
       }
     },
+    "Applying" : {
+
+    },
     "Are you sure?\n You won't be able to retrieve this information later." : {
       "localizations" : {
         "es" : {
@@ -448,7 +451,16 @@
         }
       }
     },
+    "Brand Icons" : {
+
+    },
+    "Brands" : {
+
+    },
     "Business day" : {
+
+    },
+    "Calendar" : {
 
     },
     "Cancel" : {
@@ -467,7 +479,7 @@
         }
       }
     },
-    "Categoria" : {
+    "Category" : {
 
     },
     "CFBundleName" : {
@@ -488,6 +500,9 @@
         }
       }
     },
+    "Choose an Emoji" : {
+
+    },
     "Choose an icon" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -506,6 +521,7 @@
       }
     },
     "Chose An Emoji" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -697,6 +713,12 @@
         }
       }
     },
+    "Create with Apple Intelligence" : {
+
+    },
+    "Crop" : {
+
+    },
     "Daily" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -762,6 +784,9 @@
           }
         }
       }
+    },
+    "Day balance" : {
+
     },
     "debtMe" : {
       "localizations" : {
@@ -924,6 +949,12 @@
         }
       }
     },
+    "Downloading" : {
+
+    },
+    "Downloading image" : {
+
+    },
     "Edit" : {
       "localizations" : {
         "es" : {
@@ -955,6 +986,9 @@
           }
         }
       }
+    },
+    "Emoji Picker" : {
+
     },
     "End date" : {
 
@@ -1013,6 +1047,9 @@
           }
         }
       }
+    },
+    "Files" : {
+
     },
     "Filter" : {
       "localizations" : {
@@ -1078,7 +1115,7 @@
         }
       }
     },
-    "Gastos" : {
+    "Generate" : {
 
     },
     "Get the app on your iPhone, iPad, Mac and VisionPro" : {
@@ -1096,6 +1133,12 @@
           }
         }
       }
+    },
+    "Grid density" : {
+
+    },
+    "Grid Density" : {
+
     },
     "Hello, World!" : {
       "localizations" : {
@@ -1275,6 +1318,9 @@
         }
       }
     },
+    "Image unavailable" : {
+
+    },
     "Images" : {
       "localizations" : {
         "es" : {
@@ -1292,6 +1338,7 @@
       }
     },
     "Include Image" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -1338,6 +1385,9 @@
           }
         }
       }
+    },
+    "Internet" : {
+
     },
     "Keep all your devices up to date using iCloud sync" : {
       "localizations" : {
@@ -1419,6 +1469,18 @@
           }
         }
       }
+    },
+    "List" : {
+
+    },
+    "Loading" : {
+
+    },
+    "Loading icons" : {
+
+    },
+    "Loading images" : {
+
     },
     "Loans" : {
       "localizations" : {
@@ -1712,6 +1774,15 @@
       }
     },
     "Next income %@" : {
+
+    },
+    "No icons found" : {
+
+    },
+    "No image" : {
+
+    },
+    "No images found" : {
 
     },
     "No records found!" : {
@@ -2048,7 +2119,10 @@
     "People" : {
 
     },
-    "Periodo" : {
+    "Period" : {
+
+    },
+    "Photo Library" : {
 
     },
     "Pie chart" : {
@@ -2148,6 +2222,15 @@
     "Reminder" : {
 
     },
+    "Remove" : {
+
+    },
+    "Remove Generated Image" : {
+
+    },
+    "Reset" : {
+
+    },
     "Resumen" : {
 
     },
@@ -2245,6 +2328,18 @@
         }
       }
     },
+    "Search brands (e.g. netflix, spotify, bbva)" : {
+
+    },
+    "Search for a brand" : {
+
+    },
+    "Search for images" : {
+
+    },
+    "Search images" : {
+
+    },
     "Security" : {
       "localizations" : {
         "es" : {
@@ -2262,6 +2357,7 @@
       }
     },
     "Select a Photo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -2379,6 +2475,15 @@
           }
         }
       }
+    },
+    "SF Symbol" : {
+
+    },
+    "SF Symbol name (e.g. icloud)" : {
+
+    },
+    "SF Symbols" : {
+
     },
     "Share" : {
       "localizations" : {
@@ -2562,6 +2667,9 @@
         }
       }
     },
+    "Symbol not found" : {
+
+    },
     "Tag" : {
       "localizations" : {
         "es" : {
@@ -2729,6 +2837,9 @@
         }
       }
     },
+    "Today" : {
+
+    },
     "Todos" : {
 
     },
@@ -2796,6 +2907,12 @@
           }
         }
       }
+    },
+    "Try another brand name or use an SF Symbol." : {
+
+    },
+    "Try another search term." : {
+
     },
     "Tuesday" : {
       "localizations" : {
@@ -2893,6 +3010,15 @@
         }
       }
     },
+    "Use" : {
+
+    },
+    "Use the search field to find a service icon." : {
+
+    },
+    "Use the search field to find an image." : {
+
+    },
     "Ver todo" : {
 
     },
@@ -2913,6 +3039,9 @@
       }
     },
     "Vista" : {
+
+    },
+    "Web Images" : {
 
     },
     "Wednesday" : {

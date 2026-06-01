@@ -7,6 +7,7 @@
         <relationship name="service" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Services" inverseName="amountUpdates" inverseEntity="Services"/>
     </entity>
     <entity name="Contact" representedClassName="Contact" syncable="YES">
+        <attribute name="avatarImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="hideSettled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

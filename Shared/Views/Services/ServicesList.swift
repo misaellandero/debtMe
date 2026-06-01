@@ -83,7 +83,7 @@ struct ServicesList: View {
     
     @State var endDate =  Date()
 
-    @AppStorage("servicesViewMode") var viewMode: ServicesViewMode = .list
+    @AppStorage("servicesViewMode") var viewMode: ServicesViewMode = .calendar
 
     @AppStorage("servicesCalendarPeriod") var calendarPeriod: CalendarPeriod = .month
 
@@ -382,9 +382,16 @@ struct ServicesList: View {
         let weekColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
 
         return VStack(alignment: .leading, spacing: 12) {
+            if isMacOS {
+                if calendarPeriod != .month {
+                    calendarHeaderCard
+                }
+            } else {
+                calendarHeaderCard
+            }
             switch calendarPeriod {
             case .day:
-                dayCell(for: referenceDate, compact: false)
+                dayDetailCard(for: referenceDate)
             case .week:
                 ForEach(weekDates, id: \.self) { date in
                     weekRow(for: date)
@@ -399,10 +406,7 @@ struct ServicesList: View {
                 #if os(macOS)
                 macOSMonthCalendar
                 #else
-                let monthTitle = referenceDate.formatted(.dateTime.month(.wide).year())
                 VStack(alignment: .leading, spacing: 8) {
-            Text(monthTitle)
-                .font(.subheadline.weight(.semibold))
                     ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { row, symbol in
                         VStack(alignment: .leading, spacing: 4) {
                             weekdayHeaderCell(symbol: symbol)
@@ -434,6 +438,47 @@ struct ServicesList: View {
                 EmptyView()
             }
         }
+    }
+
+    private var isMacOS: Bool {
+        #if os(macOS)
+        true
+        #else
+        false
+        #endif
+    }
+
+    private var calendarHeaderTitle: String {
+        switch calendarPeriod {
+        case .month:
+            return referenceDate.formatted(.dateTime.month(.wide).year())
+        case .year:
+            return referenceDate.formatted(.dateTime.year())
+        case .untilNextIncome:
+            return "Until Next Income"
+        default:
+            return dateRangeLabel
+        }
+    }
+
+    private var calendarHeaderBalance: Double {
+        let range = selectedDateRange
+        let expenses = cachedOccurrences.filter { range.contains($0.date) && $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        let incomes = cachedOccurrences.filter { range.contains($0.date) && !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        return incomes - expenses
+    }
+
+    private var calendarHeaderCard: some View {
+        VStack(alignment: .center, spacing: 6) {
+            Text(calendarHeaderTitle)
+                .font(.headline.weight(.semibold))
+                .multilineTextAlignment(.center)
+            Text(calendarHeaderBalance.toCurrencyString())
+                .font(.largeTitle.weight(.bold))
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
     }
         
     var body: some View {
@@ -484,14 +529,29 @@ struct ServicesList: View {
             }
             
             #endif
+
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    withAnimation(.snappy) {
+                        viewMode = (viewMode == .calendar) ? .list : .calendar
+                    }
+                } label: {
+                    Label(
+                        viewMode == .calendar ? "List" : "Calendar",
+                        systemImage: viewMode == .calendar ? "list.bullet" : "calendar"
+                    )
+                    .appToolbarLabel()
+                }
+            }
             
             ToolbarItem(placement: .primaryAction ){
                 Button(action:{
                     showNewBill.toggle()
                 }){
-                    Label("Add", systemImage: "plus.circle.fill") .font(Font.system(.headline, design: .rounded).weight(.black))
+                    Label("Add", systemImage: "plus.circle.fill")
+                        .appToolbarLabel()
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
+                .buttonStyle(.borderedProminent)
                 .tint(.accentColor)
             }
             
@@ -517,7 +577,7 @@ struct ServicesList: View {
                     }
                 } label: {
                     Label("Config", systemImage: "slider.horizontal.3")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
+                        .appToolbarLabel()
                         .foregroundColor(.gray)
                 }
             }
@@ -525,7 +585,7 @@ struct ServicesList: View {
             ToolbarItem(placement: .automatic) {
                 Menu {
                     Label("Sort alphabetically", systemImage: "arrow.up.and.down.text.horizontal")
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Button(action: {
                         sortedMode = .alfabethAsc
                     }) {
@@ -540,7 +600,7 @@ struct ServicesList: View {
                     
                     Label("Sort by Amount", systemImage: "arrow.up.and.down.text.horizontal")
                     
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Button(action: {
                         sortedMode = .amountAsc
                     }) {
@@ -555,7 +615,7 @@ struct ServicesList: View {
                     
                     Label("Tags", systemImage: "tag")
                     
-                    .font(Font.system(.headline, design: .rounded).weight(.black))
+                    .appToolbarLabel()
                     Picker(selection: $selectedTag, label: Text("Filter by tag")) {
                         Text("All").tag("All")
                         ForEach(labels){ label in
@@ -568,8 +628,8 @@ struct ServicesList: View {
                     
                 } label: {
                     Label("Orden/Filtro", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .font(Font.system(.headline, design: .rounded).weight(.black))
-                        .foregroundColor(.gray)
+                        .appToolbarLabel()
+                        .foregroundStyle(.secondary)
                 }
             }
         }
@@ -698,12 +758,25 @@ struct ServicesList: View {
         let summaryFont: Font = compact ? .caption2 : .caption
         let cellHeight: CGFloat = compact ? calendarDayCellHeightCompact : 72
         let markers = dayMarkerServices(for: date)
+        let glowColor = markers.first?.wrappedColor ?? .clear
+        let hasMarkers = !markers.isEmpty
 
         return VStack(alignment: .leading, spacing: 4) {
-            Text("\(day)")
-                .font(titleFont)
-                .fontWeight(.semibold)
-                .foregroundStyle(isToday ? Color.accentColor : Color.primary)
+            HStack(spacing: 8) {
+                Text("\(day)")
+                    .font(titleFont)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.primary)
+                Spacer(minLength: 0)
+                if isToday {
+                    Text("Today")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(.thinMaterial, in: Capsule())
+                }
+            }
             if isLarge {
                 pieSummary(expenseTotal: expenseTotal, incomeTotal: incomeTotal)
             } else {
@@ -715,7 +788,24 @@ struct ServicesList: View {
         }
         .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: cellHeight, alignment: .leading)
         .padding(10)
-        .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
+        .background {
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .fill(Color.secondary.opacity(0.12))
+
+            if viewMode == .calendar, hasMarkers {
+                RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                    .fill(glowColor.opacity(0.14))
+                    .blur(radius: 14)
+            }
+        }
+        .overlay(
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .stroke(
+                    isToday ? Color.accentColor.opacity(0.9) : (viewMode == .calendar && hasMarkers ? glowColor.opacity(0.75) : .clear),
+                    lineWidth: isToday ? 2 : 1.5
+                )
+        )
+        .shadow(color: viewMode == .calendar && hasMarkers ? glowColor.opacity(0.25) : .clear, radius: 10, x: 0, y: 3)
         .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .onTapGesture {
             #if os(macOS)
@@ -723,6 +813,83 @@ struct ServicesList: View {
             showInspector = true
             #else
             openDetail(range: calendar.dateInterval(of: .day, for: date), title: date.formatted(date: .abbreviated, time: .omitted))
+            #endif
+        }
+    }
+
+    private func dayDetailCard(for date: Date) -> some View {
+        let calendar = Calendar.current
+        let range = calendar.dateInterval(of: .day, for: date)
+        let occurrences = cachedOccurrences
+            .filter { range?.contains($0.date) == true }
+            .sorted { $0.date < $1.date }
+
+        let incomes = occurrences.filter { !$0.service.expense }
+        let expenses = occurrences.filter { $0.service.expense }
+
+        let dayKey = calendar.startOfDay(for: date)
+        let expenseTotal = expenseTotalsByDay[dayKey] ?? 0
+        let incomeTotal = incomeTotalsByDay[dayKey] ?? 0
+        let balanceTotal = incomeTotal - expenseTotal
+
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(date.formatted(.dateTime.weekday(.wide).day().month(.wide).year()))
+                    .font(.headline.weight(.semibold))
+                Spacer()
+                Text(balanceTotal.toCurrencyString())
+                    .font(.title2.weight(.bold))
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                if !incomes.isEmpty {
+                    Text("Income")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    ForEach(incomes.prefix(4)) { occ in
+                        HStack(spacing: 8) {
+                            dayMarker(for: occ.service, size: 18)
+                            Text(occ.service.wrappedName)
+                                .lineLimit(1)
+                            Spacer()
+                            Text(occ.service.amount.toCurrencyString())
+                                .font(.callout.weight(.semibold))
+                                .foregroundStyle(.blue)
+                        }
+                        .font(.callout)
+                    }
+                }
+
+                if !expenses.isEmpty {
+                    Text("Expenses")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                        .padding(.top, incomes.isEmpty ? 0 : 6)
+                    ForEach(expenses.prefix(4)) { occ in
+                        HStack(spacing: 8) {
+                            dayMarker(for: occ.service, size: 18)
+                            Text(occ.service.wrappedName)
+                                .lineLimit(1)
+                            Spacer()
+                            Text("-" + occ.service.amount.toCurrencyString())
+                                .font(.callout.weight(.semibold))
+                                .foregroundStyle(.red)
+                        }
+                        .font(.callout)
+                    }
+                }
+            }
+        }
+        .padding(12)
+        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
+        .onTapGesture {
+            #if os(macOS)
+            inspectorDate = date
+            macOSSelectedService = nil
+            showInspector = true
+            #else
+            openDetail(range: range, title: date.formatted(date: .abbreviated, time: .omitted))
             #endif
         }
     }
@@ -838,6 +1005,9 @@ struct ServicesList: View {
         let isLarge = max(abs(expenseTotal), abs(incomeTotal), abs(balanceTotal)) >= largeValueThreshold
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d"
+        let markers = dayMarkerServices(for: date)
+        let glowColor = markers.first?.wrappedColor ?? .clear
+        let hasMarkers = !markers.isEmpty
 
         return HStack {
             VStack(alignment: .leading, spacing: 6) {
@@ -849,11 +1019,28 @@ struct ServicesList: View {
                 } else {
                     calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal, font: .footnote)
                 }
+                if hasMarkers {
+                    dayMarkersGrid(services: markers)
+                }
             }
         }
         .frame(maxWidth: .infinity, minHeight: 72, maxHeight: 72, alignment: .leading)
         .padding(8)
-        .background(Color.secondary.opacity(0.08))
+        .background {
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .fill(Color.secondary.opacity(0.08))
+
+            if viewMode == .calendar, hasMarkers {
+                RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                    .fill(glowColor.opacity(0.14))
+                    .blur(radius: 14)
+            }
+        }
+        .overlay(
+            RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
+                .stroke(viewMode == .calendar && hasMarkers ? glowColor.opacity(0.75) : .clear, lineWidth: 1.5)
+        )
+        .shadow(color: viewMode == .calendar && hasMarkers ? glowColor.opacity(0.25) : .clear, radius: 10, x: 0, y: 3)
         .clipShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .contentShape(Rectangle())
         .onTapGesture {
@@ -980,18 +1167,18 @@ struct ServicesList: View {
             Chart(expenseChartData) { point in
                 if point.category == "Profit" {
                     LineMark(
-                        x: .value("Periodo", point.label),
+                        x: .value("Period", point.label),
                         y: .value("Profit", point.value)
                     )
                     .foregroundStyle(.orange)
                     .interpolationMethod(.catmullRom)
                 } else {
                     BarMark(
-                        x: .value("Periodo", point.label),
-                        y: .value("Gastos", point.value)
+                        x: .value("Period", point.label),
+                        y: .value("Expenses", point.value)
                     )
                     .foregroundStyle(point.category == "Income" ? .blue : .red)
-                    .position(by: .value("Categoria", point.category))
+                    .position(by: .value("Category", point.category))
                     .cornerRadius(4)
                 }
             }
@@ -1021,9 +1208,9 @@ struct ServicesList: View {
             let incomeTotal = incomes.filter { calendar.isDate($0.date, inSameDayAs: day) }.reduce(0) { $0 + $1.service.amount }
             let profitTotal = incomeTotal - expenseTotal
             return [
-                ExpenseChartPoint(label: "Hoy", value: expenseTotal, category: "Expenses"),
-                ExpenseChartPoint(label: "Hoy", value: incomeTotal, category: "Income"),
-                ExpenseChartPoint(label: "Hoy", value: profitTotal, category: "Profit")
+                ExpenseChartPoint(label: "Today", value: expenseTotal, category: "Expenses"),
+                ExpenseChartPoint(label: "Today", value: incomeTotal, category: "Income"),
+                ExpenseChartPoint(label: "Today", value: profitTotal, category: "Profit")
             ]
         case .week:
             let formatter = DateFormatter()
@@ -1156,6 +1343,14 @@ struct ServicesList: View {
         }
     }
 
+    private var isShowingToday: Bool {
+        selectedDateRange.contains(Date())
+    }
+
+    private func jumpToToday() {
+        referenceDateTimestamp = Date().timeIntervalSince1970
+    }
+
     private func shiftReferenceDateByFortnight(direction: Int, calendar: Calendar) {
         let comps = calendar.dateComponents([.year, .month, .day], from: referenceDate)
         let year = comps.year ?? calendar.component(.year, from: referenceDate)
@@ -1192,7 +1387,7 @@ struct ServicesList: View {
     #if os(macOS)
     var floatingDateNavigator: some View {
         HStack(spacing: 8) {
-            Picker("Periodo", selection: $calendarPeriod) {
+            Picker("Period", selection: $calendarPeriod) {
                 ForEach(CalendarPeriod.allCases, id: \.self) { option in
                     Text(LocalizedStringKey(option.rawValue))
                         .tag(option)
@@ -1225,6 +1420,14 @@ struct ServicesList: View {
                 }
                 .buttonStyle(.plain)
 
+                Button {
+                    jumpToToday()
+                } label: {
+                    Text("Today")
+                }
+                .buttonStyle(.plain)
+                .disabled(isShowingToday)
+
                 Text(dateRangeLabel)
                     .font(.subheadline.weight(.semibold))
                     .lineLimit(1)
@@ -1250,7 +1453,7 @@ struct ServicesList: View {
     var floatingDateNavigatorIOS: some View {
         return GlassEffectContainer {
             HStack {
-                Picker("Periodo", selection: $calendarPeriod) {
+                Picker("Period", selection: $calendarPeriod) {
                     ForEach(CalendarPeriod.allCases, id: \.self) { option in
                         Text(LocalizedStringKey(option.rawValue))
                             .tag(option)
@@ -1287,6 +1490,16 @@ struct ServicesList: View {
                             .font(.subheadline.weight(.semibold))
                     }
                     .buttonStyle(.bordered)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+
+                    Button {
+                        jumpToToday()
+                    } label: {
+                        Text("Today")
+                            .font(.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(isShowingToday)
                     .glassEffect(.regular.interactive(), in: .capsule)
 
                     Text(dateRangeLabel)
@@ -1395,15 +1608,25 @@ struct ServicesList: View {
     private func macOSDayCell(for date: Date) -> some View {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
+        let isToday = calendar.isDateInToday(date)
         let markers = dayMarkerServices(for: date)
         let glowColor = markers.first?.wrappedColor ?? .clear
         let hasMarkers = !markers.isEmpty
 
         return VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Spacer()
+            HStack(spacing: 8) {
                 Text("\(day)")
                     .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.primary)
+                Spacer(minLength: 0)
+                if isToday {
+                    Text("Today")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(.thinMaterial, in: Capsule())
+                }
             }
             if hasMarkers {
                 macOSDayMarkersGrid(services: markers)
@@ -1423,7 +1646,10 @@ struct ServicesList: View {
         }
         .overlay(
             RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
-                .stroke(hasMarkers ? glowColor.opacity(0.75) : .clear, lineWidth: 1.5)
+                .stroke(
+                    isToday ? Color.accentColor.opacity(0.9) : (hasMarkers ? glowColor.opacity(0.75) : .clear),
+                    lineWidth: isToday ? 2 : 1.5
+                )
         )
         .shadow(color: hasMarkers ? glowColor.opacity(0.45) : .clear, radius: 10, x: 0, y: 3)
         .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
@@ -1631,10 +1857,46 @@ struct ServicesList: View {
             let occurrences = cachedOccurrences
                 .filter { calendar.isDate($0.date, inSameDayAs: date) }
                 .sorted { $0.date < $1.date }
+            let incomeTotal = occurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
+            let expenseTotal = occurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+            let dayBalance = incomeTotal - expenseTotal
 
             VStack(alignment: .leading, spacing: 12) {
                 Text(date.formatted(.dateTime.weekday(.wide).day().month(.wide).year()))
                     .font(.headline)
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Day balance")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    Text(dayBalance.toCurrencyString())
+                        .font(.title2.weight(.bold))
+                }
+
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Income")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Text(incomeTotal.toCurrencyString())
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.blue)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Expenses")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Text("-" + expenseTotal.toCurrencyString())
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.red)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(10)
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+
                 if occurrences.isEmpty {
                     Text("No services due")
                 } else {
@@ -1666,44 +1928,10 @@ struct ServicesList: View {
 
     @ViewBuilder
     private func dayMarker(for service: Services, size: CGFloat) -> some View {
-        if let imageData = service.image {
-            #if os(iOS)
-            if let image = UIImage(data: imageData) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size, height: size)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(service.wrappedColor.opacity(0.35), lineWidth: 1))
-                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
-            } else {
-                Circle()
-                    .fill(service.wrappedColor)
-                    .frame(width: size, height: size)
-                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
-            }
-            #else
-            if let image = NSImage(data: imageData) {
-                Image(nsImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size, height: size)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(service.wrappedColor.opacity(0.35), lineWidth: 1))
-                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
-            } else {
-                Circle()
-                    .fill(service.wrappedColor)
-                    .frame(width: size, height: size)
-                    .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
-            }
-            #endif
-        } else {
-            Circle()
-                .fill(service.wrappedColor)
-                .frame(width: size, height: size)
-                .shadow(color: service.wrappedColor.opacity(0.5), radius: max(2, size * 0.35))
-        }
+        let cornerRadius = max(8, size * 0.32)
+        ServiceIconView(photoData: service.image, backgroundColor: service.wrappedColor, cornerRadius: cornerRadius)
+            .frame(width: size, height: size)
+            .shadow(color: service.wrappedColor.opacity(0.45), radius: max(2, size * 0.35))
     }
 }
 

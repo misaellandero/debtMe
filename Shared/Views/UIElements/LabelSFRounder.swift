@@ -13,8 +13,8 @@ struct LabelSFRounder: View {
     var foreground : Color
     var body: some View {
         Label(LocalizedStringKey(label), systemImage: systemImage)
-            .foregroundColor(foreground)
-            .font(Font.system(.headline, design: .rounded).weight(.black))
+            .foregroundStyle(foreground)
+            .appToolbarLabel()
     }
 }
 

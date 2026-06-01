@@ -24,40 +24,33 @@ struct ServicesForm: View {
     var body: some View {
         Group{
         #if os(macOS)
- 
+            NavigationStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 18) {
+                        ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
+                    }
+                    .padding(24)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                }
+                .navigationTitle(edition ? "Edit" : "New")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(action: closeView) {
+                            Label("Cancel", systemImage: "xmark")
+                        }
+                        .appSheetCancelButtonStyle()
+                    }
 
-        Text("\(Image(systemName: "chart.bar.doc.horizontal")) ") +
-        Text(edition ? "Edit" : "New")
-            .font(Font.system(.headline, design: .rounded).weight(.black))
-            
-            List{
-                
-                
-                ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
-            }
-            .frame(width: 500, height: 500)
-            
-            HStack{
-                Button(action: {
-                    dismiss()
-                    
-                }){
-                    Label("Cancel", systemImage: "xmark")
-                    
-                    .foregroundStyle(.red)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                        
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(action: performSaveAcion) {
+                            Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
+                                .appToolbarLabel()
+                        }
+                        .appSheetPrimaryButtonStyle()
+                    }
                 }
-                Spacer()
-                Button(action: {
-                    performSaveAcion()
-                }){
-                    Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
-                        .foregroundStyle(Color.accentColor)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                }
-                
             }
+            .macOSFixedSheet(width: 680, height: 720)
         #else
             NavigationStack{
                 List{
@@ -89,9 +82,6 @@ struct ServicesForm: View {
 #endif
         }
         .onAppear(perform:loadData)
-        #if os(macOS)
-        .padding()
-        #endif
     }
     
     func closeView(){
@@ -328,7 +318,7 @@ struct ServiceMultiPlataformForm : View {
                 .pickerStyle(MenuPickerStyle())
                 #endif
                 
-                ImagePickerView(photoData: $service.image)
+                ImagePickerView(photoData: $service.image, iconBackgroundColor: service.color, isIconFormat: true)
             }
             
             
@@ -341,17 +331,14 @@ struct ServiceMultiPlataformForm : View {
             
             Section{
 #if os(iOS)
-                Button(action: save){
-                    HStack{
-                        Spacer()
-                        Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                            .foregroundColor(.white)
-                            .font(Font.system(.headline, design: .rounded).weight(.black))
-                            .padding()
-                        Spacer()
-                    }
+                Button(action: save) {
+                    Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                        .appToolbarLabel()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
                 }
-                .listRowBackground(Color.accentColor )
+                .buttonStyle(.borderedProminent)
+                .tint(.accentColor)
 #endif
             }
         

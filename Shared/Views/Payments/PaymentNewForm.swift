@@ -22,12 +22,33 @@ struct PaymentNewForm: View {
         Group{
            
             #if os(macOS)
-                List{
-                    Text(edition ? "Edit" : "New")
-                    PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
-                        .padding()
+                NavigationStack {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 18) {
+                            PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
+                        }
+                        .padding(24)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                    }
+                    .navigationTitle(edition ? "Edit" : "New")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(action: closeView) {
+                                Label("Cancel", systemImage: "xmark")
+                            }
+                            .appSheetCancelButtonStyle()
+                        }
+
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(action: performSaveAcion) {
+                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
+                                    .appToolbarLabel()
+                            }
+                            .appSheetPrimaryButtonStyle()
+                        }
+                    }
                 }
-                .frame(width: 400, height: 500)
+                .macOSFixedSheet(width: 560, height: 640)
             #else
             NavigationView(){
                 List{
@@ -180,34 +201,18 @@ struct PaymentMultiplatformForm: View {
                 #if os(macOS)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 #endif
+                #if !os(macOS)
                 Section{
-                   
-                    #if os(macOS)
-                    HStack{
-                        Button(action: closeView){
-                            Label("Return", systemImage: "xmark") 
-                        }
-                        .tint(.red)
-                        Spacer()
-                        Button(action: savePayment){
-                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                        }
-                        .accentColor(.accentColor)
+                    Button(action: savePayment) {
+                        Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                            .appToolbarLabel()
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
                     }
-                    #else
-                    Button(action: savePayment){
-                        HStack{
-                            Spacer()
-                            Label(edition ? "Save": "Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.white)
-                                .font(Font.system(.headline, design: .rounded).weight(.black))
-                                .padding()
-                            Spacer()
-                        }
-                    }
-                    .listRowBackground(Color.accentColor )
-                    #endif
+                    .buttonStyle(.borderedProminent)
+                    .tint(.accentColor)
                 }
+                #endif
             
       
          

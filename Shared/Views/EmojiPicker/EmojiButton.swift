@@ -43,7 +43,7 @@ struct EmojiButton : View {
             .frame(width: 30, height: 30)
             .background(hovered ? Color.primary.opacity(0.3) : Color.primary.opacity(0.1))
             .cornerRadius(5)
-            .animation(.easeInOut)
+            .animation(.easeInOut, value: hovered)
             .onHover { isHovered in
                 self.hovered = isHovered
             }
@@ -56,7 +56,7 @@ struct EmojiButton : View {
             }
             .background(hovered ? Color.primary.opacity(0.3) : Color.primary.opacity(0.1))
             .cornerRadius(5)
-            .animation(.easeInOut)
+            .animation(.easeInOut, value: hovered)
             .onHover { isHovered in
                 self.hovered = isHovered
             }
