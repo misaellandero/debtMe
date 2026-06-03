@@ -9,7 +9,7 @@ import SwiftUI
 
 	struct TabBarView: View {
 	    // MARK: - current section selected
-	    @State var sectionSelected = SectionSelected.contacts
+	    @State var sectionSelected = SectionSelected.home
 	    @AppStorage("servicesViewMode") private var servicesViewMode: ServicesViewMode = .calendar
 	    @AppStorage("servicesCalendarPeriod") private var servicesCalendarPeriod: CalendarPeriod = .month
 	    @AppStorage("servicesReferenceDate") private var servicesReferenceDateTimestamp: Double = Date().timeIntervalSince1970
@@ -110,6 +110,15 @@ import SwiftUI
     
     var body: some View {
         let content = TabView(selection: $sectionSelected){
+            // MARK: - Home
+            NavigationStack {
+                HomeView()
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            .tag(SectionSelected.home)
+
             // MARK: - Contacts
             NavigationStack {
                 ContactsList()

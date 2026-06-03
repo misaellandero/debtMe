@@ -26,6 +26,10 @@ struct SideBarView: View {
                             .frame(width: 30) }
                 )
                 .labelStyle(.titleAndIcon)
+
+                Label("Home", systemImage: "house.fill")
+                    .appToolbarLabel()
+                    .tag(SectionSelected.home)
                
                 Label("People", systemImage: "person.2.fill")
                     .appToolbarLabel()
@@ -46,6 +50,8 @@ struct SideBarView: View {
               NavigationStack {
                   Group {
                       switch sectionSelected {
+                      case .home:
+                          HomeView()
                       case .contacts:
                           ContactsList()
                       case .loans:

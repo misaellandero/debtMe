@@ -17,20 +17,29 @@ struct AmountUpdateList: View {
     
     var body: some View {
         #if os(macOS)
-        Section("History") {
-            ForEach(service.amountUpdatesArray) { amountUpdate in
-                VStack(alignment: .leading) {
-                    Text(service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
-                        .font(.caption)
-                        .bold()
-                        .foregroundStyle(.secondary)
-                    Text(amountUpdate.amount.toCurrencyString())
+        VStack(alignment: .leading, spacing: 12) {
+            List {
+                Section("History") {
+                    if service.amountUpdatesArray.isEmpty {
+                        Text("No amount updates")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(service.amountUpdatesArray) { amountUpdate in
+                            VStack(alignment: .leading) {
+                                Text(service.frequencyDate.formatted(date: .abbreviated, time: .omitted))
+                                    .font(.caption)
+                                    .bold()
+                                    .foregroundStyle(.secondary)
+                                Text(amountUpdate.amount.toCurrencyString())
+                            }
+                        }
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            Divider()
-
-            VStack(spacing: 12) {
+            VStack {
+                Text("Update Amount") 
                 TextField("Amount", text: $newAmount)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
@@ -40,8 +49,10 @@ struct AmountUpdateList: View {
                     ButtonLabelAdd()
                 }
             }
-            .padding(.vertical, 6)
+            .padding()
+            .glassEffect()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         #else
         Section("History") {
             VStack {

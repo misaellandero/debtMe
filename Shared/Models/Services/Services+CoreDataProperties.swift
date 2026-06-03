@@ -148,8 +148,6 @@ extension Services {
     //TODO : Do the calculations
     //Pay Before calculation
     public var payBefore : Date {
-        let calendar = Calendar.current
-        
         switch frequency {
         case 0 ://"Daily"
             return today//Today
@@ -217,7 +215,7 @@ struct ServiceOccurrence: Identifiable {
 extension Services {
     func occurrences(in range: DateInterval, calendar: Calendar = .current) -> [ServiceOccurrence] {
         let start = calendar.startOfDay(for: range.start)
-        let end = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: range.end) ?? range.end
+        let end = inclusiveEnd(for: range, calendar: calendar)
         var effectiveEnd = end
         if let recurrenceEndDate {
             let endLimit = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: recurrenceEndDate) ?? recurrenceEndDate
@@ -265,6 +263,15 @@ extension Services {
         default:
             return dailyOccurrences(in: normalizedRange, anchor: anchor, calendar: calendar)
         }
+    }
+
+    private func inclusiveEnd(for range: DateInterval, calendar: Calendar) -> Date {
+        let endDayStart = calendar.startOfDay(for: range.end)
+        if range.end > range.start, range.end == endDayStart {
+            return range.end.addingTimeInterval(-1)
+        }
+
+        return calendar.date(bySettingHour: 23, minute: 59, second: 59, of: range.end) ?? range.end
     }
 
     private func dailyOccurrences(in range: DateInterval, anchor: Date, calendar: Calendar) -> [ServiceOccurrence] {

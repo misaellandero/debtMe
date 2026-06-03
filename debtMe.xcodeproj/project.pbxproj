@@ -179,6 +179,45 @@
 		13BBF6712FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
 		13BBF6722FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
 		13BBF6732FCE08E80059E193 /* AdaptiveGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */; };
+		13BBF6812FCE41000059E193 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6802FCE41000059E193 /* HomeView.swift */; };
+		13BBF6822FCE41000059E193 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6802FCE41000059E193 /* HomeView.swift */; };
+		13BBF6832FCE41000059E193 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6802FCE41000059E193 /* HomeView.swift */; };
+		13BBF6A02FCE51000059E193 /* HomeCalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6902FCE51000059E193 /* HomeCalendarItem.swift */; };
+		13BBF6A12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6912FCE51000059E193 /* HomeCalendarDateProvider.swift */; };
+		13BBF6A22FCE51000059E193 /* HomeSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6922FCE51000059E193 /* HomeSummaryTile.swift */; };
+		13BBF6AC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69E2FCE51000059E193 /* HomePeriodSummaryView.swift */; };
+		13BBF6A32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6932FCE51000059E193 /* HomeCalendarMarker.swift */; };
+		13BBF6A42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6942FCE51000059E193 /* HomeCalendarItemRow.swift */; };
+		13BBF6A62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6962FCE51000059E193 /* HomeEmptyStateView.swift */; };
+		13BBF6A72FCE51000059E193 /* HomeDateNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6972FCE51000059E193 /* HomeDateNavigator.swift */; };
+		13BBF6A82FCE51000059E193 /* HomeCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6982FCE51000059E193 /* HomeCalendarView.swift */; };
+		13BBF6A92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6992FCE51000059E193 /* HomeCalendarItemNavigationRow.swift */; };
+		13BBF6AA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69A2FCE51000059E193 /* HomeDetailSheet.swift */; };
+		13BBF6AB2FCE51000059E193 /* HomeInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69B2FCE51000059E193 /* HomeInspectorView.swift */; };
+		13BBF6B02FCE51000059E193 /* HomeCalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6902FCE51000059E193 /* HomeCalendarItem.swift */; };
+		13BBF6B12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6912FCE51000059E193 /* HomeCalendarDateProvider.swift */; };
+		13BBF6B22FCE51000059E193 /* HomeSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6922FCE51000059E193 /* HomeSummaryTile.swift */; };
+		13BBF6BC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69E2FCE51000059E193 /* HomePeriodSummaryView.swift */; };
+		13BBF6B32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6932FCE51000059E193 /* HomeCalendarMarker.swift */; };
+		13BBF6B42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6942FCE51000059E193 /* HomeCalendarItemRow.swift */; };
+		13BBF6B62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6962FCE51000059E193 /* HomeEmptyStateView.swift */; };
+		13BBF6B72FCE51000059E193 /* HomeDateNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6972FCE51000059E193 /* HomeDateNavigator.swift */; };
+		13BBF6B82FCE51000059E193 /* HomeCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6982FCE51000059E193 /* HomeCalendarView.swift */; };
+		13BBF6B92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6992FCE51000059E193 /* HomeCalendarItemNavigationRow.swift */; };
+		13BBF6BA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69A2FCE51000059E193 /* HomeDetailSheet.swift */; };
+		13BBF6BB2FCE51000059E193 /* HomeInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69B2FCE51000059E193 /* HomeInspectorView.swift */; };
+		13BBF6C02FCE51000059E193 /* HomeCalendarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6902FCE51000059E193 /* HomeCalendarItem.swift */; };
+		13BBF6C12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6912FCE51000059E193 /* HomeCalendarDateProvider.swift */; };
+		13BBF6C22FCE51000059E193 /* HomeSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6922FCE51000059E193 /* HomeSummaryTile.swift */; };
+		13BBF6CC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69E2FCE51000059E193 /* HomePeriodSummaryView.swift */; };
+		13BBF6C32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6932FCE51000059E193 /* HomeCalendarMarker.swift */; };
+		13BBF6C42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6942FCE51000059E193 /* HomeCalendarItemRow.swift */; };
+		13BBF6C62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6962FCE51000059E193 /* HomeEmptyStateView.swift */; };
+		13BBF6C72FCE51000059E193 /* HomeDateNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6972FCE51000059E193 /* HomeDateNavigator.swift */; };
+		13BBF6C82FCE51000059E193 /* HomeCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6982FCE51000059E193 /* HomeCalendarView.swift */; };
+		13BBF6C92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF6992FCE51000059E193 /* HomeCalendarItemNavigationRow.swift */; };
+		13BBF6CA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69A2FCE51000059E193 /* HomeDetailSheet.swift */; };
+		13BBF6CB2FCE51000059E193 /* HomeInspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBF69B2FCE51000059E193 /* HomeInspectorView.swift */; };
 		13C2F5AB2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AC2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
 		13C2F5AD2B90030400150A01 /* ServicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2F5AA2B90030400150A01 /* ServicesList.swift */; };
@@ -335,6 +374,19 @@
 		13A2FDF42C2099DE00DD820F /* AmountUpdate+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AmountUpdate+CoreDataClass.swift"; sourceTree = "<group>"; };
 		13A2FDF52C2099DE00DD820F /* AmountUpdate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AmountUpdate+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		13BBF6702FCE08E80059E193 /* AdaptiveGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGrid.swift; sourceTree = "<group>"; };
+		13BBF6802FCE41000059E193 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		13BBF6902FCE51000059E193 /* HomeCalendarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarItem.swift; sourceTree = "<group>"; };
+		13BBF6912FCE51000059E193 /* HomeCalendarDateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarDateProvider.swift; sourceTree = "<group>"; };
+		13BBF6922FCE51000059E193 /* HomeSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSummaryTile.swift; sourceTree = "<group>"; };
+		13BBF69E2FCE51000059E193 /* HomePeriodSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePeriodSummaryView.swift; sourceTree = "<group>"; };
+		13BBF6932FCE51000059E193 /* HomeCalendarMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarMarker.swift; sourceTree = "<group>"; };
+		13BBF6942FCE51000059E193 /* HomeCalendarItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarItemRow.swift; sourceTree = "<group>"; };
+		13BBF6962FCE51000059E193 /* HomeEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyStateView.swift; sourceTree = "<group>"; };
+		13BBF6972FCE51000059E193 /* HomeDateNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDateNavigator.swift; sourceTree = "<group>"; };
+		13BBF6982FCE51000059E193 /* HomeCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarView.swift; sourceTree = "<group>"; };
+		13BBF6992FCE51000059E193 /* HomeCalendarItemNavigationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarItemNavigationRow.swift; sourceTree = "<group>"; };
+		13BBF69A2FCE51000059E193 /* HomeDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailSheet.swift; sourceTree = "<group>"; };
+		13BBF69B2FCE51000059E193 /* HomeInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInspectorView.swift; sourceTree = "<group>"; };
 		13C2F5AA2B90030400150A01 /* ServicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesList.swift; sourceTree = "<group>"; };
 		13C2F5AE2B9003FB00150A01 /* ServiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
 		13C2F5B22B9008A000150A01 /* ServicesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesForm.swift; sourceTree = "<group>"; };
@@ -607,6 +659,42 @@
 			path = AppIcon;
 			sourceTree = "<group>";
 		};
+		13BBF6842FCE41000059E193 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				13BBF69C2FCE51000059E193 /* Components */,
+				13BBF69D2FCE51000059E193 /* Models */,
+				13BBF6802FCE41000059E193 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		13BBF69C2FCE51000059E193 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				13BBF6922FCE51000059E193 /* HomeSummaryTile.swift */,
+				13BBF69E2FCE51000059E193 /* HomePeriodSummaryView.swift */,
+				13BBF6932FCE51000059E193 /* HomeCalendarMarker.swift */,
+				13BBF6942FCE51000059E193 /* HomeCalendarItemRow.swift */,
+				13BBF6962FCE51000059E193 /* HomeEmptyStateView.swift */,
+				13BBF6972FCE51000059E193 /* HomeDateNavigator.swift */,
+				13BBF6982FCE51000059E193 /* HomeCalendarView.swift */,
+				13BBF6992FCE51000059E193 /* HomeCalendarItemNavigationRow.swift */,
+				13BBF69A2FCE51000059E193 /* HomeDetailSheet.swift */,
+				13BBF69B2FCE51000059E193 /* HomeInspectorView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		13BBF69D2FCE51000059E193 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				13BBF6902FCE51000059E193 /* HomeCalendarItem.swift */,
+				13BBF6912FCE51000059E193 /* HomeCalendarDateProvider.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7F2CD9F2260FE20600E67C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -730,6 +818,7 @@
 		7F70A24525FEBAF100455AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13BBF6842FCE41000059E193 /* Home */,
 				13E6DBAE2B61CEA800B3BE60 /* AppIcon */,
 				1327EE532B61C058002DFB66 /* WhatsNew */,
 				13C9DF9C29F3B61E005D1768 /* UIElements */,
@@ -1034,6 +1123,19 @@
 				1331BD9D2B4F39E200C0A15F /* Emojis.swift in Sources */,
 				1331BD912B4F39C400C0A15F /* TabBarView.swift in Sources */,
 				1331BD7B2B4F39A400C0A15F /* ConfettiView.swift in Sources */,
+				13BBF6812FCE41000059E193 /* HomeView.swift in Sources */,
+				13BBF6A02FCE51000059E193 /* HomeCalendarItem.swift in Sources */,
+				13BBF6A12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */,
+				13BBF6A22FCE51000059E193 /* HomeSummaryTile.swift in Sources */,
+				13BBF6AC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */,
+				13BBF6A32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */,
+				13BBF6A42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */,
+				13BBF6A62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */,
+				13BBF6A72FCE51000059E193 /* HomeDateNavigator.swift in Sources */,
+				13BBF6A82FCE51000059E193 /* HomeCalendarView.swift in Sources */,
+				13BBF6A92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */,
+				13BBF6AA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */,
+				13BBF6AB2FCE51000059E193 /* HomeInspectorView.swift in Sources */,
 				1331BD892B4F39B600C0A15F /* TransactionsContactList.swift in Sources */,
 				1351B32C2C209CE6007334ED /* AmountUpdateList.swift in Sources */,
 				135C71DC2C0F95DC0048C3B7 /* ImagePickerView.swift in Sources */,
@@ -1126,6 +1228,19 @@
 				1399AD6A2999BA1E00C87C3D /* Border.swift in Sources */,
 				138B249429E0AC3F002C3FD2 /* CurrencyExtension.swift in Sources */,
 				7F70A29D25FEDC8E00455AB0 /* TabBarView.swift in Sources */,
+				13BBF6822FCE41000059E193 /* HomeView.swift in Sources */,
+				13BBF6B02FCE51000059E193 /* HomeCalendarItem.swift in Sources */,
+				13BBF6B12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */,
+				13BBF6B22FCE51000059E193 /* HomeSummaryTile.swift in Sources */,
+				13BBF6BC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */,
+				13BBF6B32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */,
+				13BBF6B42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */,
+				13BBF6B62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */,
+				13BBF6B72FCE51000059E193 /* HomeDateNavigator.swift in Sources */,
+				13BBF6B82FCE51000059E193 /* HomeCalendarView.swift in Sources */,
+				13BBF6B92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */,
+				13BBF6BA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */,
+				13BBF6BB2FCE51000059E193 /* HomeInspectorView.swift in Sources */,
 				13C73BFE2A9D2AB6009CB8CE /* TransactionsListFilter.swift in Sources */,
 				1304296929EF36BA001203D3 /* TotalsView.swift in Sources */,
 				7F76A8E4260EF59C00033790 /* debtMe.xcdatamodeld in Sources */,
@@ -1216,6 +1331,19 @@
 				13C2F5B42B9008A100150A01 /* ServicesForm.swift in Sources */,
 				1355AB862B45EF840023A1E1 /* ButtonLabelShowSetled.swift in Sources */,
 				7F70A23325FEB1F700455AB0 /* debtMeApp.swift in Sources */,
+				13BBF6832FCE41000059E193 /* HomeView.swift in Sources */,
+				13BBF6C02FCE51000059E193 /* HomeCalendarItem.swift in Sources */,
+				13BBF6C12FCE51000059E193 /* HomeCalendarDateProvider.swift in Sources */,
+				13BBF6C22FCE51000059E193 /* HomeSummaryTile.swift in Sources */,
+				13BBF6CC2FCE51000059E193 /* HomePeriodSummaryView.swift in Sources */,
+				13BBF6C32FCE51000059E193 /* HomeCalendarMarker.swift in Sources */,
+				13BBF6C42FCE51000059E193 /* HomeCalendarItemRow.swift in Sources */,
+				13BBF6C62FCE51000059E193 /* HomeEmptyStateView.swift in Sources */,
+				13BBF6C72FCE51000059E193 /* HomeDateNavigator.swift in Sources */,
+				13BBF6C82FCE51000059E193 /* HomeCalendarView.swift in Sources */,
+				13BBF6C92FCE51000059E193 /* HomeCalendarItemNavigationRow.swift in Sources */,
+				13BBF6CA2FCE51000059E193 /* HomeDetailSheet.swift in Sources */,
+				13BBF6CB2FCE51000059E193 /* HomeInspectorView.swift in Sources */,
 				7F70A24E25FEBBCF00455AB0 /* Transaction+CoreDataClass.swift in Sources */,
 				7F76A8E3260EF59B00033790 /* debtMe.xcdatamodeld in Sources */,
 				7F70A2A325FEDC9D00455AB0 /* SideBarView.swift in Sources */,

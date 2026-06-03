@@ -11,7 +11,7 @@ import LocalAuthentication
 
 // MARK: - Navigation Options
 enum SectionSelected {
-    case contacts, debts, loans, settings, budget,bills
+    case home, contacts, debts, loans, settings, budget,bills
 }
 
 struct ContentView: View {
@@ -22,7 +22,7 @@ struct ContentView: View {
     #endif
     
     // MARK: - current section selected 
-    @State private var sectionSelected: SectionSelected = .contacts
+    @State private var sectionSelected: SectionSelected = .home
   
     // MARK: - LocalAuthentication Security Context
     let context = LAContext()

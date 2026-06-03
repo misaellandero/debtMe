@@ -1083,6 +1083,9 @@
         }
       }
     },
+    "From today" : {
+
+    },
     "Frequency" : {
       "localizations" : {
         "es" : {
@@ -1270,6 +1273,12 @@
         }
       }
     },
+    "Home" : {
+
+    },
+    "I owe them" : {
+
+    },
     "I Owe Them" : {
       "localizations" : {
         "es" : {
@@ -1369,6 +1378,9 @@
           }
         }
       }
+    },
+    "Incoming" : {
+
     },
     "Instagram" : {
       "localizations" : {
@@ -1776,6 +1788,9 @@
     "Next income %@" : {
 
     },
+    "No amount updates" : {
+
+    },
     "No icons found" : {
 
     },
@@ -1800,6 +1815,15 @@
           }
         }
       }
+    },
+    "No scheduled items" : {
+
+    },
+    "No scheduled items in this day" : {
+
+    },
+    "No scheduled items in this period" : {
+
     },
     "No services due" : {
 
@@ -2016,6 +2040,9 @@
           }
         }
       }
+    },
+    "Outgoing" : {
+
     },
     "Paid in" : {
       "localizations" : {
@@ -2423,6 +2450,9 @@
         }
       }
     },
+    "Service" : {
+
+    },
     "Service Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2441,6 +2471,9 @@
       }
     },
     "Services" : {
+
+    },
+    "Services and people transactions with dates will appear here." : {
 
     },
     "Settings" : {
@@ -2757,6 +2790,9 @@
         }
       }
     },
+    "They owe me" : {
+
+    },
     "They Owe me" : {
       "localizations" : {
         "es" : {
@@ -3009,6 +3045,9 @@
           }
         }
       }
+    },
+    "Update Amount" : {
+
     },
     "Use" : {
 
