@@ -87,8 +87,8 @@ private struct HomeInspectorSummary: View {
     @Binding var selectedTransaction: Transaction?
 
     var body: some View {
-        let income = items.filter(\.isIncome).reduce(0) { $0 + $1.amount }
-        let expenses = items.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        let income = items.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+        let expenses = items.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
         let balance = income - expenses
 
         VStack(alignment: .leading, spacing: 12) {
@@ -153,7 +153,7 @@ private struct HomeInspectorHoverRow: View {
 
     var body: some View {
         Button(action: action) {
-            HomeCalendarItemRow(item: item)
+            HomeCalendarItemRow(item: item, usesServiceBackground: false)
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)

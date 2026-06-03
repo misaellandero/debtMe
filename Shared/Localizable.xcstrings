@@ -8,7 +8,20 @@
 
     },
     " Fee" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarifa"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "料金"
+          }
+        }
+      }
     },
     " Fee " : {
       "localizations" : {
@@ -43,7 +56,20 @@
       }
     },
     " Fee on 15 and last day" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarifa el 15 y el último día"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15日および最終日の料金"
+          }
+        }
+      }
     },
     " for their comments and ideas. If you have a suggestion or found an error, please send an email to hola@misaellandero.com." : {
       "extractionState" : "manual",
@@ -364,7 +390,20 @@
       }
     },
     "Applying" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicando"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適用中"
+          }
+        }
+      }
     },
     "Are you sure?\n You won't be able to retrieve this information later." : {
       "localizations" : {
@@ -399,7 +438,20 @@
       }
     },
     "Back" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espalda"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バック"
+          }
+        }
+      }
     },
     "Balance" : {
       "localizations" : {
@@ -452,16 +504,68 @@
       }
     },
     "Brand Icons" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iconos de marca"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブランドアイコン"
+          }
+        }
+      }
     },
     "Brands" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcas"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブランド"
+          }
+        }
+      }
     },
     "Business day" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día hábil"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "営業日"
+          }
+        }
+      }
     },
     "Calendar" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendario"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダー"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -480,7 +584,20 @@
       }
     },
     "Category" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoría"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カテゴリ"
+          }
+        }
+      }
     },
     "CFBundleName" : {
       "comment" : "Bundle name",
@@ -501,7 +618,20 @@
       }
     },
     "Choose an Emoji" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige un Emoji"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "絵文字を選択してください"
+          }
+        }
+      }
     },
     "Choose an icon" : {
       "extractionState" : "manual",
@@ -629,7 +759,20 @@
       }
     },
     "Config" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
     },
     "Contact Me" : {
       "localizations" : {
@@ -714,10 +857,36 @@
       }
     },
     "Create with Apple Intelligence" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear con Apple Intelligence"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Intelligenceで作成"
+          }
+        }
+      }
     },
     "Crop" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cultivo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作物"
+          }
+        }
+      }
     },
     "Daily" : {
       "extractionState" : "manual",
@@ -786,7 +955,20 @@
       }
     },
     "Day balance" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balance diario"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日収支"
+          }
+        }
+      }
     },
     "debtMe" : {
       "localizations" : {
@@ -950,10 +1132,36 @@
       }
     },
     "Downloading" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargando"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダウンロード中"
+          }
+        }
+      }
     },
     "Downloading image" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargando imagen"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像をダウンロードしています"
+          }
+        }
+      }
     },
     "Edit" : {
       "localizations" : {
@@ -988,10 +1196,36 @@
       }
     },
     "Emoji Picker" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recolector de emojis"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "絵文字ピッカー"
+          }
+        }
+      }
     },
     "End date" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha de finalización"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "終了日"
+          }
+        }
+      }
     },
     "End Date" : {
       "extractionState" : "stale",
@@ -1011,10 +1245,36 @@
       }
     },
     "Estimated" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推定の"
+          }
+        }
+      }
     },
     "Estimated payment date" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha estimada de pago"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支払予定日"
+          }
+        }
+      }
     },
     "Expense" : {
       "localizations" : {
@@ -1049,7 +1309,20 @@
       }
     },
     "Files" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイル"
+          }
+        }
+      }
     },
     "Filter" : {
       "localizations" : {
@@ -1083,9 +1356,6 @@
         }
       }
     },
-    "From today" : {
-
-    },
     "Frequency" : {
       "localizations" : {
         "es" : {
@@ -1118,8 +1388,37 @@
         }
       }
     },
+    "From today" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de hoy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本日から"
+          }
+        }
+      }
+    },
     "Generate" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "創出する"
+          }
+        }
+      }
     },
     "Get the app on your iPhone, iPad, Mac and VisionPro" : {
       "localizations" : {
@@ -1138,10 +1437,36 @@
       }
     },
     "Grid density" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Densidad de la cuadrícula"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "グリッド密度"
+          }
+        }
+      }
     },
     "Grid Density" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Densidad de la cuadrícula"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "グリッド密度"
+          }
+        }
+      }
     },
     "Hello, World!" : {
       "localizations" : {
@@ -1274,10 +1599,36 @@
       }
     },
     "Home" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Casa"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家"
+          }
+        }
+      }
     },
     "I owe them" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les debo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私は彼らに借りがあります"
+          }
+        }
+      }
     },
     "I Owe Them" : {
       "localizations" : {
@@ -1328,7 +1679,20 @@
       }
     },
     "Image unavailable" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagen no disponible"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像が利用できません"
+          }
+        }
+      }
     },
     "Images" : {
       "localizations" : {
@@ -1380,7 +1744,20 @@
       }
     },
     "Incoming" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrante"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入って来る"
+          }
+        }
+      }
     },
     "Instagram" : {
       "localizations" : {
@@ -1399,7 +1776,20 @@
       }
     },
     "Internet" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internet"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インターネット"
+          }
+        }
+      }
     },
     "Keep all your devices up to date using iCloud sync" : {
       "localizations" : {
@@ -1483,16 +1873,68 @@
       }
     },
     "List" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リスト"
+          }
+        }
+      }
     },
     "Loading" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carga"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ローディング"
+          }
+        }
+      }
     },
     "Loading icons" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando iconos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイコンを読み込み中"
+          }
+        }
+      }
     },
     "Loading images" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando imágenes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像を読み込み中"
+          }
+        }
+      }
     },
     "Loans" : {
       "localizations" : {
@@ -1590,6 +2032,12 @@
           }
         }
       }
+    },
+    "Mark paid" : {
+
+    },
+    "Mark unpaid" : {
+
     },
     "Medium" : {
       "localizations" : {
@@ -1786,19 +2234,84 @@
       }
     },
     "Next income %@" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximo ingreso %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の収入 %@"
+          }
+        }
+      }
     },
     "No amount updates" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin actualizaciones de cantidad"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "金額の更新はありません"
+          }
+        }
+      }
     },
     "No icons found" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron iconos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイコンが見つかりません"
+          }
+        }
+      }
     },
     "No image" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin imagen"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像がありません"
+          }
+        }
+      }
     },
     "No images found" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron imágenes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像が見つかりません"
+          }
+        }
+      }
     },
     "No records found!" : {
       "localizations" : {
@@ -1817,23 +2330,75 @@
       }
     },
     "No scheduled items" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay artículos programados"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定された項目はありません"
+          }
+        }
+      }
     },
     "No scheduled items in this day" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay artículos programados en este día"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本日は予定項目がありません"
+          }
+        }
+      }
     },
     "No scheduled items in this period" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay artículos programados en este período"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この期間に予定された項目はありません"
+          }
+        }
+      }
     },
     "No services due" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay servicios debidos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスがありません"
+          }
+        }
+      }
     },
     "Not paid" : {
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No pagad1o"
+            "value" : "No pagadó"
           }
         },
         "ja" : {
@@ -2023,7 +2588,20 @@
       }
     },
     "Orden/Filtro" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orden/Filtro"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オーデン/フィルトロ"
+          }
+        }
+      }
     },
     "Original" : {
       "localizations" : {
@@ -2042,6 +2620,22 @@
       }
     },
     "Outgoing" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saliente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出て行く"
+          }
+        }
+      }
+    },
+    "Paid" : {
 
     },
     "Paid in" : {
@@ -2125,7 +2719,20 @@
       }
     },
     "Payment reminder" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorio de pago"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お支払いのご案内"
+          }
+        }
+      }
     },
     "Payments" : {
       "localizations" : {
@@ -2144,16 +2751,68 @@
       }
     },
     "People" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人々"
+          }
+        }
+      }
     },
     "Period" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etapa"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "期間"
+          }
+        }
+      }
     },
     "Photo Library" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biblioteca de fotos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォトライブラリー"
+          }
+        }
+      }
     },
     "Pie chart" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gráfico circular"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パイチャート"
+          }
+        }
+      }
     },
     "Preview" : {
       "localizations" : {
@@ -2211,7 +2870,20 @@
       }
     },
     "Profit" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beneficios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利益"
+          }
+        }
+      }
     },
     "Quality" : {
       "localizations" : {
@@ -2247,19 +2919,84 @@
       }
     },
     "Reminder" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注意"
+          }
+        }
+      }
     },
     "Remove" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "除去する"
+          }
+        }
+      }
     },
     "Remove Generated Image" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar imagen generada"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成された画像を削除"
+          }
+        }
+      }
     },
     "Reset" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a poner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リセット"
+          }
+        }
+      }
     },
     "Resumen" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再開"
+          }
+        }
+      }
     },
     "Return" : {
       "localizations" : {
@@ -2327,16 +3064,68 @@
       }
     },
     "Scheduled" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定されている"
+          }
+        }
+      }
     },
     "Scheduled payment" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago programado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定された支払い"
+          }
+        }
+      }
     },
     "Scheduled Payment" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago programado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定支払い"
+          }
+        }
+      }
     },
     "Scheduled Payments" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagos programados"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定された支払い"
+          }
+        }
+      }
     },
     "Search" : {
       "extractionState" : "manual",
@@ -2356,16 +3145,68 @@
       }
     },
     "Search brands (e.g. netflix, spotify, bbva)" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar marcas (por ejemplo, netflix, spotify, bbva)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブランドを検索する（例：Netflix、Spotify、BBVA）"
+          }
+        }
+      }
     },
     "Search for a brand" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar una marca"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブランドを検索"
+          }
+        }
+      }
     },
     "Search for images" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar imágenes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像を検索"
+          }
+        }
+      }
     },
     "Search images" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar imágenes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像を検索"
+          }
+        }
+      }
     },
     "Security" : {
       "localizations" : {
@@ -2451,7 +3292,20 @@
       }
     },
     "Service" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        }
+      }
     },
     "Service Name" : {
       "extractionState" : "manual",
@@ -2471,10 +3325,36 @@
       }
     },
     "Services" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        }
+      }
     },
     "Services and people transactions with dates will appear here." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las transacciones de servicios y personas con fechas aparecerán aquí."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日付付きのサービスおよび人物取引がここに表示されます。"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -2510,13 +3390,52 @@
       }
     },
     "SF Symbol" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Símbolo SF"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFシンボル"
+          }
+        }
+      }
     },
     "SF Symbol name (e.g. icloud)" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del símbolo de SF (por ejemplo, icloud)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFシンボル名（例：iCloud）"
+          }
+        }
+      }
     },
     "SF Symbols" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Símbolos de SF"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SFシンボル"
+          }
+        }
+      }
     },
     "Share" : {
       "localizations" : {
@@ -2601,7 +3520,20 @@
       }
     },
     "Sin gastos en este periodo" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin gastos en este periodo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この期間中は費用がかからずに"
+          }
+        }
+      }
     },
     "Sort alphabetically" : {
       "localizations" : {
@@ -2700,8 +3632,24 @@
         }
       }
     },
-    "Symbol not found" : {
+    "Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid." : {
 
+    },
+    "Symbol not found" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Símbolo no encontrado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンボルが見つかりません"
+          }
+        }
+      }
     },
     "Tag" : {
       "localizations" : {
@@ -2791,7 +3739,20 @@
       }
     },
     "They owe me" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Me deben"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "彼らは私に借りがあります"
+          }
+        }
+      }
     },
     "They Owe me" : {
       "localizations" : {
@@ -2874,10 +3835,36 @@
       }
     },
     "Today" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        }
+      }
     },
     "Todos" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて"
+          }
+        }
+      }
     },
     "Toggle Status to Unpaid" : {
       "extractionState" : "manual",
@@ -2945,10 +3932,36 @@
       }
     },
     "Try another brand name or use an SF Symbol." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pruebe con otra marca o use un símbolo de SF."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別のブランド名を試すか、SFシンボルを使用してください。"
+          }
+        }
+      }
     },
     "Try another search term." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prueba otro término de búsqueda."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別の検索語を試してください。"
+          }
+        }
+      }
     },
     "Tuesday" : {
       "localizations" : {
@@ -3047,19 +4060,84 @@
       }
     },
     "Update Amount" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantidad de actualización"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "金額を更新"
+          }
+        }
+      }
     },
     "Use" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uso"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使う"
+          }
+        }
+      }
     },
     "Use the search field to find a service icon." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilice el campo de búsqueda para encontrar un icono de servicio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検索フィールドを使用して、サービスアイコンを見つけてください。"
+          }
+        }
+      }
     },
     "Use the search field to find an image." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilice el campo de búsqueda para encontrar una imagen."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検索フィールドを使用して画像を見つけてください。"
+          }
+        }
+      }
     },
     "Ver todo" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてを見る"
+          }
+        }
+      }
     },
     "Version %@" : {
       "localizations" : {
@@ -3078,10 +4156,36 @@
       }
     },
     "Vista" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眺望"
+          }
+        }
+      }
     },
     "Web Images" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imágenes web"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウェブ画像"
+          }
+        }
+      }
     },
     "Wednesday" : {
       "localizations" : {

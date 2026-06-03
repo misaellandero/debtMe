@@ -16,6 +16,7 @@ struct ServiceRow: View {
     var image : Data?
     var expense : Bool = true
     var useAdaptiveText: Bool = false
+    var isPaid: Bool = false
     var body: some View {
         VStack{
             HStack{
@@ -23,6 +24,7 @@ struct ServiceRow: View {
                     .frame(width: 50, height: 50)
                 VStack(alignment:.leading){
                     Text(ServiceName)
+                        .strikethrough(isPaid, color: useAdaptiveText ? .secondary : .white.opacity(0.8))
                     Text("Pay Before ")
                         .font(.caption)
                     Text(limitDate)
@@ -31,14 +33,23 @@ struct ServiceRow: View {
                 Spacer()
                 VStack(alignment:.trailing){
                     Text(Amount)
+                        .strikethrough(isPaid, color: useAdaptiveText ? .secondary : .white.opacity(0.8))
                     Text(LocalizedStringKey(frequency))
                         .font(.caption)
                         .multilineTextAlignment(.trailing)
+                    if isPaid {
+                        Text("Paid")
+                            .font(.caption2.weight(.bold))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(.white.opacity(useAdaptiveText ? 0.12 : 0.2), in: Capsule())
+                    }
                 }
                 
             }
             .bold()
             .foregroundStyle(useAdaptiveText ? Color.primary : Color.white)
+            .opacity(isPaid ? 0.68 : 1)
             .listRowBackground(BgColor)
             HStack{
                 Spacer()

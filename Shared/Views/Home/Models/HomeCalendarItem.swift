@@ -17,6 +17,13 @@ struct HomeCalendarItem: Identifiable {
     let tint: Color
     let service: Services?
     let transaction: Transaction?
+    let paidOccurrenceID: String?
+    let isPaid: Bool
+
+    var currentIsPaid: Bool {
+        guard let paidOccurrenceID else { return false }
+        return ServiceOccurrencePaymentStore.isPaid(paidOccurrenceID)
+    }
 
     init(occurrence: ServiceOccurrence) {
         let service = occurrence.service
@@ -29,6 +36,8 @@ struct HomeCalendarItem: Identifiable {
         tint = service.wrappedColor
         self.service = service
         transaction = nil
+        paidOccurrenceID = occurrence.id
+        isPaid = occurrence.isPaid
     }
 
     init(transaction: Transaction, date: Date) {
@@ -41,5 +50,7 @@ struct HomeCalendarItem: Identifiable {
         tint = transaction.debt ? .blue : .red
         service = nil
         self.transaction = transaction
+        paidOccurrenceID = nil
+        isPaid = false
     }
 }

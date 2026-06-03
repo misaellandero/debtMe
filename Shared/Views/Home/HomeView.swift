@@ -31,7 +31,10 @@ struct HomeView: View {
 
     @State private var detailRange: DateInterval?
     @State private var detailTitle = ""
-    @State private var showDetailSheet = false
+    @State private var paidStateVersion = 0
+    #if os(iOS)
+    @State private var detailSelection: HomeDetailSelection?
+    #endif
     #if os(macOS)
     @State private var showInspector = false
     @State private var macOSSelectedService: Services?
@@ -71,11 +74,11 @@ struct HomeView: View {
     }
 
     private var incomeTotal: Double {
-        periodItems.filter(\.isIncome).reduce(0) { $0 + $1.amount }
+        periodItems.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
     }
 
     private var expenseTotal: Double {
-        periodItems.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        periodItems.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
     }
 
     private var balanceTotal: Double {
@@ -137,9 +140,11 @@ struct HomeView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 12)
             }
-            .sheet(isPresented: $showDetailSheet) {
-                HomeDetailSheet(title: detailTitle, items: detailItems)
+            #if os(iOS)
+            .sheet(item: $detailSelection) { selection in
+                HomeDetailSheet(title: selection.title, items: selection.items)
             }
+            #endif
             #if os(macOS)
             .inspector(isPresented: $showInspector) {
                 HomeInspectorView(
@@ -151,6 +156,21 @@ struct HomeView: View {
             }
             #endif
             .navigationTitle("Home")
+            .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
+                paidStateVersion += 1
+            }
+            #if os(iOS)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HomeDateNavigatorTopControls(
+                        viewMode: $viewMode,
+                        calendarPeriod: $calendarPeriod,
+                        fromToday: $calendarFromToday,
+                        namespace: namespace
+                    )
+                }
+            }
+            #endif
     }
 
     @ViewBuilder
@@ -159,14 +179,14 @@ struct HomeView: View {
             if viewMode == .list {
                 listContent
                     .id("home-list")
-                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                    .transition(.opacity)
                     .zIndex(1)
             }
 
             if viewMode == .calendar {
                 calendarContent
                     .id("home-calendar")
-                    .transition(.opacity.combined(with: .scale(scale: 1.02)))
+                    .transition(.opacity)
                     .zIndex(1)
             }
         }
@@ -184,7 +204,7 @@ struct HomeView: View {
                 )
                 .padding(.horizontal, 8)
 
-                HomeListSection(items: periodItems, namespace: namespace, onSelect: openListItem)
+                HomeListSection(items: periodItems, namespace: namespace, onSelect: openListItem, onTogglePaid: togglePaid)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.horizontal, 20)
@@ -193,6 +213,7 @@ struct HomeView: View {
         }
         .scrollContentBackground(.hidden)
         .animation(.smooth, value: periodItems.map(\.id))
+        .animation(.smooth, value: paidStateVersion)
     }
 
     private var calendarContent: some View {
@@ -234,7 +255,7 @@ struct HomeView: View {
         macOSSelectedTransaction = nil
         showInspector = true
         #else
-        showDetailSheet = true
+        detailSelection = HomeDetailSelection(title: title, range: range, items: items(in: range))
         #endif
     }
 
@@ -245,7 +266,17 @@ struct HomeView: View {
         macOSSelectedService = item.service
         macOSSelectedTransaction = item.transaction
         showInspector = true
+        #else
+        if let range = detailRange {
+            detailSelection = HomeDetailSelection(title: detailTitle, range: range, items: items(in: range))
+        }
         #endif
+    }
+
+    private func togglePaid(_ item: HomeCalendarItem) {
+        guard let paidOccurrenceID = item.paidOccurrenceID else { return }
+        ServiceOccurrencePaymentStore.toggle(paidOccurrenceID)
+        paidStateVersion += 1
     }
 
     private func shiftReferenceDate(by direction: Int) {
@@ -283,12 +314,31 @@ struct HomeView: View {
     private func contains(_ date: Date, in range: DateInterval) -> Bool {
         date >= range.start && date < range.end
     }
+
+    private func items(in range: DateInterval) -> [HomeCalendarItem] {
+        periodItems.filter { contains($0.date, in: range) }
+    }
 }
+
+#if os(iOS)
+private struct HomeDetailSelection: Identifiable {
+    let id: String
+    let title: String
+    let items: [HomeCalendarItem]
+
+    init(title: String, range: DateInterval, items: [HomeCalendarItem]) {
+        self.id = "\(range.start.timeIntervalSinceReferenceDate)-\(range.end.timeIntervalSinceReferenceDate)-\(items.map(\.id).hashValue)"
+        self.title = title
+        self.items = items
+    }
+}
+#endif
 
 private struct HomeListSection: View {
     let items: [HomeCalendarItem]
     let namespace: Namespace.ID
     let onSelect: (HomeCalendarItem) -> Void
+    let onTogglePaid: (HomeCalendarItem) -> Void
 
     var body: some View {
         if items.isEmpty {
@@ -302,7 +352,7 @@ private struct HomeListSection: View {
                     .padding(.horizontal, 8)
 
                 ForEach(items) { item in
-                    HomeCalendarItemNavigationRow(item: item, namespace: namespace, onMacSelect: { onSelect(item) })
+                    HomeCalendarItemNavigationRow(item: item, namespace: namespace, usesServiceBackground: item.service != nil, onMacSelect: { onSelect(item) })
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(rowBackground(for: item), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -310,11 +360,15 @@ private struct HomeListSection: View {
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
                                 .stroke(rowStroke(for: item), lineWidth: 1)
                         )
-                        .transition(.asymmetric(
-                            insertion: .opacity.combined(with: .scale(scale: 0.96)),
-                            removal: .opacity.combined(with: .scale(scale: 0.98))
-                        ))
+                        .transition(.opacity)
+                        .modifier(HomePaidSwipeModifier(item: item, onTogglePaid: onTogglePaid))
                 }
+
+                Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 4)
             }
         }
     }
@@ -333,6 +387,45 @@ private struct HomeListSection: View {
         }
 
         return item.tint.opacity(0.18)
+    }
+}
+
+private struct HomePaidSwipeModifier: ViewModifier {
+    let item: HomeCalendarItem
+    let onTogglePaid: (HomeCalendarItem) -> Void
+    @State private var horizontalOffset: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        if item.paidOccurrenceID == nil {
+            content
+        } else {
+            content
+                .offset(x: max(0, min(horizontalOffset, 82)))
+                .background(alignment: .leading) {
+                    Label(item.currentIsPaid ? "Mark unpaid" : "Mark paid", systemImage: item.currentIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .frame(maxHeight: .infinity)
+                        .background((item.currentIsPaid ? Color.orange : Color.green), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .opacity(horizontalOffset > 12 ? 1 : 0)
+                }
+                .gesture(
+                    DragGesture(minimumDistance: 20)
+                        .onChanged { value in
+                            guard abs(value.translation.width) > abs(value.translation.height) else { return }
+                            horizontalOffset = max(0, value.translation.width)
+                        }
+                        .onEnded { value in
+                            if value.translation.width > 70 {
+                                onTogglePaid(item)
+                            }
+                            withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                                horizontalOffset = 0
+                            }
+                        }
+                )
+        }
     }
 }
 

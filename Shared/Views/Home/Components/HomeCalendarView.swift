@@ -158,79 +158,81 @@ private struct HomeDayCell: View {
         let calendar = Calendar.current
         let day = calendar.component(.day, from: date)
         let isToday = calendar.isDateInToday(date)
-        let income = items.filter(\.isIncome).reduce(0) { $0 + $1.amount }
-        let expenses = items.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        let income = items.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+        let expenses = items.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
         let balance = income - expenses
         let isLarge = max(abs(income), abs(expenses), abs(balance)) >= largeValueThreshold
         let glowColor = items.first?.tint ?? .clear
         let hasItems = !items.isEmpty
 
-        VStack(alignment: .leading, spacing: isCompact ? 2 : 4) {
-            HStack(spacing: isCompact ? 4 : 8) {
-                Text("\(day)")
-                    .font(.caption2.weight(.semibold))
-                Spacer(minLength: 0)
-                if isToday, isCompact {
-                    Circle()
-                        .fill(Color.accentColor)
-                        .frame(width: 5, height: 5)
-                } else if isToday {
-                    Text("Today")
+        Button {
+            onOpenDetail(calendar.dateInterval(of: .day, for: date), date.formatted(date: .abbreviated, time: .omitted))
+        } label: {
+            VStack(alignment: .leading, spacing: isCompact ? 2 : 4) {
+                HStack(spacing: isCompact ? 4 : 8) {
+                    Text("\(day)")
                         .font(.caption2.weight(.semibold))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(.thinMaterial, in: Capsule())
+                    Spacer(minLength: 0)
+                    if isToday, isCompact {
+                        Circle()
+                            .fill(Color.accentColor)
+                            .frame(width: 5, height: 5)
+                    } else if isToday {
+                        Text("Today")
+                            .font(.caption2.weight(.semibold))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(.thinMaterial, in: Capsule())
+                    }
                 }
-            }
 
-            if isCompact {
-                if hasItems {
+                if isCompact {
+                    if hasItems {
+                        Text(balance.toCompactCurrencyString())
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(balance >= 0 ? Color.blue : Color.red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                    }
+                } else if isLarge {
                     Text(balance.toCompactCurrencyString())
-                        .font(.caption2.weight(.semibold))
+                        .font(.caption.weight(.semibold))
                         .foregroundStyle(balance >= 0 ? Color.blue : Color.red)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.6)
+                        .minimumScaleFactor(0.7)
+                } else {
+                    HomeDaySummary(income: income, expenses: expenses)
                 }
-            } else if isLarge {
-                Text(balance.toCompactCurrencyString())
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(balance >= 0 ? Color.blue : Color.red)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            } else {
-                HomeDaySummary(income: income, expenses: expenses)
-            }
 
-            if hasItems {
-                HomeDayMarkersGrid(
-                    items: Array(items.prefix(isCompact ? 2 : 6)),
-                    markerSize: isCompact ? 12 : 16,
-                    columnCount: isCompact ? 2 : 3,
-                    namespace: namespace
-                )
+                if hasItems {
+                    HomeDayMarkersGrid(
+                        items: Array(items.prefix(isCompact ? 2 : 6)),
+                        markerSize: isCompact ? 12 : 16,
+                        columnCount: isCompact ? 2 : 3,
+                        namespace: namespace
+                    )
+                }
             }
-        }
-        .frame(maxWidth: .infinity, minHeight: height, maxHeight: height, alignment: .topLeading)
-        .padding(isCompact ? 5 : 10)
-        .background {
-            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                .fill(Color.secondary.opacity(0.12))
-
-            if hasItems {
+            .frame(maxWidth: .infinity, minHeight: height, maxHeight: height, alignment: .topLeading)
+            .padding(isCompact ? 5 : 10)
+            .background {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(glowColor.opacity(0.14))
-                    .blur(radius: 14)
+                    .fill(Color.secondary.opacity(0.12))
+
+                if hasItems {
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .fill(glowColor.opacity(0.14))
+                        .blur(radius: 14)
+                }
             }
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(isToday ? Color.accentColor.opacity(0.9) : (hasItems ? glowColor.opacity(0.75) : .clear), lineWidth: isToday ? (isCompact ? 1.5 : 2) : 1.5)
+            )
+            .shadow(color: hasItems ? glowColor.opacity(0.25) : .clear, radius: isCompact ? 5 : 10, x: 0, y: 3)
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
-        .overlay(
-            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                .stroke(isToday ? Color.accentColor.opacity(0.9) : (hasItems ? glowColor.opacity(0.75) : .clear), lineWidth: isToday ? (isCompact ? 1.5 : 2) : 1.5)
-        )
-        .shadow(color: hasItems ? glowColor.opacity(0.25) : .clear, radius: isCompact ? 5 : 10, x: 0, y: 3)
-        .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .onTapGesture {
-            onOpenDetail(calendar.dateInterval(of: .day, for: date), date.formatted(date: .abbreviated, time: .omitted))
-        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -249,31 +251,33 @@ private struct HomeWeekRow: View {
     }
 
     var body: some View {
-        let income = items.filter(\.isIncome).reduce(0) { $0 + $1.amount }
-        let expenses = items.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        let income = items.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+        let expenses = items.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
 
-        HStack {
-            VStack(alignment: .leading, spacing: isCompact ? 4 : 6) {
-                Text(title)
-                    .font(.footnote.weight(.semibold))
-                HomeDaySummary(income: income, expenses: expenses)
-                if !items.isEmpty {
-                    HomeDayMarkersGrid(
-                        items: Array(items.prefix(isCompact ? 4 : 6)),
-                        markerSize: isCompact ? 14 : 16,
-                        columnCount: isCompact ? 4 : 3,
-                        namespace: namespace
-                    )
+        Button {
+            onOpenDetail(Calendar.current.dateInterval(of: .day, for: date), title)
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: isCompact ? 4 : 6) {
+                    Text(title)
+                        .font(.footnote.weight(.semibold))
+                    HomeDaySummary(income: income, expenses: expenses)
+                    if !items.isEmpty {
+                        HomeDayMarkersGrid(
+                            items: Array(items.prefix(isCompact ? 4 : 6)),
+                            markerSize: isCompact ? 14 : 16,
+                            columnCount: isCompact ? 4 : 3,
+                            namespace: namespace
+                        )
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
+            .padding(isCompact ? 8 : 10)
+            .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
-        .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
-        .padding(isCompact ? 8 : 10)
-        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .onTapGesture {
-            onOpenDetail(Calendar.current.dateInterval(of: .day, for: date), title)
-        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -283,8 +287,8 @@ private struct HomeDayDetailCard: View {
     let cornerRadius: CGFloat
 
     var body: some View {
-        let income = items.filter(\.isIncome).reduce(0) { $0 + $1.amount }
-        let expenses = items.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        let income = items.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+        let expenses = items.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
         let balance = income - expenses
 
         VStack(alignment: .leading, spacing: 12) {
@@ -321,21 +325,23 @@ private struct HomeMonthCell: View {
         let calendar = Calendar.current
         let range = calendar.dateInterval(of: .month, for: date)
         let items = range.map { range in periodItems.filter { $0.date >= range.start && $0.date < range.end } } ?? []
-        let income = items.filter(\.isIncome).reduce(0) { $0 + $1.amount }
-        let expenses = items.filter { !$0.isIncome }.reduce(0) { $0 + $1.amount }
+        let income = items.filter { $0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+        let expenses = items.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
 
-        VStack(alignment: .leading, spacing: 6) {
-            Text(date.formatted(.dateTime.month(.abbreviated)))
-                .font(.caption2.weight(.semibold))
-            HomeDaySummary(income: income, expenses: expenses)
-        }
-        .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
-        .padding(isCompact ? 6 : 8)
-        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-        .onTapGesture {
+        Button {
             onOpenDetail(range, date.formatted(.dateTime.month(.wide)))
+        } label: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(date.formatted(.dateTime.month(.abbreviated)))
+                    .font(.caption2.weight(.semibold))
+                HomeDaySummary(income: income, expenses: expenses)
+            }
+            .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
+            .padding(isCompact ? 6 : 8)
+            .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
+        .buttonStyle(.plain)
     }
 }
 

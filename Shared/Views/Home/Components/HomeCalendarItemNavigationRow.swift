@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeCalendarItemNavigationRow: View {
     let item: HomeCalendarItem
     var namespace: Namespace.ID?
+    var usesServiceBackground = false
     var onMacSelect: (() -> Void)?
 
     var body: some View {
@@ -17,7 +18,7 @@ struct HomeCalendarItemNavigationRow: View {
         Button {
             onMacSelect?()
         } label: {
-            HomeCalendarItemRow(item: item, namespace: namespace)
+            HomeCalendarItemRow(item: item, namespace: namespace, usesServiceBackground: usesServiceBackground)
         }
         .buttonStyle(.plain)
         .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -25,14 +26,14 @@ struct HomeCalendarItemNavigationRow: View {
         Group {
             if let service = item.service {
                 NavigationLink(destination: ServiceDetailView(service: service)) {
-                    HomeCalendarItemRow(item: item, namespace: namespace)
+                    HomeCalendarItemRow(item: item, namespace: namespace, usesServiceBackground: usesServiceBackground)
                 }
             } else if let transaction = item.transaction {
                 NavigationLink(destination: PaymentsTransactionsList(transaction: transaction)) {
-                    HomeCalendarItemRow(item: item, namespace: namespace)
+                    HomeCalendarItemRow(item: item, namespace: namespace, usesServiceBackground: usesServiceBackground)
                 }
             } else {
-                HomeCalendarItemRow(item: item, namespace: namespace)
+                HomeCalendarItemRow(item: item, namespace: namespace, usesServiceBackground: usesServiceBackground)
             }
         }
         #endif

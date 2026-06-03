@@ -210,6 +210,38 @@ struct ServiceOccurrence: Identifiable {
     let id: String
     let service: Services
     let date: Date
+
+    var isPaid: Bool {
+        ServiceOccurrencePaymentStore.isPaid(id)
+    }
+
+    func togglePaid() {
+        ServiceOccurrencePaymentStore.toggle(id)
+    }
+}
+
+enum ServiceOccurrencePaymentStore {
+    private static let key = "paidServiceOccurrenceIDs"
+    static let didChangeNotification = Notification.Name("ServiceOccurrencePaymentStoreDidChange")
+
+    static func isPaid(_ id: String) -> Bool {
+        paidIDs.contains(id)
+    }
+
+    static func toggle(_ id: String) {
+        var ids = paidIDs
+        if ids.contains(id) {
+            ids.remove(id)
+        } else {
+            ids.insert(id)
+        }
+        UserDefaults.standard.set(Array(ids), forKey: key)
+        NotificationCenter.default.post(name: didChangeNotification, object: id)
+    }
+
+    private static var paidIDs: Set<String> {
+        Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
+    }
 }
 
 extension Services {

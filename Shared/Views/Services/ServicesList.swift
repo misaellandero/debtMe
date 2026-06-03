@@ -27,6 +27,7 @@ enum CalendarPeriod: String, CaseIterable {
 }
 
 struct ServicesList: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   
     @State var showNewBill = false
     
@@ -38,10 +39,10 @@ struct ServicesList: View {
 
     // Computed property to calculate the total amount
     var totalExpenses: Double {
-        cachedOccurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        cachedOccurrences.filter { $0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
     }
     var totalIncome: Double {
-        cachedOccurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        cachedOccurrences.filter { !$0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
     }
     
     var balance: Double{
@@ -94,6 +95,7 @@ struct ServicesList: View {
 
     @State private var previousCalendarPeriod: CalendarPeriod = .month
     @State private var previousViewMode: ServicesViewMode = .list
+    @State private var paidStateVersion = 0
 
     @State private var showDetailSheet = false
     @State private var detailRange: DateInterval?
@@ -263,7 +265,7 @@ struct ServicesList: View {
     var expenseTotalsByDay: [Date: Double] {
         let calendar = Calendar.current
         return cachedOccurrences.reduce(into: [:]) { partial, occurrence in
-            guard occurrence.service.expense else { return }
+            guard occurrence.service.expense, !occurrence.isPaid else { return }
             let day = calendar.startOfDay(for: occurrence.date)
             partial[day, default: 0] += occurrence.service.amount
         }
@@ -272,7 +274,7 @@ struct ServicesList: View {
     var incomeTotalsByDay: [Date: Double] {
         let calendar = Calendar.current
         return cachedOccurrences.reduce(into: [:]) { partial, occurrence in
-            guard !occurrence.service.expense else { return }
+            guard !occurrence.service.expense, !occurrence.isPaid else { return }
             let day = calendar.startOfDay(for: occurrence.date)
             partial[day, default: 0] += occurrence.service.amount
         }
@@ -281,7 +283,7 @@ struct ServicesList: View {
     var expenseTotalsByMonth: [Date: Double] {
         let calendar = Calendar.current
         return cachedOccurrences.reduce(into: [:]) { partial, occurrence in
-            guard occurrence.service.expense else { return }
+            guard occurrence.service.expense, !occurrence.isPaid else { return }
             let components = calendar.dateComponents([.year, .month], from: occurrence.date)
             let month = calendar.date(from: components) ?? occurrence.date
             partial[month, default: 0] += occurrence.service.amount
@@ -291,7 +293,7 @@ struct ServicesList: View {
     var incomeTotalsByMonth: [Date: Double] {
         let calendar = Calendar.current
         return cachedOccurrences.reduce(into: [:]) { partial, occurrence in
-            guard !occurrence.service.expense else { return }
+            guard !occurrence.service.expense, !occurrence.isPaid else { return }
             let components = calendar.dateComponents([.year, .month], from: occurrence.date)
             let month = calendar.date(from: components) ?? occurrence.date
             partial[month, default: 0] += occurrence.service.amount
@@ -334,10 +336,19 @@ struct ServicesList: View {
         max(1, monthGridDates.count / 7)
     }
 
-    private var calendarDayCellHeightCompact: CGFloat { 96 }
+    private var isCompactCalendar: Bool {
+        #if os(iOS)
+        horizontalSizeClass == .compact
+        #else
+        false
+        #endif
+    }
+
+    private var calendarDayCellHeightCompact: CGFloat { isCompactCalendar ? 62 : 104 }
     private var calendarHeaderHeight: CGFloat { 24 }
-    private var calendarCellCornerRadius: CGFloat { 12 }
-    private var calendarCardCornerRadius: CGFloat { 18 }
+    private var calendarGridSpacing: CGFloat { isCompactCalendar ? 4 : 8 }
+    private var calendarCellCornerRadius: CGFloat { isCompactCalendar ? 8 : 12 }
+    private var calendarCardCornerRadius: CGFloat { isCompactCalendar ? 12 : 18 }
 
     var monthGridHeight: CGFloat {
         let rowHeight = calendarHeaderHeight + 4 + calendarDayCellHeightCompact
@@ -381,10 +392,10 @@ struct ServicesList: View {
     }
 
     var calendarView: some View {
-        let monthColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
-        let weekColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
+        let monthColumns = Array(repeating: GridItem(.flexible(), spacing: isCompactCalendar ? 8 : 12), count: isCompactCalendar ? 2 : 3)
+        let weekColumns = Array(repeating: GridItem(.flexible(), spacing: calendarGridSpacing), count: 7)
 
-        return VStack(alignment: .leading, spacing: 12) {
+        return VStack(alignment: .leading, spacing: isCompactCalendar ? 8 : 12) {
             if isMacOS {
                 if calendarPeriod != .month {
                     calendarHeaderCard
@@ -400,7 +411,7 @@ struct ServicesList: View {
                     weekRow(for: date)
                 }
             case .fortnight:
-                LazyVGrid(columns: weekColumns, spacing: 8) {
+                LazyVGrid(columns: weekColumns, spacing: calendarGridSpacing) {
                     ForEach(fortnightDates, id: \.self) { date in
                         dayCell(for: date, compact: true)
                     }
@@ -409,25 +420,50 @@ struct ServicesList: View {
                 #if os(macOS)
                 macOSMonthCalendar
                 #else
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { row, symbol in
-                        VStack(alignment: .leading, spacing: 4) {
-                            weekdayHeaderCell(symbol: symbol)
-                                .frame(height: calendarHeaderHeight)
-                            MonthRowScroll(
-                                rowIndex: row,
-                                weeksCount: monthGridWeeksCount,
-                                monthGridDates: monthGridDates,
-                                dayColumnWidth: 60,
-                                dayCellHeight: calendarDayCellHeightCompact,
-                                stackedFraction: 0.8
-                            ) { date in
-                                dayCell(for: date, compact: true)
+                if isCompactCalendar {
+                    VStack(alignment: .leading, spacing: calendarGridSpacing) {
+                        ForEach(Array(weekdaySymbols.enumerated()), id: \.offset) { row, symbol in
+                            VStack(alignment: .leading, spacing: 4) {
+                                weekdayHeaderCell(symbol: symbol)
+                                    .frame(height: calendarHeaderHeight)
+                                MonthRowScroll(
+                                    rowIndex: row,
+                                    weeksCount: monthGridWeeksCount,
+                                    monthGridDates: monthGridDates,
+                                    dayColumnWidth: 44,
+                                    dayCellHeight: calendarDayCellHeightCompact,
+                                    stackedFraction: 0.74
+                                ) { date in
+                                    dayCell(for: date, compact: true)
+                                }
+                            }
+                        }
+                    }
+                    .frame(minHeight: monthGridHeight)
+                } else {
+                    VStack(alignment: .leading, spacing: calendarGridSpacing) {
+                        HStack(spacing: calendarGridSpacing) {
+                            ForEach(weekdaySymbols, id: \.self) { symbol in
+                                Text(symbol)
+                                    .font(.caption2.weight(.semibold))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
+                                    .frame(maxWidth: .infinity)
+                            }
+                        }
+
+                        LazyVGrid(columns: weekColumns, spacing: calendarGridSpacing) {
+                            ForEach(Array(monthGridDates.enumerated()), id: \.offset) { _, date in
+                                if let date {
+                                    dayCell(for: date, compact: true)
+                                } else {
+                                    Color.clear
+                                        .frame(height: calendarDayCellHeightCompact)
+                                }
                             }
                         }
                     }
                 }
-                .frame(minHeight: monthGridHeight)
                 #endif
             case .year:
                 LazyVGrid(columns: monthColumns, spacing: 12) {
@@ -466,8 +502,8 @@ struct ServicesList: View {
 
     private var calendarHeaderBalance: Double {
         let range = selectedDateRange
-        let expenses = cachedOccurrences.filter { range.contains($0.date) && $0.service.expense }.reduce(0) { $0 + $1.service.amount }
-        let incomes = cachedOccurrences.filter { range.contains($0.date) && !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        let expenses = cachedOccurrences.filter { range.contains($0.date) && $0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
+        let incomes = cachedOccurrences.filter { range.contains($0.date) && !$0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
         return incomes - expenses
     }
 
@@ -501,10 +537,22 @@ struct ServicesList: View {
                 ForEach(cachedOccurrences) { occurrence in
                     serviceRow(for: occurrence)
                         .listRowBackground(occurrence.service.wrappedColor)
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button {
+                                togglePaid(occurrence)
+                            } label: {
+                                Label(occurrence.isPaid ? "Mark unpaid" : "Mark paid", systemImage: occurrence.isPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
+                            }
+                            .tint(occurrence.isPaid ? .orange : .green)
+                        }
                 }
                 .onDelete { offsets in
                     deleteOccurrences(at: offsets, in: cachedOccurrences)
                 }
+
+                Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             } else {
                 Section {
                     calendarView
@@ -531,6 +579,12 @@ struct ServicesList: View {
                 SearchTextField(searchQuery: $searchQuery)
             }
             
+            #endif
+
+            #if os(iOS)
+            ToolbarItem(placement: .principal) {
+                servicesCalendarTopControlsIOS
+            }
             #endif
 
             ToolbarItem(placement: .primaryAction ){
@@ -641,11 +695,24 @@ struct ServicesList: View {
                                     frequency: occurrence.service.frecuencyString,
                                     limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
                                     image: occurrence.service.image,
-                                    expense: occurrence.service.expense
+                                    expense: occurrence.service.expense,
+                                    isPaid: occurrence.isPaid
                                 )
                             }
                             .listRowBackground(occurrence.service.wrappedColor)
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button {
+                                    togglePaid(occurrence)
+                                } label: {
+                                    Label(occurrence.isPaid ? "Mark unpaid" : "Mark paid", systemImage: occurrence.isPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
+                                }
+                                .tint(occurrence.isPaid ? .orange : .green)
+                            }
                         }
+
+                        Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 .navigationTitle(detailTitle)
@@ -710,6 +777,11 @@ struct ServicesList: View {
         #if os(macOS)
         .navigationTitle("Services")
         #endif
+        .animation(.smooth, value: paidStateVersion)
+        .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
+            paidStateVersion += 1
+            updateCachedOccurrences()
+        }
         .onAppear(perform: updateCachedOccurrences)
         .onChange(of: referenceDateTimestamp) {
             #if os(macOS)
@@ -758,14 +830,18 @@ struct ServicesList: View {
         let glowColor = markers.first?.wrappedColor ?? .clear
         let hasMarkers = !markers.isEmpty
 
-        return VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 8) {
+        return VStack(alignment: .leading, spacing: isCompactCalendar && compact ? 2 : 4) {
+            HStack(spacing: isCompactCalendar && compact ? 4 : 8) {
                 Text("\(day)")
                     .font(titleFont)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.primary)
                 Spacer(minLength: 0)
-                if isToday {
+                if isToday, isCompactCalendar && compact {
+                    Circle()
+                        .fill(Color.accentColor)
+                        .frame(width: 5, height: 5)
+                } else if isToday {
                     Text("Today")
                         .font(.caption2.weight(.semibold))
                         .foregroundStyle(.primary)
@@ -774,17 +850,29 @@ struct ServicesList: View {
                         .background(.thinMaterial, in: Capsule())
                 }
             }
-            if isLarge {
+            if isCompactCalendar && compact {
+                if hasMarkers {
+                    Text(balanceTotal.toCompactCurrencyString())
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(balanceTotal >= 0 ? Color.blue : Color.red)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                }
+            } else if isLarge {
                 pieSummary(expenseTotal: expenseTotal, incomeTotal: incomeTotal)
             } else {
                 calendarSummaryLines(expenseTotal: expenseTotal, incomeTotal: incomeTotal, balanceTotal: balanceTotal, font: summaryFont)
             }
             if !markers.isEmpty {
-                dayMarkersGrid(services: markers)
+                dayMarkersGrid(
+                    services: Array(markers.prefix(isCompactCalendar && compact ? 2 : 6)),
+                    markerSize: isCompactCalendar && compact ? 12 : 14,
+                    columnCount: isCompactCalendar && compact ? 2 : 3
+                )
             }
         }
         .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: cellHeight, alignment: .leading)
-        .padding(10)
+        .padding(isCompactCalendar && compact ? 5 : 10)
         .background {
             RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
                 .fill(Color.secondary.opacity(0.12))
@@ -799,10 +887,10 @@ struct ServicesList: View {
             RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous)
                 .stroke(
                     isToday ? Color.accentColor.opacity(0.9) : (viewMode == .calendar && hasMarkers ? glowColor.opacity(0.75) : .clear),
-                    lineWidth: isToday ? 2 : 1.5
+                    lineWidth: isToday ? (isCompactCalendar && compact ? 1.5 : 2) : 1.5
                 )
         )
-        .shadow(color: viewMode == .calendar && hasMarkers ? glowColor.opacity(0.25) : .clear, radius: 10, x: 0, y: 3)
+        .shadow(color: viewMode == .calendar && hasMarkers ? glowColor.opacity(0.25) : .clear, radius: isCompactCalendar && compact ? 5 : 10, x: 0, y: 3)
         .contentShape(RoundedRectangle(cornerRadius: calendarCellCornerRadius, style: .continuous))
         .onTapGesture {
             #if os(macOS)
@@ -820,8 +908,8 @@ struct ServicesList: View {
             .filter { range?.contains($0.date) == true }
             .sorted { $0.date < $1.date }
 
-        let incomes = occurrences.filter { !$0.service.expense }
-        let expenses = occurrences.filter { $0.service.expense }
+        let incomes = occurrences.filter { !$0.service.expense && !$0.isPaid }
+        let expenses = occurrences.filter { $0.service.expense && !$0.isPaid }
 
         let dayKey = calendar.startOfDay(for: date)
         let expenseTotal = expenseTotalsByDay[dayKey] ?? 0
@@ -1192,8 +1280,8 @@ struct ServicesList: View {
 
     var expenseChartData: [ExpenseChartPoint] {
         let calendar = Calendar.current
-        let expenses = cachedOccurrences.filter { $0.service.expense }
-        let incomes = cachedOccurrences.filter { !$0.service.expense }
+        let expenses = cachedOccurrences.filter { $0.service.expense && !$0.isPaid }
+        let incomes = cachedOccurrences.filter { !$0.service.expense && !$0.isPaid }
 
         switch calendarPeriod {
         case .day:
@@ -1450,25 +1538,29 @@ struct ServicesList: View {
     #endif
 
     #if os(iOS) || os(visionOS)
+    var servicesCalendarTopControlsIOS: some View {
+        HStack(spacing: 8) {
+            calendarViewModeButton
+                .labelStyle(.iconOnly)
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
+                .glassEffect(.regular.interactive(), in: .capsule)
+
+            Picker("Period", selection: $calendarPeriod) {
+                ForEach(CalendarPeriod.allCases, id: \.self) { option in
+                    Text(LocalizedStringKey(option.rawValue))
+                        .tag(option)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+            .glassEffect(.regular.interactive(), in: .capsule)
+        }
+    }
+
     var floatingDateNavigatorIOS: some View {
         return
             HStack {
-                calendarViewModeButton
-                    .buttonStyle(.bordered)
-                    .tint(.accentColor)
-                    .glassEffect(.regular.interactive(), in: .capsule)
-
-                Picker("Period", selection: $calendarPeriod) {
-                    ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                        Text(LocalizedStringKey(option.rawValue))
-                            .tag(option)
-                    }
-                }
-                .labelsHidden()
-                .pickerStyle(.menu)
-                .layoutPriority(1)
-                .glassEffect(.regular.interactive(), in: .capsule)
-
                 if calendarPeriod == .untilNextIncome {
                     Button {
                         calendarPeriod = previousCalendarPeriod
@@ -1561,6 +1653,12 @@ struct ServicesList: View {
             .sorted { $0.date < $1.date }
     }
 
+    private func togglePaid(_ occurrence: ServiceOccurrence) {
+        occurrence.togglePaid()
+        paidStateVersion += 1
+        updateCachedOccurrences()
+    }
+
     private func deleteOccurrences(at offsets: IndexSet, in occurrences: [ServiceOccurrence]) {
         var deletedIds = Set<NSManagedObjectID>()
         for index in offsets {
@@ -1597,8 +1695,8 @@ struct ServicesList: View {
         let monthOccurrences = monthRange.map { range in
             cachedOccurrences.filter { range.contains($0.date) }
         } ?? []
-        let monthIncome = monthOccurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
-        let monthExpense = monthOccurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+        let monthIncome = monthOccurrences.filter { !$0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
+        let monthExpense = monthOccurrences.filter { $0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
         let monthBalance = monthIncome - monthExpense
 
         return VStack(alignment: .leading, spacing: 12) {
@@ -1705,7 +1803,8 @@ struct ServicesList: View {
                 limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
                 image: occurrence.service.image,
                 expense: occurrence.service.expense,
-                useAdaptiveText: true
+                useAdaptiveText: true,
+                isPaid: occurrence.isPaid
             )
         }
         .buttonStyle(.plain)
@@ -1718,7 +1817,8 @@ struct ServicesList: View {
                 frequency: occurrence.service.frecuencyString,
                 limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
                 image: occurrence.service.image,
-                expense: occurrence.service.expense
+                expense: occurrence.service.expense,
+                isPaid: occurrence.isPaid
             )
         }
         #endif
@@ -1843,12 +1943,12 @@ struct ServicesList: View {
         return result
     }
 
-    @ViewBuilder
-    private func dayMarkersGrid(services: [Services]) -> some View {
-        let columns = Array(repeating: GridItem(.fixed(14), spacing: 4), count: 3)
-        LazyVGrid(columns: columns, alignment: .leading, spacing: 4) {
+    private func dayMarkersGrid(services: [Services], markerSize: CGFloat = 14, columnCount: Int = 3) -> some View {
+        let spacing: CGFloat = markerSize <= 12 ? 2 : 4
+        let columns = Array(repeating: GridItem(.fixed(markerSize), spacing: spacing), count: columnCount)
+        return LazyVGrid(columns: columns, alignment: .leading, spacing: spacing) {
             ForEach(services, id: \.objectID) { service in
-                dayMarker(for: service, size: 14)
+                dayMarker(for: service, size: markerSize)
             }
         }
     }
@@ -1886,8 +1986,8 @@ struct ServicesList: View {
             let occurrences = cachedOccurrences
                 .filter { calendar.isDate($0.date, inSameDayAs: date) }
                 .sorted { $0.date < $1.date }
-            let incomeTotal = occurrences.filter { !$0.service.expense }.reduce(0) { $0 + $1.service.amount }
-            let expenseTotal = occurrences.filter { $0.service.expense }.reduce(0) { $0 + $1.service.amount }
+            let incomeTotal = occurrences.filter { !$0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
+            let expenseTotal = occurrences.filter { $0.service.expense && !$0.isPaid }.reduce(0) { $0 + $1.service.amount }
             let dayBalance = incomeTotal - expenseTotal
 
             VStack(alignment: .leading, spacing: 12) {

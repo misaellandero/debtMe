@@ -65,53 +65,64 @@ struct HomeDateNavigator: View {
         .padding(12)
         .glassEffect()
         #else
-        VStack(spacing: 8) {
-            HStack{
-                HomeViewModeButton(viewMode: $viewMode, namespace: namespace)
-                    .frame(height: 10)
-                Picker("Period", selection: $calendarPeriod) {
-                    ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                        Text(LocalizedStringKey(option.rawValue))
-                            .tag(option)
-                    }
+        HStack(spacing: 8) {
+            if calendarPeriod != .untilNextIncome {
+                Button(action: onPrevious) {
+                    Image(systemName: "chevron.left")
                 }
-                .labelsHidden()
-                .pickerStyle(.menu)
+                .buttonStyle(GlassProminentButtonStyle())
 
-                if calendarPeriod != .day && calendarPeriod != .untilNextIncome {
-                    Toggle("From today", isOn: $fromToday)
-                        .toggleStyle(ButtonToggleStyle())
+                Button(action: onToday) {
+                    Text("Today")
                 }
-                 
-            }
+                .disabled(isShowingToday)
 
-            HStack{
-                if calendarPeriod != .untilNextIncome {
-                    Button(action: onPrevious) {
-                        Image(systemName: "chevron.left")
-                    }
-                    .buttonStyle(GlassProminentButtonStyle())
-                    
-                    Button(action: onToday) {
-                        Text("Today")
-                    }
-                    .disabled(isShowingToday)
+                Text(dateRangeLabel)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
 
-                    Text(dateRangeLabel)
-                        .font(.subheadline.weight(.semibold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-
-                    Button(action: onNext) {
-                        Image(systemName: "chevron.right")
-                    }
-                    .buttonStyle(GlassProminentButtonStyle())
+                Button(action: onNext) {
+                    Image(systemName: "chevron.right")
                 }
+                .buttonStyle(GlassProminentButtonStyle())
+            } else {
+                Text(dateRangeLabel)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
         }
         .padding(12)
         .glassEffect(in: .rect(cornerRadius: 16.0))
         #endif
+    }
+}
+
+struct HomeDateNavigatorTopControls: View {
+    @Binding var viewMode: ServicesViewMode
+    @Binding var calendarPeriod: CalendarPeriod
+    @Binding var fromToday: Bool
+    let namespace: Namespace.ID
+
+    var body: some View {
+        HStack(spacing: 8) {
+            HomeViewModeButton(viewMode: $viewMode, namespace: namespace)
+
+            Picker("Period", selection: $calendarPeriod) {
+                ForEach(CalendarPeriod.allCases, id: \.self) { option in
+                    Text(LocalizedStringKey(option.rawValue))
+                        .tag(option)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+
+            if calendarPeriod != .day && calendarPeriod != .untilNextIncome {
+                Toggle("From today", isOn: $fromToday)
+                    .toggleStyle(.button)
+            }
+        }
     }
 }
 
@@ -121,7 +132,7 @@ private struct HomeViewModeButton: View {
 
     var body: some View {
         Button {
-            withAnimation(.smooth(duration: 0.5)) {
+            withAnimation(.easeInOut(duration: 0.32)) {
                 viewMode = (viewMode == .calendar) ? .list : .calendar
             }
         } label: {
