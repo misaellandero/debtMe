@@ -1195,6 +1195,9 @@
         }
       }
     },
+    "Editar" : {
+
+    },
     "Emoji Picker" : {
       "localizations" : {
         "es" : {
@@ -2016,6 +2019,18 @@
         }
       }
     },
+    "Marcar gastado" : {
+
+    },
+    "Marcar no gastado" : {
+
+    },
+    "Marcar no pagado" : {
+
+    },
+    "Marcar pagado" : {
+
+    },
     "Mark as Settled" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2034,6 +2049,9 @@
       }
     },
     "Mark paid" : {
+
+    },
+    "Mark spent" : {
 
     },
     "Mark unpaid" : {

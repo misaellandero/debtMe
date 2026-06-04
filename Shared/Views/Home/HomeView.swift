@@ -194,22 +194,48 @@ struct HomeView: View {
     }
 
     private var listContent: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+        List {
+            Section {
                 HomePeriodSummaryView(
                     title: calendarHeaderTitle,
                     incomeTotal: incomeTotal,
                     expenseTotal: expenseTotal,
                     balanceTotal: balanceTotal
                 )
-                .padding(.horizontal, 8)
-
-                HomeListSection(items: periodItems, namespace: namespace, onSelect: openListItem, onTogglePaid: togglePaid)
+                .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
             }
-            .frame(maxWidth: .infinity, alignment: .topLeading)
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 96)
+
+            Section(header: Text("Scheduled").font(.footnote.weight(.semibold)).foregroundStyle(.secondary)) {
+                ForEach(periodItems) { item in
+                    HomeCalendarItemNavigationRow(item: item, namespace: namespace, usesServiceBackground: item.service != nil, onMacSelect: { openListItem(item) })
+                        .listRowBackground(item.service != nil ? item.tint : item.tint.opacity(0.12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(item.service != nil ? item.tint.opacity(0.55) : item.tint.opacity(0.18), lineWidth: 1)
+                        )
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            if item.paidOccurrenceID != nil {
+                                Button {
+                                    togglePaid(item)
+                                } label: {
+                                    Label(item.currentIsPaid ? "Mark unpaid" : (item.isIncome ? "Mark spent" : "Mark paid"), systemImage: item.currentIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
+                                }
+                                .tint(item.currentIsPaid ? .orange : .green)
+                            }
+                        }
+                        .contextMenu {
+                            if item.paidOccurrenceID != nil {
+                                Button(item.currentIsPaid ? (item.isIncome ? "Marcar no gastado" : "Marcar no pagado") : (item.isIncome ? "Marcar gastado" : "Marcar pagado")) {
+                                    togglePaid(item)
+                                }
+                            }
+                        }
+                }
+
+                Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
         }
         .scrollContentBackground(.hidden)
         .animation(.smooth, value: periodItems.map(\.id))

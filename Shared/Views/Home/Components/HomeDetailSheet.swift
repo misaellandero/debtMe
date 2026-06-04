@@ -26,7 +26,7 @@ struct HomeDetailSheet: View {
                                     Button {
                                         togglePaid(item)
                                     } label: {
-                                        Label(item.currentIsPaid ? "Mark unpaid" : "Mark paid", systemImage: item.currentIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
+                                        Label(item.currentIsPaid ? "Mark unpaid" : (item.isIncome ? "Mark spent" : "Mark paid"), systemImage: item.currentIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
                                     }
                                     .tint(item.currentIsPaid ? .orange : .green)
                                 }
@@ -54,3 +54,4 @@ struct HomeDetailSheet: View {
         paidStateVersion += 1
     }
 }
+

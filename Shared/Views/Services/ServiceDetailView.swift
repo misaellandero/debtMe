@@ -14,6 +14,36 @@ struct ServiceDetailView: View {
     var onDelete: (() -> Void)?
     @State var showEdit = false
     @Environment(\.dismiss) private var dismiss
+
+    @State private var currentOccurrenceIsPaid: Bool = false
+    @State private var currentOccurrenceID: String?
+
+    private func refreshCurrentOccurrence() {
+        // Determine the most relevant occurrence for this service (today or next upcoming)
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        // Build a generous range around today (past month to next month) to find a relevant occurrence
+        let start = calendar.date(byAdding: .month, value: -1, to: today) ?? today
+        let end = calendar.date(byAdding: .month, value: 1, to: today) ?? today
+        let range = DateInterval(start: start, end: end)
+
+        let occurrences = service.occurrences(in: range, calendar: .current).sorted { $0.date < $1.date }
+
+        // Prefer today's occurrence; otherwise nearest future; otherwise latest past
+        let todayOcc = occurrences.first { calendar.isDate($0.date, inSameDayAs: today) }
+        let futureOcc = occurrences.first { $0.date >= today }
+        let selected = todayOcc ?? futureOcc ?? occurrences.last
+
+        currentOccurrenceID = selected?.id
+        currentOccurrenceIsPaid = selected?.isPaid ?? false
+    }
+
+    private func toggleCurrentOccurrencePaid() {
+        guard let id = currentOccurrenceID else { return }
+        ServiceOccurrencePaymentStore.toggle(id)
+        currentOccurrenceIsPaid.toggle()
+    }
+
     var body: some View {
         #if os(macOS)
         VStack(spacing: 8) {
@@ -30,6 +60,31 @@ struct ServiceDetailView: View {
                     onDelete: onDelete
                 )
             }
+            
+            VStack(spacing: 10) {
+                Button {
+                    toggleCurrentOccurrencePaid()
+                } label: {
+                    Label(
+                        service.expense ? (currentOccurrenceIsPaid ? "Marcar no pagado" : "Marcar pagado") : (currentOccurrenceIsPaid ? "Marcar no gastado" : "Marcar gastado"),
+                        systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
+                    )
+                    .frame(maxWidth: .infinity)
+                }
+                .tint(currentOccurrenceIsPaid ? .orange : .green)
+                .buttonStyle(GlassProminentButtonStyle())
+
+                Button {
+                    if let onEdit { onEdit() } else { showEdit.toggle() }
+                } label: {
+                    Label("Editar", systemImage: AppIcons.edit)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
+            }
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .center)
 
             AmountUpdateList(service: service)
         }
@@ -39,9 +94,40 @@ struct ServiceDetailView: View {
         .sheet(isPresented: $showEdit, content: {
             ServicesForm(edition:true, service: service)
         })
+        .onAppear(perform: refreshCurrentOccurrence)
+        .onChange(of: service.frequencyDate) { _ in refreshCurrentOccurrence() }
+        .onChange(of: service.amount) { _ in refreshCurrentOccurrence() }
         #else
         List{
             serviceSummarySection
+            
+            Section {
+                VStack(spacing: 10) {
+                    Button {
+                        toggleCurrentOccurrencePaid()
+                    } label: {
+                        Label(
+                            service.expense ? (currentOccurrenceIsPaid ? "Marcar no pagado" : "Marcar pagado") : (currentOccurrenceIsPaid ? "Marcar no gastado" : "Marcar gastado"),
+                            systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
+                        )
+                        .frame(maxWidth: .infinity)
+                    }
+                    .foregroundStyle(.white)
+                    .tint(currentOccurrenceIsPaid ? .orange : .green)
+                    .buttonStyle(GlassProminentButtonStyle())
+
+                    Button {
+                        showEdit.toggle()
+                    } label: {
+                        Label("Editar", systemImage: AppIcons.edit)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.accentColor)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            
             AmountUpdateList(service: service)
         }
         .navigationTitle(service.wrappedName)
@@ -51,6 +137,9 @@ struct ServiceDetailView: View {
         .sheet(isPresented: $showEdit, content: {
             ServicesForm(edition:true, service: service)
         })
+        .onAppear(perform: refreshCurrentOccurrence)
+        .onChange(of: service.frequencyDate) { _ in refreshCurrentOccurrence() }
+        .onChange(of: service.amount) { _ in refreshCurrentOccurrence() }
         #endif
     }
 
@@ -133,4 +222,3 @@ private struct ServiceInspectorCard: View {
 }
 #endif
 
- 
