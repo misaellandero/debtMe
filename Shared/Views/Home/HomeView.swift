@@ -32,6 +32,8 @@ struct HomeView: View {
     @State private var detailRange: DateInterval?
     @State private var detailTitle = ""
     @State private var paidStateVersion = 0
+    @State private var showNewService = false
+    @State private var showNewContact = false
     #if os(iOS)
     @State private var detailSelection: HomeDetailSelection?
     #endif
@@ -79,6 +81,13 @@ struct HomeView: View {
 
     private var expenseTotal: Double {
         periodItems.filter { !$0.isIncome && !$0.isPaid }.reduce(0) { $0 + $1.amount }
+    }
+
+    private func paidActionTitle(for item: HomeCalendarItem) -> LocalizedStringKey {
+        if item.currentIsPaid {
+            return item.isIncome ? "Mark unspent" : "Mark unpaid"
+        }
+        return item.isIncome ? "Mark spent" : "Mark paid"
     }
 
     private var balanceTotal: Double {
@@ -145,6 +154,12 @@ struct HomeView: View {
                 HomeDetailSheet(title: selection.title, items: selection.items)
             }
             #endif
+            .sheet(isPresented: $showNewService) {
+                ServicesForm()
+            }
+            .sheet(isPresented: $showNewContact) {
+                ContactsNewForm()
+            }
             #if os(macOS)
             .inspector(isPresented: $showInspector) {
                 HomeInspectorView(
@@ -159,8 +174,8 @@ struct HomeView: View {
             .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
                 paidStateVersion += 1
             }
-            #if os(iOS)
             .toolbar {
+                #if os(iOS)
                 ToolbarItem(placement: .principal) {
                     HomeDateNavigatorTopControls(
                         viewMode: $viewMode,
@@ -169,8 +184,29 @@ struct HomeView: View {
                         namespace: namespace
                     )
                 }
+                #endif
+
+                ToolbarItem(placement: .primaryAction) {
+                    Menu {
+                        Button {
+                            showNewService = true
+                        } label: {
+                            
+                            Label("New Service", systemImage: "chart.bar.doc.horizontal")
+                        }
+
+                        Button {
+                            showNewContact = true
+                        } label: {
+                            Label("New Contact", systemImage: "person.crop.circle.badge.plus")
+                        }
+                    } label: {
+                        Label("Add", systemImage: "plus.circle.fill")
+                            .appToolbarLabel()
+                    }
+                    .buttonStyle(.glassProminent) 
+                }
             }
-            #endif
     }
 
     @ViewBuilder
@@ -225,7 +261,7 @@ struct HomeView: View {
                         }
                         .contextMenu {
                             if item.paidOccurrenceID != nil {
-                                Button(item.currentIsPaid ? (item.isIncome ? "Marcar no gastado" : "Marcar no pagado") : (item.isIncome ? "Marcar gastado" : "Marcar pagado")) {
+                                Button(paidActionTitle(for: item)) {
                                     togglePaid(item)
                                 }
                             }

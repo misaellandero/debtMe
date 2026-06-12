@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "localizations" : {
-
-      }
-    },
-    " " : {
-      "localizations" : {
-
-      }
-    },
     " Fee" : {
       "localizations" : {
         "es" : {
@@ -796,22 +786,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
-          }
-        }
-      }
-    },
-    "Configuration Lists" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Listas de configuración"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "設定リスト"
           }
         }
       }
@@ -1704,38 +1678,6 @@
         }
       }
     },
-    "Home Hub" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Centro de inicio"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ホームハブ"
-          }
-        }
-      }
-    },
-    "Home is now the main hub for scheduled services and people transactions, with quick actions to add contacts and services." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home es ahora el centro principal para servicios programados y transacciones de personas, con acciones rápidas para agregar contactos y servicios."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Homeは現在、スケジュールされたサービスと人取引の主要ハブとなり、連絡先やサービスを追加するクイックアクションが利用できます。"
-          }
-        }
-      }
-    },
     "I owe them" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1833,22 +1775,6 @@
         }
       }
     },
-    "Improved Image Editor" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editor de imágenes mejorado"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "改良された画像エディタ"
-          }
-        }
-      }
-    },
     "Include Image" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1883,11 +1809,12 @@
       }
     },
     "Incoming" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingresos"
+            "value" : "Entrante"
           }
         },
         "ja" : {
@@ -2103,22 +2030,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ローン"
-          }
-        }
-      }
-    },
-    "Localization Cleanup" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpieza de localización"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ローカリゼーションのクリーンアップ"
           }
         }
       }
@@ -2413,22 +2324,6 @@
         }
       }
     },
-    "New Service" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nuevo servicio"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ニューサービス"
-          }
-        }
-      }
-    },
     "New Tag" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2543,7 +2438,6 @@
       }
     },
     "No expenses in this period" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -2931,11 +2825,12 @@
       }
     },
     "Outgoing" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gastos"
+            "value" : "Saliente"
           }
         },
         "ja" : {
@@ -3079,29 +2974,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contactos"
+            "value" : "Gente"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "人々"
-          }
-        }
-      }
-    },
-    "People and Services now focus on managing your saved contacts and services, while Home handles daily tracking." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "People and Services ahora se centra en la gestión de sus contactos y servicios guardados, mientras que Home se encarga del seguimiento diario."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "People and Services は現在、保存された連絡先とサービスの管理に重点を置き、Home は日々の追跡を行います。"
           }
         }
       }
@@ -3665,22 +3544,6 @@
         }
       }
     },
-    "Service images have clearer pickers, loading states, better icon visibility, and safer image sizing." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Las imágenes de servicio tienen selectores más claros, estados de carga, mejor visibilidad de iconos y tamaño de imagen más seguro."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サービスイメージは、ピッカーがより明確になり、ロード状態が良好で、アイコンの可視性が向上し、画像サイズ設定がより安全です。"
-          }
-        }
-      }
-    },
     "Service Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3845,7 +3708,6 @@
       }
     },
     "Show all" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -4159,22 +4021,6 @@
         }
       }
     },
-    "The Home calendar now combines services and scheduled people transactions so you can see income, expenses, and balances in one place." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El calendario de inicio ahora combina servicios y transacciones de personas programadas para que pueda ver ingresos, gastos y saldos en un solo lugar."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ホームカレンダーは、サービスと予定された人物取引を統合し、収入、支出、残高を一箇所で確認できるようになりました。"
-          }
-        }
-      }
-    },
     "They owe me" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4450,22 +4296,6 @@
         }
       }
     },
-    "Unified Calendar" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calendario Unificado"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "統合カレンダー"
-          }
-        }
-      }
-    },
     "Universal App" : {
       "localizations" : {
         "es" : {
@@ -4594,22 +4424,6 @@
         }
       }
     },
-    "User-facing base strings were cleaned up so the app is easier to translate from English." : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se limpiaron las cadenas base orientadas al usuario para que la aplicación sea más fácil de traducir del inglés."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ユーザー向けベース文字列は整理され、アプリが英語から翻訳しやすくなります。"
-          }
-        }
-      }
-    },
     "Ver todo" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4644,7 +4458,6 @@
       }
     },
     "View" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {

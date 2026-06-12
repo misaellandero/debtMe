@@ -62,7 +62,7 @@ struct TransactionsForm: View {
                         TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
                         Section{
                             Button(action: performSaveAcion) {
-                                Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
                                     .appToolbarLabel()
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 8)
@@ -89,7 +89,7 @@ struct TransactionsForm: View {
                     }
                     
                     ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "dollarsign.square.fill")) New")
+                        Label("New", systemImage: "dollarsign.square.fill")
                     }
                 }
             }
@@ -168,18 +168,16 @@ struct TransactionMultiPlataformForm: View {
     @Binding var transactionModel : TransactionModel
     var saveTransaction : () -> Void
     var closeView : () -> Void
-    var debtOptions = ["They Owe me" , "I Owe Them"]
-    var debtValue = [true, false]
     var edition = false
     
     var body: some View {
         
    
             Picker("Type", selection: $transactionModel.debt){
-                ForEach(0..<debtOptions.count){ index in
-                    Text(LocalizedStringKey(debtOptions[index]))
-                        .tag(debtValue[index])
-                }
+                Text("They Owe me")
+                    .tag(true)
+                Text("I Owe Them")
+                    .tag(false)
             }.pickerStyle(SegmentedPickerStyle())
         
         

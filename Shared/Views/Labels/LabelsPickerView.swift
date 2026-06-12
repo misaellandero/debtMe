@@ -28,7 +28,7 @@ struct LabelsPickerView: View {
             Group{
                 #if os(macOS)
 
-                Text("\(Image(systemName: "tag.fill")) Tags")
+                Label("Tags", systemImage: "tag.fill")
                     .appHeadline()
 
                 #endif
@@ -102,7 +102,7 @@ struct LabelsPickerView: View {
                 #else
                 
                 ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "tag.fill")) Tags")
+                    Label("Tags", systemImage: "tag.fill")
                 }
                 /*
                 ToolbarItem(placement: .confirmationAction){

@@ -16,6 +16,34 @@ struct ServicesModel {
     static let daysOfMonth = Array(1...31)
     static let months = Array(1...12)
     static let years = Array(1...31)
+
+    static func frequencyTitle(for index: Int) -> LocalizedStringResource {
+        switch index {
+        case 0: "Daily"
+        case 1: "Weekly"
+        case 2: "Biweekly"
+        case 3: "Monthly"
+        case 4: "Quarterly"
+        case 5: "Semester"
+        case 6: "Yearly"
+        case 7: "One time"
+        case 8: "Last day of month"
+        default: "Select Frequency"
+        }
+    }
+
+    static func localizedFrequencyTitle(for index: Int) -> String {
+        String(localized: frequencyTitle(for: index))
+    }
+
+    static func businessDayAdjustmentTitle(for index: Int) -> LocalizedStringResource {
+        switch index {
+        case 0: "Exact date"
+        case 1: "Previous business day"
+        case 2: "Next business day"
+        default: "Exact date"
+        }
+    }
     
     
     
@@ -68,5 +96,4 @@ struct ServicesModel {
             return dateFormatter.string(from: frequencyDate)
         }
 }
-
 

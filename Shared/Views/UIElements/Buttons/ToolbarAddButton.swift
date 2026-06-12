@@ -12,8 +12,9 @@ struct ToolbarAddButton: View {
     let action: () -> Void
     var body: some View {
         Button(action: action) {
-            Label(edition ? "Save" : "Add", systemImage: "plus")
+            Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
                 .appToolbarLabel()
+                .labelStyle(.titleAndIcon)
         }
         .buttonStyle(.borderedProminent)
         .tint(.accentColor)

@@ -15,6 +15,13 @@ import Charts
 enum ServicesViewMode: String, CaseIterable {
     case list = "List"
     case calendar = "Calendar"
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .list: "List"
+        case .calendar: "Calendar"
+        }
+    }
 }
 
 enum CalendarPeriod: String, CaseIterable {
@@ -24,6 +31,17 @@ enum CalendarPeriod: String, CaseIterable {
     case month = "Month"
     case year = "Year"
     case untilNextIncome = "Until Next Income"
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .day: "Day"
+        case .week: "Week"
+        case .fortnight: "Fortnight"
+        case .month: "Month"
+        case .year: "Year"
+        case .untilNextIncome: "Until Next Income"
+        }
+    }
 }
 
 struct ServicesList: View {
@@ -384,6 +402,56 @@ struct ServicesList: View {
     @AppStorage("summaryServicesSelectd") var summarySelectd: summaryServicesMenu = .balance
     @AppStorage("ShowServicesSummary") var ShowSummary = true
 
+    private var filteredIncomeTotal: Double {
+        filteredServices.filter { !$0.expense }.reduce(0) { $0 + $1.amount }
+    }
+
+    private var filteredExpenseTotal: Double {
+        filteredServices.filter { $0.expense }.reduce(0) { $0 + $1.amount }
+    }
+
+    private var filteredBalanceTotal: Double {
+        filteredIncomeTotal - filteredExpenseTotal
+    }
+
+    private var selectedServicesSummaryAmount: Double {
+        switch summarySelectd {
+        case .balance:
+            return filteredBalanceTotal
+        case .income:
+            return filteredIncomeTotal
+        case .expense:
+            return filteredExpenseTotal
+        case .all:
+            return Double(filteredServices.count)
+        }
+    }
+
+    private var servicesConfigurationSummary: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(summarySelectd.localizedTitle)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            if summarySelectd == .all {
+                Text(filteredServices.count, format: .number)
+                    .font(.largeTitle.weight(.bold))
+            } else {
+                Text(selectedServicesSummaryAmount.toCurrencyString())
+                    .font(.largeTitle.weight(.bold))
+                    .foregroundStyle(selectedServicesSummaryAmount >= 0 ? Color.primary : Color.red)
+            }
+
+            HStack(spacing: 12) {
+                Label(filteredIncomeTotal.toCompactCurrencyString(), systemImage: "arrow.down.circle.fill")
+                    .foregroundStyle(.blue)
+                Label("-" + filteredExpenseTotal.toCompactCurrencyString(), systemImage: "arrow.up.circle.fill")
+                    .foregroundStyle(.red)
+            }
+            .font(.caption.weight(.semibold))
+        }
+        .padding(.vertical, 6)
+    }
+
     var weekdaySymbols: [String] {
         let calendar = Calendar.current
         let symbols = calendar.weekdaySymbols
@@ -494,7 +562,7 @@ struct ServicesList: View {
         case .year:
             return referenceDate.formatted(.dateTime.year())
         case .untilNextIncome:
-            return "Until Next Income"
+            return String(localized: "Until Next Income")
         default:
             return dateRangeLabel
         }
@@ -521,57 +589,22 @@ struct ServicesList: View {
     }
         
     var body: some View {
-        let listContent = List {
-            #if os(macOS)
-            let shouldShowSummary = ShowSummary && viewMode != .calendar
-            #else
-            let shouldShowSummary = ShowSummary
-            #endif
-            if shouldShowSummary {
+        List {
+            if ShowSummary {
                 Section {
-                    summaryHeader
+                    servicesConfigurationSummary
                 }
             }
 
-            if viewMode == .list {
-                ForEach(cachedOccurrences) { occurrence in
-                    serviceRow(for: occurrence)
-                        .listRowBackground(occurrence.service.wrappedColor)
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button {
-                                togglePaid(occurrence)
-                            } label: {
-                                Label(occurrence.isPaid ? "Mark unpaid" : "Mark paid", systemImage: occurrence.isPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
-                            }
-                            .tint(occurrence.isPaid ? .orange : .green)
-                        }
+            Section {
+                ForEach(filteredServices) { service in
+                    serviceConfigurationRow(for: service)
+                        .listRowBackground(service.wrappedColor)
                 }
                 .onDelete { offsets in
-                    deleteOccurrences(at: offsets, in: cachedOccurrences)
-                }
-
-                Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            } else {
-                Section {
-                    calendarView
-                        .fixedSize(horizontal: false, vertical: true)
+                    deleteServices(at: offsets)
                 }
             }
-        }
-
-        return listContent
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            #if os(iOS) || os(visionOS)
-            floatingDateNavigatorIOS
-                .padding(.horizontal, 20)
-                .padding(.bottom, 12)
-            #elseif os(macOS)
-            floatingDateNavigator
-            #else
-            EmptyView()
-            #endif
         }
         .toolbar{
             #if os(macOS)
@@ -579,12 +612,6 @@ struct ServicesList: View {
                 SearchTextField(searchQuery: $searchQuery)
             }
             
-            #endif
-
-            #if os(iOS)
-            ToolbarItem(placement: .principal) {
-                servicesCalendarTopControlsIOS
-            }
             #endif
 
             ToolbarItem(placement: .primaryAction ){
@@ -600,23 +627,11 @@ struct ServicesList: View {
             
             ToolbarItem(placement: .automatic) {
                 Menu {
-                    Picker("Vista", selection: $viewMode) {
-                        ForEach(ServicesViewMode.allCases, id: \.self) { option in
-                            Text(LocalizedStringKey(option.rawValue))
-                                .tag(option)
-                        }
-                    }
-                    Divider()
-                    Divider()
-                    Picker("Resumen", selection: $summarySelectd) {
+                    Picker("Summary", selection: $summarySelectd) {
                         ForEach(summaryServicesMenu.allCases, id:\.self ){ option in
-                            Text(LocalizedStringKey(option.rawValue))
+                            Text(option.localizedTitle)
                                 .tag(option)
                         }
-                    }
-                    Divider()
-                    Button("Ver todo") {
-                        showAllEntriesSheet = true
                     }
                 } label: {
                     Label("Config", systemImage: "slider.horizontal.3")
@@ -670,7 +685,7 @@ struct ServicesList: View {
                     }
                     
                 } label: {
-                    Label("Orden/Filtro", systemImage: "line.horizontal.3.decrease.circle.fill")
+                    Label("Sort/Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
                         .appToolbarLabel()
                         .foregroundStyle(.secondary)
                 }
@@ -679,97 +694,6 @@ struct ServicesList: View {
         .sheet(isPresented: $showNewBill, content: {
             ServicesForm()
         })
-        .sheet(isPresented: $showDetailSheet) {
-            NavigationStack {
-                List {
-                    if detailOccurrences.isEmpty {
-                        Text("Sin gastos en este periodo")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ForEach(detailOccurrences) { occurrence in
-                            NavigationLink(destination: ServiceDetailView(service: occurrence.service)) {
-                                ServiceRow(
-                                    BgColor: occurrence.service.wrappedColor,
-                                    ServiceName: occurrence.service.wrappedName,
-                                    Amount: occurrence.service.amount.toCurrencyString(),
-                                    frequency: occurrence.service.frecuencyString,
-                                    limitDate: occurrence.date.formatted(date: .abbreviated, time: .omitted),
-                                    image: occurrence.service.image,
-                                    expense: occurrence.service.expense,
-                                    isPaid: occurrence.isPaid
-                                )
-                            }
-                            .listRowBackground(occurrence.service.wrappedColor)
-                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                Button {
-                                    togglePaid(occurrence)
-                                } label: {
-                                    Label(occurrence.isPaid ? "Mark unpaid" : "Mark paid", systemImage: occurrence.isPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill")
-                                }
-                                .tint(occurrence.isPaid ? .orange : .green)
-                            }
-                        }
-
-                        Text("Swipe right on a service to mark only that day as paid. Swipe it again to mark it unpaid.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .navigationTitle(detailTitle)
-                #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-                .onAppear {
-                    print("ServicesList detail sheet -> title: \(detailTitle), items: \(detailOccurrences.count)")
-                }
-            }
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $showAllEntriesSheet) {
-            NavigationStack {
-                List {
-                    Section(header: Text("Income")) {
-                        ForEach(allIncomeServices) { service in
-                            NavigationLink(destination: ServiceDetailView(service: service)) {
-                                ServiceRow(
-                                    BgColor: service.wrappedColor,
-                                    ServiceName: service.wrappedName,
-                                    Amount: service.amount.toCurrencyString(),
-                                    frequency: service.frecuencyString,
-                                    limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted),
-                                    image: service.image,
-                                    expense: service.expense
-                                )
-                            }
-                            .listRowBackground(service.wrappedColor)
-                        }
-                    }
-                    Section(header: Text("Expenses")) {
-                        ForEach(allExpenseServices) { service in
-                            NavigationLink(destination: ServiceDetailView(service: service)) {
-                                ServiceRow(
-                                    BgColor: service.wrappedColor,
-                                    ServiceName: service.wrappedName,
-                                    Amount: service.amount.toCurrencyString(),
-                                    frequency: service.frecuencyString,
-                                    limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted),
-                                    image: service.image,
-                                    expense: service.expense
-                                )
-                            }
-                            .listRowBackground(service.wrappedColor)
-                        }
-                    }
-                }
-                .navigationTitle("Todos")
-                #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-            }
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
-        }
         #if os(iOS)
         .navigationTitle("Services")
         .searchable(text: $searchQuery)
@@ -777,36 +701,6 @@ struct ServicesList: View {
         #if os(macOS)
         .navigationTitle("Services")
         #endif
-        .animation(.smooth, value: paidStateVersion)
-        .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
-            paidStateVersion += 1
-            updateCachedOccurrences()
-        }
-        .onAppear(perform: updateCachedOccurrences)
-        .onChange(of: referenceDateTimestamp) {
-            #if os(macOS)
-            if showInspector {
-                inspectorDate = referenceDate
-                macOSSelectedService = nil
-            }
-            #endif
-            updateCachedOccurrences()
-        }
-        .onChange(of: calendarPeriod) { oldValue, newValue in
-            if newValue == .untilNextIncome, oldValue != .untilNextIncome {
-                previousCalendarPeriod = oldValue
-                previousViewMode = viewMode
-                viewMode = .list
-            } else if oldValue == .untilNextIncome, newValue != .untilNextIncome {
-                viewMode = previousViewMode
-            }
-            updateCachedOccurrences()
-        }
-        .onChange(of: viewMode) { updateCachedOccurrences() }
-        .onChange(of: selectedTag) { updateCachedOccurrences() }
-        .onChange(of: searchQuery) { updateCachedOccurrences() }
-        .onChange(of: sortedMode) { updateCachedOccurrences() }
-        .onChange(of: services.count) { updateCachedOccurrences() }
         #if os(macOS)
         .inspector(isPresented: $showInspector) {
             macOSInspectorContent
@@ -1475,7 +1369,7 @@ struct ServicesList: View {
 
                 Picker("Period", selection: $calendarPeriod) {
                     ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                        Text(LocalizedStringKey(option.rawValue))
+                        Text(option.localizedTitle)
                             .tag(option)
                     }
                 }
@@ -1548,7 +1442,7 @@ struct ServicesList: View {
 
             Picker("Period", selection: $calendarPeriod) {
                 ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                    Text(LocalizedStringKey(option.rawValue))
+                    Text(option.localizedTitle)
                         .tag(option)
                 }
             }
@@ -1671,6 +1565,17 @@ struct ServicesList: View {
             try viewContext.save()
         } catch {
             // Handle the error appropriately in a real app
+            print("Error saving context after delete: \(error.localizedDescription)")
+        }
+    }
+
+    private func deleteServices(at offsets: IndexSet) {
+        for index in offsets {
+            viewContext.delete(filteredServices[index])
+        }
+        do {
+            try viewContext.save()
+        } catch {
             print("Error saving context after delete: \(error.localizedDescription)")
         }
     }
@@ -1819,6 +1724,41 @@ struct ServicesList: View {
                 image: occurrence.service.image,
                 expense: occurrence.service.expense,
                 isPaid: occurrence.isPaid
+            )
+        }
+        #endif
+    }
+
+    @ViewBuilder
+    private func serviceConfigurationRow(for service: Services) -> some View {
+        #if os(macOS)
+        Button {
+            inspectorDate = nil
+            macOSSelectedService = service
+            showInspector = true
+        } label: {
+            ServiceRow(
+                BgColor: service.wrappedColor,
+                ServiceName: service.wrappedName,
+                Amount: service.amount.toCurrencyString(),
+                frequency: service.frecuencyString,
+                limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted),
+                image: service.image,
+                expense: service.expense,
+                useAdaptiveText: true
+            )
+        }
+        .buttonStyle(.plain)
+        #else
+        NavigationLink(destination: ServiceDetailView(service: service)) {
+            ServiceRow(
+                BgColor: service.wrappedColor,
+                ServiceName: service.wrappedName,
+                Amount: service.amount.toCurrencyString(),
+                frequency: service.frecuencyString,
+                limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted),
+                image: service.image,
+                expense: service.expense
             )
         }
         #endif

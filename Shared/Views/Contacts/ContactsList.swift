@@ -266,7 +266,7 @@ struct ContactsRows : View  {
                         
                         Picker("Summary", selection: $summarySelectd) {
                             ForEach(summaryContactsMenu.allCases, id:\.self ){ option in
-                                Text(LocalizedStringKey(option.rawValue))
+                                Text(option.localizedTitle)
                                     .tag(option)
                             }
                         }
@@ -301,8 +301,8 @@ struct ContactsRows : View  {
                                 Label("New Contact", systemImage: "plus.circle.fill")
                                     .appToolbarLabel()
                             }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accentColor)
+                            .buttonStyle(.glassProminent)
+                            .foregroundStyle(.white)
                         }
                         Spacer()
                     }
@@ -324,9 +324,8 @@ struct ContactsRows : View  {
                                 Label("New Contact", systemImage: "plus.circle.fill")
                                     .appToolbarLabel()
                             }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accentColor)
-                            
+                            .buttonStyle(.glassProminent) 
+                            .foregroundStyle(.white)
                             
                             Button {
                                 selectedTag = "All"

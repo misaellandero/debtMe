@@ -151,92 +151,124 @@ struct UnifiedImagePickerView: View {
         }
     }
 
+    @ViewBuilder
     private var imageActionButtons: some View {
         let primaryTitleKey = photoData == nil ? "Add" : "Edit"
         let primaryTitle = paddedLocalizedActionTitle(primaryTitleKey, matching: "Remove")
         let removeTitle = paddedLocalizedActionTitle("Remove", matching: primaryTitleKey)
 
-        return HStack(spacing: 12) {
-            Menu {
-                PhotosPicker(selection: $photoSelected, matching: .images, photoLibrary: .shared()) {
-                    Label("Photo Library", systemImage: "photo.on.rectangle")
-                }
-
-                Button {
-                    showFileImporter = true
-                } label: {
-                    Label("Files", systemImage: "folder")
-                }
-
-                Button {
-                    urlString = ""
-                    downloadError = nil
-                    showURLSheet = true
-                } label: {
-                    Label("Internet", systemImage: "link")
-                }
-
-                if isIconFormat {
-                    Button {
-                        if sfSymbolName.isEmpty { sfSymbolName = "icloud" }
-                        sfSymbolError = nil
-                        showSFSymbolSheet = true
-                    } label: {
-                        Label("SF Symbol", systemImage: "square.stack.3d.up")
-                    }
-
-                    Button {
-                        if brandQuery.isEmpty { brandQuery = imagename }
-                        showBrandIconsSheet = true
-                    } label: {
-                        Label("Brands", systemImage: "building.2.crop.circle")
-                    }
-                }
-
-                #if canImport(ImagePlayground)
-                Button {
-                    if playgroundPrompt.isEmpty { playgroundPrompt = imagename }
-                    showImagePlayground = true
-                } label: {
-                    Label("Generate", systemImage: "sparkles")
-                }
-                #endif
-
-                if isIconFormat, photoData != nil {
-                    Button {
-                        showCropSheet = true
-                    } label: {
-                        Label("Crop", systemImage: "crop")
-                    }
-                }
-            } label: {
-                Label {
-                    Text(primaryTitle)
-                } icon: {
-                    Image(systemName: photoData == nil ? "plus.circle.fill" : AppIcons.edit)
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            .fixedSize(horizontal: true, vertical: false)
-            .accessibilityLabel(Text(String(localized: String.LocalizationValue(primaryTitleKey))))
-
-            Button(role: .destructive) {
-                photoData = nil
-                photoSelected = nil
-            } label: {
-                Label {
-                    Text(removeTitle)
-                } icon: {
-                    Image(systemName: "trash")
-                }
-            }
-            .buttonStyle(.bordered)
-            .tint(.red)
-            .fixedSize(horizontal: true, vertical: false)
-            .disabled(photoData == nil)
-            .accessibilityLabel(Text(String(localized: "Remove")))
+        #if os(iOS) || os(visionOS)
+        VStack(spacing: 10) {
+            imagePrimaryActionButton(primaryTitleKey: primaryTitleKey, primaryTitle: primaryTitle)
+            imageRemoveButton(removeTitle: removeTitle)
+        }
+        .frame(maxWidth: .infinity)
+        #else
+        HStack {
+            imagePrimaryActionButton(primaryTitleKey: primaryTitleKey, primaryTitle: primaryTitle)
+            imageRemoveButton(removeTitle: removeTitle)
         }
         .frame(maxWidth: .infinity, alignment: .center)
+        #endif
+    }
+
+    private func imagePrimaryActionButton(primaryTitleKey: String, primaryTitle: String) -> some View {
+        Menu {
+            PhotosPicker(selection: $photoSelected, matching: .images, photoLibrary: .shared()) {
+                Label("Photo Library", systemImage: "photo.on.rectangle")
+            }
+
+            Button {
+                showFileImporter = true
+            } label: {
+                Label("Files", systemImage: "folder")
+            }
+
+            Button {
+                urlString = ""
+                downloadError = nil
+                showURLSheet = true
+            } label: {
+                Label("Internet", systemImage: "link")
+            }
+
+            if isIconFormat {
+                Button {
+                    if sfSymbolName.isEmpty { sfSymbolName = "icloud" }
+                    sfSymbolError = nil
+                    showSFSymbolSheet = true
+                } label: {
+                    Label("SF Symbol", systemImage: "square.stack.3d.up")
+                }
+
+                Button {
+                    if brandQuery.isEmpty { brandQuery = imagename }
+                    showBrandIconsSheet = true
+                } label: {
+                    Label("Brands", systemImage: "building.2.crop.circle")
+                }
+            }
+
+            #if canImport(ImagePlayground)
+            Button {
+                if playgroundPrompt.isEmpty { playgroundPrompt = imagename }
+                showImagePlayground = true
+            } label: {
+                Label("Generate", systemImage: "sparkles")
+            }
+            #endif
+
+            if isIconFormat, photoData != nil {
+                Button {
+                    showCropSheet = true
+                } label: {
+                    Label("Crop", systemImage: "crop")
+                }
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: photoData == nil ? "plus.circle.fill" : AppIcons.edit)
+                    .imageScale(.medium)
+                Text(primaryTitle)
+            }
+            .appToolbarLabel()
+            .frame(maxWidth: .infinity)
+            .foregroundStyle(.white)
+        }
+        .buttonStyle(.borderedProminent)
+        .controlSize(.large)
+        .tint(.accentColor)
+        #if os(iOS) || os(visionOS)
+        .frame(maxWidth: .infinity)
+        #else
+        .fixedSize(horizontal: true, vertical: false)
+        #endif
+        .accessibilityLabel(Text(String(localized: String.LocalizationValue(primaryTitleKey))))
+    }
+
+    private func imageRemoveButton(removeTitle: String) -> some View {
+        Button(role: .destructive) {
+            photoData = nil
+            photoSelected = nil
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "trash")
+                    .imageScale(.medium)
+                Text(removeTitle)
+            }
+            .appToolbarLabel()
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.large)
+        .tint(.red)
+        #if os(iOS) || os(visionOS)
+        .frame(maxWidth: .infinity)
+        #else
+        .fixedSize(horizontal: true, vertical: false)
+        #endif
+        .disabled(photoData == nil)
+        .accessibilityLabel(Text(String(localized: "Remove")))
     }
 
     private func paddedLocalizedActionTitle(_ titleKey: String, matching otherTitleKey: String) -> String {
@@ -1440,4 +1472,3 @@ private extension UIImage {
     }
 }
 #endif
-

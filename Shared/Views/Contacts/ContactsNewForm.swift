@@ -68,7 +68,7 @@ struct ContactsNewForm: View {
                          VStack{
                              Spacer()
                              Button(action: performSaveAcion) {
-                                 Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                                 Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
                                      .appToolbarLabel()
                                      .frame(maxWidth: .infinity)
                                      .padding(.vertical, 10)
@@ -94,8 +94,7 @@ struct ContactsNewForm: View {
                     }
                     
                     ToolbarItem(placement: .principal){
-                        Text("\(Image(systemName: "person.2.fill")) ") +
-                        Text((edition ? LocalizedStringKey("Edit") : LocalizedStringKey("New")))
+                        Label(edition ? "Edit" : "New", systemImage: "person.2.fill")
                     }
                 }
                 }

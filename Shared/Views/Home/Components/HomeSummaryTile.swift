@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeSummaryTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let amount: Double
     let systemImage: String
     let tint: Color

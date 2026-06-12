@@ -23,6 +23,15 @@ enum summaryContactsMenu: String, CaseIterable {
     case loans = "Loans"
     case debts = "Debts"
     case all = "All"
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .balance: "Balance"
+        case .loans: "Loans"
+        case .debts: "Debts"
+        case .all: "All"
+        }
+    }
 }
 
 enum summaryServicesMenu: String, CaseIterable {
@@ -30,4 +39,13 @@ enum summaryServicesMenu: String, CaseIterable {
     case income = "Income"
     case expense = "Expenses"
     case all = "All"
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .balance: "Balance"
+        case .income: "Income"
+        case .expense: "Expenses"
+        case .all: "All"
+        }
+    }
 }

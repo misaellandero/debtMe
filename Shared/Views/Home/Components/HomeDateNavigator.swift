@@ -25,7 +25,7 @@ struct HomeDateNavigator: View {
             HomeViewModeButton(viewMode: $viewMode, namespace: namespace)
             Picker("Period", selection: $calendarPeriod) {
                 ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                    Text(LocalizedStringKey(option.rawValue))
+                    Text(option.localizedTitle)
                         .tag(option)
                 }
             }
@@ -111,7 +111,7 @@ struct HomeDateNavigatorTopControls: View {
 
             Picker("Period", selection: $calendarPeriod) {
                 ForEach(CalendarPeriod.allCases, id: \.self) { option in
-                    Text(LocalizedStringKey(option.rawValue))
+                    Text(option.localizedTitle)
                         .tag(option)
                 }
             }

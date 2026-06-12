@@ -113,23 +113,24 @@ extension Services {
     
     //Frecuency String
     public var frecuencyString : String {
+        let frequencyTitle = ServicesModel.localizedFrequencyTitle(for: Int(frequency))
         switch frequency {
         case 0 ://"Daily":
-            return NSLocalizedString("Daily Fee", comment: "")
+            return String(localized: "Daily Fee")
         case 1 : //"Weekly":
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  (dayName ?? "")
+            return frequencyTitle + String(localized: " Fee each ") + (dayName ?? "")
         case 2 : //"Biweekly":
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee on 15 and last day", comment: "")
+            return frequencyTitle + String(localized: " Fee on 15 and last day")
         case 3,4,5:   //"Monthly", "Quarterly", "Semester":
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") +  String(frequencyDay)
+            return frequencyTitle + String(localized: " Fee each ") + String(frequencyDay)
         case 6: //"Yearly":
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee each ", comment: "") + NSLocalizedString("\(frequencyDay)", comment: "") + NSLocalizedString(" of ", comment: "") + NSLocalizedString("\(monthName ?? "")", comment: "")
+            return frequencyTitle + String(localized: " Fee each ") + String(frequencyDay) + String(localized: " of ") + (monthName ?? "")
         case 7: //One time payment
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(frequencyDate.formatted(date: .abbreviated, time: .omitted))
+            return frequencyTitle + String(localized: " Fee ") + String(frequencyDate.formatted(date: .abbreviated, time: .omitted))
         case 8: //Last day of month
-            return NSLocalizedString(ServicesModel.frequency[Int(frequency)], comment: "") + NSLocalizedString(" Fee", comment: "")
+            return frequencyTitle + String(localized: " Fee")
         default:
-            return "Daily Fee"
+            return String(localized: "Daily Fee")
         }
     }
     
@@ -222,6 +223,7 @@ struct ServiceOccurrence: Identifiable {
 
 enum ServiceOccurrencePaymentStore {
     private static let key = "paidServiceOccurrenceIDs"
+    private static let appGroupIdentifier = "group.mx.landercorp.debtMe"
     static let didChangeNotification = Notification.Name("ServiceOccurrencePaymentStoreDidChange")
 
     static func isPaid(_ id: String) -> Bool {
@@ -235,12 +237,16 @@ enum ServiceOccurrencePaymentStore {
         } else {
             ids.insert(id)
         }
-        UserDefaults.standard.set(Array(ids), forKey: key)
+        userDefaults.set(Array(ids), forKey: key)
         NotificationCenter.default.post(name: didChangeNotification, object: id)
     }
 
     private static var paidIDs: Set<String> {
-        Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
+        Set(userDefaults.stringArray(forKey: key) ?? [])
+    }
+
+    private static var userDefaults: UserDefaults {
+        UserDefaults(suiteName: appGroupIdentifier) ?? .standard
     }
 }
 

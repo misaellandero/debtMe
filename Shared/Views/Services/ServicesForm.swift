@@ -73,8 +73,7 @@ struct ServicesForm: View {
                     }
                     
                     ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "chart.bar.doc.horizontal"))") +
-                        Text((edition ? LocalizedStringKey("Edit") : LocalizedStringKey("New")))
+                        Label(edition ? "Edit" : "New", systemImage: "chart.bar.doc.horizontal")
                     }
                 }
             }
@@ -212,7 +211,7 @@ struct ServiceMultiPlataformForm : View {
                     
                 Picker("Frequency", selection: $service.frecuencyIndex) {
                     ForEach(0..<ServicesModel.frequency.count) { index in
-                        Text(LocalizedStringKey(ServicesModel.frequency[index])).tag(index)
+                        Text(ServicesModel.frequencyTitle(for: index)).tag(index)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
@@ -221,27 +220,27 @@ struct ServiceMultiPlataformForm : View {
                 case 0: //"Daily":
                     Text("Daily Fee")
                 case 1: //"Weekly":
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
+                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
                 case 2: //"Biweekly":
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee on 15 and last day")
+                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee on 15 and last day")
                     
                 case 3, 4, 5: //"Monthly", "Quarterly", "Semester":
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)")
+                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.frequencyDay)")
                     
                 case 6: //"Yearly":
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
+                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
                     
                 case 7: //One time payment
-                     Text(NSLocalizedString(ServicesModel.frequency[service.frecuencyIndex], comment: "") + NSLocalizedString(" Fee ", comment: "") + String(service.frequencyDate.formatted(date: .abbreviated, time: .omitted)))
+                     Text(ServicesModel.localizedFrequencyTitle(for: service.frecuencyIndex) + String(localized: " Fee ") + String(service.frequencyDate.formatted(date: .abbreviated, time: .omitted)))
                 case 8: //Last day of month
-                    Text(LocalizedStringKey(ServicesModel.frequency[service.frecuencyIndex])) + Text(" Fee")
+                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee")
                 default:
                     Text("Select Frequency")
                 }
 
                 Picker("Business day", selection: $service.businessDayAdjustmentIndex) {
                     ForEach(0..<ServicesModel.businessDayAdjustments.count, id: \.self) { index in
-                        Text(LocalizedStringKey(ServicesModel.businessDayAdjustments[index])).tag(index)
+                        Text(ServicesModel.businessDayAdjustmentTitle(for: index)).tag(index)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
@@ -332,7 +331,7 @@ struct ServiceMultiPlataformForm : View {
             Section{
 #if os(iOS)
                 Button(action: save) {
-                    Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                    Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
                         .appToolbarLabel()
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)

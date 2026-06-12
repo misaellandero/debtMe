@@ -44,6 +44,13 @@ struct ServiceDetailView: View {
         currentOccurrenceIsPaid.toggle()
     }
 
+    private var paidActionTitle: LocalizedStringKey {
+        if currentOccurrenceIsPaid {
+            return service.expense ? "Mark unpaid" : "Mark unspent"
+        }
+        return service.expense ? "Mark paid" : "Mark spent"
+    }
+
     var body: some View {
         #if os(macOS)
         VStack(spacing: 8) {
@@ -66,7 +73,7 @@ struct ServiceDetailView: View {
                     toggleCurrentOccurrencePaid()
                 } label: {
                     Label(
-                        service.expense ? (currentOccurrenceIsPaid ? "Marcar no pagado" : "Marcar pagado") : (currentOccurrenceIsPaid ? "Marcar no gastado" : "Marcar gastado"),
+                        paidActionTitle,
                         systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
                     )
                     .frame(maxWidth: .infinity)
@@ -77,7 +84,9 @@ struct ServiceDetailView: View {
                 Button {
                     if let onEdit { onEdit() } else { showEdit.toggle() }
                 } label: {
-                    Label("Editar", systemImage: AppIcons.edit)
+                    Label("Edit", systemImage: AppIcons.edit)
+                        .appToolbarLabel()
+                        .labelStyle(.titleAndIcon)
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
@@ -107,7 +116,7 @@ struct ServiceDetailView: View {
                         toggleCurrentOccurrencePaid()
                     } label: {
                         Label(
-                            service.expense ? (currentOccurrenceIsPaid ? "Marcar no pagado" : "Marcar pagado") : (currentOccurrenceIsPaid ? "Marcar no gastado" : "Marcar gastado"),
+                            paidActionTitle,
                             systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
                         )
                         .frame(maxWidth: .infinity)
@@ -119,7 +128,9 @@ struct ServiceDetailView: View {
                     Button {
                         showEdit.toggle()
                     } label: {
-                        Label("Editar", systemImage: AppIcons.edit)
+                        Label("Edit", systemImage: AppIcons.edit)
+                            .appToolbarLabel()
+                            .labelStyle(.titleAndIcon)
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
@@ -159,7 +170,8 @@ struct ServiceDetailView: View {
             }){
                 Label("Edit", systemImage: AppIcons.edit)
                     .appToolbarLabel()
-                    .foregroundColor(.accentColor)
+                    .labelStyle(.titleAndIcon)
+                    .foregroundStyle(Color.accentColor)
             }
         }
     }
@@ -221,4 +233,3 @@ private struct ServiceInspectorCard: View {
     }
 }
 #endif
-

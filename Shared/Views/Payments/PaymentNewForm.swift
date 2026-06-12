@@ -204,7 +204,7 @@ struct PaymentMultiplatformForm: View {
                 #if !os(macOS)
                 Section{
                     Button(action: savePayment) {
-                        Label(edition ? "Save" : "Add", systemImage: "plus.circle.fill")
+                        Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
                             .appToolbarLabel()
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)

@@ -86,7 +86,7 @@ struct LabelNewForm: View {
                     }
                     
                     ToolbarItem(placement:.principal){
-                        Text("\(Image(systemName: "tag.fill")) New")
+                        Label("New", systemImage: "tag.fill")
                     }
                 }
             }

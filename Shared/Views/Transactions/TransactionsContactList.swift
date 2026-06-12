@@ -223,7 +223,11 @@ struct TransactionsContactList: View {
                             contact.hideSettled.toggle()
                             try? self.moc.save()
                         }) {
-                            Label(NSLocalizedString((contact.hideSettled ? "Hide" : "Show") + " Settled", comment: ""), systemImage: contact.hideSettled ? "eye.slash" :"eye")
+                            if contact.hideSettled {
+                                Label("Hide Settled", systemImage: "eye.slash")
+                            } else {
+                                Label("Show Settled", systemImage: "eye")
+                            }
                         }
                         
                     } label: {

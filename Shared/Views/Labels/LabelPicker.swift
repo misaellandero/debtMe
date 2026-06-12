@@ -18,7 +18,7 @@ struct labelPicker: View {
             #if os(macOS)
             List{
                 HStack{
-                    Text("\(Image(systemName: "tag.fill")) Tags")
+                    Label("Tags", systemImage: "tag.fill")
                     Spacer()
                     Button(action:{
                         showFormLabel.toggle()
@@ -74,7 +74,7 @@ struct labelPicker: View {
                     }
                 }*/
                 ToolbarItem(placement:.principal){
-                    Text("\(Image(systemName: "tag.fill")) Tags")
+                    Label("Tags", systemImage: "tag.fill")
                 }
             }
             .sheet(isPresented: $showFormLabel, content: {
@@ -108,7 +108,8 @@ struct LabelPickerListElements: View {
             #if os(macOS)
                 HStack{
                     Spacer()
-                    Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
+                    Image(systemName: "tag.fill")
+                    Text(label.wrappedName)
                         .appToolbarLabel()
                         .foregroundStyle(.primary)
                     Spacer()
@@ -125,7 +126,8 @@ struct LabelPickerListElements: View {
             Button(action:{setLabel(label: label)}){
                 HStack{
                     Spacer()
-                    Text("\(Image(systemName: "tag.fill")) \(label.wrappedName)")
+                    Image(systemName: "tag.fill")
+                    Text(label.wrappedName)
                         .appToolbarLabel()
                     Spacer()
                 }

@@ -44,7 +44,7 @@ enum HomeCalendarDateProvider {
         case .year:
             return referenceDate.formatted(.dateTime.year())
         case .untilNextIncome:
-            return "Until Next Income"
+            return String(localized: "Until Next Income")
         default:
             return dateRangeLabel(for: range)
         }

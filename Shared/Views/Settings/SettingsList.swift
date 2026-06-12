@@ -102,17 +102,6 @@ struct SettingsList: View {
                 
             }
 
-            #if DEBUG
-            Section(header:
-                        Text("Developer")
-                .bold()
-                .foregroundColor(.secondary)
-            ) {
-                NavigationLink(destination: StyleGuidePreviewView()) {
-                    Label("Style Guide", systemImage: "paintbrush.pointed")
-                }
-            }
-            #endif
             // MARK: - Footer
             Section{
                 VStack{
@@ -204,6 +193,7 @@ struct StyleGuidePreviewView: View {
                 typographySection
                 toolbarSection
                 accentButtonsSection
+                appButtonStylesSection
                 shapesSection
             }
             .padding(20)
@@ -358,6 +348,116 @@ struct StyleGuidePreviewView: View {
                         .fill(Color.secondary.opacity(0.08))
                         .frame(width: 160, height: 72)
                 }
+            }
+        }
+    }
+
+    private var appButtonStylesSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Button Styles")
+                .appHeadline()
+
+            Text("Reusable button styles for the legacy UIElements button labels. Prefer `.buttonStyle(...)` for new buttons.")
+                .font(AppTypography.caption)
+                .foregroundStyle(.secondary)
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Outside")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                StyleGuideActionButtons()
+            }
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Form")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                Form {
+                    Section("Actions") {
+                        StyleGuideActionButtons()
+                    }
+                }
+                .frame(minHeight: 260)
+            }
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("List")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                List {
+                    Section("Actions") {
+                        StyleGuideActionButtons()
+                    }
+                }
+                .frame(minHeight: 260)
+            }
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Navigation")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                NavigationStack {
+                    Form {
+                        Section("Actions") {
+                            StyleGuideActionButtons()
+                        }
+                    }
+                    .navigationTitle("Buttons")
+                    #if os(iOS)
+                    .navigationBarTitleDisplayMode(.inline)
+                    #endif
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button {
+                            } label: {
+                                Label("Done", systemImage: "checkmark.circle.fill")
+                                    .appToolbarLabel()
+                            }
+                            .appSheetPrimaryButtonStyle()
+                        }
+                    }
+                }
+                .frame(minHeight: 320)
+            }
+        }
+    }
+}
+
+private struct StyleGuideActionButtons: View {
+    var body: some View {
+        VStack(spacing: 10) {
+            Button {
+            } label: {
+                Label("Add", systemImage: "plus.circle.fill")
+            }
+            .buttonStyle(.appAdd)
+
+            Button {
+            } label: {
+                Label("Continue", systemImage: "checkmark.circle")
+            }
+            .buttonStyle(.appContinue)
+
+            Button {
+            } label: {
+                Label("Mark as Settled", systemImage: "face.smiling")
+            }
+            .buttonStyle(.appPayAll)
+
+            Button {
+            } label: {
+                Label("Toggle Status to Unpaid", systemImage: "arrow.counterclockwise")
+            }
+            .buttonStyle(.appReset)
+
+            HStack {
+                Button {
+                } label: {
+                    Label("Show Settled", systemImage: "eye")
+                }
+                .buttonStyle(.appShowSettled)
+
+                Spacer(minLength: 0)
             }
         }
     }
