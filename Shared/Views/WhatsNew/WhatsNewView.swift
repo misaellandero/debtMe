@@ -11,7 +11,7 @@ import SwiftUI
 struct WhatsNewView: View {
     var body: some View {
         List{
-            FeaturesList()
+            FeaturesList(showAllVersions: true)
         }
         .navigationTitle("What's New?")
     }

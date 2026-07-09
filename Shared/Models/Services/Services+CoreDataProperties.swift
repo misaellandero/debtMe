@@ -223,7 +223,13 @@ struct ServiceOccurrence: Identifiable {
 
 enum ServiceOccurrencePaymentStore {
     private static let key = "paidServiceOccurrenceIDs"
-    private static let appGroupIdentifier = "group.mx.landercorp.debtMe"
+    private static var appGroupIdentifier: String {
+        #if BETA_DEMO_DATA
+        return "group.mx.landercorp.debtMe.beta"
+        #else
+        return "group.mx.landercorp.debtMe"
+        #endif
+    }
     static let didChangeNotification = Notification.Name("ServiceOccurrencePaymentStoreDidChange")
 
     static func isPaid(_ id: String) -> Bool {

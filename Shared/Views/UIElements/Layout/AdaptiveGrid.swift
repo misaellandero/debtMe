@@ -15,6 +15,13 @@ public struct AdaptiveGridDensitySlider: View {
     }
 }
 
+private struct AdaptiveGridWidthKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 public struct AdaptiveGrid<Content: View>: View {
     let density: Double
     let minCell: CGFloat
@@ -30,21 +37,38 @@ public struct AdaptiveGrid<Content: View>: View {
         self.content = content
     }
 
+    // Measured through a zero-height probe instead of wrapping the content in a
+    // GeometryReader: a GeometryReader inside a ScrollView collapses to its minimum
+    // height, which breaks scrolling.
+    @State private var availableWidth: CGFloat = 0
+
     public var body: some View {
-        GeometryReader { proxy in
-            let metrics = Self.metrics(
-                for: density,
-                availableWidth: proxy.size.width,
-                minCell: minCell,
-                maxCell: maxCell,
-                spacing: spacing
-            )
-            let columns = Array(
-                repeating: GridItem(.fixed(metrics.cellWidth), spacing: spacing),
-                count: metrics.columnCount
-            )
-            content(metrics.cellWidth, columns)
+        VStack(alignment: .leading, spacing: 0) {
+            Color.clear
+                .frame(maxWidth: .infinity)
+                .frame(height: 0)
+                .background(
+                    GeometryReader { proxy in
+                        Color.clear.preference(key: AdaptiveGridWidthKey.self, value: proxy.size.width)
+                    }
+                )
+
+            if availableWidth > 0 {
+                let metrics = Self.metrics(
+                    for: density,
+                    availableWidth: availableWidth,
+                    minCell: minCell,
+                    maxCell: maxCell,
+                    spacing: spacing
+                )
+                let columns = Array(
+                    repeating: GridItem(.fixed(metrics.cellWidth), spacing: spacing),
+                    count: metrics.columnCount
+                )
+                content(metrics.cellWidth, columns)
+            }
         }
+        .onPreferenceChange(AdaptiveGridWidthKey.self) { availableWidth = $0 }
     }
 
     static func metrics(

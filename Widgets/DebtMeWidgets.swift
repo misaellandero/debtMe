@@ -1,10 +1,18 @@
 import AppIntents
 import CoreData
+import ImageIO
 import SwiftUI
+import UniformTypeIdentifiers
 import WidgetKit
 
 private enum WidgetShared {
-    static let appGroupIdentifier = "group.mx.landercorp.debtMe"
+    static var appGroupIdentifier: String {
+        #if BETA_DEMO_DATA
+        return "group.mx.landercorp.debtMe.beta"
+        #else
+        return "group.mx.landercorp.debtMe"
+        #endif
+    }
     static let privacyKey = "debtMeWidgetUsesPercentages"
     static let paidOccurrencesKey = "paidServiceOccurrenceIDs"
 }
@@ -20,6 +28,38 @@ struct ToggleWidgetPrivacyIntent: AppIntent {
     }
 }
 
+enum WidgetDateRangeOption: String, AppEnum {
+    case week
+    case twoWeeks
+    case month
+    case twoMonths
+
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Date Range"
+    static var caseDisplayRepresentations: [WidgetDateRangeOption: DisplayRepresentation] = [
+        .week: "Next 7 days",
+        .twoWeeks: "Next 14 days",
+        .month: "Next 30 days",
+        .twoMonths: "Next 60 days"
+    ]
+
+    var days: Int {
+        switch self {
+        case .week: 7
+        case .twoWeeks: 14
+        case .month: 30
+        case .twoMonths: 60
+        }
+    }
+}
+
+struct DebtWidgetRangeIntent: WidgetConfigurationIntent {
+    static var title: LocalizedStringResource = "Date Range"
+    static var description = IntentDescription("Choose how many days ahead the widget shows.")
+
+    @Parameter(title: "Date Range", default: .twoWeeks)
+    var dateRange: WidgetDateRangeOption
+}
+
 struct DebtFlowEntry: TimelineEntry {
     let date: Date
     let snapshot: DebtFlowSnapshot
@@ -28,6 +68,11 @@ struct DebtFlowEntry: TimelineEntry {
 struct PeopleDebtEntry: TimelineEntry {
     let date: Date
     let people: [PeopleDebtSnapshot]
+}
+
+struct UpcomingPaymentsEntry: TimelineEntry {
+    let date: Date
+    let items: [DebtWidgetItem]
 }
 
 struct DebtFlowSnapshot {
@@ -60,6 +105,14 @@ struct DebtWidgetItem: Identifiable {
     let subtitle: String
     let amount: Double
     let isIncome: Bool
+    let source: DebtWidgetItemSource
+    var imageData: Data? = nil
+    var emoji: String? = nil
+}
+
+enum DebtWidgetItemSource {
+    case service
+    case person
 }
 
 struct PeopleDebtSnapshot: Identifiable {
@@ -67,25 +120,29 @@ struct PeopleDebtSnapshot: Identifiable {
     let name: String
     let symbol: String
     let balance: Double
+    var imageData: Data? = nil
 
     var isPositive: Bool {
         balance >= 0
     }
 }
 
-struct DebtFlowProvider: TimelineProvider {
+private func widgetRefreshDate() -> Date {
+    Calendar.current.date(byAdding: .minute, value: 30, to: .now) ?? .now.addingTimeInterval(1_800)
+}
+
+struct DebtFlowProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> DebtFlowEntry {
         DebtFlowEntry(date: .now, snapshot: .placeholder)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (DebtFlowEntry) -> Void) {
-        completion(DebtFlowEntry(date: .now, snapshot: DebtWidgetRepository().debtFlowSnapshot()))
+    func snapshot(for configuration: DebtWidgetRangeIntent, in context: Context) async -> DebtFlowEntry {
+        DebtFlowEntry(date: .now, snapshot: DebtWidgetRepository().debtFlowSnapshot(days: configuration.dateRange.days))
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<DebtFlowEntry>) -> Void) {
-        let entry = DebtFlowEntry(date: .now, snapshot: DebtWidgetRepository().debtFlowSnapshot())
-        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: .now) ?? .now.addingTimeInterval(1_800)
-        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
+    func timeline(for configuration: DebtWidgetRangeIntent, in context: Context) async -> Timeline<DebtFlowEntry> {
+        let entry = DebtFlowEntry(date: .now, snapshot: DebtWidgetRepository().debtFlowSnapshot(days: configuration.dateRange.days))
+        return Timeline(entries: [entry], policy: .after(widgetRefreshDate()))
     }
 }
 
@@ -100,22 +157,43 @@ struct PeopleDebtProvider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<PeopleDebtEntry>) -> Void) {
         let entry = PeopleDebtEntry(date: .now, people: DebtWidgetRepository().peopleDebtSnapshot())
-        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: .now) ?? .now.addingTimeInterval(1_800)
-        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
+        completion(Timeline(entries: [entry], policy: .after(widgetRefreshDate())))
+    }
+}
+
+struct UpcomingPaymentsProvider: AppIntentTimelineProvider {
+    var filter: DebtWidgetItemSource? = nil
+
+    func placeholder(in context: Context) -> UpcomingPaymentsEntry {
+        UpcomingPaymentsEntry(date: .now, items: .placeholderUpcoming)
+    }
+
+    func snapshot(for configuration: DebtWidgetRangeIntent, in context: Context) async -> UpcomingPaymentsEntry {
+        UpcomingPaymentsEntry(date: .now, items: items(for: configuration))
+    }
+
+    func timeline(for configuration: DebtWidgetRangeIntent, in context: Context) async -> Timeline<UpcomingPaymentsEntry> {
+        let entry = UpcomingPaymentsEntry(date: .now, items: items(for: configuration))
+        return Timeline(entries: [entry], policy: .after(widgetRefreshDate()))
+    }
+
+    private func items(for configuration: DebtWidgetRangeIntent) -> [DebtWidgetItem] {
+        DebtWidgetRepository().upcomingPaymentsSnapshot(days: configuration.dateRange.days, filter: filter)
     }
 }
 
 struct DebtFlowWidgetView: View {
+    @Environment(\.widgetFamily) private var widgetFamily
     let entry: DebtFlowEntry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: widgetFamily == .systemMedium ? 8 : 10) {
             header
             summary
             calendarStrip
             itemList
         }
-        .padding(14)
+        .padding(widgetFamily == .systemMedium ? 12 : 14)
         .containerBackground(.background, for: .widget)
     }
 
@@ -135,7 +213,7 @@ struct DebtFlowWidgetView: View {
     }
 
     private var summary: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: widgetFamily == .systemMedium ? 6 : 8) {
             SummaryPill(title: "Incoming", value: amountText(entry.snapshot.incoming, total: entry.snapshot.incoming), color: .blue)
             SummaryPill(title: "Outgoing", value: amountText(entry.snapshot.outgoing, total: max(entry.snapshot.incoming, entry.snapshot.outgoing)), color: .red)
             SummaryPill(title: "Balance", value: amountText(entry.snapshot.balance, total: max(entry.snapshot.incoming, entry.snapshot.outgoing)), color: entry.snapshot.balance >= 0 ? .green : .red)
@@ -160,16 +238,15 @@ struct DebtFlowWidgetView: View {
     }
 
     private var itemList: some View {
-        VStack(spacing: 7) {
-            ForEach(entry.snapshot.items.prefix(3)) { item in
+        VStack(spacing: widgetFamily == .systemMedium ? 5 : 7) {
+            ForEach(entry.snapshot.items.prefix(widgetFamily == .systemMedium ? 2 : 4)) { item in
                 HStack(spacing: 8) {
-                    Image(systemName: item.isIncome ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
-                        .foregroundStyle(item.isIncome ? .blue : .red)
+                    WidgetItemIcon(item: item, size: 24, compact: true)
                     VStack(alignment: .leading, spacing: 1) {
                         Text(item.title)
                             .font(.caption.bold())
                             .lineLimit(1)
-                        Text(item.subtitle)
+                        Text(paymentCountdownText(for: item.date))
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
@@ -193,19 +270,28 @@ struct DebtFlowWidgetView: View {
 }
 
 struct PeopleDebtWidgetView: View {
+    @Environment(\.widgetFamily) private var widgetFamily
     let entry: PeopleDebtEntry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: widgetFamily == .systemSmall ? 7 : 10) {
             Text("People Debts")
                 .font(.headline)
 
-            ForEach(entry.people.prefix(5)) { person in
+            ForEach(entry.people.prefix(itemLimit)) { person in
                 HStack(spacing: 8) {
-                    Text(person.symbol)
-                        .font(.title3)
-                        .frame(width: 30, height: 30)
-                        .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
+                    if let imageData = person.imageData, let image = widgetImage(from: imageData) {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: iconSize, height: iconSize)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    } else {
+                        Text(person.symbol)
+                            .font(widgetFamily == .systemSmall ? .caption.bold() : .title3)
+                            .frame(width: iconSize, height: iconSize)
+                            .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
+                    }
                     Text(person.name)
                         .font(.caption.bold())
                         .lineLimit(1)
@@ -221,8 +307,222 @@ struct PeopleDebtWidgetView: View {
                     .font(.caption)
             }
         }
-        .padding(14)
+        .padding(widgetFamily == .systemSmall ? 10 : 14)
         .containerBackground(.background, for: .widget)
+    }
+
+    private var itemLimit: Int {
+        widgetFamily == .systemSmall ? 3 : 5
+    }
+
+    private var iconSize: CGFloat {
+        widgetFamily == .systemSmall ? 24 : 30
+    }
+}
+
+struct UpcomingPaymentsWidgetView: View {
+    @Environment(\.widgetFamily) private var widgetFamily
+    let entry: UpcomingPaymentsEntry
+    var title: LocalizedStringKey = "Upcoming Payments"
+    var subtitleText: LocalizedStringKey = "People and services"
+    var itemSource: DebtWidgetItemSource? = nil
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            header
+            itemList
+            if entry.items.isEmpty {
+                ContentUnavailableView("No Upcoming Payments", systemImage: "calendar.badge.checkmark")
+                    .font(.caption)
+            }
+        }
+        .padding(padding)
+        .containerBackground(.background, for: .widget)
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.headline)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            if widgetFamily != .systemSmall {
+                Text(subtitleText)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var itemList: some View {
+        VStack(spacing: spacing) {
+            ForEach(entry.items.prefix(itemLimit)) { item in
+                UpcomingPaymentRow(item: item, compact: widgetFamily == .systemSmall)
+            }
+        }
+    }
+
+    private var itemLimit: Int {
+        switch widgetFamily {
+        case .systemSmall: itemSource == .person ? 2 : 3
+        case .systemLarge: 8
+        default: 5
+        }
+    }
+
+    private var padding: CGFloat {
+        widgetFamily == .systemSmall ? 10 : 14
+    }
+
+    private var spacing: CGFloat {
+        widgetFamily == .systemSmall ? 7 : 9
+    }
+}
+
+private func paymentCountdownText(for date: Date) -> String {
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: .now)
+    let target = calendar.startOfDay(for: date)
+    let days = calendar.dateComponents([.day], from: today, to: target).day ?? 0
+    switch days {
+    case ..<0:
+        let overdue = -days
+        return String(localized: "Overdue by \(overdue) days")
+    case 0:
+        return String(localized: "Payment today")
+    case 1:
+        return String(localized: "Payment tomorrow")
+    default:
+        return String(localized: "Payment in \(days) days")
+    }
+}
+
+private struct WidgetItemIcon: View {
+    let item: DebtWidgetItem
+    let size: CGFloat
+    var compact: Bool = false
+
+    var body: some View {
+        Group {
+            if let imageData = item.imageData, let image = widgetImage(from: imageData) {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            } else if item.source == .person, let emoji = item.emoji, !emoji.isEmpty {
+                Text(emoji)
+                    .font(compact ? .caption : .body)
+                    .frame(width: size, height: size)
+                    .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
+            } else {
+                Image(systemName: fallbackSymbol)
+                    .font(compact ? .caption.bold() : .callout.bold())
+                    .foregroundStyle(item.isIncome ? .blue : .red)
+                    .frame(width: size, height: size)
+                    .background((item.isIncome ? Color.blue : Color.red).opacity(0.13), in: RoundedRectangle(cornerRadius: 8))
+            }
+        }
+    }
+
+    private var fallbackSymbol: String {
+        item.source == .service ? "calendar.badge.clock" : (item.isIncome ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
+    }
+}
+
+private func widgetImage(from data: Data) -> Image? {
+    #if canImport(UIKit)
+    guard let image = UIImage(data: data) else { return nil }
+    return Image(uiImage: image)
+    #elseif canImport(AppKit)
+    guard let image = NSImage(data: data) else { return nil }
+    return Image(nsImage: image)
+    #else
+    return nil
+    #endif
+}
+
+private struct UpcomingPaymentRow: View {
+    let item: DebtWidgetItem
+    let compact: Bool
+
+    var body: some View {
+        if compact {
+            HStack(alignment: .center, spacing: 8) {
+                WidgetItemIcon(item: item, size: iconSize, compact: true)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.title)
+                        .font(.caption.bold())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.78)
+
+                    HStack(spacing: 4) {
+                        Text(shortDate)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+
+                        Text(amount)
+                            .font(.caption2.bold())
+                            .foregroundStyle(item.isIncome ? .blue : .red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.72)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        } else {
+            HStack(spacing: 9) {
+                WidgetItemIcon(item: item, size: iconSize, compact: false)
+
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(item.title)
+                        .font(.caption.bold())
+                        .lineLimit(1)
+                    Text(subtitle)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: 4)
+
+                Text(amount)
+                    .font(.caption.bold())
+                    .foregroundStyle(item.isIncome ? .blue : .red)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+            }
+        }
+    }
+
+    private var subtitle: String {
+        let countdown = paymentCountdownText(for: item.date)
+        if compact {
+            return countdown
+        }
+        let date = item.date.formatted(.dateTime.month(.abbreviated).day())
+        return "\(date) · \(countdown)"
+    }
+
+    private var amount: String {
+        item.amount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD").notation(.compactName))
+    }
+
+    private var shortDate: String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(item.date) {
+            return String(localized: "Today")
+        }
+        if calendar.isDateInTomorrow(item.date) {
+            return String(localized: "Tomorrow")
+        }
+        return item.date.formatted(.dateTime.month(.abbreviated).day())
+    }
+
+    private var iconSize: CGFloat {
+        compact ? 28 : 32
     }
 }
 
@@ -251,7 +551,7 @@ struct DebtFlowWidget: Widget {
     let kind = "DebtFlowWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: DebtFlowProvider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: DebtWidgetRangeIntent.self, provider: DebtFlowProvider()) { entry in
             DebtFlowWidgetView(entry: entry)
         }
         .configurationDisplayName("Debt Flow")
@@ -273,26 +573,67 @@ struct PeopleDebtWidget: Widget {
     }
 }
 
+struct UpcomingPaymentsWidget: Widget {
+    let kind = "UpcomingPaymentsWidget"
+
+    var body: some WidgetConfiguration {
+        AppIntentConfiguration(kind: kind, intent: DebtWidgetRangeIntent.self, provider: UpcomingPaymentsProvider()) { entry in
+            UpcomingPaymentsWidgetView(entry: entry, title: "DebtMe", subtitleText: "People and services")
+        }
+        .configurationDisplayName("DebtMe")
+        .description("Shows upcoming payments from people and services together.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}
+
+struct ServicesPaymentsWidget: Widget {
+    let kind = "ServicesPaymentsWidget"
+
+    var body: some WidgetConfiguration {
+        AppIntentConfiguration(kind: kind, intent: DebtWidgetRangeIntent.self, provider: UpcomingPaymentsProvider(filter: .service)) { entry in
+            UpcomingPaymentsWidgetView(entry: entry, title: "Services", subtitleText: "Upcoming service payments", itemSource: .service)
+        }
+        .configurationDisplayName("Services")
+        .description("Shows upcoming payments from services only.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}
+
+struct ContactsPaymentsWidget: Widget {
+    let kind = "ContactsPaymentsWidget"
+
+    var body: some WidgetConfiguration {
+        AppIntentConfiguration(kind: kind, intent: DebtWidgetRangeIntent.self, provider: UpcomingPaymentsProvider(filter: .person)) { entry in
+            UpcomingPaymentsWidgetView(entry: entry, title: "Contacts", subtitleText: "Upcoming payments from people", itemSource: .person)
+        }
+        .configurationDisplayName("Contacts")
+        .description("Shows upcoming payments from people only.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}
+
 @main
 struct DebtMeWidgetsBundle: WidgetBundle {
     var body: some Widget {
-        DebtFlowWidget()
-        PeopleDebtWidget()
+        ContactsPaymentsWidget()
+        ServicesPaymentsWidget()
+        UpcomingPaymentsWidget()
     }
 }
 
 private final class DebtWidgetRepository {
     private let calendar = Calendar.current
 
-    func debtFlowSnapshot() -> DebtFlowSnapshot {
+    func debtFlowSnapshot(days rangeDays: Int = 14) -> DebtFlowSnapshot {
+        let rangeDays = max(1, rangeDays)
         let today = calendar.startOfDay(for: .now)
-        let end = calendar.date(byAdding: .day, value: 13, to: today) ?? today
+        let end = calendar.date(byAdding: .day, value: rangeDays - 1, to: today) ?? today
         let range = DateInterval(start: today, end: calendar.date(byAdding: .day, value: 1, to: end)?.addingTimeInterval(-1) ?? end)
         let items = serviceItems(in: range) + transactionItems(in: range)
         let activeItems = items.sorted { $0.date < $1.date }
         let incoming = activeItems.filter(\.isIncome).map(\.amount).reduce(0, +)
         let outgoing = activeItems.filter { !$0.isIncome }.map(\.amount).reduce(0, +)
-        let days = (0..<14).compactMap { offset -> DayDebtSnapshot? in
+        let days = (0..<rangeDays).compactMap { offset -> DayDebtSnapshot? in
             guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { return nil }
             let dayItems = activeItems.filter { calendar.isDate($0.date, inSameDayAs: date) }
             return DayDebtSnapshot(
@@ -331,12 +672,44 @@ private final class DebtWidgetRepository {
                     return partial + (theyOweMe ? remaining : -remaining)
                 }
                 guard balance != 0 else { return nil }
-                return PeopleDebtSnapshot(id: contact.objectID.uriRepresentation().absoluteString, name: name, symbol: symbol, balance: balance)
+                return PeopleDebtSnapshot(
+                    id: contact.objectID.uriRepresentation().absoluteString,
+                    name: name,
+                    symbol: symbol,
+                    balance: balance,
+                    imageData: thumbnailData(from: contact.value(forKey: "avatarImage") as? Data)
+                )
             }
             .sorted { abs($0.balance) > abs($1.balance) }
         } catch {
             return .placeholder
         }
+    }
+
+    func upcomingPaymentsSnapshot(days rangeDays: Int = 45, filter: DebtWidgetItemSource? = nil) -> [DebtWidgetItem] {
+        let rangeDays = max(1, rangeDays)
+        let today = calendar.startOfDay(for: .now)
+        let end = calendar.date(byAdding: .day, value: rangeDays - 1, to: today) ?? today
+        let range = DateInterval(start: today, end: calendar.date(byAdding: .day, value: 1, to: end)?.addingTimeInterval(-1) ?? end)
+        let allItems: [DebtWidgetItem]
+        switch filter {
+        case .service:
+            allItems = serviceItems(in: range)
+        case .person:
+            allItems = transactionItems(in: range)
+        case nil:
+            allItems = serviceItems(in: range) + transactionItems(in: range)
+        }
+        let items = allItems
+            .sorted { first, second in
+                if calendar.isDate(first.date, inSameDayAs: second.date) {
+                    return first.title.localizedStandardCompare(second.title) == .orderedAscending
+                }
+                return first.date < second.date
+            }
+
+        guard items.isEmpty else { return items }
+        return [DebtWidgetItem].placeholderUpcoming.filter { filter == nil || $0.source == filter }
     }
 
     private func serviceItems(in range: DateInterval) -> [DebtWidgetItem] {
@@ -357,7 +730,9 @@ private final class DebtWidgetRepository {
                         title: name,
                         subtitle: "Service",
                         amount: amount,
-                        isIncome: !isExpense
+                        isIncome: !isExpense,
+                        source: .service,
+                        imageData: thumbnailData(from: service.value(forKey: "image") as? Data)
                     )
                 }
             }
@@ -386,7 +761,10 @@ private final class DebtWidgetRepository {
                     title: title,
                     subtitle: isIncome ? "They owe me" : "I owe them",
                     amount: amount,
-                    isIncome: isIncome
+                    isIncome: isIncome,
+                    source: .person,
+                    imageData: thumbnailData(from: contact?.value(forKey: "avatarImage") as? Data),
+                    emoji: contact?.value(forKey: "emoji") as? String
                 )
             }
         } catch {
@@ -512,6 +890,22 @@ private final class DebtWidgetRepository {
         return current
     }
 
+    private func thumbnailData(from data: Data?, maxDimension: CGFloat = 120) -> Data? {
+        guard let data, !data.isEmpty,
+              let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxDimension * 2
+        ]
+        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
+        let output = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(output, UTType.png.identifier as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, cgImage, nil)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        return output as Data
+    }
+
     private func occurrenceID(for service: NSManagedObject, date: Date) -> String {
         let id = service.value(forKey: "id") as? UUID ?? UUID()
         return "\(id.uuidString)-\(date.timeIntervalSince1970)"
@@ -568,9 +962,9 @@ private extension DebtFlowSnapshot {
             usesPercentages: false,
             days: days,
             items: [
-                DebtWidgetItem(id: "rent", date: today, title: "Rent", subtitle: "Service", amount: 9_500, isIncome: false),
-                DebtWidgetItem(id: "payroll", date: today, title: "Payroll", subtitle: "Service", amount: 20_000, isIncome: true),
-                DebtWidgetItem(id: "alex", date: today, title: "Alex Rivera", subtitle: "They owe me", amount: 850, isIncome: true)
+                DebtWidgetItem(id: "rent", date: today, title: "Rent", subtitle: "Service", amount: 9_500, isIncome: false, source: .service),
+                DebtWidgetItem(id: "payroll", date: today, title: "Payroll", subtitle: "Service", amount: 20_000, isIncome: true, source: .service),
+                DebtWidgetItem(id: "alex", date: today, title: "Alex Rivera", subtitle: "They owe me", amount: 850, isIncome: true, source: .person)
             ]
         )
     }
@@ -582,6 +976,17 @@ private extension Array where Element == PeopleDebtSnapshot {
             PeopleDebtSnapshot(id: "alex", name: "Alex Rivera", symbol: "A", balance: 850),
             PeopleDebtSnapshot(id: "sofia", name: "Sofia Chen", symbol: "S", balance: -420),
             PeopleDebtSnapshot(id: "maya", name: "Maya Lopez", symbol: "M", balance: 1_200)
+        ]
+    }
+}
+
+private extension Array where Element == DebtWidgetItem {
+    static var placeholderUpcoming: [DebtWidgetItem] {
+        let today = Calendar.current.startOfDay(for: .now)
+        return [
+            DebtWidgetItem(id: "payroll", date: today, title: "Payroll", subtitle: "Service", amount: 20_000, isIncome: true, source: .service),
+            DebtWidgetItem(id: "internet", date: today.addingTimeInterval(86_400), title: "Internet", subtitle: "Service", amount: 750, isIncome: false, source: .service),
+            DebtWidgetItem(id: "alex", date: today.addingTimeInterval(172_800), title: "Alex Rivera", subtitle: "They owe me", amount: 850, isIncome: true, source: .person)
         ]
     }
 }

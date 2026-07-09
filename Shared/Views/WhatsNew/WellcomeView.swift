@@ -10,9 +10,7 @@ import SwiftUI
 struct WellcomeView: View {
     
     @AppStorage("newUser") static var newUser = true
-    
-    var features = whatsNewFeatures.appFeatures
-     
+
     @State var isVisible : Bool = true
     
     @State var debuAllwayShow = true
@@ -37,7 +35,7 @@ struct WellcomeView: View {
                             .padding()
                             Spacer()
                             ScrollView(.vertical){
-                                FeaturesList(features: features)
+                                FeaturesList()
                             }
                             Spacer()
                             

@@ -99,7 +99,6 @@
 		1351B32A2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
 		1351B32B2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
 		1351B32C2C209CE6007334ED /* AmountUpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1351B3292C209CE6007334ED /* AmountUpdateList.swift */; };
-		135290E02DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
 		135290E12DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
 		135290E22DF957E20061A929 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 135290DF2DF957E20061A929 /* icon.icon */; };
 		13545D762B5ACE9900BBD6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F70A21F25FEB1F700455AB0 /* Assets.xcassets */; };
@@ -170,6 +169,7 @@
 		1399AD6B2999BA1E00C87C3D /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399AD692999BA1E00C87C3D /* Border.swift */; };
 		139A16262EB9678100132E69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 139A16252EB9678000132E69 /* Localizable.xcstrings */; };
 		139A16272EB9678100132E69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 139A16252EB9678000132E69 /* Localizable.xcstrings */; };
+		139A162A2EB9678100132E69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 139A16252EB9678000132E69 /* Localizable.xcstrings */; };
 		139A16292EB9678100132E69 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 139A16282EB9678100132E69 /* InfoPlist.xcstrings */; };
 		13A2FDED2C1FD63600DD820F /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */; };
 		13A2FDEE2C1FD63600DD820F /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2FDEC2C1FD63500DD820F /* ServiceDetailView.swift */; };
@@ -1232,7 +1232,6 @@
 				13874D532ACBEB59007B8FE3 /* ConfettiPopSoundEffectLong.m4a in Resources */,
 				139A16262EB9678100132E69 /* Localizable.xcstrings in Resources */,
 				139A16292EB9678100132E69 /* InfoPlist.xcstrings in Resources */,
-				135290E02DF957E20061A929 /* icon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1240,6 +1239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				139A162A2EB9678100132E69 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,14 +1848,12 @@
 		7F70A23D25FEB1F700455AB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "\"AppIcon 1\" \"AppIcon 2\" \"AppIcon 3\" \"AppIcon 4\" \"AppIcon 5\"";
-				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1866,7 +1864,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1883,14 +1881,12 @@
 		F6473178AEBF4B47B8E7AF25 /* Beta Demo */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "\"AppIcon 1\" \"AppIcon 2\" \"AppIcon 3\" \"AppIcon 4\" \"AppIcon 5\"";
-				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
+				CODE_SIGN_ENTITLEMENTS = debtMe.beta.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1901,7 +1897,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe.beta;
 				PRODUCT_NAME = "DebtMe Beta";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1923,7 +1919,7 @@
 				CODE_SIGN_ENTITLEMENTS = Widgets/DebtMeWidgets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -1933,7 +1929,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe.widgets;
 				PRODUCT_NAME = DebtMeWidgets;
 				SDKROOT = iphoneos;
@@ -1950,10 +1946,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = Widgets/DebtMeWidgets.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Widgets/DebtMeWidgets.beta.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -1963,7 +1959,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe.beta.widgets;
 				PRODUCT_NAME = DebtMeWidgets;
 				SDKROOT = iphoneos;
@@ -1983,7 +1979,7 @@
 				CODE_SIGN_ENTITLEMENTS = Widgets/DebtMeWidgets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -1993,7 +1989,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe.widgets;
 				PRODUCT_NAME = DebtMeWidgets;
 				SDKROOT = iphoneos;
@@ -2009,14 +2005,12 @@
 		7F70A23E25FEB1F700455AB0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "\"AppIcon 1\" \"AppIcon 2\" \"AppIcon 3\" \"AppIcon 4\" \"AppIcon 5\"";
-				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = debtMe.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -2027,7 +2021,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2052,7 +2046,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -2064,7 +2058,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;
@@ -2082,7 +2076,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20260610;
+				CURRENT_PROJECT_VERSION = 20260708;
 				DEVELOPMENT_TEAM = 63AJC847ZW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -2094,7 +2088,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = mx.landercorp.debtMe;
 				PRODUCT_NAME = debtMe;
 				SDKROOT = macosx;

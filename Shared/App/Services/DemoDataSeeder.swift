@@ -9,6 +9,13 @@ import CoreData
 import Foundation
 
 enum DemoDataSeeder {
+    static func seedIfNeeded(in context: NSManagedObjectContext) {
+        context.performAndWait {
+            guard isEmpty(context) else { return }
+        }
+        resetAndSeed(in: context)
+    }
+
     static func resetAndSeed(in context: NSManagedObjectContext) {
         context.performAndWait {
             deleteExistingData(in: context)
@@ -77,6 +84,15 @@ enum DemoDataSeeder {
             } catch {
                 assertionFailure("Unable to seed demo data: \(error.localizedDescription)")
             }
+        }
+    }
+
+    private static func isEmpty(_ context: NSManagedObjectContext) -> Bool {
+        ["Contact", "Services", "Transaction"].allSatisfy { entityName in
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            request.fetchLimit = 1
+            let count = (try? context.count(for: request)) ?? 0
+            return count == 0
         }
     }
 

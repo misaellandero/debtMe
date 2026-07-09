@@ -8,35 +8,37 @@
 import SwiftUI
 
 struct FeaturesList: View {
-    
-    var features = whatsNewFeatures.appFeatures
-    
+
+    /// When true (Settings), shows the full feature history grouped by version.
+    /// When false (welcome sheet), shows only the current release.
+    var showAllVersions = false
+
     var body: some View {
-        
-        Section(){
-            ForEach(features, id: \.id ) { feature in
-                if feature.newOnThisVersion {
+
+        if showAllVersions {
+            ForEach(whatsNewFeatures.versions) { group in
+                Section(header: Text("Version \(group.version)")) {
+                    ForEach(group.features, id: \.id) { feature in
                         FeatureView(feature: feature)
+                    }
+                }
+            }
+        } else {
+            Section() {
+                ForEach(whatsNewFeatures.latest.features, id: \.id) { feature in
+                    FeatureView(feature: feature)
                 }
             }
         }
-        
-        Section(){
+
+        Section() {
             FeatureView(feature: whatsNewFeatures.thanksSection)
         }
-        
-        Section(header: Text("All Features")){
-            ForEach(features, id: \.id ) { feature in
-                if !feature.newOnThisVersion {
-                        FeatureView(feature: feature)
-                }
-            }
-        }
-        
-      
     }
 }
 
 #Preview {
-    FeaturesList()
+    List {
+        FeaturesList(showAllVersions: true)
+    }
 }

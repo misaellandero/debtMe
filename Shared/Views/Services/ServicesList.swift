@@ -429,25 +429,51 @@ struct ServicesList: View {
 
     private var servicesConfigurationSummary: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(summarySelectd.localizedTitle)
-                .font(.caption)
-                .foregroundStyle(.secondary)
             if summarySelectd == .all {
-                Text(filteredServices.count, format: .number)
-                    .font(.largeTitle.weight(.bold))
+                VStack(alignment: .leading) {
+                    Text("Income")
+                        .font(.caption)
+                    Text(filteredIncomeTotal.toCurrencyString())
+                        .foregroundColor(.blue)
+                }
+                .bold()
+                .font(.largeTitle)
+                VStack(alignment: .leading) {
+                    Text("Expenses")
+                        .font(.caption)
+                    Text("-" + filteredExpenseTotal.toCurrencyString())
+                        .foregroundColor(.red)
+                }
+                .bold()
+                .font(.largeTitle)
+                VStack(alignment: .leading) {
+                    Text("Balance")
+                        .font(.caption)
+                    Text(filteredBalanceTotal.toCurrencyString())
+                        .foregroundStyle(filteredBalanceTotal >= 0 ? Color.primary : Color.red)
+                }
+                .bold()
+                .font(.largeTitle)
+
+                Text("\(filteredServices.count) services")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             } else {
+                Text(summarySelectd.localizedTitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 Text(selectedServicesSummaryAmount.toCurrencyString())
                     .font(.largeTitle.weight(.bold))
                     .foregroundStyle(selectedServicesSummaryAmount >= 0 ? Color.primary : Color.red)
-            }
 
-            HStack(spacing: 12) {
-                Label(filteredIncomeTotal.toCompactCurrencyString(), systemImage: "arrow.down.circle.fill")
-                    .foregroundStyle(.blue)
-                Label("-" + filteredExpenseTotal.toCompactCurrencyString(), systemImage: "arrow.up.circle.fill")
-                    .foregroundStyle(.red)
+                HStack(spacing: 12) {
+                    Label(filteredIncomeTotal.toCompactCurrencyString(), systemImage: "arrow.down.circle.fill")
+                        .foregroundStyle(.blue)
+                    Label("-" + filteredExpenseTotal.toCompactCurrencyString(), systemImage: "arrow.up.circle.fill")
+                        .foregroundStyle(.red)
+                }
+                .font(.caption.weight(.semibold))
             }
-            .font(.caption.weight(.semibold))
         }
         .padding(.vertical, 6)
     }

@@ -14,6 +14,10 @@ import WebKit
 import ImagePlayground
 #endif
 
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
+
 struct ImagePickerView: View {
     @Binding var photoData: Data?
     @AppStorage("selectedQuality") private var selectedQuality: JPEGQuality = .lowest
@@ -65,6 +69,10 @@ struct UnifiedImagePickerView: View {
     @State private var showSFSymbolSheet = false
     @State private var sfSymbolName = ""
     @State private var sfSymbolError: String?
+    @State private var sfSymbolQuery = ""
+    @State private var sfSymbolResults: [String] = []
+    @State private var isSearchingSymbols = false
+    @AppStorage("sfSymbolSmartSearch") private var useSmartSymbolSearch = true
 
     @State private var showBrandIconsSheet = false
     @State private var brandQuery = ""
@@ -194,7 +202,7 @@ struct UnifiedImagePickerView: View {
 
             if isIconFormat {
                 Button {
-                    if sfSymbolName.isEmpty { sfSymbolName = "icloud" }
+                    if sfSymbolQuery.isEmpty { sfSymbolQuery = imagename }
                     sfSymbolError = nil
                     showSFSymbolSheet = true
                 } label: {
@@ -298,56 +306,111 @@ struct UnifiedImagePickerView: View {
     private var sfSymbolSheet: some View {
         NavigationStack {
             VStack(spacing: 12) {
-                TextField("SF Symbol name (e.g. icloud)", text: $sfSymbolName)
+                TextField("Search symbols (e.g. car, wifi, credit card)", text: $sfSymbolQuery)
                     .textFieldStyle(.roundedBorder)
                     #if os(iOS) || os(visionOS)
                     .textInputAutocapitalization(.never)
                     #endif
+                    .autocorrectionDisabled()
                     .padding(.horizontal, 16)
                     .padding(.top, 12)
-                    .onChange(of: sfSymbolName) { _, _ in
+                    .onChange(of: sfSymbolQuery) { _, _ in
                         sfSymbolError = nil
                     }
 
-                VStack(spacing: 12) {
+                if SFSymbolAISearch.isAvailable {
+                    Toggle(isOn: $useSmartSymbolSearch) {
+                        Label("Smart search (Apple Intelligence)", systemImage: "sparkles")
+                            .font(.footnote)
+                    }
+                    .padding(.horizontal, 16)
+                }
+
+                HStack(spacing: 14) {
                     let bg = iconBackgroundColor ?? Color.accentColor
                     let iconStyle = contrastingStyle(for: bg)
                     let trimmedName = sfSymbolName.trimmingCharacters(in: .whitespacesAndNewlines)
                     let previewName = sfSymbolExists(trimmedName) ? trimmedName : "questionmark"
 
                     ZStack {
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .fill(bg)
-                            .frame(width: 180, height: 180)
+                            .frame(width: 84, height: 84)
 
                         Image(systemName: previewName)
-                            .font(.system(size: 74, weight: .semibold, design: .rounded))
+                            .font(.system(size: 36, weight: .semibold, design: .rounded))
                             .foregroundStyle(iconStyle)
-                            .padding(.horizontal, 25)
+                            .padding(.horizontal, 10)
                     }
                     .overlay(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .stroke(Color.primary.opacity(0.08), lineWidth: 1)
                     )
 
-                    if let sfSymbolError {
-                        Text(sfSymbolError)
-                            .font(.footnote)
-                            .foregroundStyle(.red)
-                    } else if !trimmedName.isEmpty && !sfSymbolExists(trimmedName) {
-                        Text("Symbol not found")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        if sfSymbolExists(trimmedName) {
+                            Text(trimmedName)
+                                .font(.footnote.monospaced())
+                                .lineLimit(2)
+                        } else {
+                            Text("No symbol selected")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                        if let sfSymbolError {
+                            Text(sfSymbolError)
+                                .font(.footnote)
+                                .foregroundStyle(.red)
+                        }
+                        if isSearchingSymbols {
+                            HStack(spacing: 6) {
+                                ProgressView()
+                                    .controlSize(.small)
+                                Text("Searching symbols")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+
+                ScrollView {
+                    if sfSymbolResults.isEmpty {
+                        PickerEmptyStateView(
+                            title: "No symbols found",
+                            message: "Try another search term or type an exact SF Symbol name."
+                        )
+                        .padding(.vertical, 24)
+                    } else {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 52), spacing: 10)], spacing: 10) {
+                            ForEach(sfSymbolResults, id: \.self) { symbol in
+                                Button {
+                                    sfSymbolName = symbol
+                                } label: {
+                                    Image(systemName: symbol)
+                                        .font(.title3)
+                                        .frame(width: 52, height: 52)
+                                        .foregroundStyle(sfSymbolName == symbol ? Color.white : Color.primary)
+                                        .background(
+                                            sfSymbolName == symbol ? Color.accentColor : Color.secondary.opacity(0.1),
+                                            in: RoundedRectangle(cornerRadius: 12)
+                                        )
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel(Text(symbol))
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
                     }
                 }
-
-                Spacer()
             }
             .navigationTitle("SF Symbols")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { showSFSymbolSheet = false }
-                        .appSheetCancelButtonStyle()
+                    SheetCancelToolbarButton { showSFSymbolSheet = false }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Use") {
@@ -357,12 +420,55 @@ struct UnifiedImagePickerView: View {
                     .appSheetPrimaryButtonStyle()
                 }
             }
+            .task(id: symbolSearchTaskID) {
+                await performSymbolSearch()
+            }
         }
         #if os(iOS) || os(visionOS)
-        .presentationDetents([.medium])
+        .presentationDetents([.large])
         #elseif os(macOS)
-        .macOSFixedSheet(width: 520, height: 480)
+        .macOSFixedSheet(width: 560, height: 620)
         #endif
+    }
+
+    private var symbolSearchTaskID: String {
+        "\(sfSymbolQuery)|\(useSmartSymbolSearch)"
+    }
+
+    @MainActor
+    private func performSymbolSearch() async {
+        let query = sfSymbolQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // Typing an exact symbol name still selects it directly.
+        if sfSymbolExists(query) {
+            sfSymbolName = query
+        }
+
+        guard !query.isEmpty else {
+            sfSymbolResults = SFSymbolCatalog.defaultSuggestions
+            return
+        }
+
+        // Debounce keystrokes.
+        try? await Task.sleep(for: .milliseconds(250))
+        guard !Task.isCancelled else { return }
+
+        let localResults = SFSymbolCatalog.search(query)
+        sfSymbolResults = localResults
+
+        guard useSmartSymbolSearch, SFSymbolAISearch.isAvailable else { return }
+
+        isSearchingSymbols = true
+        defer { isSearchingSymbols = false }
+
+        let aiResults = await SFSymbolAISearch.suggestSymbols(for: query).filter { sfSymbolExists($0) }
+        guard !Task.isCancelled, !aiResults.isEmpty else { return }
+
+        var merged = aiResults
+        for symbol in localResults where !merged.contains(symbol) {
+            merged.append(symbol)
+        }
+        sfSymbolResults = merged
     }
 
     private var brandIconsSheet: some View {
@@ -439,8 +545,7 @@ struct UnifiedImagePickerView: View {
             .navigationTitle("Brand Icons")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { showBrandIconsSheet = false }
-                        .appSheetCancelButtonStyle()
+                    SheetCancelToolbarButton { showBrandIconsSheet = false }
                 }
             }
         }
@@ -542,8 +647,7 @@ struct UnifiedImagePickerView: View {
             .navigationTitle("Web Images")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { showURLSheet = false }
-                        .appSheetCancelButtonStyle()
+                    SheetCancelToolbarButton { showURLSheet = false }
                 }
             }
         }
@@ -866,6 +970,25 @@ private extension UnifiedImagePickerView {
 
 private struct IconifySearchResponse: Decodable {
     let icons: [String]
+}
+
+/// Cancel button for picker sheets: icon-only on mobile, text on macOS.
+private struct SheetCancelToolbarButton: View {
+    let action: () -> Void
+
+    var body: some View {
+        #if os(iOS) || os(visionOS)
+        Button(action: action) {
+            Image(systemName: "xmark")
+                .imageScale(.medium)
+        }
+        .appSheetCancelButtonStyle()
+        .accessibilityLabel(Text("Cancel"))
+        #else
+        Button("Cancel", action: action)
+            .appSheetCancelButtonStyle()
+        #endif
+    }
 }
 
 private struct PickerLoadingView: View {
@@ -1241,6 +1364,182 @@ private func rgbComponents(for color: Color) -> (r: Int, g: Int, b: Int) {
     return (r, g, b)
 }
 
+// MARK: - SF Symbol catalog + search
+
+private enum SFSymbolCatalog {
+    /// name -> search terms, loaded from the system symbol search index when
+    /// available, with a curated fallback list otherwise.
+    static let entries: [(name: String, terms: [String])] = loadEntries()
+
+    static let defaultSuggestions: [String] = {
+        fallbackSymbols.filter { sfSymbolExists($0) }
+    }()
+
+    static func search(_ query: String, limit: Int = 90) -> [String] {
+        let normalized = query.lowercased()
+        let tokens = normalized
+            .split(whereSeparator: { $0 == " " || $0 == "." || $0 == "," })
+            .map(String.init)
+        guard !tokens.isEmpty else { return defaultSuggestions }
+
+        var scored: [(name: String, score: Int)] = []
+        for entry in entries {
+            let score = score(entry: entry, query: normalized, tokens: tokens)
+            if score > 0 {
+                scored.append((entry.name, score))
+            }
+        }
+
+        return scored
+            .sorted { $0.score == $1.score ? $0.name < $1.name : $0.score > $1.score }
+            .prefix(limit * 2)
+            .map(\.name)
+            .filter { sfSymbolExists($0) }
+            .prefix(limit)
+            .map { $0 }
+    }
+
+    private static func score(entry: (name: String, terms: [String]), query: String, tokens: [String]) -> Int {
+        let name = entry.name
+        if name == query { return 1_000 }
+
+        var score = 0
+        if name.hasPrefix(query) {
+            score += 400
+        } else if name.contains(query) {
+            score += 250
+        }
+
+        let nameParts = name.split(separator: ".").map(String.init)
+        var matchedTokens = 0
+        for token in tokens {
+            if nameParts.contains(token) {
+                score += 120
+                matchedTokens += 1
+            } else if nameParts.contains(where: { $0.hasPrefix(token) }) {
+                score += 70
+                matchedTokens += 1
+            } else if entry.terms.contains(token) {
+                score += 90
+                matchedTokens += 1
+            } else if entry.terms.contains(where: { $0.hasPrefix(token) }) {
+                score += 45
+                matchedTokens += 1
+            } else if name.contains(token) {
+                score += 40
+                matchedTokens += 1
+            } else if token.count >= 3, isSubsequence(token, of: name) {
+                score += 12
+                matchedTokens += 1
+            }
+        }
+
+        // Multi-word queries should match every word somewhere.
+        guard matchedTokens == tokens.count else { return 0 }
+        return score
+    }
+
+    private static func isSubsequence(_ needle: String, of haystack: String) -> Bool {
+        var iterator = haystack.makeIterator()
+        outer: for character in needle {
+            while let candidate = iterator.next() {
+                if candidate == character { continue outer }
+            }
+            return false
+        }
+        return true
+    }
+
+    private static func loadEntries() -> [(name: String, terms: [String])] {
+        if let index = systemSearchIndex() {
+            return index
+        }
+        return fallbackSymbols.map { ($0, []) }
+    }
+
+    /// The system bundle that powers the SF Symbols search field. Optional by
+    /// design: when it cannot be read we fall back to the curated list.
+    private static func systemSearchIndex() -> [(name: String, terms: [String])]? {
+        let bundle = Bundle(identifier: "com.apple.CoreGlyphs")
+            ?? Bundle(path: "/System/Library/CoreServices/CoreGlyphs.bundle")
+        guard let url = bundle?.url(forResource: "symbol_search", withExtension: "plist"),
+              let data = try? Data(contentsOf: url),
+              let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: [String]],
+              !plist.isEmpty else {
+            return nil
+        }
+        return plist.map { ($0.key, $0.value) }.sorted { $0.name < $1.name }
+    }
+
+    private static let fallbackSymbols: [String] = [
+        "creditcard", "creditcard.fill", "banknote", "dollarsign.circle", "dollarsign.square",
+        "eurosign.circle", "yensign.circle", "bitcoinsign.circle", "percent", "chart.bar",
+        "chart.pie", "chart.line.uptrend.xyaxis", "building.columns", "building.2", "banknote.fill",
+        "house", "house.fill", "key", "key.fill", "lock", "lock.shield", "shield",
+        "wifi", "antenna.radiowaves.left.and.right", "network", "globe", "icloud", "icloud.fill",
+        "phone", "phone.fill", "iphone", "ipad", "laptopcomputer", "desktopcomputer", "display",
+        "tv", "tv.fill", "gamecontroller", "gamecontroller.fill", "headphones", "music.note",
+        "film", "play.rectangle", "play.tv", "photo", "camera", "video", "mic",
+        "envelope", "envelope.fill", "message", "message.fill", "paperplane",
+        "cart", "cart.fill", "bag", "bag.fill", "gift", "gift.fill", "tag", "tag.fill",
+        "car", "car.fill", "bus", "tram", "airplane", "bicycle", "fuelpump", "fuelpump.fill",
+        "bolt", "bolt.fill", "flame", "flame.fill", "drop", "drop.fill", "lightbulb",
+        "lightbulb.fill", "thermometer.medium", "snowflake", "sun.max", "cloud", "umbrella",
+        "leaf", "leaf.fill", "pawprint", "pawprint.fill", "tree",
+        "fork.knife", "cup.and.saucer", "takeoutbag.and.cup.and.straw", "birthday.cake",
+        "pills", "pills.fill", "cross.case", "heart", "heart.fill", "stethoscope",
+        "figure.walk", "figure.run", "dumbbell", "sportscourt",
+        "book", "book.fill", "graduationcap", "graduationcap.fill", "backpack",
+        "briefcase", "briefcase.fill", "hammer", "wrench.and.screwdriver", "paintbrush",
+        "scissors", "printer", "doc.text", "newspaper", "calendar", "clock", "alarm",
+        "bell", "bell.fill", "star", "star.fill", "sparkles", "wand.and.stars",
+        "person", "person.fill", "person.2", "person.2.fill", "person.crop.circle",
+        "gearshape", "gearshape.fill", "questionmark.circle"
+    ]
+}
+
+private enum SFSymbolAISearch {
+    static var isAvailable: Bool {
+        #if canImport(FoundationModels)
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            return SystemLanguageModel.default.availability == .available
+        }
+        #endif
+        return false
+    }
+
+    static func suggestSymbols(for query: String) async -> [String] {
+        #if canImport(FoundationModels)
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            do {
+                let session = LanguageModelSession(instructions: """
+                You suggest Apple SF Symbols. Given a concept, respond with identifiers of existing \
+                SF Symbols that visually represent it, best matches first. Use only real SF Symbol \
+                names, such as "creditcard.fill", "wifi" or "car".
+                """)
+                let response = try await session.respond(
+                    to: "List up to 15 SF Symbol names that best represent: \"\(query)\"",
+                    generating: SymbolSuggestions.self
+                )
+                return response.content.symbols
+            } catch {
+                return []
+            }
+        }
+        #endif
+        return []
+    }
+}
+
+#if canImport(FoundationModels)
+@available(iOS 26.0, macOS 26.0, visionOS 26.0, *)
+@Generable
+private struct SymbolSuggestions {
+    @Guide(description: "Existing SF Symbol identifiers, e.g. \"creditcard.fill\"")
+    var symbols: [String]
+}
+#endif
+
 private func sfSymbolExists(_ name: String) -> Bool {
     guard !name.isEmpty else { return false }
     #if os(macOS)
@@ -1351,10 +1650,7 @@ private struct IconCropperView: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    dismiss()
-                }
-                .appSheetCancelButtonStyle()
+                SheetCancelToolbarButton { dismiss() }
             }
 
             ToolbarItem(placement: .automatic) {

@@ -2,14 +2,10 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "localizations" : {
 
-      }
     },
     " " : {
-      "localizations" : {
 
-      }
     },
     " Fee" : {
       "localizations" : {
@@ -275,6 +271,22 @@
         }
       }
     },
+    "%lld services" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld servicios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld件のサービス"
+          }
+        }
+      }
+    },
     "2023 - %@\nDebtMe App by Misael Landeros" : {
       "localizations" : {
         "es" : {
@@ -356,6 +368,7 @@
       }
     },
     "All Features" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -581,6 +594,22 @@
         }
       }
     },
+    "Calendar and list overview for incoming and outgoing money." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen del calendario y la lista para el dinero entrante y saliente."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入金および出金のカレンダーとリストの概要。"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "es" : {
@@ -664,6 +693,38 @@
         }
       }
     },
+    "Choose how many days ahead the widget shows." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige cuántos días hacia adelante muestra el widget."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェットに表示する先の日数を選択します。"
+          }
+        }
+      }
+    },
+    "Choose Your Widget Range" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige el rango del widget"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェットの範囲を選択"
+          }
+        }
+      }
+    },
     "Chose An Emoji" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -685,10 +746,6 @@
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Click me!"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -707,10 +764,6 @@
           }
         },
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¡Haz clic en mí!"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -729,10 +782,6 @@
           }
         },
         "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "私をクリックしてください！"
-          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -833,7 +882,6 @@
       }
     },
     "Contacts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -963,6 +1011,22 @@
         }
       }
     },
+    "Daily Payment Tracking" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguimiento de pagos diarios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日次支払追跡"
+          }
+        }
+      }
+    },
     "Date" : {
       "localizations" : {
         "es" : {
@@ -996,6 +1060,22 @@
         }
       }
     },
+    "Date Range" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rango de fechas"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日付範囲"
+          }
+        }
+      }
+    },
     "Day" : {
       "localizations" : {
         "es" : {
@@ -1024,6 +1104,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日収支"
+          }
+        }
+      }
+    },
+    "Debt Flow" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flujo de deuda"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "債務フロー"
           }
         }
       }
@@ -1426,6 +1522,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タグで絞り込む"
+          }
+        }
+      }
+    },
+    "Find icons for your services by describing them. Uses Apple Intelligence when available." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encuentra íconos para tus servicios describiéndolos. Usa Apple Intelligence cuando está disponible."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言葉で説明してサービスのアイコンを検索できます。利用可能な場合はApple Intelligenceを使用します。"
           }
         }
       }
@@ -2108,6 +2220,7 @@
       }
     },
     "Localization Cleanup" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -2462,6 +2575,22 @@
         }
       }
     },
+    "New widgets show your debt flow, people balances, and upcoming payments from services and people." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los nuevos widgets muestran su flujo de deuda, los saldos de personas y los próximos pagos de servicios y personas."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいウィジェットは、負債の流れ、人の残高、そしてサービスや人からの今後の支払いを表示します。"
+          }
+        }
+      }
+    },
     "Newest Creation First" : {
       "localizations" : {
         "es" : {
@@ -2490,6 +2619,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最新の解決先"
+          }
+        }
+      }
+    },
+    "Next 7 days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos 7 días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後7日間"
+          }
+        }
+      }
+    },
+    "Next 14 days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos 14 días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後14日間"
+          }
+        }
+      }
+    },
+    "Next 30 days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos 30 días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後30日間"
+          }
+        }
+      }
+    },
+    "Next 60 days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos 60 días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後60日間"
           }
         }
       }
@@ -2607,6 +2800,22 @@
         }
       }
     },
+    "No People Debts" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Hay Deudas De Personas"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人の借金はありません"
+          }
+        }
+      }
+    },
     "No records found!" : {
       "localizations" : {
         "es" : {
@@ -2683,6 +2892,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サービスがありません"
+          }
+        }
+      }
+    },
+    "No symbol selected" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún símbolo seleccionado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンボルが選択されていません"
+          }
+        }
+      }
+    },
+    "No symbols found" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron símbolos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンボルが見つかりません"
+          }
+        }
+      }
+    },
+    "No Upcoming Payments" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay próximos pagos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後の支払いはありません"
           }
         }
       }
@@ -2946,6 +3203,22 @@
         }
       }
     },
+    "Overdue by %lld days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vencido hace %lld días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日延滞"
+          }
+        }
+      }
+    },
     "Paid" : {
       "localizations" : {
         "es" : {
@@ -3042,6 +3315,22 @@
         }
       }
     },
+    "Payment in %lld days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago en %lld días"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日後に支払い"
+          }
+        }
+      }
+    },
     "Payment reminder" : {
       "localizations" : {
         "es" : {
@@ -3054,6 +3343,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "お支払いのご案内"
+          }
+        }
+      }
+    },
+    "Payment today" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago hoy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日支払い"
+          }
+        }
+      }
+    },
+    "Payment tomorrow" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago mañana"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日支払い"
           }
         }
       }
@@ -3090,6 +3411,22 @@
         }
       }
     },
+    "People and services" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personas y servicios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人々とサービス"
+          }
+        }
+      }
+    },
     "People and Services now focus on managing your saved contacts and services, while Home handles daily tracking." : {
       "localizations" : {
         "es" : {
@@ -3102,6 +3439,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "People and Services は現在、保存された連絡先とサービスの管理に重点を置き、Home は日々の追跡を行います。"
+          }
+        }
+      }
+    },
+    "People Debts" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deudas de las personas"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人々の借金"
           }
         }
       }
@@ -3134,6 +3487,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フォトライブラリー"
+          }
+        }
+      }
+    },
+    "Pick how far ahead each widget looks — 7, 14, 30 or 60 days — right from the widget settings." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige cuántos días hacia adelante muestra cada widget (7, 14, 30 o 60 días) directamente desde la configuración del widget."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェットの設定から、表示する期間(7日、14日、30日、60日)を選べます。"
           }
         }
       }
@@ -3270,6 +3639,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "季刊誌"
+          }
+        }
+      }
+    },
+    "Redesigned Widgets" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widgets rediseñados"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェットを刷新"
           }
         }
       }
@@ -3565,6 +3950,38 @@
         }
       }
     },
+    "Search symbols (e.g. car, wifi, credit card)" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar símbolos (p. ej. auto, wifi, tarjeta)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンボルを検索(例:車、Wi-Fi、カード)"
+          }
+        }
+      }
+    },
+    "Searching symbols" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscando símbolos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンボルを検索中"
+          }
+        }
+      }
+    },
     "Security" : {
       "localizations" : {
         "es" : {
@@ -3714,6 +4131,22 @@
         }
       }
     },
+    "Services and Contacts Widgets" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widgets de servicios y contactos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスと連絡先のウィジェット"
+          }
+        }
+      }
+    },
     "Services and people transactions with dates will appear here." : {
       "localizations" : {
         "es" : {
@@ -3726,6 +4159,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日付付きのサービスおよび人物取引がここに表示されます。"
+          }
+        }
+      }
+    },
+    "Services Summary" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen de servicios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスの概要"
           }
         }
       }
@@ -3780,6 +4229,7 @@
       }
     },
     "SF Symbol name (e.g. icloud)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -3910,6 +4360,70 @@
         }
       }
     },
+    "Shows the current balances for people who owe you or that you owe." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra los saldos actuales de las personas que te deben o que tú debes."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたに借りている人、またはあなたが借りている人の現在の残高を表示します。"
+          }
+        }
+      }
+    },
+    "Shows upcoming payments from people and services." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra los próximos pagos de personas y servicios."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人々やサービスからの今後の支払いを表示します。"
+          }
+        }
+      }
+    },
+    "Shows upcoming payments from people only." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra solo los próximos pagos de personas."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人の今後の支払いのみを表示します。"
+          }
+        }
+      }
+    },
+    "Shows upcoming payments from services only." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra solo los próximos pagos de servicios."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスの今後の支払いのみを表示します。"
+          }
+        }
+      }
+    },
     "Sin gastos en este periodo" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3923,6 +4437,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この期間中は費用がかからずに"
+          }
+        }
+      }
+    },
+    "Smart search (Apple Intelligence)" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Búsqueda inteligente (Apple Intelligence)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スマート検索(Apple Intelligence)"
+          }
+        }
+      }
+    },
+    "Smarter Icon Search" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Búsqueda de íconos más inteligente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "より賢いアイコン検索"
           }
         }
       }
@@ -4056,6 +4602,22 @@
         }
       }
     },
+    "Swipe scheduled services to mark that day as paid or cancelled without changing the rest of the schedule." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deslice los servicios programados para marcar ese día como pagado o cancelado sin cambiar el resto del horario."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュールされたサービスをスワイプして、その日を有料またはキャンセルとしてマークし、スケジュールの残りを変更せずに設定してください。"
+          }
+        }
+      }
+    },
     "Symbol not found" : {
       "localizations" : {
         "es" : {
@@ -4171,6 +4733,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ホームカレンダーは、サービスと予定された人物取引を統合し、収入、支出、残高を一箇所で確認できるようになりました。"
+          }
+        }
+      }
+    },
+    "The Services tab now shows income, expenses and balance together, just like Contacts." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La pestaña Servicios ahora muestra ingresos, gastos y balance juntos, igual que Contactos."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスタブに、連絡先と同じように収入・支出・残高がまとめて表示されるようになりました。"
           }
         }
       }
@@ -4305,6 +4883,22 @@
         }
       }
     },
+    "Toggle Privacy" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternar privacidad"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーを切り替える"
+          }
+        }
+      }
+    },
     "Toggle Status to Unpaid" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4386,6 +4980,22 @@
         }
       }
     },
+    "Try another search term or type an exact SF Symbol name." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prueba con otro término o escribe el nombre exacto del SF Symbol."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別の検索語を試すか、正確なSF Symbol名を入力してください。"
+          }
+        }
+      }
+    },
     "Try another search term." : {
       "localizations" : {
         "es" : {
@@ -4430,6 +5040,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ツイッター"
+          }
+        }
+      }
+    },
+    "Two new widgets show only your services or only your contacts, so you can see each at a glance." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dos nuevos widgets muestran solo tus servicios o solo tus contactos, para verlos de un vistazo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービスのみ、連絡先のみを表示する2つの新しいウィジェットが追加され、ひと目で確認できます。"
           }
         }
       }
@@ -4530,6 +5156,54 @@
         }
       }
     },
+    "Upcoming Payments" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos pagos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後の支払い"
+          }
+        }
+      }
+    },
+    "Upcoming payments from people" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos pagos de personas"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人からの今後の支払い"
+          }
+        }
+      }
+    },
+    "Upcoming service payments" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos pagos de servicios"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後のサービス支払い"
+          }
+        }
+      }
+    },
     "Update Amount" : {
       "localizations" : {
         "es" : {
@@ -4595,6 +5269,7 @@
       }
     },
     "User-facing base strings were cleaned up so the app is easier to translate from English." : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -4803,6 +5478,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このオプションをオンにすると、App のロックを解除するには、FaceID、TouchID、またはパスコードが必要です。"
+          }
+        }
+      }
+    },
+    "Widgets" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widgets"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェット"
+          }
+        }
+      }
+    },
+    "Widgets now show your service images and contact photos, and tell you how many days are left before each payment." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los widgets ahora muestran las imágenes de tus servicios y las fotos de tus contactos, y te dicen cuántos días faltan para cada pago."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウィジェットにサービスの画像や連絡先の写真が表示され、各支払いまでの残り日数がわかるようになりました。"
           }
         }
       }

@@ -39,15 +39,6 @@ class UserPreferences: ObservableObject {
         
         userPreferences.accentColor  = colorID
          
-        //Para cuando se añadan widgets
-        /*if userSetings.widgetIndependtColor {
-            if let userDefaults = UserDefaults(suiteName: "group.mx.landercorp.debtMe") {
-                userDefaults.set(colorID as Int , forKey: "themeColor")
-                userDefaults.synchronize()
-                WidgetCenter.shared.reloadAllTimelines()
-            }
-        }*/
-         
         save()
     }
     

@@ -7,7 +7,21 @@
 
 import CoreData
 public class PersistentCloudKitContainer: ObservableObject {
-    private static let appGroupIdentifier = "group.mx.landercorp.debtMe"
+    private static var appGroupIdentifier: String {
+        #if BETA_DEMO_DATA
+        return "group.mx.landercorp.debtMe.beta"
+        #else
+        return "group.mx.landercorp.debtMe"
+        #endif
+    }
+
+    private static var cloudKitContainerIdentifier: String {
+        #if BETA_DEMO_DATA
+        return "iCloud.debtMe.beta"
+        #else
+        return "iCloud.debtMe"
+        #endif
+    }
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
@@ -17,9 +31,12 @@ public class PersistentCloudKitContainer: ObservableObject {
             fatalError("No descriptions found")
         }
 
+        description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
+            containerIdentifier: Self.cloudKitContainerIdentifier
+        )
+
         if let sharedStoreURL = sharedStoreURL {
             #if BETA_DEMO_DATA
-            removeStore(at: sharedStoreURL)
             #else
             migrateDefaultStoreIfNeeded(to: sharedStoreURL, containerName: "debtMe")
             #endif
@@ -34,7 +51,9 @@ public class PersistentCloudKitContainer: ObservableObject {
             }
 
             #if BETA_DEMO_DATA
-            DemoDataSeeder.resetAndSeed(in: container.viewContext)
+            if Self.isBetaDemoBundle {
+                DemoDataSeeder.seedIfNeeded(in: container.viewContext)
+            }
             #endif
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
@@ -53,6 +72,10 @@ public class PersistentCloudKitContainer: ObservableObject {
         #else
         return storeDirectory.appendingPathComponent("debtMe.sqlite")
         #endif
+    }
+
+    private static var isBetaDemoBundle: Bool {
+        Bundle.main.bundleIdentifier?.contains(".beta") == true
     }
 
     private func removeStore(at url: URL) {
