@@ -33,7 +33,7 @@ struct LabelNewForm: View {
                     Button {
                         showForm.toggle()
                     } label: {
-                        Label("Cancel", systemImage: "xmark")
+                        Label("Close", systemImage: "xmark")
                     }
                     .appSheetCancelButtonStyle()
                 }
@@ -46,47 +46,29 @@ struct LabelNewForm: View {
                     .appSheetPrimaryButtonStyle()
                 }
             }
+            .appSheetBottomConfirmationAction(edition: false, action: saveTag)
         }
         .macOSFixedSheet(width: 480, height: 320)
             #else
-            NavigationView{
-                ZStack{
-                    List{
-                        LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
-                    }
-                    .listStyle(InsetGroupedListStyle())
-                    VStack{
-                        Spacer()
-                        Button(action: saveTag) {
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .appToolbarLabel()
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 10)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.accentColor)
-                        .controlSize(.large)
-                        .padding()
-                   }
-                    
-                    
+            NavigationStack{
+                List{
+                    LabelMultiplatformForm(name: $name, colorSelect: $colorSelect, showForm: $showForm, save: saveTag, serviceLabelMode: serviceLabelMode)
                 }
+                .listStyle(InsetGroupedListStyle())
+                .navigationTitle("New")
+                .appSheetBottomConfirmationAction(edition: false, action: saveTag)
                 .toolbar{
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
                             showForm.toggle()
                         }){
-                            Label("Return", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
-                        .tint(.red)
+                        .appSheetCancelButtonStyle()
                     }
                     
-                    ToolbarItem(placement: .primaryAction ){
+                    ToolbarItem(placement: .confirmationAction ){
                         ToolbarAddButton(edition: false, action: saveTag)
-                    }
-                    
-                    ToolbarItem(placement:.principal){
-                        Label("New", systemImage: "tag.fill")
                     }
                 }
             }

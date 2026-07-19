@@ -36,7 +36,7 @@ struct ServicesForm: View {
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(action: closeView) {
-                            Label("Cancel", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
                         .appSheetCancelButtonStyle()
                     }
@@ -49,6 +49,7 @@ struct ServicesForm: View {
                         .appSheetPrimaryButtonStyle()
                     }
                 }
+                .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
             }
             .macOSFixedSheet(width: 680, height: 720)
         #else
@@ -57,25 +58,23 @@ struct ServicesForm: View {
                     ServiceMultiPlataformForm(service: $serviceModel, label: $serviceLabel, save: performSaveAcion, edition: edition)
                 }
                 .listStyle(InsetGroupedListStyle())
+                .navigationTitle(edition ? "Edit" : "New")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
                             closeView()
                         }){
-                            Label("Return", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
                         
-                        .tint(.red)
+                        .appSheetCancelButtonStyle()
                     }
                      
-                    ToolbarItem(placement: .primaryAction ){
+                    ToolbarItem(placement: .confirmationAction ){
                         ToolbarAddButton(edition: edition, action: performSaveAcion)
                     }
-                    
-                    ToolbarItem(placement:.principal){
-                        Label(edition ? "Edit" : "New", systemImage: "chart.bar.doc.horizontal")
-                    }
                 }
+                .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
             }
             
 #endif
@@ -328,20 +327,6 @@ struct ServiceMultiPlataformForm : View {
                     
             }
             
-            Section{
-#if os(iOS)
-                Button(action: save) {
-                    Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                        .appToolbarLabel()
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
-#endif
-            }
-        
-       
         .sheet(isPresented: $showFormLabel, content: {
             labelPicker(label: $label, showLabelList: $showLabelList)
         })

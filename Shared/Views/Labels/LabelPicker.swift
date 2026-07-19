@@ -38,18 +38,6 @@ struct labelPicker: View {
             ZStack{
                 List{
                     LabelPickerListElements(label: $label, showLabelList: $showLabelList)
-                    
-                    Button(action: {
-                        showFormLabel.toggle()
-                    }){
-                        Label("New", systemImage: "plus.circle.fill")
-                            .appToolbarLabel()
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.accentColor)
-                     
                 }
                 .listStyle(InsetGroupedListStyle())
               
@@ -61,18 +49,15 @@ struct labelPicker: View {
                     Button(action:{
                         showLabelList.toggle()
                     }){
-                        Label("Return", systemImage: "xmark")
+                        Label("Close", systemImage: "xmark")
                     }
-                    .tint(.red)
+                    .appSheetCancelButtonStyle()
                 }
-                /*ToolbarItem(placement: .confirmationAction){
-                    Button(action: {
+                ToolbarItem(placement: .confirmationAction){
+                    ToolbarAddButton(edition: false) {
                         showFormLabel.toggle()
-                    }){
-                       Label("New", image: "plus.circle.fill")
-                            .foregroundColor(.accentColor)
                     }
-                }*/
+                }
                 ToolbarItem(placement:.principal){
                     Label("Tags", systemImage: "tag.fill")
                 }

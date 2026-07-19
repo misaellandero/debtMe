@@ -40,7 +40,7 @@ struct TransactionsForm: View {
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(action: closeView) {
-                            Label("Cancel", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
                         .appSheetCancelButtonStyle()
                     }
@@ -53,43 +53,29 @@ struct TransactionsForm: View {
                         .appSheetPrimaryButtonStyle()
                     }
                 }
+                .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
             }
             .macOSFixedSheet(width: 560, height: 640)
             #else
-            NavigationView{
-                VStack{
-                    List{
-                        TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
-                        Section{
-                            Button(action: performSaveAcion) {
-                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                    .appToolbarLabel()
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 8)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accentColor)
-                        }
-                    }
-                    .listStyle(InsetGroupedListStyle())
-                  
+            NavigationStack{
+                List{
+                    TransactionMultiPlataformForm(transactionModel: $transactionModel, saveTransaction: performSaveAcion,closeView: closeView, edition: edition)
                 }
+                .listStyle(InsetGroupedListStyle())
+                .navigationTitle(edition ? "Edit" : "New")
+                .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
                             closeView()
                         }){
-                            Label("Return", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
-                        .tint(.red)
+                        .appSheetCancelButtonStyle()
                     }
                    
-                    ToolbarItem(placement: .primaryAction ){
+                    ToolbarItem(placement: .confirmationAction ){
                         ToolbarAddButton(edition: edition, action: performSaveAcion)
-                    }
-                    
-                    ToolbarItem(placement:.principal){
-                        Label("New", systemImage: "dollarsign.square.fill")
                     }
                 }
             }

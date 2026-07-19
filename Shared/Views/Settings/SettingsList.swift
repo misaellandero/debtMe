@@ -140,6 +140,9 @@ struct SettingsList: View {
             
         }
         .navigationTitle("Settings")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.large)
+        #endif
     }
 #if os(iOS)
     // MARK: -  Cambair el icono

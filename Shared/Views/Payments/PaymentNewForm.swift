@@ -34,7 +34,7 @@ struct PaymentNewForm: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button(action: closeView) {
-                                Label("Cancel", systemImage: "xmark")
+                                Label("Close", systemImage: "xmark")
                             }
                             .appSheetCancelButtonStyle()
                         }
@@ -47,25 +47,27 @@ struct PaymentNewForm: View {
                             .appSheetPrimaryButtonStyle()
                         }
                     }
+                    .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
                 }
                 .macOSFixedSheet(width: 560, height: 640)
             #else
-            NavigationView(){
+            NavigationStack {
                 List{
                     PaymentMultiplatformForm(paymentModel: $paymentModel, savePayment: performSaveAcion, closeView: closeView, edition: edition)
                 }
-                .navigationTitle(LocalizedStringKey(edition ? "Edit" : "New"))
+                .navigationTitle(edition ? "Edit" : "New")
                 .listStyle(InsetGroupedListStyle())
+                .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
               
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction ){
                         Button(action: closeView){
-                            Label("Return", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
-                        .tint(.red)
+                        .appSheetCancelButtonStyle()
                     }
-                    ToolbarItem(placement: .primaryAction ){
-                        ToolbarAddButton(edition: edition, action: savePayment)
+                    ToolbarItem(placement: .confirmationAction ){
+                        ToolbarAddButton(edition: edition, action: performSaveAcion)
                     }
                 }
             }
@@ -201,22 +203,6 @@ struct PaymentMultiplatformForm: View {
                 #if os(macOS)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 #endif
-                #if !os(macOS)
-                Section{
-                    Button(action: savePayment) {
-                        Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                            .appToolbarLabel()
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.accentColor)
-                }
-                #endif
-            
-      
-         
-        
     }
     
     

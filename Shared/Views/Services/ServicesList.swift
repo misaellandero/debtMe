@@ -722,6 +722,7 @@ struct ServicesList: View {
         })
         #if os(iOS)
         .navigationTitle("Services")
+        .navigationBarTitleDisplayMode(.large)
         .searchable(text: $searchQuery)
         #endif
         #if os(macOS)

@@ -43,7 +43,7 @@ struct ContactsNewForm: View {
                             Button {
                                 presentationMode.wrappedValue.dismiss()
                             } label: {
-                                Label("Cancel", systemImage: "xmark")
+                                Label("Close", systemImage: "xmark")
                             }
                             .appSheetCancelButtonStyle()
                         }
@@ -56,45 +56,29 @@ struct ContactsNewForm: View {
                             .appSheetPrimaryButtonStyle()
                         }
                     }
+                    .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
                 }
                 .macOSFixedSheet(width: 520, height: 360)
                 #else
-                NavigationView{
-                    ZStack{
-                        List{
-                            NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion, edition: edition)
-                        }
-                        .listStyle(InsetGroupedListStyle())
-                         VStack{
-                             Spacer()
-                             Button(action: performSaveAcion) {
-                                 Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                     .appToolbarLabel()
-                                     .frame(maxWidth: .infinity)
-                                     .padding(.vertical, 10)
-                             }
-                             .buttonStyle(.borderedProminent)
-                             .tint(.accentColor)
-                             .controlSize(.large)
-                             .padding()
-                        }
+                NavigationStack{
+                    List{
+                        NewContactMultiplatformForm(contact: $contact, labelContact: $labelContact, saveContact: performSaveAcion, edition: edition)
                     }
+                    .listStyle(InsetGroupedListStyle())
+                    .navigationTitle(edition ? "Edit Contact" : "New Contact")
+                    .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
                 .toolbar{
                     ToolbarItem(placement: .cancellationAction){
                         Button(action:{
                             self.presentationMode.wrappedValue.dismiss()
                         }){
-                            Label("Return", systemImage: "xmark")
+                            Label("Close", systemImage: "xmark")
                         }
-                        .tint(.red)
+                        .appSheetCancelButtonStyle()
                     }
                      
-                    ToolbarItem(placement: .primaryAction ){
+                    ToolbarItem(placement: .confirmationAction ){
                         ToolbarAddButton(edition: edition, action: performSaveAcion)
-                    }
-                    
-                    ToolbarItem(placement: .principal){
-                        Label(edition ? "Edit" : "New", systemImage: "person.2.fill")
                     }
                 }
                 }
@@ -288,7 +272,7 @@ struct NewContactMultiplatformForm : View {
                 }
                 .sheet(isPresented: $showLabelList){
                    
-                    NavigationView{
+                    NavigationStack{
                         labelPicker(label: $labelContact, showLabelList: $showLabelList)
                     }
                     .environment(\.horizontalSizeClass, .compact)

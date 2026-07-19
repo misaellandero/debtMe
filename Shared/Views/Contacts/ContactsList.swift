@@ -41,7 +41,8 @@ struct ContactsList: View {
             .searchable(text: $searchQuery)
             .listStyle(InsetGroupedListStyle())
             .navigationBarBackButtonHidden(true)
-            .navigationBarTitle(Text("People"))
+            .navigationTitle("People")
+            .navigationBarTitleDisplayMode(.large)
             
             #endif
         }

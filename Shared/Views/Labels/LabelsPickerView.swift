@@ -118,21 +118,20 @@ struct LabelsPickerView: View {
                     
                 }*/
                 
-                ToolbarItem(placement: .primaryAction ){
+                ToolbarItem(placement: .confirmationAction ){
                     ToolbarAddButton(edition: true){
                         showFormLabel.toggle()
                     }
                 }
                 
-                ToolbarItem(placement: .destructiveAction){
+                ToolbarItem(placement: .cancellationAction){
                     Button(action: {
                         dismiss()
                     }){
-                       Label("Cancel", systemImage: "xmark")
+                       Label("Close", systemImage: "xmark")
                             .labelStyle(.titleAndIcon)
-                            .foregroundColor(.red)
                     }
-                    
+                    .appSheetCancelButtonStyle()
                 }
                 #endif
             }

@@ -23,7 +23,7 @@ struct ToolbarAddButton: View {
 
 #Preview {
     NavigationStack(){
-        Text("sime view")
+        Text("Sample view")
             .toolbar {
             ToolbarItem(placement: .primaryAction){
                 ToolbarAddButton(edition: true, action: {})

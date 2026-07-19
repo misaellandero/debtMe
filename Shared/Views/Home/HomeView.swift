@@ -171,6 +171,9 @@ struct HomeView: View {
             }
             #endif
             .navigationTitle("Home")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.large)
+            #endif
             .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
                 paidStateVersion += 1
             }

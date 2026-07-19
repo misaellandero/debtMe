@@ -47,4 +47,26 @@ extension View {
         self.buttonStyle(.bordered)
             .tint(.red)
     }
+
+    func appSheetBottomConfirmationAction(
+        edition: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        self.safeAreaInset(edge: .bottom) {
+            Button(action: action) {
+                Label(
+                    edition ? "Save" : "Add",
+                    systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill"
+                )
+                .appToolbarLabel()
+                .labelStyle(.titleAndIcon)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+            }
+            .appSheetPrimaryButtonStyle()
+            .controlSize(.large)
+            .padding()
+            .background(.bar)
+        }
+    }
 }
