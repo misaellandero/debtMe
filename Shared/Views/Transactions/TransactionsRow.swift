@@ -57,13 +57,7 @@ struct TransactionsRow: View {
                 .font(.caption)
                 
                 HStack{
-                    if transaction.debt {
-                        Text("They Owe me")
-                            .strikethrough(transaction.settled)
-                    } else {
-                        Text("I Owe Them")
-                            .strikethrough(transaction.settled)
-                    }
+                    directionBadge
                     Spacer()
                     Text(transaction.amount.toCurrencyString())
                         .strikethrough(transaction.settled)
@@ -88,6 +82,26 @@ struct TransactionsRow: View {
         }
     }
     
+    // Tag that tells at a glance whether the record is money owed to me or money I owe
+    var directionBadge: some View {
+        Label(
+            transaction.debt ? LocalizedStringKey("They Owe me") : LocalizedStringKey("I Owe Them"),
+            systemImage: transaction.debt ? "arrow.down.circle.fill" : "arrow.up.circle.fill"
+        )
+        .strikethrough(transaction.settled)
+        .font(Font.system(.subheadline, design: .rounded).weight(.bold))
+        .foregroundColor(directionColor)
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .background(directionColor.opacity(0.15))
+        .clipShape(Capsule())
+    }
+
+    // Blue for money they owe me, orange for money I owe (same scheme as the contacts list)
+    var directionColor: Color {
+        transaction.debt ? Color.blue : Color.orange
+    }
+
     var dolarIconColor : Color {
         // They own us and not pay
         if transaction.debt && !transaction.settled {
@@ -99,7 +113,7 @@ struct TransactionsRow: View {
         }
         // we own they and havent pay
         else if !transaction.debt && !transaction.settled {
-            return Color.red
+            return Color.orange
         }
         // we own they and already pay
         else {
