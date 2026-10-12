@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ButtonLabelContinue: View {
     var label : String = "Continue"
-    var systemImage: String = "checkmark.circle"
+    var systemImage: String = "checkmark.circle.fill"
     var foreground : Color = .white
     var body: some View {
         HStack{
@@ -19,7 +19,7 @@ struct ButtonLabelContinue: View {
                 .padding()
             Spacer()
         }
-        .background(Color.accentColor )
+        .background(AppTheme.actionTint)
         .cornerRadius(10)
         .padding()
     }

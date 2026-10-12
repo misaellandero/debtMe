@@ -13,16 +13,11 @@ import ConfettiSwiftUI
 
 struct ConfettiView: View {
     @Binding var counter: Int
-    #if os(iOS)
-    @State var screenwidht = UIScreen.main.bounds.width * 0.5
-    #else
-    @State var screenwidht = 200.5//NSScreen.main.width * 0.5
-    #endif
   
     var body: some View {
-        Group {
+        GeometryReader { proxy in
             #if canImport(ConfettiSwiftUI)
-            ConfettiCannon(counter: $counter, num: 50, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: screenwidht, repetitions: 3, repetitionInterval: 0.7)
+            ConfettiCannon(counter: $counter, num: 50, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: proxy.size.width * 0.5, repetitions: 3, repetitionInterval: 0.7)
                 .offset(y: -228)
             #else
             EmptyView()
@@ -39,15 +34,9 @@ struct ConfettiView: View {
 
 struct ConfettiMoneyView: View {
     @Binding var counter: Int
-    #if os(iOS)
-    @State var screenwidht = UIScreen.main.bounds.width * 0.5
-    #else
-    @State var screenwidht = 200.5//NSScreen.main.width * 0.5
-    #endif
-     
     
     var body: some View {
-        Group {
+        GeometryReader { proxy in
             #if canImport(ConfettiSwiftUI)
             ConfettiCannon(
                 counter: $counter,
@@ -56,7 +45,7 @@ struct ConfettiMoneyView: View {
                 confettiSize: 30,
                 openingAngle: Angle(degrees: 0),
                 closingAngle: Angle(degrees: 360),
-                radius: screenwidht,
+                radius: proxy.size.width * 0.5,
                 repetitions: 3,
                 repetitionInterval: 0.7
             )
@@ -67,4 +56,3 @@ struct ConfettiMoneyView: View {
         }
     }
 }
-

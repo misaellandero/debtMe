@@ -81,8 +81,7 @@ struct DetailImageView: View {
                         Label("Share", systemImage: "square.and.arrow.up")
                             .appToolbarLabel()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.accentColor)
+                    .buttonStyle(.appAction(tint: .blue, expandsHorizontally: false))
                     
                     Spacer()
                     Button {
@@ -91,8 +90,7 @@ struct DetailImageView: View {
                         Label("Close", systemImage: "xmark")
                             .appToolbarLabel()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
+                    .appSheetCancelButtonStyle()
 
                 }
             }

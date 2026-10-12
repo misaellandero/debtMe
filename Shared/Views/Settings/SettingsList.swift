@@ -27,8 +27,8 @@ struct SettingsList: View {
             // MARK: - Contacts Tab
             Section(header:
                         Text("Contacts Tab")
-                .bold()
-                .foregroundColor(.secondary)
+                .appHeadline()
+                .foregroundStyle(.secondary)
             ){
                 
                 // MARK: - Show Summary
@@ -41,9 +41,9 @@ struct SettingsList: View {
                     }
                     .labelsHidden()
                 }
-                
+	                
             }
-            
+	            
             // MARK: - Personalization Tab
             #if os(iOS)
             /*Section(header:
@@ -58,8 +58,8 @@ struct SettingsList: View {
                 Section(
                     header:
                     Text("Security")
-                    .bold()
-                    .foregroundColor(.secondary),
+                    .appHeadline()
+                    .foregroundStyle(.secondary),
                     footer: Text("When you turn on this option, the device will require your FaceID, TouchID, or passcode to unlock the app.")
                 ){
                     // MARK: - Lock Upon Exit
@@ -76,13 +76,13 @@ struct SettingsList: View {
                         }
                         .labelsHidden()
                     }
-                }
-            
+	                }
+	            
             // MARK: - About this App
             Section(header:
                         Text("About this App")
-                .bold()
-                .foregroundColor(.secondary)
+                .appHeadline()
+                .foregroundStyle(.secondary)
             ){
                 
                 NavigationLink(destination: AboutThisAppView()) {
@@ -98,9 +98,21 @@ struct SettingsList: View {
                 NavigationLink(destination:   LegalAppView(headerImage: "lock.shield", title: "Privacy Policy", text: "Privacy_Text")) {
                     Label("Privacy Policy", systemImage: "lock.shield.fill")
                 }
-                
-                
+	                
+		                
             }
+
+            #if DEBUG
+            Section(header:
+                        Text("Developer")
+                .appHeadline()
+                .foregroundStyle(.secondary)
+            ) {
+                NavigationLink(destination: StyleGuidePreviewView()) {
+                    Label("Style Guide", systemImage: "paintpalette.fill")
+                }
+            }
+            #endif
 
             // MARK: - Footer
             Section{
@@ -132,8 +144,7 @@ struct SettingsList: View {
                     
                 }
                 #if os(iOS)
-                .listRowBackground(Color(colorScheme == .light ? UIColor.secondarySystemBackground : UIColor.systemBackground )
-                .opacity(0.95))
+                .listRowBackground(Color(colorScheme == .light ? UIColor.secondarySystemBackground : UIColor.systemBackground).opacity(0.95))
                 
                 #endif
             }
@@ -196,6 +207,7 @@ struct StyleGuidePreviewView: View {
                 typographySection
                 toolbarSection
                 accentButtonsSection
+                buttonStyleBuilderSection
                 appButtonStylesSection
                 shapesSection
             }
@@ -261,7 +273,7 @@ struct StyleGuidePreviewView: View {
                     .padding(.vertical, 8)
                     .background(.thinMaterial, in: Capsule())
 
-                Label("Add", systemImage: "plus.circle.fill")
+                Label("Add", systemImage: "plus")
                     .appToolbarLabel()
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
@@ -280,19 +292,17 @@ struct StyleGuidePreviewView: View {
             HStack(spacing: 12) {
                 Button {
                 } label: {
-                    Label("Add", systemImage: "plus.circle.fill")
+                    Label("Add", systemImage: "plus")
                         .appToolbarLabel()
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
+                .buttonStyle(.appAdd)
 
                 Button {
                 } label: {
                     Label("Edit", systemImage: AppIcons.edit)
                         .appToolbarLabel()
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor.opacity(0.85))
+                .buttonStyle(.appEdit)
 
                 Spacer(minLength: 0)
             }
@@ -322,6 +332,10 @@ struct StyleGuidePreviewView: View {
                 Spacer(minLength: 0)
             }
         }
+    }
+
+    private var buttonStyleBuilderSection: some View {
+        ButtonStyleBuilderView()
     }
 
     private var shapesSection: some View {
@@ -426,18 +440,203 @@ struct StyleGuidePreviewView: View {
     }
 }
 
+private enum StyleGuideButtonShape: String, CaseIterable, Identifiable {
+    case capsule = "Capsule"
+    case roundedRectangle = "Rounded Rectangle"
+    case circle = "Circle"
+
+    var id: String { rawValue }
+}
+
+private enum StyleGuideButtonSymbol: String, CaseIterable, Identifiable {
+    case plus = "plus"
+    case checkmark = "checkmark"
+    case pencil = "pencil"
+    case trash = "trash"
+
+    var id: String { rawValue }
+}
+
+private struct ButtonStyleBuilderView: View {
+    @State private var tint = AppTheme.actionTint
+    @State private var shape = StyleGuideButtonShape.circle
+    @State private var symbol = StyleGuideButtonSymbol.plus
+    @State private var title = "Add"
+    @State private var size = 64.0
+    @State private var horizontalPadding = 18.0
+    @State private var verticalPadding = 12.0
+    @State private var cornerRadius = 18.0
+    @State private var showTitle = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Button Style Builder")
+                .appHeadline()
+
+            Text("Tune a Liquid Glass button and use the generated SwiftUI snippet as the shared style reference.")
+                .font(AppTypography.caption)
+                .foregroundStyle(.secondary)
+
+            preview
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+
+            controls
+            snippet
+        }
+        .padding(14)
+        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    @ViewBuilder
+    private var preview: some View {
+        Button {
+        } label: {
+            if showTitle {
+                Label(title, systemImage: symbol.rawValue)
+                    .labelStyle(.titleAndIcon)
+                    .font(.system(size: shape == .circle ? 30 : 18, weight: .semibold))
+                    .foregroundStyle(tint)
+                    .frame(width: shape == .circle ? size : nil, height: shape == .circle ? size : nil)
+                    .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
+                    .padding(.vertical, shape == .circle ? 0 : verticalPadding)
+            } else {
+                Label(title, systemImage: symbol.rawValue)
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: shape == .circle ? 30 : 18, weight: .semibold))
+                    .foregroundStyle(tint)
+                    .frame(width: shape == .circle ? size : nil, height: shape == .circle ? size : nil)
+                    .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
+                    .padding(.vertical, shape == .circle ? 0 : verticalPadding)
+            }
+        }
+        .buttonStyle(.plain)
+        .modifier(
+            StyleGuideGlassPreviewModifier(
+                tint: tint,
+                shape: shape,
+                cornerRadius: cornerRadius
+            )
+        )
+    }
+
+    private var controls: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            ColorPicker("Tint", selection: $tint, supportsOpacity: true)
+
+            Picker("Shape", selection: $shape) {
+                ForEach(StyleGuideButtonShape.allCases) { shape in
+                    Text(shape.rawValue).tag(shape)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            Picker("Symbol", selection: $symbol) {
+                ForEach(StyleGuideButtonSymbol.allCases) { symbol in
+                    Text(symbol.rawValue).tag(symbol)
+                }
+            }
+            .pickerStyle(.menu)
+
+            TextField("Title", text: $title)
+                .textFieldStyle(.roundedBorder)
+
+            Toggle("Show title", isOn: $showTitle)
+
+            LabeledContent("Size") {
+                Slider(value: $size, in: 44...96, step: 1)
+                    .frame(maxWidth: 220)
+            }
+
+            if shape != .circle {
+                LabeledContent("Horizontal padding") {
+                    Slider(value: $horizontalPadding, in: 10...32, step: 1)
+                        .frame(maxWidth: 220)
+                }
+
+                LabeledContent("Vertical padding") {
+                    Slider(value: $verticalPadding, in: 8...24, step: 1)
+                        .frame(maxWidth: 220)
+                }
+
+                LabeledContent("Corner radius") {
+                    Slider(value: $cornerRadius, in: 10...32, step: 1)
+                        .frame(maxWidth: 220)
+                }
+            }
+        }
+        .font(AppTypography.body)
+    }
+
+    private var snippet: some View {
+        Text(generatedSnippet)
+            .font(.system(.caption, design: .monospaced))
+            .textSelection(.enabled)
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+
+    private var generatedSnippet: String {
+        let shapeCode: String
+        switch shape {
+        case .capsule:
+            shapeCode = ".capsule"
+        case .roundedRectangle:
+            shapeCode = ".rect(cornerRadius: \(Int(cornerRadius)))"
+        case .circle:
+            shapeCode = ".circle"
+        }
+
+        return """
+        Label("\(title)", systemImage: "\(symbol.rawValue)")
+            .foregroundStyle(AppTheme.actionTint)
+            .glassEffect(.regular.tint(AppTheme.actionTint).interactive(), in: \(shapeCode))
+        """
+    }
+}
+
+private struct StyleGuideGlassPreviewModifier: ViewModifier {
+    let tint: Color
+    let shape: StyleGuideButtonShape
+    let cornerRadius: Double
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            switch shape {
+            case .capsule:
+                content.glassEffect(.regular.tint(tint).interactive(), in: .capsule)
+            case .roundedRectangle:
+                content.glassEffect(.regular.tint(tint).interactive(), in: .rect(cornerRadius: cornerRadius))
+            case .circle:
+                content.glassEffect(.regular.tint(tint).interactive(), in: .circle)
+            }
+        } else {
+            switch shape {
+            case .capsule:
+                content.background(.thinMaterial, in: Capsule())
+            case .roundedRectangle:
+                content.background(.thinMaterial, in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            case .circle:
+                content.background(.thinMaterial, in: Circle())
+            }
+        }
+    }
+}
+
 private struct StyleGuideActionButtons: View {
     var body: some View {
         VStack(spacing: 10) {
             Button {
             } label: {
-                Label("Add", systemImage: "plus.circle.fill")
+                Label("Add", systemImage: "plus")
             }
             .buttonStyle(.appAdd)
 
             Button {
             } label: {
-                Label("Continue", systemImage: "checkmark.circle")
+                Label("Continue", systemImage: "checkmark.circle.fill")
             }
             .buttonStyle(.appContinue)
 
@@ -495,8 +694,7 @@ struct StyleGuideSheetPreview: View {
                                 .appToolbarLabel()
                                 .frame(maxWidth: .infinity)
                         }
-                        .buttonStyle(.bordered)
-                        .tint(.red)
+                        .buttonStyle(.appAction(tint: AppTheme.destructiveTint))
                     }
                 }
                 .padding(24)

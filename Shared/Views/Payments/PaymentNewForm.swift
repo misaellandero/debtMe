@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct PaymentNewForm: View {
     //Model View de Coredata
@@ -40,11 +41,7 @@ struct PaymentNewForm: View {
                         }
 
                         ToolbarItem(placement: .confirmationAction) {
-                            Button(action: performSaveAcion) {
-                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                    .appToolbarLabel()
-                            }
-                            .appSheetPrimaryButtonStyle()
+                            SheetConfirmationButton(edition: edition, action: performSaveAcion)
                         }
                     }
                     .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
@@ -67,7 +64,7 @@ struct PaymentNewForm: View {
                         .appSheetCancelButtonStyle()
                     }
                     ToolbarItem(placement: .confirmationAction ){
-                        ToolbarAddButton(edition: edition, action: performSaveAcion)
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
             }
@@ -175,19 +172,66 @@ struct PaymentMultiplatformForm: View {
     var savePayment : () -> Void
     var closeView : () -> Void
     var edition = false
+    @State private var amountIsFocused = false
+
     var body: some View {
-        Section{
+#if os(macOS)
+        VStack(spacing: 16) {
+            AppMacFormSection {
+                AppMacFormRow("Date", systemImage: "calendar") {
+                    DatePicker("Date", selection: $paymentModel.date, displayedComponents: .date)
+                        .labelsHidden()
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Note") {
+                    TextField("Note", text: $paymentModel.note)
+                        .textFieldStyle(.plain)
+                        .multilineTextAlignment(.trailing)
+                }
+            }
+
+            AppAmountEntryField(amountText: $paymentModel.amout, isFocused: $amountIsFocused)
+                .disabled(paymentModel.payAll)
+
+            AppMacFormSection {
+                AppMacFormRow("Scheduled payment", systemImage: "calendar.badge.clock") {
+                    Toggle("Scheduled payment", isOn: $paymentModel.isPlanned.onChange(changePlanned))
+                        .labelsHidden()
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Reminder", systemImage: "bell") {
+                    Toggle("Reminder", isOn: $paymentModel.reminderEnabled)
+                        .labelsHidden()
+                        .disabled(!paymentModel.isPlanned)
+                }
+                if !edition {
+                    AppMacFormDivider()
+                    AppMacFormRow("Pay Full Settlement") {
+                        Toggle("Pay Full Settlement", isOn: $paymentModel.payAll.onChange(changePayAll))
+                            .labelsHidden()
+                            .disabled(paymentModel.isPlanned)
+                    }
+                }
+            }
+
+            AppMacFormSection {
+                ImagePickerView(photoData: $paymentModel.photo)
+                    .padding(.vertical, 8)
+            }
+        }
+#else
+        Section {
             DatePicker("Date", selection: $paymentModel.date)
                 .datePickerStyle(GraphicalDatePickerStyle())
             TextField("Note", text: $paymentModel.note)
-                #if os(macOS)
-            TextField("Amount", text: $paymentModel.amout)
+        }
+
+        Section {
+            AppAmountEntryField(amountText: $paymentModel.amout, isFocused: $amountIsFocused)
                 .disabled(paymentModel.payAll)
-                #else
-            TextField("Amount", text: $paymentModel.amout)
-                .disabled(paymentModel.payAll)
-                .keyboardType(.decimalPad)
-                #endif
+        }
+
+        Section {
             Toggle("Scheduled payment", isOn: $paymentModel.isPlanned.onChange(changePlanned))
             Toggle("Reminder", isOn: $paymentModel.reminderEnabled)
                 .disabled(!paymentModel.isPlanned)
@@ -200,15 +244,13 @@ struct PaymentMultiplatformForm: View {
         Section{
             ImagePickerView(photoData: $paymentModel.photo)
         }
-                #if os(macOS)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                #endif
+#endif
     }
     
     
     func changePayAll(_ tag: Bool){
       
-        var payAll = tag
+        let payAll = tag
         
         if payAll {
             paymentModel.amout = String(localized: LocalizedStringResource("All"))

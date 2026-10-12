@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TransactionsContactList: View {
     
@@ -97,11 +98,10 @@ struct TransactionsContactList: View {
                                 Button {
                                     showAddTransaction.toggle()
                                 } label: {
-                                    Label("New Transaction", systemImage: "plus.circle.fill")
-                                        .appToolbarLabel()
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .tint(.accentColor)
+                                Label("New Transaction", systemImage: "plus")
+                                    .appToolbarLabel()
+                            }
+                            .buttonStyle(.appAdd)
                             }
                             Spacer()
                         }
@@ -148,9 +148,8 @@ struct TransactionsContactList: View {
                         showEditContact.toggle()
                     }){
                         Label("Edit", systemImage: AppIcons.edit)
-                            .appToolbarLabel()
-                            .foregroundStyle(Color.accentColor)
                     }
+                    .buttonStyle(.appToolbarEdit)
                 }
                 
                 #if os(macOS)
@@ -162,14 +161,9 @@ struct TransactionsContactList: View {
                 
                 ToolbarItem(placement: .primaryAction ){
                     
-                    Button(action:{
+                    ToolbarAddButton(edition: false) {
                         showAddTransaction.toggle()
-                    }){
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .appToolbarLabel()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.accentColor)
                 }
                 
                 ToolbarItem(placement: .automatic) {

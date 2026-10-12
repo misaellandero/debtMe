@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 #if canImport(ImagePlayground)
 import ImagePlayground
@@ -49,11 +50,7 @@ struct ContactsNewForm: View {
                         }
 
                         ToolbarItem(placement: .confirmationAction) {
-                            Button(action: performSaveAcion) {
-                                Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                    .appToolbarLabel()
-                            }
-                            .appSheetPrimaryButtonStyle()
+                            SheetConfirmationButton(edition: edition, action: performSaveAcion)
                         }
                     }
                     .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
@@ -78,7 +75,7 @@ struct ContactsNewForm: View {
                     }
                      
                     ToolbarItem(placement: .confirmationAction ){
-                        ToolbarAddButton(edition: edition, action: performSaveAcion)
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
                 }
@@ -163,100 +160,53 @@ struct NewContactMultiplatformForm : View {
     @State var showFormLabel = false
     
     var body: some View {
-        Group{
-            HStack{
-                Menu {
-                    Button {
-                        showEmojiPicker()
-                    } label: {
-                        Label("Emoji Picker", systemImage: "face.smiling")
-                    }
+        Group {
+#if os(macOS)
+            VStack(spacing: 16) {
+                contactAvatarMenu(size: 64, cornerRadius: 18)
+                    .buttonStyle(.plain)
 
-                    #if canImport(ImagePlayground)
-                    Button {
-                        showImagePlayground = true
-                    } label: {
-                        Label("Create with Apple Intelligence", systemImage: "sparkles")
+                AppMacFormSection {
+                    AppMacFormRow("Name") {
+                        TextField("Name", text: $contact.name)
+                            .textFieldStyle(.plain)
+                            .multilineTextAlignment(.trailing)
                     }
-                    #endif
+                    AppMacFormDivider()
+                    AppMacFormRow("Tag", systemImage: "tag.fill") {
+                        HStack(spacing: 8) {
+                            Picker(selection: $labelContact) {
+                                Text("Select a tag")
+                                    .tag(Optional<ContactLabel>.none)
+                                ForEach(labels, id: \.id) { label in
+                                    Text(label.wrappedName)
+                                        .tag(Optional(label))
+                                }
+                            } label: {
+                                Text(labelContact?.wrappedName ?? "Select a tag")
+                            }
+                            .labelsHidden()
+                            .pickerStyle(.menu)
+                            .foregroundStyle(labelContact?.labelColor ?? AppTheme.actionTint)
 
-                    if contact.avatarImage != nil {
-                        Button(role: .destructive) {
-                            contact.avatarImage = nil
-                        } label: {
-                            Label("Remove Generated Image", systemImage: "trash")
+                            Button {
+                                showFormLabel.toggle()
+                            } label: {
+                                Label("New", systemImage: "plus")
+                            }
+                            .appGlassControlButtonStyle()
                         }
                     }
-                } label: {
-                    ContactAvatarView(
-                        imageData: contact.avatarImage,
-                        emoji: contact.emoji,
-                        size: 46,
-                        cornerRadius: 12
-                    )
-                    .scaleEffect(animate ? 1.12 : 1)
-                    .animation(.easeInOut, value: animate)
                 }
-                .menuStyle(.button)
-                .popover(
-                    isPresented: self.$showPopover,
-                    arrowEdge: .top
-                ) {
-                   
-                    #if os(macOS)
-                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                    #elseif os(visionOS)
-                    EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                    #else
-                    if horizontalSizeClass == .compact {
-                        EmojiSelecter(emoji: $contact.emoji.onChange(showChange))
-                    } else {
-                        EmojiPicker(emoji: $contact.emoji.onChange(showChange))
-                    }
-                    #endif
-                }
-                #if canImport(ImagePlayground)
-                .imagePlaygroundSheet(
-                    isPresented: $showImagePlayground,
-                    concept: imagePlaygroundConcept,
-                    sourceImage: nil,
-                    onCompletion: { url in
-                        loadGeneratedContactImage(from: url)
-                    },
-                    onCancellation: nil
-                )
-                #endif
-                
+            }
+#else
+            HStack {
+                contactAvatarMenu(size: 46, cornerRadius: 12)
                 TextField("Name", text: $contact.name)
             }
             .buttonStyle(BorderlessButtonStyle())
-            
-            HStack{
-                #if os(macOS)
-                 
-                Picker(selection: $labelContact) {
-                    ForEach(labels, id: \.id){ label in
-                        Text(label.wrappedName)
-                            .tag(Optional(label))
-                    }
-                } label: {
-                    Label(labelContact?.wrappedName ?? "Select a tag", systemImage: "tag.fill")
-                        .foregroundStyle(labelContact?.labelColor ?? .secondary)
-                   
-                }
-                .pickerStyle(MenuPickerStyle())
-                
-                Button(action: {
-                    showFormLabel.toggle()
-                }){
-                    Label("New" , systemImage: "plus.circle.fill")
-                }
-                .buttonStyle(BorderedButtonStyle())
-                .sheet(isPresented: $showFormLabel, content: {
-                    LabelNewForm(showForm: $showFormLabel)
-                        .environment(\.horizontalSizeClass, .compact)
-                }) 
-                #else
+
+            HStack {
                 Button(action:{
                     showLabelList.toggle()
                 }){
@@ -271,16 +221,81 @@ struct NewContactMultiplatformForm : View {
                     .cornerRadius(10)
                 }
                 .sheet(isPresented: $showLabelList){
-                   
                     NavigationStack{
                         labelPicker(label: $labelContact, showLabelList: $showLabelList)
                     }
                     .environment(\.horizontalSizeClass, .compact)
-                  
                 }
-                #endif
             }
+#endif
         }
+        .sheet(isPresented: $showFormLabel, content: {
+            LabelNewForm(showForm: $showFormLabel)
+                .environment(\.horizontalSizeClass, .compact)
+        })
+    }
+
+    private func contactAvatarMenu(size: CGFloat, cornerRadius: CGFloat) -> some View {
+        Menu {
+            Button {
+                showEmojiPicker()
+            } label: {
+                Label("Emoji Picker", systemImage: "face.smiling")
+            }
+
+            #if canImport(ImagePlayground)
+            Button {
+                showImagePlayground = true
+            } label: {
+                Label("Create with Apple Intelligence", systemImage: "sparkles")
+            }
+            #endif
+
+            if contact.avatarImage != nil {
+                Button(role: .destructive) {
+                    contact.avatarImage = nil
+                } label: {
+                    Label("Remove Generated Image", systemImage: "trash")
+                }
+            }
+        } label: {
+            ContactAvatarView(
+                imageData: contact.avatarImage,
+                emoji: contact.emoji,
+                size: size,
+                cornerRadius: cornerRadius
+            )
+            .scaleEffect(animate ? 1.12 : 1)
+            .animation(.easeInOut, value: animate)
+        }
+        .menuStyle(.button)
+        .popover(
+            isPresented: self.$showPopover,
+            arrowEdge: .top
+        ) {
+            #if os(macOS)
+            EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+            #elseif os(visionOS)
+            EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+            #else
+            if horizontalSizeClass == .compact {
+                EmojiSelecter(emoji: $contact.emoji.onChange(showChange))
+            } else {
+                EmojiPicker(emoji: $contact.emoji.onChange(showChange))
+            }
+            #endif
+        }
+        #if canImport(ImagePlayground)
+        .imagePlaygroundSheet(
+            isPresented: $showImagePlayground,
+            concept: imagePlaygroundConcept,
+            sourceImage: nil,
+            onCompletion: { url in
+                loadGeneratedContactImage(from: url)
+            },
+            onCancellation: nil
+        )
+        #endif
     }
     
     

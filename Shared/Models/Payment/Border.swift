@@ -48,7 +48,7 @@ struct Border: View {
     
     var body: some View {
             HStack(spacing: -1) {
-                ForEach(0 ..< Int(cutes)) { _ in
+                ForEach(0 ..< Int(cutes), id: \.self) { _ in
                     Image("borderTicket")
                         .resizable()
                         .scaledToFill()

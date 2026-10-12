@@ -24,6 +24,8 @@ struct ServiceRow: View {
                     .frame(width: 50, height: 50)
                 VStack(alignment:.leading){
                     Text(ServiceName)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
                         .strikethrough(isPaid, color: useAdaptiveText ? .secondary : .white.opacity(0.8))
                     Text("Pay Before ")
                         .font(.caption)

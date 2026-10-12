@@ -29,6 +29,7 @@ extension Services {
     @NSManaged public var color: Int16
     @NSManaged public var label: ContactLabel?
     @NSManaged public var amountUpdates: NSSet?
+    @NSManaged public var status: Int16
     
     // MARK: - Wrapped vars
     
@@ -50,6 +51,11 @@ extension Services {
     // Wrapped color
     public var wrappedColor: Color {
         AppColorsModel.colors[Int(color)].color
+    }
+
+    var lifecycleStatus: ServiceLifecycleStatus {
+        get { ServiceLifecycleStatus(rawValue: status) ?? .active }
+        set { status = newValue.rawValue }
     }
     
     //Wrapped Frecuency Date
@@ -118,17 +124,17 @@ extension Services {
         case 0 ://"Daily":
             return String(localized: "Daily Fee")
         case 1 : //"Weekly":
-            return frequencyTitle + String(localized: " Fee each ") + (dayName ?? "")
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(dayName ?? "")"
         case 2 : //"Biweekly":
-            return frequencyTitle + String(localized: " Fee on 15 and last day")
+            return "\(frequencyTitle) \(String(localized: "Fee on 15 and last day"))"
         case 3,4,5:   //"Monthly", "Quarterly", "Semester":
-            return frequencyTitle + String(localized: " Fee each ") + String(frequencyDay)
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(frequencyDay)"
         case 6: //"Yearly":
-            return frequencyTitle + String(localized: " Fee each ") + String(frequencyDay) + String(localized: " of ") + (monthName ?? "")
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(frequencyDay) \(String(localized: "of")) \(monthName ?? "")"
         case 7: //One time payment
-            return frequencyTitle + String(localized: " Fee ") + String(frequencyDate.formatted(date: .abbreviated, time: .omitted))
+            return "\(frequencyTitle) \(String(localized: "Fee")) \(frequencyDate.formatted(date: .abbreviated, time: .omitted))"
         case 8: //Last day of month
-            return frequencyTitle + String(localized: " Fee")
+            return "\(frequencyTitle) \(String(localized: "Fee"))"
         default:
             return String(localized: "Daily Fee")
         }

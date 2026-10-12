@@ -7,12 +7,16 @@
 
 import SwiftUI
 import StoreKit
+#if os(macOS)
+import AppKit
+#endif
 
 enum AppReviewRequest {
     static var threshold = 0
     @AppStorage("runsSinceLastRequest") static var runsSinceLastRequest = 0
     @AppStorage("version") static var version = ""
     
+    @MainActor
     static func requestReviewIfNeeded() {
         runsSinceLastRequest += 1
         let appBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
@@ -26,12 +30,14 @@ enum AppReviewRequest {
             if runsSinceLastRequest >= threshold {
                           
             #if os(macOS)
-                SKStoreReviewController.requestReview()
-                version = thisVersion
-                runsSinceLastRequest = 0  
+                if let controller = NSApplication.shared.keyWindow?.contentViewController {
+                    AppStore.requestReview(in: controller)
+                    version = thisVersion
+                    runsSinceLastRequest = 0
+                }
             #else
                 if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive}) as? UIWindowScene {
-                    SKStoreReviewController.requestReview(in: scene)
+                    AppStore.requestReview(in: scene)
                     version = thisVersion
                     runsSinceLastRequest = 0
                 }

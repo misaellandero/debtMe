@@ -13,12 +13,12 @@ struct DebtMeAppHeaderView: View {
             AppIconView()
                 .frame(height: 150)
             VStack(){
-                Text("Wellcome to")
+                Text("Welcome to")
                     .font(.headline)
                 HStack{
                     Text("debtMe")
                         .font(.largeTitle.weight(.bold))
-                    + Text(getCurrentAppVersion())
+                    Text(getCurrentAppVersion())
                         .font(.callout)
                         .baselineOffset(10)
                 }

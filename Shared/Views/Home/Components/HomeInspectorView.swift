@@ -18,31 +18,34 @@ struct HomeInspectorView: View {
 
     var body: some View {
         if let selectedService {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 8) {
-                    Button {
-                        self.selectedService = nil
-                    } label: {
-                        Label("Back", systemImage: "chevron.left")
-                    }
-                    .buttonStyle(.plain)
-
-                    Text(selectedService.wrappedName)
-                        .font(.headline)
-                        .lineLimit(1)
-
-                    Spacer()
-                }
-                .padding(.horizontal, 12)
-
+            NavigationStack {
                 ServiceDetailView(
                     service: selectedService,
                     showsNavigationChrome: false,
                     onEdit: { showServiceEdit = true },
                     onDelete: { delete(service: selectedService) }
                 )
+                .navigationTitle(selectedService.wrappedName)
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button {
+                            self.selectedService = nil
+                        } label: {
+                            Label("Back", systemImage: "chevron.left")
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            showServiceEdit = true
+                        } label: {
+                            Label("Edit", systemImage: AppIcons.edit)
+                        }
+                        .buttonStyle(.appToolbarEdit)
+                    }
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .sheet(isPresented: $showServiceEdit) {
                 ServicesForm(edition: true, service: selectedService)
             }

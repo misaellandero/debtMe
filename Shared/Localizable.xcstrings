@@ -2,12 +2,17 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
+      "localizations" : {
 
+      }
     },
     " " : {
+      "localizations" : {
 
+      }
     },
     " Fee" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -24,6 +29,7 @@
       }
     },
     " Fee " : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -40,6 +46,7 @@
       }
     },
     " Fee each " : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -56,6 +63,7 @@
       }
     },
     " Fee on 15 and last day" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -89,6 +97,7 @@
       }
     },
     " of " : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -287,6 +296,11 @@
         }
       }
     },
+    "0.00" : {
+      "localizations" : {
+
+      }
+    },
     "2023 - %@\nDebtMe App by Misael Landeros" : {
       "localizations" : {
         "es" : {
@@ -331,6 +345,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このアプリについて"
+          }
+        }
+      }
+    },
+    "Active" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効"
           }
         }
       }
@@ -428,6 +458,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "適用中"
+          }
+        }
+      }
+    },
+    "Archived" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アーカイブ済み"
           }
         }
       }
@@ -578,6 +624,11 @@
         }
       }
     },
+    "Button Styles" : {
+      "localizations" : {
+
+      }
+    },
     "Calendar" : {
       "localizations" : {
         "es" : {
@@ -622,6 +673,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "中止する"
+          }
+        }
+      }
+    },
+    "Canceled" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル済み"
           }
         }
       }
@@ -746,6 +813,10 @@
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click me!"
+          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -764,6 +835,10 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Haz clic en mí!"
+          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -782,6 +857,10 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私をクリックしてください！"
+          },
           "variations" : {
             "device" : {
               "iphone" : {
@@ -1252,6 +1331,11 @@
         }
       }
     },
+    "Detail Actions" : {
+      "localizations" : {
+
+      }
+    },
     "Detail view" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1414,6 +1498,22 @@
         }
       }
     },
+    "Estimated date" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha estimada"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定日"
+          }
+        }
+      }
+    },
     "Estimated payment date" : {
       "localizations" : {
         "es" : {
@@ -1474,6 +1574,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "経費"
+          }
+        }
+      }
+    },
+    "Fee" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuota"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "料金"
+          }
+        }
+      }
+    },
+    "Fee each" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cuota cada"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ごとの料金"
+          }
+        }
+      }
+    },
+    "Fee on 15 and last day" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cuota el 15 y el último día"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15日と最終日の料金"
           }
         }
       }
@@ -1540,6 +1688,21 @@
             "value" : "言葉で説明してサービスのアイコンを検索できます。利用可能な場合はApple Intelligenceを使用します。"
           }
         }
+      }
+    },
+    "Form" : {
+      "localizations" : {
+
+      }
+    },
+    "Form Preview" : {
+      "localizations" : {
+
+      }
+    },
+    "Forms" : {
+      "localizations" : {
+
       }
     },
     "Fortnight" : {
@@ -2010,6 +2173,16 @@
         }
       }
     },
+    "Inside Form" : {
+      "localizations" : {
+
+      }
+    },
+    "Inside List" : {
+      "localizations" : {
+
+      }
+    },
     "Instagram" : {
       "localizations" : {
         "es" : {
@@ -2478,6 +2651,11 @@
         }
       }
     },
+    "Navigation Context" : {
+      "localizations" : {
+
+      }
+    },
     "New" : {
       "localizations" : {
         "es" : {
@@ -2896,6 +3074,22 @@
         }
       }
     },
+    "No services or people transactions are scheduled for this day." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay servicios ni transacciones de contactos programados para este día."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この日に予定されているサービスや連絡先の取引はありません。"
+          }
+        }
+      }
+    },
     "No symbol selected" : {
       "localizations" : {
         "es" : {
@@ -3138,6 +3332,11 @@
         }
       }
     },
+    "Open Button Form Preview" : {
+      "localizations" : {
+
+      }
+    },
     "Or via mail hola@misaellandero.com" : {
       "localizations" : {
         "es" : {
@@ -3201,6 +3400,11 @@
             "value" : "出て行く"
           }
         }
+      }
+    },
+    "Outside" : {
+      "localizations" : {
+
       }
     },
     "Overdue by %lld days" : {
@@ -3741,6 +3945,7 @@
       }
     },
     "Return" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -3817,6 +4022,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "予定されている"
+          }
+        }
+      }
+    },
+    "Scheduled Items" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elementos programados"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予定項目"
           }
         }
       }
@@ -4147,6 +4369,23 @@
         }
       }
     },
+    "Services and people transactions scheduled for the selected day." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicios y transacciones de contactos programados para el día seleccionado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択した日に予定されているサービスと連絡先の取引です。"
+          }
+        }
+      }
+    },
     "Services and people transactions with dates will appear here." : {
       "localizations" : {
         "es" : {
@@ -4376,7 +4615,24 @@
         }
       }
     },
+    "Shows upcoming payments from people and services together." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra juntos los próximos pagos de contactos y servicios."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連絡先とサービスの今後の支払いをまとめて表示します。"
+          }
+        }
+      }
+    },
     "Shows upcoming payments from people and services." : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -4420,23 +4676,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サービスの今後の支払いのみを表示します。"
-          }
-        }
-      }
-    },
-    "Sin gastos en este periodo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin gastos en este periodo"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "この期間中は費用がかからずに"
           }
         }
       }
@@ -4554,6 +4793,22 @@
         }
       }
     },
+    "Status" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステータス"
+          }
+        }
+      }
+    },
     "Summary" : {
       "localizations" : {
         "es" : {
@@ -4598,6 +4853,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サービスを右にスワイプすると、その日だけ支払い済みにできます。もう一度スワイプすると未払いに戻せます。"
+          }
+        }
+      }
+    },
+    "Swipe right on an item to mark only this date as paid or spent. Swipe again to undo." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza un elemento hacia la derecha para marcar solo esta fecha como pagada o gastada. Vuelve a deslizarlo para deshacerlo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目を右にスワイプすると、この日付だけを支払い済みまたは使用済みにできます。もう一度スワイプすると元に戻せます。"
           }
         }
       }
@@ -4786,6 +5057,22 @@
         }
       }
     },
+    "They Owe Me" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Me deben"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "相手が私に借りている"
+          }
+        }
+      }
+    },
     "This contact has unsettled transactions and balance is not Zero. Are you sure you want to delete?" : {
       "localizations" : {
         "es" : {
@@ -4866,23 +5153,6 @@
         }
       }
     },
-    "Todos" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Todos"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "すべて"
-          }
-        }
-      }
-    },
     "Toggle Privacy" : {
       "localizations" : {
         "es" : {
@@ -4914,6 +5184,27 @@
             "value" : "ステータスを未払いに切り替える"
           }
         }
+      }
+    },
+    "Tomorrow" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日"
+          }
+        }
+      }
+    },
+    "Toolbar" : {
+      "localizations" : {
+
       }
     },
     "Total " : {
@@ -5209,7 +5500,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cantidad de actualización"
+            "value" : "Actualizar monto"
           }
         },
         "ja" : {
@@ -5335,23 +5626,6 @@
         }
       }
     },
-    "Vista" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vista"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "眺望"
-          }
-        }
-      }
-    },
     "Web Images" : {
       "localizations" : {
         "es" : {
@@ -5435,6 +5709,7 @@
       }
     },
     "Wellcome to" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {

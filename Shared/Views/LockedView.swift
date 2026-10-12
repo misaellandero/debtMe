@@ -47,7 +47,7 @@ struct LockedView: View {
                 }
                 
             })
-            .buttonStyle(.borderedProminent)
+            .appGlassControlButtonStyle()
             .padding()
         }
     }

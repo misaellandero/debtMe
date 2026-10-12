@@ -50,14 +50,9 @@ struct ContactsList: View {
         .toolbar{
             
             ToolbarItem(placement: .primaryAction ){
-                Button(action:{
+                ToolbarAddButton(edition: false) {
                     showingNewContactForm.toggle()
-                }){
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .appToolbarLabel()
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
             }
             
             ToolbarItem(placement: .automatic) {
@@ -262,8 +257,7 @@ struct ContactsRows : View  {
                                 }
                             }
                         }
-                        .bold()
-                        .font(.largeTitle)
+                            .appLargeTitle()
                         
                         Picker("Summary", selection: $summarySelectd) {
                             ForEach(summaryContactsMenu.allCases, id:\.self ){ option in
@@ -299,11 +293,10 @@ struct ContactsRows : View  {
                                 showingNewContactForm.toggle()
                             } label: {
                                 
-                                Label("New Contact", systemImage: "plus.circle.fill")
+                                Label("New Contact", systemImage: "plus")
                                     .appToolbarLabel()
                             }
-                            .buttonStyle(.glassProminent)
-                            .foregroundStyle(.white)
+                            .buttonStyle(.appAdd)
                         }
                         Spacer()
                     }
@@ -322,11 +315,10 @@ struct ContactsRows : View  {
                                 showingNewContactForm.toggle()
                             } label: {
                                 
-                                Label("New Contact", systemImage: "plus.circle.fill")
+                                Label("New Contact", systemImage: "plus")
                                     .appToolbarLabel()
                             }
-                            .buttonStyle(.glassProminent) 
-                            .foregroundStyle(.white)
+                            .buttonStyle(.appAdd)
                             
                             Button {
                                 selectedTag = "All"
@@ -336,8 +328,7 @@ struct ContactsRows : View  {
                                 Label("Show All", systemImage: "eyes")
                                     .appToolbarLabel()
                             }
-                            .tint(.blue)
-                            .buttonStyle(.borderedProminent)
+                            .buttonStyle(.appAction(tint: .blue))
                             
                         }
                         Spacer()

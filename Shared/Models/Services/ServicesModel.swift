@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+enum ServiceLifecycleStatus: Int16, CaseIterable, Identifiable {
+    case active = 0
+    case canceled = 1
+    case archived = 2
+
+    var id: Int16 { rawValue }
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .active: "Active"
+        case .canceled: "Canceled"
+        case .archived: "Archived"
+        }
+    }
+}
+
 struct ServicesModel {
     
     // Arrays for date selection
@@ -17,7 +33,7 @@ struct ServicesModel {
     static let months = Array(1...12)
     static let years = Array(1...31)
 
-    static func frequencyTitle(for index: Int) -> LocalizedStringResource {
+    static func frequencyKey(for index: Int) -> String {
         switch index {
         case 0: "Daily"
         case 1: "Weekly"
@@ -32,8 +48,23 @@ struct ServicesModel {
         }
     }
 
+    static func frequencyTitle(for index: Int) -> LocalizedStringKey {
+        LocalizedStringKey(frequencyKey(for: index))
+    }
+
     static func localizedFrequencyTitle(for index: Int) -> String {
-        String(localized: frequencyTitle(for: index))
+        switch index {
+        case 0: String(localized: "Daily")
+        case 1: String(localized: "Weekly")
+        case 2: String(localized: "Biweekly")
+        case 3: String(localized: "Monthly")
+        case 4: String(localized: "Quarterly")
+        case 5: String(localized: "Semester")
+        case 6: String(localized: "Yearly")
+        case 7: String(localized: "One time")
+        case 8: String(localized: "Last day of month")
+        default: String(localized: "Select Frequency")
+        }
     }
 
     static func businessDayAdjustmentTitle(for index: Int) -> LocalizedStringResource {
@@ -60,6 +91,7 @@ struct ServicesModel {
     var image: Data?
     var name : String = ""
     var colorIndex: Int = 0
+    var statusIndex: Int = Int(ServiceLifecycleStatus.active.rawValue)
     
     var color : Color {
         AppColorsModel.colors[colorIndex].color
@@ -96,4 +128,3 @@ struct ServicesModel {
             return dateFormatter.string(from: frequencyDate)
         }
 }
-

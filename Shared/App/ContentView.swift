@@ -45,7 +45,8 @@ struct ContentView: View {
             }
             WellcomeView()
         }
-        .onChange(of: scenePhase) { newPhase in
+        .tint(AppTheme.actionTint)
+        .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .background {
                 //print("Background")
                 unlocked = false
@@ -59,7 +60,7 @@ struct ContentView: View {
     func authenticate(){
         
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error){
-            let  reason = "Desbloquea para ver tus datos"
+            let reason = "Unlock to view your data"
             
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) {
                 success, authenticationError in
@@ -71,7 +72,7 @@ struct ContentView: View {
             }
             
         } else {
-            let  reason = "Desbloquea para ver tus datos"
+            let reason = "Unlock to view your data"
             // sin biometricos
             context.evaluatePolicy(.deviceOwnerAuthentication , localizedReason: reason ) {
                 success, authenticationError in

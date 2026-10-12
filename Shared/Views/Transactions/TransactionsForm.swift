@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TransactionsForm: View {
     //Model View de Coredata
@@ -46,11 +47,7 @@ struct TransactionsForm: View {
                     }
 
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(action: performSaveAcion) {
-                            Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                .appToolbarLabel()
-                        }
-                        .appSheetPrimaryButtonStyle()
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
                 .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
@@ -75,7 +72,7 @@ struct TransactionsForm: View {
                     }
                    
                     ToolbarItem(placement: .confirmationAction ){
-                        ToolbarAddButton(edition: edition, action: performSaveAcion)
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
             }
@@ -155,12 +152,64 @@ struct TransactionMultiPlataformForm: View {
     var saveTransaction : () -> Void
     var closeView : () -> Void
     var edition = false
+    @State private var amountIsFocused = false
     
     var body: some View {
-        
-   
+#if os(macOS)
+        VStack(spacing: 16) {
+            AppMacFormSection {
+                Picker("Type", selection: $transactionModel.debt) {
+                    Text("They Owe Me")
+                        .tag(true)
+                    Text("I Owe Them")
+                        .tag(false)
+                }
+                .pickerStyle(.segmented)
+            }
+
+            AppMacFormSection {
+                AppMacFormRow("Date", systemImage: "calendar") {
+                    DatePicker("Date", selection: $transactionModel.date, displayedComponents: .date)
+                        .labelsHidden()
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Estimated payment date") {
+                    Toggle("Estimated payment date", isOn: $transactionModel.hasEstimatedPaymentDate)
+                        .labelsHidden()
+                }
+                if transactionModel.hasEstimatedPaymentDate {
+                    AppMacFormDivider()
+                    AppMacFormRow("Estimated date", systemImage: "calendar.badge.clock") {
+                        DatePicker("Estimated date", selection: $transactionModel.estimatedPaymentDate, displayedComponents: .date)
+                            .labelsHidden()
+                    }
+                }
+            }
+
+            AppMacFormSection {
+                AppMacFormRow("Description") {
+                    TextField("Description", text: $transactionModel.des)
+                        .textFieldStyle(.plain)
+                        .multilineTextAlignment(.trailing)
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Notes") {
+                    TextField("Notes", text: $transactionModel.notes)
+                        .textFieldStyle(.plain)
+                        .multilineTextAlignment(.trailing)
+                }
+            }
+
+            AppAmountEntryField(amountText: $transactionModel.amout, isFocused: $amountIsFocused)
+
+            AppMacFormSection {
+                ImagePickerView(photoData: $transactionModel.photo, imagename: transactionModel.des)
+                    .padding(.vertical, 8)
+            }
+        }
+#else
             Picker("Type", selection: $transactionModel.debt){
-                Text("They Owe me")
+                Text("They Owe Me")
                     .tag(true)
                 Text("I Owe Them")
                     .tag(false)
@@ -186,23 +235,17 @@ struct TransactionMultiPlataformForm: View {
                     #endif
             }
         }
-        Section{
+        Section {
             TextField("Description", text: $transactionModel.des)
             TextField("Notes", text: $transactionModel.notes)
-            #if os(macOS)
-            TextField("Amount", text: $transactionModel.amout)
-            #else
-            TextField("Amount", text: $transactionModel.amout)
-                .keyboardType(.decimalPad)
-            #endif
         }
-        #if os(macOS)
-        .textFieldStyle(RoundedBorderTextFieldStyle())
-        #endif
+
+        Section {
+            AppAmountEntryField(amountText: $transactionModel.amout, isFocused: $amountIsFocused)
+        }
         
         ImagePickerView(photoData: $transactionModel.photo, imagename: transactionModel.des)
-        
-        
+#endif
     }
 }
 

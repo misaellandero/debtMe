@@ -7,12 +7,24 @@
 
 import SwiftUI
 
+private enum ServiceDetailModal: Identifiable {
+    case edit
+    case amountUpdate
+
+    var id: String {
+        switch self {
+        case .edit: "edit"
+        case .amountUpdate: "amountUpdate"
+        }
+    }
+}
+
 struct ServiceDetailView: View {
     @ObservedObject var service : Services
     var showsNavigationChrome = true
     var onEdit: (() -> Void)?
     var onDelete: (() -> Void)?
-    @State var showEdit = false
+    @State private var activeModal: ServiceDetailModal?
     @Environment(\.dismiss) private var dismiss
 
     @State private var currentOccurrenceIsPaid: Bool = false
@@ -61,96 +73,48 @@ struct ServiceDetailView: View {
                 .listStyle(.plain)
                 .frame(minHeight: 110, maxHeight: 190)
             } else {
-                ServiceInspectorCard(
-                    service: service,
-                    onEdit: onEdit,
-                    onDelete: onDelete
-                )
+                ServiceInspectorCard(service: service)
             }
-            
-            VStack(spacing: 10) {
-                Button {
-                    toggleCurrentOccurrencePaid()
-                } label: {
-                    Label(
-                        paidActionTitle,
-                        systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
-                    )
-                    .frame(maxWidth: .infinity)
-                }
-                .tint(currentOccurrenceIsPaid ? .orange : .green)
-                .buttonStyle(GlassProminentButtonStyle())
 
-                Button {
-                    if let onEdit { onEdit() } else { showEdit.toggle() }
-                } label: {
-                    Label("Edit", systemImage: AppIcons.edit)
-                        .appToolbarLabel()
-                        .labelStyle(.titleAndIcon)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .tint(.accentColor)
-            }
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity, alignment: .center)
+            serviceActions
+                .padding(.horizontal)
 
-            AmountUpdateList(service: service)
+            serviceManagementActions
+                .padding(.horizontal)
+
+            AmountUpdateList(service: service, showsUpdateButton: false, onUpdateAmount: showAmountUpdateEditor)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle(showsNavigationChrome ? service.wrappedName : "")
         .toolbar { if showsNavigationChrome { editToolbarItem } }
-        .sheet(isPresented: $showEdit, content: {
-            ServicesForm(edition:true, service: service)
-        })
+        .sheet(item: $activeModal, content: modalContent)
         .onAppear(perform: refreshCurrentOccurrence)
-        .onChange(of: service.frequencyDate) { _ in refreshCurrentOccurrence() }
-        .onChange(of: service.amount) { _ in refreshCurrentOccurrence() }
+        .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
+            refreshCurrentOccurrence()
+        }
+        .onChange(of: service.frequencyDate) { _, _ in refreshCurrentOccurrence() }
+        .onChange(of: service.amount) { _, _ in refreshCurrentOccurrence() }
         #else
         List{
             serviceSummarySection
             
             Section {
-                VStack(spacing: 10) {
-                    Button {
-                        toggleCurrentOccurrencePaid()
-                    } label: {
-                        Label(
-                            paidActionTitle,
-                            systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
-                        )
-                        .frame(maxWidth: .infinity)
-                    }
-                    .foregroundStyle(.white)
-                    .tint(currentOccurrenceIsPaid ? .orange : .green)
-                    .buttonStyle(GlassProminentButtonStyle())
-
-                    Button {
-                        showEdit.toggle()
-                    } label: {
-                        Label("Edit", systemImage: AppIcons.edit)
-                            .appToolbarLabel()
-                            .labelStyle(.titleAndIcon)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(.accentColor)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
+                serviceActions
             }
             
-            AmountUpdateList(service: service)
+            AmountUpdateList(service: service, showsUpdateButton: false, onUpdateAmount: showAmountUpdateEditor)
         }
         .navigationTitle(service.wrappedName)
         .toolbar{
             editToolbarItem
         }
-        .sheet(isPresented: $showEdit, content: {
-            ServicesForm(edition:true, service: service)
-        })
+        .sheet(item: $activeModal, content: modalContent)
         .onAppear(perform: refreshCurrentOccurrence)
-        .onChange(of: service.frequencyDate) { _ in refreshCurrentOccurrence() }
-        .onChange(of: service.amount) { _ in refreshCurrentOccurrence() }
+        .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
+            refreshCurrentOccurrence()
+        }
+        .onChange(of: service.frequencyDate) { _, _ in refreshCurrentOccurrence() }
+        .onChange(of: service.amount) { _, _ in refreshCurrentOccurrence() }
         #endif
     }
 
@@ -163,16 +127,72 @@ struct ServiceDetailView: View {
         .listRowBackground(service.wrappedColor)
     }
 
+    private var serviceActions: some View {
+        VStack(spacing: 12) {
+            paidActionButton
+            updateAmountActionButton
+        }
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+    }
+
+    private var paidActionButton: some View {
+        Button {
+            toggleCurrentOccurrencePaid()
+        } label: {
+            Label(
+                paidActionTitle,
+                systemImage: currentOccurrenceIsPaid ? "arrow.uturn.backward.circle.fill" : "checkmark.circle.fill"
+            )
+        }
+        .buttonStyle(AppActionButtonStyle(tint: currentOccurrenceIsPaid ? .orange : .green))
+    }
+
+    private var updateAmountActionButton: some View {
+        Button {
+            showAmountUpdateEditor()
+        } label: {
+            Label("Update Amount", systemImage: "plus")
+        }
+        .buttonStyle(AppActionButtonStyle(tint: AppTheme.actionTint))
+    }
+
+    private func showAmountUpdateEditor() {
+        activeModal = .amountUpdate
+    }
+
+    @ViewBuilder
+    private func modalContent(_ modal: ServiceDetailModal) -> some View {
+        switch modal {
+        case .edit:
+            ServicesForm(edition: true, service: service)
+        case .amountUpdate:
+            AmountUpdateEditorSheet(service: service)
+        }
+    }
+
+    @ViewBuilder
+    private var serviceManagementActions: some View {
+        if let onDelete {
+            Button(role: .destructive) {
+                onDelete()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            .buttonStyle(.appAction(tint: AppTheme.destructiveTint))
+            .frame(maxWidth: .infinity)
+        }
+    }
+
     private var editToolbarItem: some ToolbarContent {
         ToolbarItem(placement:.primaryAction){
             Button(action:{
-                showEdit.toggle()
+                if let onEdit { onEdit() } else { activeModal = .edit }
             }){
-                Label("Edit", systemImage: AppIcons.edit)
-                    .appToolbarLabel()
-                    .labelStyle(.titleAndIcon)
-                    .foregroundStyle(Color.accentColor)
+                Image(systemName: AppIcons.edit)
+                    .accessibilityLabel(Text("Edit"))
             }
+            .appGlassControlButtonStyle()
         }
     }
 }
@@ -180,8 +200,6 @@ struct ServiceDetailView: View {
 #if os(macOS)
 private struct ServiceInspectorCard: View {
     @ObservedObject var service: Services
-    let onEdit: (() -> Void)?
-    let onDelete: (() -> Void)?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -201,26 +219,6 @@ private struct ServiceInspectorCard: View {
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
-            }
-
-            HStack(spacing: 10) {
-                Button {
-                    onEdit?()
-                } label: {
-                    Label("Edit", systemImage: AppIcons.edit)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
-
-                Button(role: .destructive) {
-                    onDelete?()
-                } label: {
-                    Label("Delete", systemImage: "trash")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color(red: 1.0, green: 0.12, blue: 0.08))
             }
         }
         .padding(14)

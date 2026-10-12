@@ -38,7 +38,7 @@ struct TotalsView: View {
                 
                DebtCoverView(total:amount, current:current)
                         .frame(height:50)
-                        .animation(.easeOut(duration: 1.5))
+                        .animation(.easeOut(duration: 1.5), value: current)
             }
             .padding()
             .background(Material.ultraThinMaterial)
@@ -70,7 +70,7 @@ struct DebtCoverView: View {
                 
             Group{
                 Text(String(format: "%.0f%%", percentage * 100))
-                    .animation(.default) 
+                    .animation(.default, value: percentage)
             }
             .font(Font.caption.weight(.bold))
             .padding()

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 
 struct labelPicker: View {
@@ -23,9 +24,9 @@ struct labelPicker: View {
                     Button(action:{
                         showFormLabel.toggle()
                     }){
-                        Label("Add", systemImage: "plus.circle.fill") 
+                        Label("Add", systemImage: "plus") 
                     }
-                    .accentColor(.accentColor)
+                    .appGlassControlButtonStyle()
                     .sheet(isPresented: $showFormLabel, content: {
                         LabelNewForm(showForm: $showFormLabel)
                             .frame(width: 250, height: 200)

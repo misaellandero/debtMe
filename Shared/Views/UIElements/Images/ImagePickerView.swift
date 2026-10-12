@@ -53,6 +53,7 @@ struct UnifiedImagePickerView: View {
     @AppStorage("selectedQuality") private var selectedQuality: JPEGQuality = .lowest
 
     @State private var photoSelected: PhotosPickerItem?
+    @State private var showPhotosPicker = false
 
     @State private var showFileImporter = false
     @State private var showURLSheet = false
@@ -102,10 +103,10 @@ struct UnifiedImagePickerView: View {
                     Spacer()
                     if isIconFormat {
                         ServiceIconView(photoData: photoData, backgroundColor: iconBackgroundColor, cornerRadius: 22)
-                            .frame(width: 180, height: 180)
+                            .frame(width: formPreviewSize, height: formPreviewSize)
                     } else {
                         ImageView(photoData: photoData, placeHolder: true, imagename: imagename)
-                            .frame(height: 250)
+                            .frame(height: formImagePreviewHeight)
                     }
                     Spacer()
                 }
@@ -124,6 +125,12 @@ struct UnifiedImagePickerView: View {
                 }
             }
         }
+        .photosPicker(
+            isPresented: $showPhotosPicker,
+            selection: $photoSelected,
+            matching: .images,
+            preferredItemEncoding: .compatible
+        )
         .fileImporter(
             isPresented: $showFileImporter,
             allowedContentTypes: [.image],
@@ -159,6 +166,22 @@ struct UnifiedImagePickerView: View {
         }
     }
 
+    private var formPreviewSize: CGFloat {
+        #if os(macOS)
+        132
+        #else
+        180
+        #endif
+    }
+
+    private var formImagePreviewHeight: CGFloat {
+        #if os(macOS)
+        180
+        #else
+        250
+        #endif
+    }
+
     @ViewBuilder
     private var imageActionButtons: some View {
         let primaryTitleKey = photoData == nil ? "Add" : "Edit"
@@ -172,9 +195,11 @@ struct UnifiedImagePickerView: View {
         }
         .frame(maxWidth: .infinity)
         #else
-        HStack {
+        HStack(spacing: 12) {
             imagePrimaryActionButton(primaryTitleKey: primaryTitleKey, primaryTitle: primaryTitle)
+                .frame(width: 132)
             imageRemoveButton(removeTitle: removeTitle)
+                .frame(width: 132)
         }
         .frame(maxWidth: .infinity, alignment: .center)
         #endif
@@ -182,7 +207,10 @@ struct UnifiedImagePickerView: View {
 
     private func imagePrimaryActionButton(primaryTitleKey: String, primaryTitle: String) -> some View {
         Menu {
-            PhotosPicker(selection: $photoSelected, matching: .images, photoLibrary: .shared()) {
+            Button {
+                downloadError = nil
+                showPhotosPicker = true
+            } label: {
                 Label("Photo Library", systemImage: "photo.on.rectangle")
             }
 
@@ -235,22 +263,16 @@ struct UnifiedImagePickerView: View {
             }
         } label: {
             HStack(spacing: 8) {
-                Image(systemName: photoData == nil ? "plus.circle.fill" : AppIcons.edit)
+                Image(systemName: photoData == nil ? "plus" : AppIcons.edit)
                     .imageScale(.medium)
                 Text(primaryTitle)
             }
             .appToolbarLabel()
             .frame(maxWidth: .infinity)
-            .foregroundStyle(.white)
         }
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(photoData == nil ? .appAdd : .appEdit)
         .controlSize(.large)
-        .tint(.accentColor)
-        #if os(iOS) || os(visionOS)
         .frame(maxWidth: .infinity)
-        #else
-        .fixedSize(horizontal: true, vertical: false)
-        #endif
         .accessibilityLabel(Text(String(localized: String.LocalizationValue(primaryTitleKey))))
     }
 
@@ -267,13 +289,10 @@ struct UnifiedImagePickerView: View {
             .appToolbarLabel()
             .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(.appAction(tint: AppTheme.destructiveTint))
         .controlSize(.large)
-        .tint(.red)
         #if os(iOS) || os(visionOS)
         .frame(maxWidth: .infinity)
-        #else
-        .fixedSize(horizontal: true, vertical: false)
         #endif
         .disabled(photoData == nil)
         .accessibilityLabel(Text(String(localized: "Remove")))
@@ -394,7 +413,7 @@ struct UnifiedImagePickerView: View {
                                         .frame(width: 52, height: 52)
                                         .foregroundStyle(sfSymbolName == symbol ? Color.white : Color.primary)
                                         .background(
-                                            sfSymbolName == symbol ? Color.accentColor : Color.secondary.opacity(0.1),
+                                            sfSymbolName == symbol ? AppTheme.actionTint : Color.secondary.opacity(0.1),
                                             in: RoundedRectangle(cornerRadius: 12)
                                         )
                                 }
@@ -413,11 +432,10 @@ struct UnifiedImagePickerView: View {
                     SheetCancelToolbarButton { showSFSymbolSheet = false }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Use") {
+                    SheetPickerConfirmationButton(title: "Use", systemImage: "checkmark.circle.fill") {
                         Task { await applySFSymbolIcon() }
                     }
                     .disabled(!sfSymbolExists(sfSymbolName.trimmingCharacters(in: .whitespacesAndNewlines)))
-                    .appSheetPrimaryButtonStyle()
                 }
             }
             .task(id: symbolSearchTaskID) {
@@ -427,7 +445,7 @@ struct UnifiedImagePickerView: View {
         #if os(iOS) || os(visionOS)
         .presentationDetents([.large])
         #elseif os(macOS)
-        .macOSFixedSheet(width: 560, height: 620)
+        .macOSFixedSheet(width: 520, height: 560)
         #endif
     }
 
@@ -488,7 +506,7 @@ struct UnifiedImagePickerView: View {
                         Image(systemName: "magnifyingglass")
                     }
                     .disabled(brandQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSearchingBrands || applyingBrandIcon != nil)
-                    .buttonStyle(.bordered)
+                    .appGlassControlButtonStyle()
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
@@ -589,7 +607,7 @@ struct UnifiedImagePickerView: View {
                         Image(systemName: "magnifyingglass")
                     }
                     .disabled(webSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSearchingWeb || isDownloading)
-                    .buttonStyle(.bordered)
+                    .appGlassControlButtonStyle()
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
@@ -661,12 +679,22 @@ struct UnifiedImagePickerView: View {
     @MainActor
     private func loadFromPhotosPicker() async {
         guard let photoSelected else { return }
-        guard let data = try? await photoSelected.loadTransferable(type: Data.self) else { return }
+        downloadError = nil
+        defer { self.photoSelected = nil }
 
-        if selectedQuality == .original {
-            photoData = data
-        } else {
-            photoData = reencodeImageData(data)
+        do {
+            guard let data = try await photoSelected.loadTransferable(type: Data.self) else {
+                downloadError = "Could not load the selected photo"
+                return
+            }
+
+            if selectedQuality == .original {
+                photoData = data
+            } else {
+                photoData = reencodeImageData(data)
+            }
+        } catch {
+            downloadError = error.localizedDescription
         }
     }
 
@@ -972,22 +1000,31 @@ private struct IconifySearchResponse: Decodable {
     let icons: [String]
 }
 
-/// Cancel button for picker sheets: icon-only on mobile, text on macOS.
+/// Cancel button for picker sheets.
 private struct SheetCancelToolbarButton: View {
     let action: () -> Void
 
     var body: some View {
-        #if os(iOS) || os(visionOS)
         Button(action: action) {
-            Image(systemName: "xmark")
-                .imageScale(.medium)
+            Label("Cancel", systemImage: "xmark")
         }
         .appSheetCancelButtonStyle()
         .accessibilityLabel(Text("Cancel"))
-        #else
-        Button("Cancel", action: action)
-            .appSheetCancelButtonStyle()
-        #endif
+    }
+}
+
+private struct SheetPickerConfirmationButton: View {
+    let title: LocalizedStringKey
+    let systemImage: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .appToolbarLabel()
+                .labelStyle(.titleAndIcon)
+        }
+        .appSheetPrimaryButtonStyle()
     }
 }
 

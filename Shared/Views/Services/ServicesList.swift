@@ -44,6 +44,35 @@ enum CalendarPeriod: String, CaseIterable {
     }
 }
 
+enum ServiceStatusFilter: String, CaseIterable {
+    case active
+    case canceled
+    case archived
+    case all
+
+    var localizedTitle: LocalizedStringResource {
+        switch self {
+        case .active: "Active"
+        case .canceled: "Canceled"
+        case .archived: "Archived"
+        case .all: "All"
+        }
+    }
+
+    func includes(_ service: Services) -> Bool {
+        switch self {
+        case .active:
+            return service.lifecycleStatus == .active
+        case .canceled:
+            return service.lifecycleStatus == .canceled
+        case .archived:
+            return service.lifecycleStatus == .archived
+        case .all:
+            return true
+        }
+    }
+}
+
 struct ServicesList: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   
@@ -111,9 +140,12 @@ struct ServicesList: View {
 
     @AppStorage("servicesNextIncomeDayOfMonth") private var nextIncomeDayOfMonth: Int = 15
 
+    @AppStorage("servicesStatusFilter") private var statusFilter: ServiceStatusFilter = .active
+
     @State private var previousCalendarPeriod: CalendarPeriod = .month
     @State private var previousViewMode: ServicesViewMode = .list
     @State private var paidStateVersion = 0
+    @State private var servicesListVersion = 0
 
     @State private var showDetailSheet = false
     @State private var detailRange: DateInterval?
@@ -130,6 +162,21 @@ struct ServicesList: View {
     
     @Namespace private var namespace
     
+    private var servicesCacheSignature: [String] {
+        filteredServices.map { service in
+            [
+                service.objectID.uriRepresentation().absoluteString,
+                service.amount.description,
+                service.expense.description,
+                service.frequency.description,
+                service.frequencyDate.timeIntervalSince1970.description,
+                service.recurrenceEndDate?.timeIntervalSince1970.description ?? "nil",
+                service.status.description,
+                service.label?.objectID.uriRepresentation().absoluteString ?? "nil"
+            ].joined(separator: "|")
+        }
+    }
+
     var filteredServices : [Services] {
         let sortedServices: [Services]
         
@@ -152,14 +199,16 @@ struct ServicesList: View {
             }
         }
         
+        let filteredByStatus = sortedServices.filter { statusFilter.includes($0) }
+
         let filteredByTag: [Services]
          
          if selectedTag == "All" {
              // No tag selected, use all contacts
-             filteredByTag = sortedServices
+             filteredByTag = filteredByStatus
          } else {
              // Filter contacts based on the selected tag
-             filteredByTag = sortedServices.filter { service in
+             filteredByTag = filteredByStatus.filter { service in
                  service.label?.wrappedName == selectedTag
              }
          }
@@ -632,6 +681,7 @@ struct ServicesList: View {
                 }
             }
         }
+        .id(servicesListVersion)
         .toolbar{
             #if os(macOS)
             ToolbarItem(placement: .automatic) {
@@ -641,14 +691,9 @@ struct ServicesList: View {
             #endif
 
             ToolbarItem(placement: .primaryAction ){
-                Button(action:{
+                ToolbarAddButton(edition: false) {
                     showNewBill.toggle()
-                }){
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .appToolbarLabel()
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
             }
             
             ToolbarItem(placement: .automatic) {
@@ -709,6 +754,17 @@ struct ServicesList: View {
                             
                         }
                     }
+
+                    Divider()
+
+                    Label("Status", systemImage: "circle.dashed")
+                        .appToolbarLabel()
+                    Picker("Status", selection: $statusFilter) {
+                        ForEach(ServiceStatusFilter.allCases, id: \.self) { option in
+                            Text(option.localizedTitle)
+                                .tag(option)
+                        }
+                    }
                     
                 } label: {
                     Label("Sort/Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
@@ -720,6 +776,22 @@ struct ServicesList: View {
         .sheet(isPresented: $showNewBill, content: {
             ServicesForm()
         })
+        .onAppear(perform: updateCachedOccurrences)
+        .onReceive(NotificationCenter.default.publisher(for: ServiceOccurrencePaymentStore.didChangeNotification)) { _ in
+            paidStateVersion += 1
+            updateCachedOccurrences()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSManagedObjectContext.didChangeObjectsNotification, object: viewContext)) { _ in
+            servicesListVersion += 1
+            updateCachedOccurrences()
+        }
+        .onChange(of: servicesCacheSignature) { _, _ in updateCachedOccurrences() }
+        .onChange(of: selectedTag) { _, _ in updateCachedOccurrences() }
+        .onChange(of: searchQuery) { _, _ in updateCachedOccurrences() }
+        .onChange(of: sortedMode) { _, _ in updateCachedOccurrences() }
+        .onChange(of: statusFilter) { _, _ in updateCachedOccurrences() }
+        .onChange(of: calendarPeriod) { _, _ in updateCachedOccurrences() }
+        .onChange(of: referenceDateTimestamp) { _, _ in updateCachedOccurrences() }
         #if os(iOS)
         .navigationTitle("Services")
         .navigationBarTitleDisplayMode(.large)
@@ -887,6 +959,10 @@ struct ServicesList: View {
         }
         .padding(12)
         .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous)
+                .stroke(Color.secondary.opacity(0.08), lineWidth: 1)
+        )
         .contentShape(RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
         .onTapGesture {
             #if os(macOS)
@@ -1463,9 +1539,7 @@ struct ServicesList: View {
         HStack(spacing: 8) {
             calendarViewModeButton
                 .labelStyle(.iconOnly)
-                .buttonStyle(.bordered)
-                .tint(.accentColor)
-                .glassEffect(.regular.interactive(), in: .capsule)
+                .appGlassControlButtonStyle()
 
             Picker("Period", selection: $calendarPeriod) {
                 ForEach(CalendarPeriod.allCases, id: \.self) { option in
@@ -1490,8 +1564,7 @@ struct ServicesList: View {
                         Image(systemName: "arrow.uturn.left")
                             .font(.subheadline.weight(.semibold))
                     }
-                    .buttonStyle(.bordered)
-                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .appGlassControlButtonStyle()
 
                     Text("Next income \(nextIncomeLabel)")
                         .font(.subheadline.weight(.semibold))
@@ -1507,8 +1580,7 @@ struct ServicesList: View {
                         Image(systemName: "chevron.left")
                             .font(.subheadline.weight(.semibold))
                     }
-                    .buttonStyle(.bordered)
-                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .appGlassControlButtonStyle()
 
                     Button {
                         jumpToToday()
@@ -1516,9 +1588,8 @@ struct ServicesList: View {
                         Text("Today")
                             .font(.subheadline.weight(.semibold))
                     }
-                    .buttonStyle(.bordered)
+                    .appGlassControlButtonStyle()
                     .disabled(isShowingToday)
-                    .glassEffect(.regular.interactive(), in: .capsule)
 
                     Text(dateRangeLabel)
                         .font(.subheadline.weight(.semibold))
@@ -1534,8 +1605,7 @@ struct ServicesList: View {
                         Image(systemName: "chevron.right")
                             .font(.subheadline.weight(.semibold))
                     }
-                    .buttonStyle(.bordered)
-                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .appGlassControlButtonStyle()
                 }
             }
             .glassEffect()
@@ -1576,8 +1646,6 @@ struct ServicesList: View {
 
     private func togglePaid(_ occurrence: ServiceOccurrence) {
         occurrence.togglePaid()
-        paidStateVersion += 1
-        updateCachedOccurrences()
     }
 
     private func deleteOccurrences(at offsets: IndexSet, in occurrences: [ServiceOccurrence]) {
@@ -1590,6 +1658,8 @@ struct ServicesList: View {
         }
         do {
             try viewContext.save()
+            servicesListVersion += 1
+            updateCachedOccurrences()
         } catch {
             // Handle the error appropriately in a real app
             print("Error saving context after delete: \(error.localizedDescription)")
@@ -1602,6 +1672,8 @@ struct ServicesList: View {
         }
         do {
             try viewContext.save()
+            servicesListVersion += 1
+            updateCachedOccurrences()
         } catch {
             print("Error saving context after delete: \(error.localizedDescription)")
         }
@@ -1661,6 +1733,10 @@ struct ServicesList: View {
         }
         .padding(16)
         .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: calendarCardCornerRadius, style: .continuous)
+                .stroke(Color.secondary.opacity(0.08), lineWidth: 1)
+        )
         .frame(minHeight: macOSMonthCalendarHeight)
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -1872,7 +1948,7 @@ struct ServicesList: View {
                             scrollProxy.scrollTo(weeksCount - 1, anchor: .trailing)
                         }
                     }
-                    .onChange(of: proxy.size.width) { newValue in
+                    .onChange(of: proxy.size.width) { _, newValue in
                         containerWidth = newValue
                     }
                 }

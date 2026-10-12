@@ -67,19 +67,21 @@ extension NSImage {
 enum AppTypography {
     // Brand-ish rounded titles, but keep weights readable.
     static let brandTitle: Font = .system(.title2, design: .rounded).weight(.bold)
-    static let brandHeadline: Font = .system(.headline, design: .rounded).weight(.semibold)
+    static let brandHeadline: Font = .system(.headline, design: .rounded).weight(.bold)
 
     // General purpose
-    static let title: Font = .title2.weight(.bold)
-    static let headline: Font = .headline.weight(.semibold)
-    static let body: Font = .body
-    static let caption: Font = .caption
+    static let largeTitle: Font = .system(.largeTitle, design: .rounded).weight(.bold)
+    static let title: Font = .system(.title2, design: .rounded).weight(.bold)
+    static let headline: Font = .system(.headline, design: .rounded).weight(.bold)
+    static let body: Font = .system(.body, design: .default).weight(.regular)
+    static let caption: Font = .system(.caption, design: .default).weight(.regular)
 }
 
 extension View {
     func appBrandTitle() -> some View { font(AppTypography.brandTitle) }
     func appBrandHeadline() -> some View { font(AppTypography.brandHeadline) }
 
+    func appLargeTitle() -> some View { font(AppTypography.largeTitle) }
     func appTitle() -> some View { font(AppTypography.title) }
     func appHeadline() -> some View { font(AppTypography.headline) }
 

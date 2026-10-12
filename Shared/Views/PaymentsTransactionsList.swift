@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 import AVFoundation
 
 struct PaymentsTransactionsList: View {
@@ -126,20 +127,14 @@ struct PaymentsTransactionsList: View {
                     showEditTransaction.toggle()
                 }){
                     Label("Edit", systemImage: AppIcons.edit)
-                        .appToolbarLabel()
-                        .foregroundStyle(Color.accentColor)
                 }
+                .buttonStyle(.appToolbarEdit)
             }
             ToolbarItem(placement: .primaryAction ){
-                Button(action:{
+                ToolbarAddButton(edition: false) {
                     showAddPayment.toggle()
-                }){
-                    Label("Add", systemImage: "plus.circle.fill")
-                        .appToolbarLabel()
                 }
                 .disabled(transaction.settled)
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
             }
            
         }

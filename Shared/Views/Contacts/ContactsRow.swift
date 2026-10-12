@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContactsRow: View {
     @ObservedObject var contact : Contact
@@ -35,7 +36,7 @@ struct ContactsRow: View {
                             Text(contact.wrappedName)
     #else
                             Text(contact.wrappedName)
-                                .font(Font.system(.title, design: .rounded).weight(.bold))
+                                .appTitle()
     #endif
                             
                         }
@@ -79,7 +80,7 @@ struct ContactsRow: View {
                     }
                     Spacer()
                 }
-                .font(Font.system(.body, design: .rounded).weight(.semibold))
+                .font(AppTypography.body)
                 .padding(3)
                 .listRowBackground(Color.secondary.opacity(0.2))
                 HStack{

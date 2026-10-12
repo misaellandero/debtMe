@@ -17,11 +17,12 @@ struct HomePeriodSummaryView: View {
     var body: some View {
         VStack(alignment: .center, spacing: isCompact ? 8 : 12) {
             Text(title)
-                .font((isCompact ? Font.subheadline : .headline).weight(.semibold))
+                .font(isCompact ? AppTypography.brandHeadline : AppTypography.title)
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 
             Text(balanceTotal.toCurrencyString())
-                .font((isCompact ? Font.title2 : .largeTitle).weight(.bold))
+                .font(isCompact ? AppTypography.title : AppTypography.largeTitle)
                 .foregroundStyle(balanceTotal >= 0 ? Color.primary : Color.red)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
@@ -47,5 +48,6 @@ struct HomePeriodSummaryView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, isCompact ? 2 : 6)
+        .padding(.horizontal, isCompact ? 0 : 4)
     }
 }

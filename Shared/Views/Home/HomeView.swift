@@ -151,7 +151,7 @@ struct HomeView: View {
             }
             #if os(iOS)
             .sheet(item: $detailSelection) { selection in
-                HomeDetailSheet(title: selection.title, items: selection.items)
+                HomeDetailSheet(dateSubtitle: selection.title, items: selection.items)
             }
             #endif
             .sheet(isPresented: $showNewService) {
@@ -204,10 +204,9 @@ struct HomeView: View {
                             Label("New Contact", systemImage: "person.crop.circle.badge.plus")
                         }
                     } label: {
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .appToolbarLabel()
+                        AppToolbarIconLabel(systemImage: "plus", accessibilityLabel: "Add")
                     }
-                    .buttonStyle(.glassProminent) 
+                    .buttonStyle(.plain)
                 }
             }
     }
@@ -276,39 +275,39 @@ struct HomeView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .scrollContentBackground(.hidden)
         .animation(.smooth, value: periodItems.map(\.id))
         .animation(.smooth, value: paidStateVersion)
     }
 
     private var calendarContent: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                HomeCalendarView(
-                    calendarPeriod: calendarPeriod,
-                    referenceDate: referenceDate,
-                    headerTitle: calendarHeaderTitle,
-                    incomeTotal: incomeTotal,
-                    expenseTotal: expenseTotal,
-                    balanceTotal: balanceTotal,
-                    weekDates: weekDates,
-                    fortnightDates: fortnightDates,
-                    monthGridDates: monthGridDates,
-                    yearMonthStarts: yearMonthStarts,
-                    weekdaySymbols: weekdaySymbols,
-                    periodItems: periodItems,
-                    namespace: namespace,
-                    onOpenDetail: openDetail
-                )
-                .fixedSize(horizontal: false, vertical: true)
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    HomeCalendarView(
+                        calendarPeriod: calendarPeriod,
+                        referenceDate: referenceDate,
+                        headerTitle: calendarHeaderTitle,
+                        incomeTotal: incomeTotal,
+                        expenseTotal: expenseTotal,
+                        balanceTotal: balanceTotal,
+                        weekDates: weekDates,
+                        fortnightDates: fortnightDates,
+                        monthGridDates: monthGridDates,
+                        yearMonthStarts: yearMonthStarts,
+                        weekdaySymbols: weekdaySymbols,
+                        periodItems: periodItems,
+                        namespace: namespace,
+                        availableHeight: max(320, proxy.size.height - 116),
+                        onOpenDetail: openDetail
+                    )
+                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 96)
             }
-            .frame(maxWidth: .infinity, alignment: .topLeading)
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 96)
+            .animation(.smooth, value: periodItems.map(\.id))
         }
-        .scrollContentBackground(.hidden)
-        .animation(.smooth, value: periodItems.map(\.id))
     }
 
     private func openDetail(range: DateInterval?, title: String) {
@@ -417,7 +416,7 @@ private struct HomeListSection: View {
                     .padding(.horizontal, 8)
 
                 ForEach(items) { item in
-                    HomeCalendarItemNavigationRow(item: item, namespace: namespace, usesServiceBackground: item.service != nil, onMacSelect: { onSelect(item) })
+                HomeCalendarItemNavigationRow(item: item, namespace: namespace, usesServiceBackground: item.service != nil, onMacSelect: { onSelect(item) })
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(rowBackground(for: item), in: RoundedRectangle(cornerRadius: 14, style: .continuous))

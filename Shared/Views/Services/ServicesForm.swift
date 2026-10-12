@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ServicesForm: View {
     //Model View de Coredata
@@ -42,16 +43,12 @@ struct ServicesForm: View {
                     }
 
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(action: performSaveAcion) {
-                            Label(edition ? "Save" : "Add", systemImage: edition ? "checkmark.circle.fill" : "plus.circle.fill")
-                                .appToolbarLabel()
-                        }
-                        .appSheetPrimaryButtonStyle()
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
                 .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
             }
-            .macOSFixedSheet(width: 680, height: 720)
+            .macOSFixedSheet(width: 560, height: 620)
         #else
             NavigationStack{
                 List{
@@ -71,7 +68,7 @@ struct ServicesForm: View {
                     }
                      
                     ToolbarItem(placement: .confirmationAction ){
-                        ToolbarAddButton(edition: edition, action: performSaveAcion)
+                        SheetConfirmationButton(edition: edition, action: performSaveAcion)
                     }
                 }
                 .appSheetBottomConfirmationAction(edition: edition, action: performSaveAcion)
@@ -105,6 +102,7 @@ struct ServicesForm: View {
                 serviceModel.frecuencyIndex = Int(service.frequency)
                 serviceModel.frequencyDate = service.frequencyDate
                 serviceModel.businessDayAdjustmentIndex = Int(service.business_day_adjustment)
+                serviceModel.statusIndex = Int(service.status)
                 serviceLabel = service.label
                 serviceModel.image = service.image
                 if let endDate = service.recurrenceEndDate {
@@ -128,6 +126,7 @@ struct ServicesForm: View {
             service.frequency_date = serviceModel.frequencyDate
             service.business_day_adjustment = Int16(serviceModel.businessDayAdjustmentIndex)
             service.recurrence_end_date = serviceModel.hasEndDate ? serviceModel.endDate : nil
+            service.status = Int16(serviceModel.statusIndex)
             service.label = serviceLabel
             service.image = serviceModel.image
             
@@ -154,6 +153,7 @@ struct ServicesForm: View {
         service.frequency_date = serviceModel.frequencyDate
         service.business_day_adjustment = Int16(serviceModel.businessDayAdjustmentIndex)
         service.recurrence_end_date = serviceModel.hasEndDate ? serviceModel.endDate : nil
+        service.status = Int16(serviceModel.statusIndex)
         service.label = serviceLabel
         service.image = serviceModel.image
         
@@ -192,11 +192,152 @@ struct ServiceMultiPlataformForm : View {
     
     @State var showLabelList = false
     @State var showFormLabel = false
-    @FocusState private var amountIsFocuse: Bool
+    @State private var amountIsFocused = false
     
     @State var showTagPicker = false
     var body: some View {
-        
+        Group {
+#if os(macOS)
+            macOSForm
+#else
+            iOSForm
+#endif
+        }
+        .sheet(isPresented: $showFormLabel, content: {
+            labelPicker(label: $label, showLabelList: $showLabelList)
+        })
+    }
+
+#if os(macOS)
+    private var macOSForm: some View {
+        VStack(spacing: 16) {
+            if service.image != nil {
+                ServiceIconView(photoData: service.image, backgroundColor: service.color, cornerRadius: 20)
+                    .frame(width: 72, height: 72)
+                    .shadow(color: service.color.opacity(0.24), radius: 8, x: 0, y: 4)
+            }
+
+            AppMacFormSection {
+                AppMacFormRow("Name") {
+                    TextField("Name", text: $service.name)
+                        .textFieldStyle(.plain)
+                        .multilineTextAlignment(.trailing)
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Description") {
+                    TextField("Description", text: $service.des)
+                        .textFieldStyle(.plain)
+                        .multilineTextAlignment(.trailing)
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Type") {
+                    Picker("Type", selection: $service.expense) {
+                        Text("Expense").tag(true)
+                        Text("Income").tag(false)
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Status") {
+                    Picker("Status", selection: $service.statusIndex) {
+                        ForEach(ServiceLifecycleStatus.allCases) { status in
+                            Text(status.localizedTitle).tag(Int(status.rawValue))
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                }
+            }
+
+            AppMacFormSection {
+                AppMacFormRow("Payment date") {
+                    DatePicker("Payment date", selection: $service.frequencyDate, displayedComponents: .date)
+                        .labelsHidden()
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Frequency") {
+                    Picker("Frequency", selection: $service.frecuencyIndex) {
+                        ForEach(0..<ServicesModel.frequency.count, id: \.self) { index in
+                            Text(ServicesModel.frequencyTitle(for: index)).tag(index)
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                }
+                AppMacFormDivider()
+                Text(feeDescription)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 30)
+                    .padding(.vertical, 6)
+                AppMacFormDivider()
+                AppMacFormRow("Business day") {
+                    Picker("Business day", selection: $service.businessDayAdjustmentIndex) {
+                        ForEach(0..<ServicesModel.businessDayAdjustments.count, id: \.self) { index in
+                            Text(ServicesModel.businessDayAdjustmentTitle(for: index)).tag(index)
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                }
+                AppMacFormDivider()
+                AppMacFormRow("End date") {
+                    Toggle("End date", isOn: $service.hasEndDate)
+                        .labelsHidden()
+                }
+                if service.hasEndDate {
+                    AppMacFormDivider()
+                    AppMacFormRow("End date") {
+                        DatePicker("End date", selection: $service.endDate, displayedComponents: .date)
+                            .labelsHidden()
+                    }
+                }
+            }
+
+            AppAmountEntryField(amountText: $service.amout, isFocused: $amountIsFocused)
+
+            AppMacFormSection {
+                AppMacFormRow("Tag", systemImage: "tag") {
+                    Button(label?.wrappedName ?? "Select a tag") {
+                        showTagPicker.toggle()
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(AppTheme.actionTint)
+                    .sheet(isPresented: $showTagPicker, content: {
+                        LabelsPickerView(label:$label, serviceLabelMode: true)
+                            .frame(width: 250, height: 200)
+                    })
+                }
+                AppMacFormDivider()
+                AppMacFormRow("Color", systemImage: "paintbrush.fill") {
+                    Picker("Color", selection: $service.colorIndex) {
+                        ForEach(0..<AppColorsModel.colors.count, id: \.self){ index in
+                            Text(AppColorsModel.colors[index].name)
+                                .tag(index)
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                }
+                AppMacFormDivider()
+                ImagePickerView(photoData: $service.image, iconBackgroundColor: service.color, isIconFormat: true)
+                    .padding(.vertical, 8)
+            }
+
+            AppMacFormSection {
+                ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
+                    .padding(12)
+                    .background(service.color, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            }
+        }
+    }
+#endif
+
+#if !os(macOS)
+    private var iOSForm: some View {
+        Group {
             Section{
                 TextField("Name", text: $service.name)
                 TextField("Description", text: $service.des)
@@ -204,38 +345,23 @@ struct ServiceMultiPlataformForm : View {
                     Text("Expense").tag(true)
                     Text("Income").tag(false)
                 }
+                Picker("Status", selection: $service.statusIndex) {
+                    ForEach(ServiceLifecycleStatus.allCases) { status in
+                        Text(status.localizedTitle).tag(Int(status.rawValue))
+                    }
+                }
             }
             Section{
                 DatePicker("Payment date", selection: $service.frequencyDate, displayedComponents: .date)
-                    
+
                 Picker("Frequency", selection: $service.frecuencyIndex) {
-                    ForEach(0..<ServicesModel.frequency.count) { index in
+                    ForEach(0..<ServicesModel.frequency.count, id: \.self) { index in
                         Text(ServicesModel.frequencyTitle(for: index)).tag(index)
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                
-                switch service.frecuencyIndex {
-                case 0: //"Daily":
-                    Text("Daily Fee")
-                case 1: //"Weekly":
-                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.dayName ?? "")")
-                case 2: //"Biweekly":
-                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee on 15 and last day")
-                    
-                case 3, 4, 5: //"Monthly", "Quarterly", "Semester":
-                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.frequencyDay)")
-                    
-                case 6: //"Yearly":
-                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee each ") + Text("\(service.frequencyDay)") + Text(" of ") + Text("\(service.monthName ?? "")")
-                    
-                case 7: //One time payment
-                     Text(ServicesModel.localizedFrequencyTitle(for: service.frecuencyIndex) + String(localized: " Fee ") + String(service.frequencyDate.formatted(date: .abbreviated, time: .omitted)))
-                case 8: //Last day of month
-                    Text(ServicesModel.frequencyTitle(for: service.frecuencyIndex)) + Text(" Fee")
-                default:
-                    Text("Select Frequency")
-                }
+
+                Text(feeDescription)
 
                 Picker("Business day", selection: $service.businessDayAdjustmentIndex) {
                     ForEach(0..<ServicesModel.businessDayAdjustments.count, id: \.self) { index in
@@ -243,7 +369,7 @@ struct ServiceMultiPlataformForm : View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                
+
             }
             Section {
                 Toggle("End date", isOn: $service.hasEndDate)
@@ -251,37 +377,11 @@ struct ServiceMultiPlataformForm : View {
                     DatePicker("End date", selection: $service.endDate, displayedComponents: .date)
                 }
             }
-            Section{
-            #if os(macOS)
-            TextField("Amount", text: $service.amout)
-            #else
-            TextField("Amount", text: $service.amout)
-            .keyboardType(.decimalPad)
-            .focused($amountIsFocuse)
-            .toolbar{
-             ToolbarItemGroup(placement: .keyboard){
-                  Spacer()
-                 if amountIsFocuse {
-                     Button("Done"){
-                        amountIsFocuse = false
-                      }
-                 }
-               }
-           }
-            #endif
-            }
-            
             Section {
-                
-                #if os(macOS)
-                Button( label != nil ? (label?.wrappedName ?? "Select a tag") : "Select a tag", systemImage: "tag", action: {
-                    showTagPicker.toggle()
-                })
-                    .sheet(isPresented: $showTagPicker, content: {
-                        LabelsPickerView(label:$label, serviceLabelMode: true)
-                            .frame(width: 250, height: 200)
-                    })
-                #else
+                AppAmountEntryField(amountText: $service.amout, isFocused: $amountIsFocused)
+            }
+
+            Section {
                 NavigationLink(destination: {
                     LabelsPickerView(label:$label, serviceLabelMode: true)
                 }, label: {
@@ -291,45 +391,53 @@ struct ServiceMultiPlataformForm : View {
                         Text(label?.name ?? "")
                     }
                 })
-                #endif
-              
-                
-                
+
                 Picker(selection: $service.colorIndex, label: Label("Color", systemImage: "paintbrush.fill"), content: {
-                    ForEach(0..<AppColorsModel.colors.count){ index in
+                    ForEach(0..<AppColorsModel.colors.count, id: \.self){ index in
                         HStack{
-                            #if os(iOS)
                             Image(systemName: "circle.fill")
-                                .foregroundColor(AppColorsModel.colors[index].color)
-                            
+                                .foregroundStyle(AppColorsModel.colors[index].color)
+
                             Text(AppColorsModel.colors[index].name)
-                            #elseif os(macOS)
-                            Text(AppColorsModel.colors[index].name)       #endif
                         }
                         .padding()
                         .tag(index)
                     }
                 })
-                #if os(iOS)
                 .pickerStyle(NavigationLinkPickerStyle())
-                #else
-                .pickerStyle(MenuPickerStyle())
-                #endif
-                
+
                 ImagePickerView(photoData: $service.image, iconBackgroundColor: service.color, isIconFormat: true)
             }
-            
-            
+
             Section(footer: Text("Preview")){
                 ServiceRow(BgColor: service.color, ServiceName: service.name, Amount: service.amountNumber.toCurrencyString(), frequency: ServicesModel.frequency[service.frecuencyIndex], limitDate: service.frequencyDate.formatted(date: .abbreviated, time: .omitted), image: service.image, expense: service.expense)
                     .listRowBackground(service.color)
-                
-                    
             }
-            
-        .sheet(isPresented: $showFormLabel, content: {
-            labelPicker(label: $label, showLabelList: $showLabelList)
-        })
+        }
+    }
+#endif
+
+    private var feeDescription: String {
+        let frequencyTitle = ServicesModel.localizedFrequencyTitle(for: service.frecuencyIndex)
+
+        switch service.frecuencyIndex {
+        case 0:
+            return String(localized: "Daily Fee")
+        case 1:
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(service.dayName ?? "")"
+        case 2:
+            return "\(frequencyTitle) \(String(localized: "Fee on 15 and last day"))"
+        case 3, 4, 5:
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(service.frequencyDay)"
+        case 6:
+            return "\(frequencyTitle) \(String(localized: "Fee each")) \(service.frequencyDay) \(String(localized: "of")) \(service.monthName ?? "")"
+        case 7:
+            return "\(frequencyTitle) \(String(localized: "Fee")) \(service.frequencyDate.formatted(date: .abbreviated, time: .omitted))"
+        case 8:
+            return "\(frequencyTitle) \(String(localized: "Fee"))"
+        default:
+            return String(localized: "Select Frequency")
+        }
     }
  
 }

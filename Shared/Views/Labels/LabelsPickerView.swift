@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct LabelsPickerView: View {
     
@@ -74,19 +75,18 @@ struct LabelsPickerView: View {
                         
                     }){
                         Label("Cancel", systemImage: "xmark")
-                        
-                        .foregroundStyle(.red)
-                                .appToolbarLabel()
+                            .appToolbarLabel()
                             
                     }
+                    .appSheetCancelButtonStyle()
                     Spacer()
                     Button(action: {
                         showFormLabel.toggle()
                     }){
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .foregroundStyle(Color.accentColor)
+                        Label("Add", systemImage: "plus")
                                 .appToolbarLabel()
                     }
+                    .appGlassControlButtonStyle()
                     
                 }
                 
@@ -109,7 +109,7 @@ struct LabelsPickerView: View {
                     Button(action: {
                         showFormLabel.toggle()
                     }){
-                       Label("Add", systemImage: "plus.circle.fill")
+                       Label("Add", systemImage: "plus")
                              .labelStyle(.titleAndIcon)
                         #if os(iOS)
                             .foregroundColor(.accentColor)
@@ -119,7 +119,7 @@ struct LabelsPickerView: View {
                 }*/
                 
                 ToolbarItem(placement: .confirmationAction ){
-                    ToolbarAddButton(edition: true){
+                    SheetConfirmationButton(edition: true){
                         showFormLabel.toggle()
                     }
                 }

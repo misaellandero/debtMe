@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 enum transactionsType {
     case all, debts, loans

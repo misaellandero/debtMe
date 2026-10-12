@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct LabelNewForm: View {
     //Model View de Coredate
@@ -39,11 +40,7 @@ struct LabelNewForm: View {
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(action: saveTag) {
-                        Label("Add", systemImage: "plus.circle.fill")
-                            .appToolbarLabel()
-                    }
-                    .appSheetPrimaryButtonStyle()
+                    SheetConfirmationButton(edition: false, action: saveTag)
                 }
             }
             .appSheetBottomConfirmationAction(edition: false, action: saveTag)
@@ -68,7 +65,7 @@ struct LabelNewForm: View {
                     }
                     
                     ToolbarItem(placement: .confirmationAction ){
-                        ToolbarAddButton(edition: false, action: saveTag)
+                        SheetConfirmationButton(edition: false, action: saveTag)
                     }
                 }
             }
@@ -110,7 +107,7 @@ struct LabelMultiplatformForm: View {
         #if os(macOS)
         ScrollView{
             Picker(selection: $colorSelect) {
-                ForEach(0..<AppColorsModel.colors.count){ index in
+                ForEach(0..<AppColorsModel.colors.count, id: \.self){ index in
                     Text(AppColorsModel.colors[index].name)
                     .tag(index)
                 }
@@ -124,7 +121,7 @@ struct LabelMultiplatformForm: View {
         #else
 
         Picker(selection: $colorSelect, label: Label("Color", systemImage: "paintbrush.fill") , content: {
-            ForEach(0..<AppColorsModel.colors.count){ index in
+            ForEach(0..<AppColorsModel.colors.count, id: \.self){ index in
                 HStack{
                     Image(systemName: "circle.fill")
                         .foregroundColor(AppColorsModel.colors[index].color)

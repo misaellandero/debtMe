@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BlurdEfectView : View {
-    // MARK: - Configuraciones del Usuario
+    // MARK: - User Settings
     @EnvironmentObject var settings : UserPreferences
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     

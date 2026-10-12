@@ -46,6 +46,7 @@
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="recurrence_end_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="amountUpdates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AmountUpdate" inverseName="service" inverseEntity="AmountUpdate"/>
         <relationship name="label" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactLabel" inverseName="services" inverseEntity="ContactLabel"/>
     </entity>

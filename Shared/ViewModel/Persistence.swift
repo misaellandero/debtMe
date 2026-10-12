@@ -67,11 +67,28 @@ public class PersistentCloudKitContainer: ObservableObject {
             return nil
         }
 
+        guard Self.canWriteSharedStore(in: storeDirectory) else {
+            return nil
+        }
+
         #if BETA_DEMO_DATA
         return storeDirectory.appendingPathComponent("debtMe-beta-demo.sqlite")
         #else
         return storeDirectory.appendingPathComponent("debtMe.sqlite")
         #endif
+    }
+
+    private static func canWriteSharedStore(in directory: URL) -> Bool {
+        let fileManager = FileManager.default
+        let probeURL = directory.appendingPathComponent(".debtme-store-access-check")
+
+        do {
+            try Data().write(to: probeURL, options: .atomic)
+            try? fileManager.removeItem(at: probeURL)
+            return true
+        } catch {
+            return false
+        }
     }
 
     private static var isBetaDemoBundle: Bool {

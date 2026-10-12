@@ -44,10 +44,25 @@ Use:
 - Keep icon weight consistent with the text (avoid extra-bold icon+text combos).
 - Prefer clear, standard symbols:
   - Calendar/List toggle: `calendar` / `list.bullet`
-  - Add: `plus.circle.fill`
-  - Edit: `square.and.pencil`
+  - Add: `plus`
+  - Edit: `pencil`
   - Delete/remove: `trash`
   - Cancel/close: `xmark`
+
+## App Icon
+
+The app icon source of truth is the Icon Composer file:
+
+- `icon.icon`
+
+This project uses the Xcode/Icon Composer icon workflow. Do not rebuild the app icon from the old asset catalog flow unless explicitly requested.
+
+Rules:
+
+- Do not recreate or restore `Shared/Assets.xcassets/AppIcon.appiconset` as the primary app icon.
+- Do not replace `icon.icon` with generated PNG app icon sets.
+- If app icon build settings need repair, keep `icon.icon` as the app icon source and adjust the target/project configuration around that file.
+- The exported PNG files in `Art/icon 26/` are reference/export assets, not the primary app icon source.
 
 ## Navigation & Screen Titles
 
@@ -69,7 +84,7 @@ Every primary screen must have a clear title that follows native platform behavi
 - Accent color: use `.accentColor` for primary emphasis; don’t introduce random hard-coded accent colors.
 
 ### Accent buttons
-- Primary actions should use `.buttonStyle(.borderedProminent)` with `.tint(.accentColor)`.
+- Primary actions should use the shared app styles. On iOS/macOS/visionOS 26 and newer they should render as `.glassProminent`; older systems should fall back to `.borderedProminent` with the app accent tint.
 - Secondary “pill” controls (filters, small toggles) can use `.thinMaterial` in a `Capsule()` with `AppTypography.brandHeadline`.
 
 ## Buttons & Actions
@@ -80,14 +95,17 @@ Buttons must be visually consistent across the app. Prefer shared button compone
 
 | Role | Use for | Style |
 |---|---|---|
-| Primary | Save, Add, Continue, Confirm | `.buttonStyle(.borderedProminent)` + `.tint(.accentColor)` |
-| Secondary | Edit, filters, non-destructive options | `.buttonStyle(.bordered)` or app shared secondary style |
-| Destructive | Delete, Remove, Cancel destructive flows | `.tint(.red)` with clear `trash` or destructive symbol |
+| Primary | Save, Add, Continue, Confirm | `.buttonStyle(.appAdd)`, `.buttonStyle(.appContinue)`, or `.appSheetPrimaryButtonStyle()` |
+| Compact Primary | Toolbar/search/date controls | `.appGlassControlButtonStyle()` |
+| Secondary | Edit, filters, non-destructive options | `.buttonStyle(.appEdit)` or app shared secondary style |
+| Destructive | Delete, Remove, Cancel destructive flows | `.buttonStyle(.appDestructive)` or `.buttonStyle(.appToolbarCancel)` |
 | Toolbar | Top navigation actions | `ToolbarAddButton` or a shared toolbar action view |
 
 ### Rules
 
 - Do not create one-off button colors, padding, corner radius, or font treatment when a shared style exists.
+- Add buttons must use the plain SF Symbol `plus`; the filled/prominent visual belongs to the shared button container, not the plus symbol itself.
+- Toolbar symbols should stay plain (`plus`, `xmark`, `checkmark`, `pencil`); the filled/prominent visual belongs to the shared glass button container.
 - Icon + text buttons should use `Label` with `.labelStyle(.titleAndIcon)` when space allows.
 - Icon-only buttons must use standard SF Symbols and should have an accessibility label.
 - Primary confirmation actions must appear in two places for sheets/forms:
@@ -102,11 +120,26 @@ Buttons must be visually consistent across the app. Prefer shared button compone
 
 Use or extend these before adding new button code:
 
+- `AppButtonStyleCatalogView`
+- `AppAddButtonStyle`
+- `AppContinueButtonStyle`
+- `AppEditButtonStyle`
+- `AppPaidButtonStyle`
+- `AppResetButtonStyle`
+- `AppShowSettledButtonStyle`
+- `AppDestructiveButtonStyle`
+- `AppToolbarButtonStyles`
+- `AppButtonStylePrimitives`
 - `ToolbarAddButton`
 - `ButtonLabelAdd`
 - `ButtonLabelContinue`
 - `ButtonLabelReset`
 - `ButtonLabelPayAll`
+- `AppActionButtonStyle`
+- `AppToolbarCircleButtonStyle`
+- `appGlassControlButtonStyle()`
+
+Each app button style must live in its own file with a preview. The catalog view is the place to compare all approved button styles across outside, list, form, and navigation contexts. Do not add a new visual button treatment directly inside feature views; add or update one of these style files first.
 
 ## Layout & spacing
 
@@ -151,7 +184,7 @@ NavigationStack {
             } label: {
                 Label("Close", systemImage: "xmark")
             }
-            .tint(.red)
+            .buttonStyle(.appToolbarCancel)
         }
 
         ToolbarItem(placement: .confirmationAction) {
@@ -164,11 +197,10 @@ NavigationStack {
         Button {
             save()
         } label: {
-            Label("Save", systemImage: "checkmark.circle.fill")
+            Label("Save", systemImage: "checkmark")
                 .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
-        .tint(.accentColor)
+        .buttonStyle(.appContinue)
         .padding()
     }
 }

@@ -23,6 +23,7 @@ struct HomeCalendarView: View {
     let weekdaySymbols: [String]
     let periodItems: [HomeCalendarItem]
     let namespace: Namespace.ID
+    let availableHeight: CGFloat?
     let onOpenDetail: (DateInterval?, String) -> Void
 
     private var isCompactCalendar: Bool {
@@ -34,7 +35,18 @@ struct HomeCalendarView: View {
     }
 
     private var calendarDayCellHeight: CGFloat {
-        isCompactCalendar ? 62 : 104
+        let baseHeight: CGFloat = isCompactCalendar ? 62 : 104
+        guard let availableHeight else { return baseHeight }
+
+        let rows = CGFloat(max(1, calendarRowCount))
+        let summaryHeight: CGFloat = isCompactCalendar ? 112 : 132
+        let headerHeight: CGFloat = showsWeekdayHeader ? 18 : 0
+        let verticalSpacing = calendarGridSpacing * max(0, rows - 1)
+        let availableGridHeight = max(0, availableHeight - summaryHeight - headerHeight - verticalSpacing - 20)
+        let fittedHeight = availableGridHeight / rows
+        let minimumHeight: CGFloat = isCompactCalendar ? 48 : 68
+
+        return min(baseHeight, max(minimumHeight, fittedHeight))
     }
 
     private var calendarGridSpacing: CGFloat {
@@ -47,6 +59,54 @@ struct HomeCalendarView: View {
 
     private var calendarCardCornerRadius: CGFloat {
         isCompactCalendar ? 12 : 18
+    }
+
+    private var calendarRowCount: Int {
+        switch calendarPeriod {
+        case .day:
+            return 1
+        case .week:
+            return weekDates.count
+        case .fortnight, .untilNextIncome:
+            return Int(ceil(Double(fortnightDates.count) / 7.0))
+        case .month:
+            return Int(ceil(Double(monthGridDates.count) / 7.0))
+        case .year:
+            return Int(ceil(Double(yearMonthStarts.count) / Double(isCompactCalendar ? 2 : 3)))
+        }
+    }
+
+    private var showsWeekdayHeader: Bool {
+        switch calendarPeriod {
+        case .fortnight, .untilNextIncome, .month:
+            return true
+        case .day, .week, .year:
+            return false
+        }
+    }
+
+    private var visibleMarkerLimit: Int {
+        if isCompactCalendar {
+            return calendarDayCellHeight < 56 ? 1 : 2
+        }
+
+        if calendarDayCellHeight < 78 {
+            return 2
+        }
+
+        if calendarDayCellHeight < 94 {
+            return 3
+        }
+
+        return 6
+    }
+
+    private var markerSize: CGFloat {
+        if isCompactCalendar {
+            return calendarDayCellHeight < 56 ? 10 : 12
+        }
+
+        return calendarDayCellHeight < 78 ? 13 : 16
     }
 
     var body: some View {
@@ -81,22 +141,18 @@ struct HomeCalendarView: View {
                     )
                 }
             case .fortnight, .untilNextIncome:
-                LazyVGrid(columns: weekColumns, spacing: calendarGridSpacing) {
-                    ForEach(fortnightDates, id: \.self) { date in
-                        dayCell(for: date)
+                VStack(alignment: .leading, spacing: calendarGridSpacing) {
+                    weekdayHeader
+
+                    LazyVGrid(columns: weekColumns, spacing: calendarGridSpacing) {
+                        ForEach(fortnightDates, id: \.self) { date in
+                            dayCell(for: date)
+                        }
                     }
                 }
             case .month:
                 VStack(alignment: .leading, spacing: calendarGridSpacing) {
-                    HStack(spacing: calendarGridSpacing) {
-                        ForEach(weekdaySymbols, id: \.self) { symbol in
-                            Text(symbol)
-                                .font(.caption2.weight(.semibold))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
+                    weekdayHeader
 
                     LazyVGrid(columns: weekColumns, spacing: calendarGridSpacing) {
                         ForEach(Array(monthGridDates.enumerated()), id: \.offset) { _, date in
@@ -125,6 +181,19 @@ struct HomeCalendarView: View {
         }
     }
 
+    private var weekdayHeader: some View {
+        HStack(spacing: calendarGridSpacing) {
+            ForEach(weekdaySymbols, id: \.self) { symbol in
+                Text(symbol)
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+    }
+
     private func dayCell(for date: Date) -> HomeDayCell {
         HomeDayCell(
             date: date,
@@ -132,6 +201,8 @@ struct HomeCalendarView: View {
             height: calendarDayCellHeight,
             cornerRadius: calendarCellCornerRadius,
             isCompact: isCompactCalendar,
+            visibleMarkerLimit: visibleMarkerLimit,
+            markerSize: markerSize,
             namespace: namespace,
             onOpenDetail: onOpenDetail
         )
@@ -149,6 +220,8 @@ private struct HomeDayCell: View {
     let height: CGFloat
     let cornerRadius: CGFloat
     let isCompact: Bool
+    let visibleMarkerLimit: Int
+    let markerSize: CGFloat
     let namespace: Namespace.ID
     let onOpenDetail: (DateInterval?, String) -> Void
 
@@ -206,9 +279,9 @@ private struct HomeDayCell: View {
 
                 if hasItems {
                     HomeDayMarkersGrid(
-                        items: Array(items.prefix(isCompact ? 2 : 6)),
-                        markerSize: isCompact ? 12 : 16,
-                        columnCount: isCompact ? 2 : 3,
+                        items: Array(items.prefix(visibleMarkerLimit)),
+                        markerSize: markerSize,
+                        columnCount: markerSize < 14 ? 2 : 3,
                         namespace: namespace
                     )
                 }
@@ -275,6 +348,10 @@ private struct HomeWeekRow: View {
             .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
             .padding(isCompact ? 8 : 10)
             .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(Color.secondary.opacity(0.08), lineWidth: 1)
+            )
             .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
@@ -311,6 +388,10 @@ private struct HomeDayDetailCard: View {
         }
         .padding(12)
         .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .stroke(Color.secondary.opacity(0.08), lineWidth: 1)
+        )
     }
 }
 
@@ -339,6 +420,10 @@ private struct HomeMonthCell: View {
             .frame(maxWidth: .infinity, minHeight: isCompact ? 64 : 78, alignment: .leading)
             .padding(isCompact ? 6 : 8)
             .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(Color.secondary.opacity(0.08), lineWidth: 1)
+            )
             .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
